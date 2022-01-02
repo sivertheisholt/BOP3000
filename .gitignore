@@ -1,7 +1,8 @@
 #Custom
 .vscode
 appsettings.json
-
+client/ssl/privateKey.pem
+client/ssl/private.pem
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/aspnetcore
