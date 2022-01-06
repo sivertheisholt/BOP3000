@@ -25,13 +25,12 @@ jobs:
       - name: Build with dotnet
         run: dotnet build ./API --configuration Release
         
+      - name: Install dotnet 
+        run: dotnet tool install --global dotnet-ef
+        
       - name: Update database
-        run: |
-          dotnet tool install --global dotnet-ef
-          dotnet tool restore
-          dotnet ef migrations add InitialCreate -o Data/Migrations
-          dotnet ef database update
-
+        run: dotnet ef database update
+        
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
