@@ -37,7 +37,7 @@ jobs:
         run: dotnet ef -p ./API migrations script --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --idempotent
         
       - name: Azure SQL Deploy
-        uses: Azure/sql-action@v1.1
+        uses: Azure/sql-action@v1
         with:
           # Name of the Azure SQL Server name, like Fabrikam.database.windows.net.
           server-name: tcp:bop3000.database.windows.net
