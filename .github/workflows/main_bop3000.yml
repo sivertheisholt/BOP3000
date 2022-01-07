@@ -26,9 +26,10 @@ jobs:
         run: dotnet build ./API --configuration Release
         
       - name: Install dotnet 
-        run: dotnet tool install dotnet-ef
+        run: |
+          dotnet new tool-manifest
+          dotnet tool install dotnet-ef
         
-
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
         
