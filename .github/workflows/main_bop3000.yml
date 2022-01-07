@@ -36,6 +36,8 @@ jobs:
       - name: Generate scripts
         run: dotnet ef -p ./API migrations script --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --idempotent
         
+      - run: npm install
+        
       - name: Azure SQL Deploy
         uses: Azure/sql-action@v1.1
         with:
