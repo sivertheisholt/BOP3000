@@ -49,7 +49,7 @@ namespace API
 
                 // Whether the connection string came from the local development configuration file
                 // or from the environment variable from Heroku, use it to set up your DbContext.
-                options.UseMySql(connStr, new MySqlServerVersion(new Version(8, 0, 27)), null);
+                options.UseSqlServer(connStr);
             });
 
             services.AddControllers();
