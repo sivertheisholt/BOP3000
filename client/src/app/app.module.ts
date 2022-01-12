@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { StartComponent } from './start/start.component';
 import {FormsModule} from '@angular/forms'
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {FormsModule} from '@angular/forms'
     NavbarComponent,
     RegisterComponent,
     HomeComponent,
-    StartComponent
+    StartComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

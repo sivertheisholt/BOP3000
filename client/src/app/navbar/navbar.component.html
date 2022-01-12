@@ -1,35 +1,39 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" routerLink="home">
-      <img src="../../assets/images/placeholder-bg.jpeg" width="112" height="28">
+    <a class="navbar-item">
+      <img src="https://www.hafslunddekksenter.no/wp-content/uploads/2018/01/logo-placeholder.png">
     </a>
-
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-basic">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
+  <div id="navbar-basic" class="navbar-menu">
     <div class="navbar-start">
       <a class="navbar-item">Home</a>
-      <a class="navbar-item">Documentation</a>
+      <a class="navbar-item">Home</a>
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">More</a>
         <div class="navbar-dropdown">
           <a class="navbar-item">About</a>
-          <a class="navbar-item">Jobs</a>
-          <a class="navbar-item">Contact</a>
+          <a class="navbar-item">About</a>
+          <a class="navbar-item">About</a>
           <hr class="navbar-divider">
-          <a class="navbar-item">Report an issue</a>
+          <a class="navbar-item">Report</a>
         </div>
       </div>
     </div>
-    <div class="navbar-end">
-      <div class="navbar-item">
-          <a class="button is-dark">Log Out</a>
+    <div id="navbar-basic" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <a><fa-icon class="icon is-medium fa-2x" [icon]="faUserCircle"></fa-icon></a>
+        </div>
+        <div class="navbar-item mr-5">
+          <a (onClick)="logOut()"><fa-icon class="icon is-medium fa-2x" [icon]="faSignOutAlt"></fa-icon></a>
+        </div>
       </div>
     </div>
   </div>
 </nav>
+
