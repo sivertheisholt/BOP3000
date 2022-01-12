@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { StartComponent } from './start/start.component';
+import {FormsModule} from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { StartComponent } from './start/start.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
