@@ -64,7 +64,7 @@
               <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo dolorem facilis enim ipsa! Quisquam, dignissimos quae exercitationem iste tempore est consequuntur consectetur maiores maxime minima qui perspiciatis ipsa eaque ullam. Esse, tempore itaque? Voluptas, enim adipisci. Ad quia, amet fuga laboriosam ducimus ex commodi vitae dignissimos voluptatem quisquam sint tenetur obcaecati sit nemo atque animi, deserunt, aliquam aperiam velit eum.
               </p>
-              <ol type="I">
+              <ol *ngIf="(accountService.currentUser$ | async) === null" type="I">
                 <li>Lorem</li>
                 <li>Ipsum</li>
                 <li>Dolor</li>
@@ -75,4 +75,5 @@
       </div>
     </div>
   </section>
+  
 </div>

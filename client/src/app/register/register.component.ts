@@ -8,9 +8,18 @@ import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 })
 export class RegisterComponent implements OnInit {
   faEnvelope = faEnvelope; faLock = faLock; faUser = faUser;
+  model: any = {}
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  register() {
+    console.log(this.model)
+  }
+
+  cancel() {
+    console.log('cancelled');
   }
 
 }
