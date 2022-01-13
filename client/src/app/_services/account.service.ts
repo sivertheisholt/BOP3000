@@ -22,11 +22,25 @@ export class AccountService {
       map((res: User) => {
         const user = res;
         if(user) {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSource.next(user);
+          this.initCurrentUser(res);
         }
       })
     );
+  }
+
+  register(model: any) {
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+      map((res: User) => {
+        if(res) {
+          this.initCurrentUser(res);
+        }
+      })
+    )
+  }
+
+  initCurrentUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUserSource.next(user);
   }
 
   setCurrentUser(user: User) {

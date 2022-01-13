@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -9,17 +10,20 @@ import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 export class RegisterComponent implements OnInit {
   faEnvelope = faEnvelope; faLock = faLock; faUser = faUser;
   model: any = {}
-  constructor() { }
+  constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
   }
 
   register() {
-    console.log(this.model)
+    this.accountService.register(this.model).subscribe(res => {
+      console.log(res);
+    }, err => {
+      console.log(err);
+    })
   }
 
   cancel() {
     console.log('cancelled');
   }
-
 }
