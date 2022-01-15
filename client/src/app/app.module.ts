@@ -9,6 +9,10 @@ import { StartComponent } from './start/start.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SharedModule } from './_modules/shared.module';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -18,14 +22,18 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
     HomeComponent,
     StartComponent,
     SidebarComponent,
-    TestErrorsComponent
+    TestErrorsComponent,
+    ServerErrorComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
