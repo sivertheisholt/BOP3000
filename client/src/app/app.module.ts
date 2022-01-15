@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { StartComponent } from './start/start.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SharedModule } from './_modules/shared.module';
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SharedModule } from './_modules/shared.module';
     RegisterComponent,
     HomeComponent,
     StartComponent,
-    SidebarComponent
+    SidebarComponent,
+    TestErrorsComponent
   ],
   imports: [
     BrowserModule,
