@@ -26,7 +26,7 @@ jobs:
         run: |
           cd client
           npm install --production
-          npm build
+          npm run build
 
       - name: Build with dotnet
         run: dotnet build ./API --configuration Release
