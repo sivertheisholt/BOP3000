@@ -4,6 +4,7 @@ appsettings.json
 client/ssl/privateKey.pem
 client/ssl/private.pem
 API/Data/Migrations
+API/wwwroot
 
 # Created by https://www.toptal.com/developers/gitignore/api/aspnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=aspnetcore
