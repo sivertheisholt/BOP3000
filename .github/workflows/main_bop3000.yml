@@ -21,6 +21,11 @@ jobs:
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
+          
+      - name: Build angular
+        run: |
+          npm install --production
+          npm build
 
       - name: Build with dotnet
         run: dotnet build ./API --configuration Release
