@@ -1,0 +1,90 @@
+<!-- <video id="background-video" class="header" autoplay loop muted playsinline poster="https://images.pexels.com/photos/1631677/pexels-photo-1631677.jpeg?cs=srgb&dl=pexels-abdullah-ghatasheh-1631677.jpg&fm=jpg">
+  <source src="../assets/videos/background.mp4" type="video/mp4">
+</video> -->
+<div class="bg">
+    <section class="section hero is-fullheight">
+      <div class="has-text-centered">
+        <figure class="image is-128x128 is-inline-block">
+          <img src="https://www.hafslunddekksenter.no/wp-content/uploads/2018/01/logo-placeholder.png">
+        </figure>
+      </div>
+      <div class="container hero-body">
+        <div class="columns is-centered">
+          <div class="card column is-half m-3">
+          <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+            <div class="card-content">
+              <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                  <input
+                    name="email"
+                    [(ngModel)]="model.email"
+                    class="input"
+                    type="email"
+                    placeholder="Email">
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faEnvelope"></fa-icon>
+                  </span>
+                </p>
+              </div>
+              <div class="field mt-5 mb-5">
+                <p class="control has-icons-left">
+                  <input
+                    name="password"
+                    [(ngModel)]="model.password"
+                    class="input"
+                    type="password"
+                    placeholder="Password">
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faLock"></fa-icon>
+                  </span>
+                </p>
+              </div>
+              <div class="field mt-5 mb-5">
+                <p class="control has-icons-left">
+                  <input
+                    name="repeatpassword"
+                    [(ngModel)]="model.repeatpassword"
+                    class="input"
+                    type="password"
+                    placeholder="Repeat Password">
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faLock"></fa-icon>
+                  </span>
+                </p>
+              </div>
+              <div class="field mt-5 mb-5">
+                <p class="control has-icons-left">
+                  <input
+                    name="username"
+                    [(ngModel)]="model.username"
+                    class="input"
+                    type="text"
+                    placeholder="Username">
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                  </span>
+                </p>
+              </div>
+              <div class="control has-text-light has-text-centered">
+                <label class="radio">
+                  <input type="radio" name="answer" value="male">Male</label>
+                <label class="radio">
+                  <input type="radio" name="answer" value="female">Female</label>
+                <label class="radio">
+                  <input type="radio" name="answer" value="other">Other</label>
+              </div>
+            </div>
+            <div class="has-text-centered">
+              <button type="submit" class="column is-half button is-info">Register</button>
+            </div>
+          </form>
+            <p class="has-text-light mt-5 column is-full">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis pariatur, cum ex asperiores tenetur, dolore numquam assumenda doloribus nostrum earum deleniti, obcaecati blanditiis necessitatibus deserunt id minus? Error, quis ducimus?</p>
+            <div class="card-footer mt-5"></div>
+            <div class="has-text-centered mt-5">
+              <button href="#" class="column is-half button is-success mt-2" routerLink="">Go back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
