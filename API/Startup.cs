@@ -35,6 +35,29 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>(options =>
+            {
+                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+                string connStr;
+
+                // Depending on if in development or production, use either Heroku-provided
+                // connection string, or development connection string from env var.
+                if (env == "Development")
+                {
+                    // Use connection string from file.
+                    connStr = _config.GetConnectionString("DefaultConnection");
+                }
+                else
+                {
+                    // Use connection string provided at runtime by Azure.
+                    connStr = Environment.GetEnvironmentVariable("DATABASE_URL");
+                }
+
+                // Whether the connection string came from the local development configuration file
+                // or from the environment variable from Heroku, use it to set up your DbContext.
+                options.UseSqlServer(connStr);
+            });
 
             services.AddApplicationServices(_config);
             services.AddControllers();
