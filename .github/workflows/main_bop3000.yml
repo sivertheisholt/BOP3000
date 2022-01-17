@@ -25,6 +25,7 @@ jobs:
       - name: Build angular
         run: |
           cd client
+          npm install -g @angular/cli
           npm install --production
           npm run build
 
