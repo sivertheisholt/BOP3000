@@ -12,13 +12,23 @@ namespace API.Extentions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var token = "";
+            if (env == "Development")
+            {
+                token = config["TokenKey"];
+            }
+            else
+            {
+                token = Environment.GetEnvironmentVariable("JWT_TOKEN_KEY");
+            }
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(token)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
