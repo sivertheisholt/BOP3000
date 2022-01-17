@@ -25,8 +25,8 @@ jobs:
       - name: Build angular
         run: |
           cd client
-          npm install @angular/cli
-          npm instal @angular-devkit/build-angular:browser
+          npm install -g @angular/cli
+          npm instal -g @angular-devkit/build-angular:browser
           npm install --production
           npm run build
 
