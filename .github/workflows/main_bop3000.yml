@@ -26,7 +26,7 @@ jobs:
         run: |
           cd client
           npm install -g @angular/cli
-          npm instal -g @angular-devkit/build-angular:browser
+          npm install -g @angular-devkit/build-angular
           npm install --production
           npm run build
 
