@@ -26,7 +26,7 @@ namespace API.Services
             {
                 token = Environment.GetEnvironmentVariable("JWT_TOKEN_KEY");
             }
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(token));
         }
 
         public string CreateToken(AppUser user)
