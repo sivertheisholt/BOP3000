@@ -16,6 +16,16 @@ namespace API.Services
         private readonly SymmetricSecurityKey _key;
         public TokenService(IConfiguration config)
         {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var token = "";
+            if (env == "Development")
+            {
+                token = config["TokenKey"];
+            }
+            else
+            {
+                token = Environment.GetEnvironmentVariable("JWT_TOKEN_KEY");
+            }
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
 
