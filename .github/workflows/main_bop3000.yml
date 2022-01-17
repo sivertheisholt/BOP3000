@@ -39,7 +39,7 @@ jobs:
         run: |
           cd client
           npm ci
-          npm run build:ci
+          npm run build
 
       - name: Build with dotnet
         run: dotnet build ./API --configuration Release
