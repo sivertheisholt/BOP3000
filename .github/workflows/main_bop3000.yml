@@ -22,13 +22,23 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
           
-      - name: Build angular
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: npm ci and npm run build
         run: |
-          cd client
-          npm install -g @angular/cli
-          npm install -g @angular-devkit/build-angular
-          npm install --production
-          npm run build
+          npm ci
+          npm run build:ci
 
       - name: Build with dotnet
         run: dotnet build ./API --configuration Release
