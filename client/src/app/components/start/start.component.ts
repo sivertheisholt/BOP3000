@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
-import { User } from '../_models/user';
-import { AccountService } from '../_services/account.service';
+import { User } from '../../_models/user';
+import { AccountService } from '../../_services/account.service';
 
 @Component({
   selector: 'app-start',
