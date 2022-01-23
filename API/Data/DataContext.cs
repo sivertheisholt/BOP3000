@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using API.Entities;
 using API.Entities.Roles;
 using API.Entities.Users;
 using API.Entities.Users.Role;
@@ -30,11 +25,11 @@ namespace API.Data
                 .WithOne(u => u.User)
                 .HasForeignKey(ur => ur.UserId)
                 .IsRequired();
-            
+
             builder.Entity<AppRole>()
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.Role)
-                .HasForeignKey(ur => ur.Role)
+                .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
         }
     }
