@@ -1,0 +1,52 @@
+.play-wrapper{
+    background-color: rgb(27, 27, 27);
+    width: 100%;
+}
+
+.right-content{
+    padding: 0rem;
+}
+
+.main-content-wrapper{
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.activity-wrapper{
+    background:linear-gradient(
+        rgba(56, 16, 18, 0.95),
+        rgba(18, 26, 43, 0.95)
+      ),
+      url(https://w0.peakpx.com/wallpaper/466/135/HD-wallpaper-rgb-joystick-art-gaming-led-neon-pubg.jpg);
+    background-size: cover;
+    overflow: hidden;
+}
+
+.left-navigation{
+    width: 225px;
+    flex-shrink: 0;
+    z-index: 99;
+    position: relative;
+}
+
+.app{
+    width: 100%;
+    background-color: rgb(53, 49, 49);
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.main-content{
+    width: 100%;
+    position: relative;
+    min-height: 100vh;
+    flex-grow: 1;
+}
+
+@media only screen and (max-width: 1023px) {
+    .app{
+        display: block;
+    }
+}

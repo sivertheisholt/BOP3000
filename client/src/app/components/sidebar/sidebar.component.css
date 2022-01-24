@@ -1,8 +1,29 @@
 aside{
     height: 100vh;
-    background-color: yellow;
+    background-color: rgb(27, 29, 38);
+    position: fixed;
 }
 
 .sidebar{
-    width: 200px;
+    width: 225px;
+}
+
+.menu-list a{
+    color: white;
+}
+
+.menu-label{
+    color: white;
+}
+
+.sidebar-items{
+    margin-top: 60px;
+}
+
+@media only screen and (max-width: 1023px) {
+    .sidebar{
+        top: 50px;
+        width: 100%;
+        text-align: center;
+    }
 }

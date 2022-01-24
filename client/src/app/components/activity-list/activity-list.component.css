@@ -1,0 +1,35 @@
+.activity-list-container{
+    background: linear-gradient(180deg, rgba(16,19,54,0.6) 0%, rgba(26, 23, 37, 0.95) 100%);
+    overflow: auto;
+    overflow-y: hidden;
+}
+
+table{
+    background-color: transparent;
+    width: 100%;
+    min-width: 600px;
+}
+
+th{
+    color: white;
+}
+
+tr{
+    color: white;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-track {
+background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+background: rgb(141, 138, 138);
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: rgb(92, 84, 84);
+}

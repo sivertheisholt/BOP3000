@@ -1,54 +1,17 @@
 <app-navbar></app-navbar>
-<section class="columns">
-  <app-sidebar></app-sidebar>      
-  <div class="bg">
-    <div class="container column is-10">
-      <div class="section">
-        <div class="card column is-half">
-          <div class="card-content">
-            <p class="title">
-              “There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors.”
-            </p>
-            <p class="subtitle">
-              Jeff Atwood
-            </p>
-          </div>
-          <footer class="card-footer">
-            <p class="card-footer-item">
-              <span>
-                View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
-              </span>
-            </p>
-            <p class="card-footer-item">
-              <span>
-                Share on <a href="#">Facebook</a>
-              </span>
-            </p>
-          </footer>
-        </div>
-        <div class="card column is-half is-offset-half">
-          <div class="card-content">
-            <p class="title">
-              “There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors.”
-            </p>
-            <p class="subtitle">
-              Jeff Atwood
-            </p>
-          </div>
-          <footer class="card-footer">
-            <p class="card-footer-item">
-              <span>
-                View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
-              </span>
-            </p>
-            <p class="card-footer-item">
-              <span>
-                Share on <a href="#">Facebook</a>
-              </span>
-            </p>
-          </footer>
-        </div>
-      </div>
+<section class="app">
+  <div class="left-navigation">
+    <app-sidebar></app-sidebar> 
+  </div>
+  <div class="main-content">
+    <div class="section is-medium play-wrapper">
+      <app-home-buttons-section></app-home-buttons-section>
+    </div>
+    <div class="section is-large activity-wrapper">
+      <app-activity-list></app-activity-list>
+    </div>
+    <div>
+      <app-footer></app-footer>
     </div>
   </div>
 </section>

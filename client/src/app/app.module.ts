@@ -13,6 +13,9 @@ import { HomeComponent } from './components/home/home.component';
 import { StartComponent } from './components/start/start.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
+import { ActivityListComponent } from './components/activity-list/activity-list.component';
+import { HomeButtonsSectionComponent } from './components/home/home-buttons-section/home-buttons-section.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -25,7 +28,10 @@ import { NotFoundComponent } from './components/errors/not-found/not-found.compo
     SidebarComponent,
     TestErrorsComponent,
     ServerErrorComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ActivityListComponent,
+    HomeButtonsSectionComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

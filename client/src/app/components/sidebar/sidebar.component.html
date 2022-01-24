@@ -1,25 +1,23 @@
-<aside class="column is-full is-narrow-mobile is-fullheight is-hidden-mobile sidebar">
-    <p class="menu-label is-hidden-mobile has-text-centered mt-5">Navigation</p>
-    <div class="ml-3">
+<aside class="sidebar" *ngIf="!sidebarVisible">
+    <div class="ml-3 sidebar-items">
+        <p class="menu-label has-text-centered mt-5">Navigation</p>
         <ul class="menu-list">
-            <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Home</a></li>
-            <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>About</a></li>
+            <li><a><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>Home</a></li>
         </ul>
-            <p class="menu-label has-text-centered">Social</p>
-            <ul class="menu-list">
-                <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
-                <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
-                <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
-                <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
-                <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
-                <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
-            </ul>
-            <p class="menu-label has-text-centered">Account</p>
+        <p class="menu-label has-text-centered">Social</p>
         <ul class="menu-list">
+            <li><a><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>Create Lobby</a></li>
+            <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find Lobby</a></li>
             <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
             <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
             <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
+            <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
+        </ul>
+        <p class="menu-label has-text-centered">Account</p>
+        <ul class="menu-list">
+            <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Account</a></li>
+            <li><a><fa-icon class="fa-lg mr-2" [icon]="faCogs"></fa-icon>Settings</a></li>
+            <li><a><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>Help</a></li>
         </ul>
     </div>
-
 </aside>

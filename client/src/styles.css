@@ -20,7 +20,20 @@
   url(https://images.pexels.com/photos/9754/mountains-clouds-forest-fog.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
   background-size: cover;
 }
-  
-.start-screen-wrapper{
-  height: 100vh;
+
+.title{
+  font-size: 34px;
+}
+
+
+@media only screen and (max-width: 1023px) {
+  .title{
+      font-size: 26px;
+  }
+}
+
+@media only screen and (max-width: 623px) {
+  .title{
+      font-size: 16px;
+  }
 }

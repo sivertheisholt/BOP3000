@@ -1,7 +1,13 @@
 nav{
-    background-color: yellow;
+    background-color: rgb(27, 29, 38);
+    width: 100%;
+    position: fixed;
 }
 
 .icon{
-    color: grey;
+    color: rgb(206, 202, 202);
+}
+
+.navbar-burger{
+    color: white;
 }

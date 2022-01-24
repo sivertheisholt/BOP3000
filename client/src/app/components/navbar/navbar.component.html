@@ -1,37 +1,21 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item">
+    <a class="navbar-item navbar-logo">
       <img src="https://www.hafslunddekksenter.no/wp-content/uploads/2018/01/logo-placeholder.png">
     </a>
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-basic">
+    <a role="button" class="navbar-burger burger" #navBurger aria-label="menu" aria-expanded="false" data-target="navbar-burger" (click)="toggleNavbar()">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
-  <div id="navbar-basic" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item">Home</a>
-      <a class="navbar-item">Home</a>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">More</a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item">About</a>
-          <a class="navbar-item">About</a>
-          <a class="navbar-item">About</a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">Report</a>
-        </div>
+  <div id="navbar-desktop" class="navbar-menu">
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <a><fa-icon class="icon is-medium fa-2x" [icon]="faUserCircle"></fa-icon></a>
       </div>
-    </div>
-    <div id="navbar-basic" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <a><fa-icon class="icon is-medium fa-2x" [icon]="faUserCircle"></fa-icon></a>
-        </div>
-        <div class="navbar-item mr-5">
-          <a (click)="logOut()"><fa-icon class="icon is-medium fa-2x" [icon]="faSignOutAlt"></fa-icon></a>
-        </div>
+      <div class="navbar-item mr-5">
+        <a (click)="logOut()"><fa-icon class="icon is-medium fa-2x" [icon]="faSignOutAlt"></fa-icon></a>
       </div>
     </div>
   </div>

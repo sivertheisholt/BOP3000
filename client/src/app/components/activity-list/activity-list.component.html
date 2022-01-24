@@ -1,0 +1,30 @@
+<div class="container">
+    <h1 class="title has-text-centered has-text-light">Gamerooms you might be interested in</h1>
+    <div class="activity-list-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Language</th>
+                    <th>Creator</th>
+                    <th>Game</th>
+                    <th>Players</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let gameroom of gameRooms">
+                    <td> 
+                        <figure class="image is-64x64">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/United-kingdom_flag_icon_round.svg/1200px-United-kingdom_flag_icon_round.svg.png">
+                        </figure>
+                    </td>
+                    <td>{{ gameroom.creator }}</td>
+                    <td>{{ gameroom.game }}</td>
+                    <td> 2 / {{ gameroom.maxplayers }}</td>
+                    <td><button class="button is-info">Join</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
