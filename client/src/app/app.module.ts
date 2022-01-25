@@ -16,6 +16,9 @@ import { NotFoundComponent } from './components/errors/not-found/not-found.compo
 import { ActivityListComponent } from './components/activity-list/activity-list.component';
 import { HomeButtonsSectionComponent } from './components/home/home-buttons-section/home-buttons-section.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LoginComponent } from './components/login/login.component';
+import { CreateLobbyComponent } from './components/create-lobby/create-lobby.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -31,12 +34,15 @@ import { FooterComponent } from './components/footer/footer.component';
     NotFoundComponent,
     ActivityListComponent,
     HomeButtonsSectionComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent,
+    CreateLobbyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    NgSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}

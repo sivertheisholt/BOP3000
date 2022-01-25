@@ -1,7 +1,23 @@
-button {
-  display: inline-flex;
-}
-
+  
 .card{
   background: linear-gradient(90deg, rgba(29, 29, 29, 0.6) 0%, rgb(51, 51, 51) 100%);
+}
+
+.login-section{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-section-one{
+  background-color: rgb(19, 33, 61);
+}
+
+.info-section-two{
+  background-color: rgb(117, 101, 9);
+}
+
+.info-section-three{
+  background-color: rgb(58, 17, 17);
 }

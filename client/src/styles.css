@@ -1,3 +1,4 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
 #background-video {
   height: 100vh;
   width: 100vw;
@@ -9,17 +10,6 @@
   bottom: 0;
   z-index: -1;
 }
-  
-.bg{
-  width: 100%;
-  height:100vh;
-  background:linear-gradient(
-    rgba(7, 80, 23, 0.75),
-    rgba(18, 26, 43, 0.85)
-  ),
-  url(https://images.pexels.com/photos/9754/mountains-clouds-forest-fog.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
-  background-size: cover;
-}
 
 .title{
   font-size: 34px;
@@ -30,10 +20,33 @@
   .title{
       font-size: 26px;
   }
+
+  .subtitle{
+    font-size: 20px;
+  }
 }
 
 @media only screen and (max-width: 623px) {
   .title{
-      font-size: 16px;
+      font-size: 24px;
   }
+
+  .subtitle{
+    font-size: 16px;
+  }
+}
+
+.bg{
+  width: 100%;
+  height:100vh;
+  background:linear-gradient(
+    rgba(11, 29, 53, 0.75),
+    rgba(17, 18, 19, 0.85)
+  ),
+  url(https://images.pexels.com/photos/735911/pexels-photo-735911.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+  background-size: cover;
+}
+
+.text-is-light{
+  color: rgb(221, 220, 212);
 }

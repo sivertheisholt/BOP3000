@@ -1,0 +1,47 @@
+<div class="create-lobby-bg">
+    <div class="container">
+        <div class="create-lobby-form">
+            <div class="card column is-two-thirds m-3">
+                <h1 class="title has-text-centered text-is-light">Lobby Creation</h1>
+                <div class="card-content">
+                    <ng-select [items]="games" 
+                        bindLabel="name" 
+                        bindValue="id"
+                        placeholder="Search for a game..."
+                        [(ngModel)]="selectedGame"
+                        (change)="getGame(selectedGame)"
+                        [closeOnSelect]='true'
+                        class="custom">
+                    </ng-select>
+                    <label for="lobbyname"></label>
+                    <input class="input is-normal mt-6" type="text" placeholder="Lobby name" name="lobbyname">
+                    <textarea class="textarea is-primary mt-6" placeholder="Describe what you are looking for(optional)"></textarea>
+                    <div class="columns">
+                        <div class="column">
+                            <ng-select [items]="selectedType" 
+                            bindLabel="name" 
+                            bindValue="id"
+                            placeholder="What type of game?"
+                            [(ngModel)]="selectedType"
+                            [closeOnSelect]='true'
+                            class="custom mt-6">
+                        </ng-select>
+                        </div>
+                        <div class="column">
+                            <ng-select [items]="selectedMaxplayers" 
+                            bindLabel="name" 
+                            bindValue="id"
+                            placeholder="How many players including yourself?"
+                            [(ngModel)]="selectedMaxplayers"
+                            [closeOnSelect]='true'
+                            class="custom mt-6">
+                        </ng-select>
+                        </div>
+                    </div>
+                    <button class="button create-lobby-button is-normal text-is-light">Create Lobby</button>
+                    <button class="button go-back-btn is-normal text-is-light mt-5">Cancel</button>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

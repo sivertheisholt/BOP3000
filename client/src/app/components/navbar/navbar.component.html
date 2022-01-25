@@ -14,8 +14,12 @@
       <div class="navbar-item">
         <a><fa-icon class="icon is-medium fa-2x" [icon]="faUserCircle"></fa-icon></a>
       </div>
-      <div class="navbar-item mr-5">
-        <a (click)="logOut()"><fa-icon class="icon is-medium fa-2x" [icon]="faSignOutAlt"></fa-icon></a>
+      <div class="navbar-item">
+        <a>
+          <fa-icon class="noti-icon icon is-medium fa-2x mr-5" [icon]="faBell">
+            <span class="noti-num">2</span>
+          </fa-icon>
+        </a>
       </div>
     </div>
   </div>
