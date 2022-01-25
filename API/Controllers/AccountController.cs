@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Entities.Users;
+using API.Enums;
 using API.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +21,16 @@ namespace API.Controllers
             _tokenService = tokenService;
         }
 
+        /// <summary>
+        /// Creates a new user
+        /// </summary>
+        /// <param name="registerDto"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
+
 
             var user = new AppUser
             {
@@ -33,10 +40,14 @@ namespace API.Controllers
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded) return BadRequest(result.Errors);
 
+            var roleResult = await _userManager.AddToRoleAsync(user, Role.Member.MakeString());
+
+            if(!roleResult.Succeeded) return BadRequest(roleResult.Errors);
+
             return new UserDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = await _tokenService.CreateToken(user)
             };
         }
 
@@ -51,10 +62,12 @@ namespace API.Controllers
 
             if (!result.Succeeded) return Unauthorized();
 
+            var roleResult = await _userManager.AddToRoleAsync(user, Role.Member.MakeString());
+
             return new UserDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = await _tokenService.CreateToken(user)
             };
         }
 

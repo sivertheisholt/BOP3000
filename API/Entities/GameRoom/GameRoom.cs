@@ -7,6 +7,7 @@ namespace API.Entities.GameRoom
         public int MaxUsers { get; set; }
         public int AdminUid { get; set; }
         public string Title { get; set; }
+
         public Requirement RoomRequirement { get; set; }
     }
 }
