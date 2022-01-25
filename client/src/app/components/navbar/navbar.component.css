@@ -11,3 +11,18 @@ nav{
 .navbar-burger{
     color: white;
 }
+
+.noti-icon{
+    position: relative;
+    font-size: 2em;
+    color: grey;
+    cursor: pointer;
+}
+
+.noti-num{
+    position: absolute;
+    font-size: 0.3em;
+    top: 1px;
+    color: #fff;
+    right: 2px;
+}

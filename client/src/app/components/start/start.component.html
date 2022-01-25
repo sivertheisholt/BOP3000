@@ -2,77 +2,38 @@
   <source src="../assets/videos/background.mp4" type="video/mp4">
 </video> -->
 <div class="bg">
-  <section class="section hero is-fullheight">
-    <div class="has-text-centered">
-      <figure class="image is-128x128 is-inline-block">
-        <img src="https://www.hafslunddekksenter.no/wp-content/uploads/2018/01/logo-placeholder.png">
-      </figure>
-    </div>
-    <div class="container hero-body">
-      <div class="columns is-centered">
-        <div class="card column is-one-third m-3">
-          <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
-            <div class="card-content">
-              <div class="field">
-                <p class="control has-icons-left has-icons-right">
-                  <input
-                    name="username"
-                    [(ngModel)]="model.username"
-                    class="input"
-                    type="email"
-                    placeholder="Email">
-                  <span class="icon is-small is-left">
-                    <fa-icon [icon]="faEnvelope"></fa-icon>
-                  </span>
-                </p>
-              </div>
-              <div class="field mt-5 mb-5">
-                <p class="control has-icons-left">
-                  <input
-                    name="password"
-                    [(ngModel)]="model.password"
-                    class="input"
-                    type="password"
-                    placeholder="Password">
-                  <span class="icon is-small is-left">
-                    <fa-icon [icon]="faLock"></fa-icon>
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div class="has-text-centered">
-              <button class="column is-half button is-info" type="submit">Login</button>
-            </div>
-          </form>
-          <div class="card-footer mt-5"></div>
-          <div class="has-text-centered mt-5">
-            <p class="is-size-6 has-text-light">New to ...?</p>
-            <button href="#" class="column is-half button is-success mt-2" routerLink="register">Create Account</button>
-          </div>
-          <div class="has-text-centered mt-5">
-            <a class="is-size-6 has-text-light is-underlined">Forgotten Password</a>
-          </div>
-        </div>
-        <div class="card column is-one-third m-3">
-          <div class="card-header">
-            <div class="card-header-title">
-              <div class="title is-2 is-float-right has-text-light">Lorem, ipsum.</div>
-            </div>
-          </div>
-          <div class="card-content">
-            <div class="content has-text-light">
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo dolorem facilis enim ipsa! Quisquam, dignissimos quae exercitationem iste tempore est consequuntur consectetur maiores maxime minima qui perspiciatis ipsa eaque ullam. Esse, tempore itaque? Voluptas, enim adipisci. Ad quia, amet fuga laboriosam ducimus ex commodi vitae dignissimos voluptatem quisquam sint tenetur obcaecati sit nemo atque animi, deserunt, aliquam aperiam velit eum.
-              </p>
-              <ol *ngIf="(accountService.currentUser$ | async) === null" type="I">
-                <li>Lorem</li>
-                <li>Ipsum</li>
-                <li>Dolor</li>
-              </ol>
-            </div>
-          </div>
-        </div>
+  <div class="container">
+    <div class="login-section">
+      <div class="card column is-half m-3">
+        <app-login></app-login>
       </div>
     </div>
-  </section>
+  </div>
+</div> 
+<div class="info-section-wrapper">
+  <div class="info-section-one">
+    <section class="section is-medium container">
+      <h1 class="title has-text-light">Sign up</h1>
+      <h2 class="subtitle has-text-light">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur temporibus eligendi ipsum possimus! Quis harum necessitatibus sint a id ipsa.
+      </h2>
+    </section>
+  </div>
+  <div class="info-section-two">
+    <section class="section is-medium is-flex is-flex-direction-column container">
+      <h1 class="title is-flex is-justify-content-end has-text-light">Connect your Steam and Discord</h1>
+      <h2 class="subtitle has-text-light">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur temporibus eligendi ipsum possimus! Quis harum necessitatibus sint a id ipsa.
+      </h2>
+    </section>
+  </div>
+  <div class="info-section-three">
+    <section class="section is-medium container">
+      <h1 class="title has-text-light">Join or create a lobby and start gaming!</h1>
+      <h2 class="subtitle has-text-light">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur temporibus eligendi ipsum possimus! Quis harum necessitatibus sint a id ipsa.
+      </h2>
+    </section>
+  </div>
 </div>
+<app-footer></app-footer>
