@@ -1,3 +1,4 @@
+using API.Entities.GameRoom;
 using API.Entities.Roles;
 using API.Entities.Users;
 using API.Entities.Users.Role;
@@ -15,6 +16,7 @@ namespace API.Data
         {
 
         }
+        public DbSet<GameRoom> GameRoom { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

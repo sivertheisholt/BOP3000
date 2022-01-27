@@ -21,11 +21,6 @@ namespace API.Controllers
             _tokenService = tokenService;
         }
 
-        /// <summary>
-        /// Creates a new user
-        /// </summary>
-        /// <param name="registerDto"></param>
-        /// <returns></returns>
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {

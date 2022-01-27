@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Data;
+using API.Data.Repositories;
+using API.Helpers;
 using API.Interfaces;
+using API.Interfaces.IRepositories;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,13 +13,16 @@ namespace API.Extentions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGameRoomRepository, GameRoomRepository>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
                 string connStr;
 
-                // Depending on if in development or production, use either Heroku-provided
+                // Depending on if in development or production, use either MSSQL-provided
                 // connection string, or development connection string from env var.
                 if (env == "Development")
                 {

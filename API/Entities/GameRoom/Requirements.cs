@@ -4,7 +4,7 @@ namespace API.Entities.GameRoom
 {
     public class Requirement
     {
-        public Gender Gender { get; set; }
-        public int MyProperty { get; set; }
+        public int Id { get; set; }
+        public string Gender { get; set; }
     }
 }

@@ -7,7 +7,6 @@ namespace API.Entities.Users
         public int Id { get; set; }
         public AppUserConnections UserConnections { get; set; }
         public string Nickname { get; set; }
-        public History GameRoomHistory { get; set; }
-
+        public ICollection<FinishedGameRoom> FinishedGameRooms { get; set; }
     }
 }
