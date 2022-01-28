@@ -1,5 +1,4 @@
 using API.DTOs;
-using API.Entities.Users;
 using API.Interfaces.IRepositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -7,17 +6,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// UsersController contains all the endpoints for actions related to users
+    /// </summary>
     public class UsersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Creates a new UsersController
+        /// </summary>
+        /// <param name="userRepository"></param>
+        /// <param name="mapper"></param>
         public UsersController(IUserRepository userRepository, IMapper mapper)
         {
             _mapper = mapper;
             _userRepository = userRepository;
         }
 
+        /// <summary>
+        /// Gets all users
+        /// </summary>
+        /// <returns>A collection of MemberDto</returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
@@ -29,7 +40,12 @@ namespace API.Controllers
             return Ok(usersToReturn);
         }
 
-        [Authorize(Roles = "Member")]
+        /// <summary>
+        /// Gets a user by ID 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A MemberDto</returns>
+        //[Authorize(Roles = "Member")]
         [HttpGet("{id}")]
         public async Task<ActionResult<MemberDto>> GetUser(int id)
         {
