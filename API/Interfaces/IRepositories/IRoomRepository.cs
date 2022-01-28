@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.Interfaces.IRepositories
 {
-    public interface IRoomRepository
+    public class IRoomRepository
     {
 
     }

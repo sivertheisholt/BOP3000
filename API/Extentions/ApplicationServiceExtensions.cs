@@ -1,6 +1,5 @@
 using API.Data;
 using API.Data.Repositories;
-using API.Entities.Users;
 using API.Helpers;
 using API.Interfaces;
 using API.Interfaces.IRepositories;
