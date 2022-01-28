@@ -1,0 +1,16 @@
+.account-background{
+    width: 100%;
+    height:100vh;
+    background:linear-gradient(
+      rgba(37, 35, 33, 0.85),
+      rgba(37, 37, 37, 0.85)
+    ),
+    url(https://i.ibb.co/47ZDzvC/digital-technology-background-with-blue-and-orange-light-effect.jpg);
+    background-size: cover;
+}
+
+.content{
+    width: 100%;
+    background-color: black;
+    height: 100vh;
+}

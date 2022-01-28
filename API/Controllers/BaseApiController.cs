@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// BaseApiController is the base for all other controllers
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class BaseApiController : ControllerBase
     {
-        
+
     }
 }

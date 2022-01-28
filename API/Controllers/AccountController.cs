@@ -8,12 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// AccountController is the endpoint for actions related to accounts
+    /// </summary>
     public class AccountController : BaseApiController
     {
         private readonly ITokenService _tokenService;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
+        /// <summary>
+        /// Constructs a new AccountController
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="tokenService"></param>
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService)
         {
             _signInManager = signInManager;
@@ -21,24 +30,36 @@ namespace API.Controllers
             _tokenService = tokenService;
         }
 
+
+        /// <summary>
+        /// Registers a new user with the provided information
+        /// </summary>
+        /// <param name="registerDto"></param>
+        /// <returns>A UserDto of the newly created user</returns>
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+
+            // Check if username already exists
             if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
 
-
+            // Creates a new AppUser
             var user = new AppUser
             {
                 UserName = registerDto.Username.ToLower(),
             };
 
+            // Creates the user in backend
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded) return BadRequest(result.Errors);
 
+            // Give Member role to user
             var roleResult = await _userManager.AddToRoleAsync(user, Role.Member.MakeString());
 
+            // Check if role was successfully given
             if(!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
+            // Returns a new UserDto
             return new UserDto
             {
                 Username = user.UserName,
@@ -46,19 +67,25 @@ namespace API.Controllers
             };
         }
 
+        /// <summary>
+        /// Log in a user with the provided information
+        /// </summary>
+        /// <param name="loginDto"></param>
+        /// <returns>A UserDto of the newly logged in user</returns>
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
+            // Gets the user by username from the database
             var user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
 
+            // Checks if user exists
             if (user == null) return Unauthorized("Invalid username");
 
+            // Checks if the password matches
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
             if (!result.Succeeded) return Unauthorized();
 
-            var roleResult = await _userManager.AddToRoleAsync(user, Role.Member.MakeString());
-
+            // Returns a new UserDto
             return new UserDto
             {
                 Username = user.UserName,
@@ -66,6 +93,11 @@ namespace API.Controllers
             };
         }
 
+        /// <summary>
+        /// Checks if a user exists
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Task -> True/False if the user exists</returns>
         private async Task<bool> UserExists(string username)
         {
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());

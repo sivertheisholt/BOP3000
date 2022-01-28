@@ -19,6 +19,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { CreateLobbyComponent } from './components/create-lobby/create-lobby.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AccountComponent } from './components/account/account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -36,13 +38,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
     HomeButtonsSectionComponent,
     FooterComponent,
     LoginComponent,
-    CreateLobbyComponent
+    CreateLobbyComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    NgSelectModule
+    NgSelectModule,
+    ReactiveFormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
