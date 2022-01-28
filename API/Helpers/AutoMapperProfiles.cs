@@ -13,7 +13,6 @@ namespace API.Helpers
             CreateMap<AppUser, MemberDto>();
             CreateMap<GameRoom, GameRoomDto>();
             CreateMap<GameRoom, NewGameRoomDto>();
-            CreateMap<NewGameRoomDto, RequirementDto>();
             CreateMap<GameRoom, Requirement>();
             CreateMap<Requirement, RequirementDto>();
         }
