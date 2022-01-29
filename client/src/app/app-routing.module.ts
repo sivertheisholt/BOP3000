@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountComponent } from './components/account/account.component';
 import { CreateLobbyComponent } from './components/create-lobby/create-lobby.component';
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
 import { ServerErrorComponent } from './components/errors/server-error/server-error.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
   { path: 'create-lobby', component: CreateLobbyComponent },
+  { path: 'account', component: AccountComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

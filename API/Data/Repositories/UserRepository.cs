@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository<AppUser>, IUserRepository
     {
-        private readonly DataContext _context;
-        public UserRepository(DataContext context)
+        public UserRepository(DataContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
@@ -25,16 +23,6 @@ namespace API.Data.Repositories
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users.ToListAsync();
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public void Update(AppUser user)
-        {
-            _context.Entry(user).State = EntityState.Modified;
         }
     }
 }

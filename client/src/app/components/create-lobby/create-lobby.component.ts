@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-lobby',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-lobby.component.css']
 })
 export class CreateLobbyComponent implements OnInit {
+  createLobbyForm!: FormGroup;
+  submitted = false;
   games = [
     {id: 1, name: 'Counter-Strike: Global Offensive'},
     {id: 2, name: 'League of Legends'},
@@ -27,19 +30,29 @@ export class CreateLobbyComponent implements OnInit {
     {id: 18, name: 'Apex Legends'},
     {id: 19, name: 'Other'}];
 
-    selectedGame!: number;
 
-    selectedType = ['Fun', 'Competetive', 'Ranked', 'Tryhard', 'Chill'];
+    selectedType = ['Fun', 'Competitive', 'Ranked', 'Tryhard', 'Chill'];
 
     selectedMaxplayers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16, 17, 18, 19, 20];
+
+    model: any = {};
 
   constructor() { }
 
   ngOnInit(): void {
+    this.createLobbyForm = new FormGroup({
+      game: new FormControl(null, [Validators.required]),
+      lobbyName: new FormControl(null, [Validators.required]),
+      desc: new FormControl(null),
+      type: new FormControl(null, [Validators.required]),
+      maxPlayers: new FormControl(null, [Validators.required])
+    });
 
   }
-  getGame(val: number){
-    console.log(val);
+
+  onSubmit(){
+    this.submitted = true;
+    console.log(this.createLobbyForm);
   }
 
 }
