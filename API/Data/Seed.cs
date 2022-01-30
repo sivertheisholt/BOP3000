@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Entities.Roles;
 using API.Entities.Users;
 using API.Enums;
@@ -43,7 +39,6 @@ namespace API.Data
 
             await userManager.CreateAsync(testUser, "Playfu123!");
             await userManager.AddToRolesAsync(admin, new[] { Role.Member.MakeString() });
-
         }
     }
 }

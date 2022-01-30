@@ -1,5 +1,8 @@
+using API.Clients;
 using API.DTOs.GameRoom;
 using API.Entities.GameRoom;
+using API.Entities.SteamApps;
+using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +16,12 @@ namespace API.Controllers
     {
         private readonly IGameRoomRepository _gameRoomRepository;
         private readonly IMapper _mapper;
-        public GameRoomController(IGameRoomRepository gameRoomRepository, IMapper mapper)
+        private readonly ISteamClient _steamClient;
+        private readonly ISteamStoreClient _steamStoreClient;
+        public GameRoomController(IGameRoomRepository gameRoomRepository, IMapper mapper, ISteamClient steamClient, ISteamStoreClient steamStoreClient)
         {
+            _steamStoreClient = steamStoreClient;
+            _steamClient = steamClient;
             _mapper = mapper;
             _gameRoomRepository = gameRoomRepository;
         }
@@ -47,6 +54,22 @@ namespace API.Controllers
             if (await _gameRoomRepository.SaveAllAsync()) return Ok(_mapper.Map<NewGameRoomDto>(gameRoom));
 
             return BadRequest("Failed to create room");
+        }
+
+        [HttpGet("steam-test")]
+        public async Task<ActionResult> TestSteamApi()
+        {
+            var steam = await _steamClient.GetAppsList();
+            Console.WriteLine(steam.applist.apps.FirstOrDefault<App>().name);
+            return Ok();
+        }
+
+        [HttpGet("store-test")]
+        public async Task<ActionResult> TestStoreApi()
+        {
+            var steam = await _steamStoreClient.GetAppInfo("872200");
+            Console.WriteLine(steam.data.achievements.total);
+            return Ok();
         }
 
     }
