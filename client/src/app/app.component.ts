@@ -12,8 +12,12 @@ import { AccountService } from './_services/account.service';
 export class AppComponent implements OnInit {
   title = 'BOP3000';
   users: any;
+  loggedIn : boolean;
 
-  constructor(private http: HttpClient, private accountService: AccountService) {}
+  constructor(private http: HttpClient, private accountService: AccountService) {
+    this.loggedIn = accountService.isLoggedIn;
+    console.log(this.loggedIn);
+  }
 
   ngOnInit() {
     this.getUsers();
@@ -22,7 +26,7 @@ export class AppComponent implements OnInit {
 
   setCurrentUser() {
     const user: User = JSON.parse(localStorage.getItem('user')!);
-    this.accountService.setCurrentUser(user)
+    this.accountService.setCurrentUser(user);
   }
 
   getUsers() {

@@ -18,24 +18,26 @@
                     <textarea class="textarea is-primary mt-6" placeholder="Describe what you are looking for(optional)" formControlName="desc"></textarea>
                     <div class="columns">
                         <div class="column is-half">
-                            <ng-select [items]="selectedType" 
-                            bindLabel="name" 
-                            placeholder="What type of game?"
-                            formControlName="type"
-                            [closeOnSelect]='true'
-                            class="custom mt-6">
+                            <ng-select 
+                                [items]="selectedType" 
+                                bindLabel="name" 
+                                placeholder="What type of game?"
+                                formControlName="type"
+                                [closeOnSelect]='true'
+                                class="custom mt-6">
                         </ng-select>
                         <div *ngIf="!createLobbyForm.controls.type.valid && submitted" class="has-text-centered has-text-light">Choose the type of lobby.</div>
                         </div>
                         <div class="column is-half">
-                            <ng-select [items]="selectedMaxplayers" 
-                            bindLabel="name" 
-                            placeholder="How many players including yourself?"
-                            formControlName="maxPlayers"
-                            [closeOnSelect]='true'
-                            class="custom mt-6">
-                        </ng-select>
-                        <div *ngIf="!createLobbyForm.controls.game.valid && submitted" class="has-text-centered has-text-light">Amount of players your looking for.</div>
+                            <ng-select 
+                                [items]="selectedMaxplayers" 
+                                bindLabel="name" 
+                                placeholder="How many players including yourself?"
+                                formControlName="maxPlayers"
+                                [closeOnSelect]='true'
+                                class="custom mt-6">
+                            </ng-select>
+                            <div *ngIf="!createLobbyForm.controls.game.valid && submitted" class="has-text-centered has-text-light">Amount of players your looking for.</div>
                         </div>
                     </div>
                     <button class="button create-lobby-button is-normal text-is-light" type="submit">Create Lobby</button>

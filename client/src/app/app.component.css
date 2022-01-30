@@ -1,0 +1,21 @@
+.left-navigation{
+    width: 225px;
+    flex-shrink: 0;
+    z-index: 99;
+    position: relative;
+}
+
+.app{
+    width: 100%;
+    background-color: rgb(53, 49, 49);
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.main-content{
+    width: 100%;
+    position: relative;
+    min-height: 100vh;
+    flex-grow: 1;
+}

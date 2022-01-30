@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
-import {map} from 'rxjs/operators';
+import { ReplaySubject, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -12,9 +12,9 @@ export class AccountService {
 
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
-
+  isLoggedIn! : boolean;
   constructor(private http: HttpClient) {
-
+    this.checkStatus();
   }
 
   login(model: any) {
@@ -29,9 +29,11 @@ export class AccountService {
   }
 
   register(model: any) {
+    console.log(model);
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map((res: User) => {
-        if(res) {
+        const user = res;
+        if(user) {
           this.initCurrentUser(res);
         }
       })
@@ -50,5 +52,13 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(undefined);
+  }
+
+  checkStatus(){
+    if(localStorage.getItem('user')){
+      this.isLoggedIn = true;
+    } else {
+      this.isLoggedIn = false;
+    }
   }
 }

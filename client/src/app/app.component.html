@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<app-navbar *ngIf="loggedIn"></app-navbar>
+<section class="app">
+  <div class="left-navigation" *ngIf="loggedIn">
+    <app-sidebar></app-sidebar> 
+  </div>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+    <div>
+      <app-footer></app-footer>
+    </div>
+  </div>
+</section>

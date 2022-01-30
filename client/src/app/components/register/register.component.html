@@ -5,13 +5,13 @@
   <div class="container">
     <div class="register-section">
       <div class="card column is-half m-3">
-        <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+        <form [formGroup]="regUserForm" (ngSubmit)="register()" autocomplete="off">
           <div class="card-content">
             <div class="field">
               <p class="control has-icons-left has-icons-right">
                 <input
                   name="email"
-                  [(ngModel)]="model.email"
+                  formControlName="email"
                   class="input"
                   type="email"
                   placeholder="Email">
@@ -24,7 +24,7 @@
               <p class="control has-icons-left">
                 <input
                   name="password"
-                  [(ngModel)]="model.password"
+                  formControlName="password"
                   class="input"
                   type="password"
                   placeholder="Password">
@@ -37,7 +37,7 @@
               <p class="control has-icons-left">
                 <input
                   name="repeatpassword"
-                  [(ngModel)]="model.repeatpassword"
+                  formControlName="repeatPassword"
                   class="input"
                   type="password"
                   placeholder="Repeat Password">
@@ -50,7 +50,7 @@
               <p class="control has-icons-left">
                 <input
                   name="username"
-                  [(ngModel)]="model.username"
+                  formControlName="username"
                   class="input"
                   type="text"
                   placeholder="Username">
