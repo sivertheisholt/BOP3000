@@ -1,29 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization.Json;
 using System.Text.Json;
-using System.Threading.Tasks;
-using API.Entities.SteamGame;
+using API.Entities.SteamApp;
 using API.Interfaces.IClients;
+using API.Network.Clients;
 
 namespace API.Clients
 {
-    public class SteamStoreClient : ISteamStoreClient
+    public class SteamStoreClient : BaseClient, ISteamStoreClient
     {
-        private readonly HttpClient _client;
-        public SteamStoreClient(HttpClient client)
+        public SteamStoreClient(HttpClient client) : base(client)
         {
-            _client = client;
-            _client.BaseAddress = new Uri("https://store.steampowered.com/api/");
-            _client.DefaultRequestHeaders.Add("Accept", "application/json");
-            _client.DefaultRequestHeaders.Clear();
+            Client.BaseAddress = new Uri("https://store.steampowered.com/api/");
         }
 
-        public async Task<GameInfo> GetAppInfo(string appid)
+        public async Task<GameInfo> GetAppInfo(int appid)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_client.BaseAddress}appdetails/?appids={appid}");
-            using (var response = await _client.SendAsync(request))
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{Client.BaseAddress}appdetails/?appids={appid}");
+            using (var response = await Client.SendAsync(request))
             {
                 // Ensure we have a Success Status Code
                 response.EnsureSuccessStatusCode();
@@ -32,8 +24,9 @@ namespace API.Clients
                 var content = await response.Content.ReadAsStreamAsync();
 
                 // Deserialize the JSON into the C# List<Movie> object and return
-                var dictionaryResult = await JsonSerializer.DeserializeAsync<Dictionary<string, GameInfo>>(content);
+                var dictionaryResult = await JsonSerializer.DeserializeAsync<Dictionary<string, GameInfo>>(content, JsonSerializerOptions);
                 var game = dictionaryResult.Values.First();
+                game.id = appid;
                 return game;
             }
         }

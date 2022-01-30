@@ -1,7 +1,5 @@
-using API.Clients;
 using API.DTOs.GameRoom;
 using API.Entities.GameRoom;
-using API.Entities.SteamApps;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using AutoMapper;
@@ -16,12 +14,12 @@ namespace API.Controllers
     {
         private readonly IGameRoomRepository _gameRoomRepository;
         private readonly IMapper _mapper;
-        private readonly ISteamClient _steamClient;
+        private readonly ISteamAppsClient _steamAppsClient;
         private readonly ISteamStoreClient _steamStoreClient;
-        public GameRoomController(IGameRoomRepository gameRoomRepository, IMapper mapper, ISteamClient steamClient, ISteamStoreClient steamStoreClient)
+        public GameRoomController(IGameRoomRepository gameRoomRepository, IMapper mapper, ISteamAppsClient steamAppsClient, ISteamStoreClient steamStoreClient)
         {
             _steamStoreClient = steamStoreClient;
-            _steamClient = steamClient;
+            _steamAppsClient = steamAppsClient;
             _mapper = mapper;
             _gameRoomRepository = gameRoomRepository;
         }
@@ -59,15 +57,14 @@ namespace API.Controllers
         [HttpGet("steam-test")]
         public async Task<ActionResult> TestSteamApi()
         {
-            var steam = await _steamClient.GetAppsList();
-            Console.WriteLine(steam.applist.apps.FirstOrDefault<App>().name);
+            var steam = await _steamAppsClient.GetAppsList();
             return Ok();
         }
 
         [HttpGet("store-test")]
         public async Task<ActionResult> TestStoreApi()
         {
-            var steam = await _steamStoreClient.GetAppInfo("872200");
+            var steam = await _steamStoreClient.GetAppInfo(872200);
             Console.WriteLine(steam.data.achievements.total);
             return Ok();
         }

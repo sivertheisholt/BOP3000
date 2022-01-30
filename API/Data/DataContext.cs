@@ -1,5 +1,7 @@
 using API.Entities.GameRoom;
 using API.Entities.Roles;
+using API.Entities.SteamApp;
+using API.Entities.SteamApps;
 using API.Entities.Users;
 using API.Entities.Users.Role;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +19,7 @@ namespace API.Data
 
         }
         public DbSet<GameRoom> GameRoom { get; set; }
+        //public DbSet<GameInfo> GameInfo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

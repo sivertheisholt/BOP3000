@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Entities.SteamGame
+namespace API.Entities.SteamApp.Information
 {
-    public class Metacritic
+    public class SupportInfo
     {
-        public int score { get; set; }
         public string url { get; set; }
+        public string email { get; set; }
     }
 }

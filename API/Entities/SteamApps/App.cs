@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace API.Entities.SteamApps
 {
     public class App
     {
-        public int appid { get; set; }
-        public string name { get; set; }
+        [Key]
+        public int Appid { get; set; }
+        public string Name { get; set; }
     }
 }

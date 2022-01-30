@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Entities.SteamApp;
 
-namespace API.Interfaces.IClients
+namespace API.Interfaces.IRepositories
 {
-    public interface ISteamStoreClient
+    public interface ISteamAppRepository
     {
-        Task<GameInfo> GetAppInfo(int appid);
+        Task<GameInfo> GetGameInfo();
     }
 }

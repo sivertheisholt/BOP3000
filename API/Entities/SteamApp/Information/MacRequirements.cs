@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Entities.SteamGame
+namespace API.Entities.SteamApp.Information
 {
-    public class PcRequirements
+    public class MacRequirements
     {
         public string minimum { get; set; }
         public string recommended { get; set; }

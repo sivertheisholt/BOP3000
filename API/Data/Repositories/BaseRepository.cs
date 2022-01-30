@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    abstract public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        protected readonly DataContext _context;
-        public BaseRepository(DataContext context)
+        private readonly DataContext _context;
+        protected BaseRepository(DataContext context)
         {
             _context = context;
         }
@@ -29,5 +29,7 @@ namespace API.Data.Repositories
         {
             _context.Entry(entity).State = EntityState.Modified;
         }
+
+        protected DataContext Context { get { return _context; } }
     }
 }
