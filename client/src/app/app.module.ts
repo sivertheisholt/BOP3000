@@ -21,6 +21,10 @@ import { CreateLobbyComponent } from './components/create-lobby/create-lobby.com
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AccountComponent } from './components/account/account.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RoomComponent } from './components/room/room.component';
+import { RoomcardComponent } from './components/room/room-slider/roomcard/roomcard.component';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { RoomSliderComponent } from './components/room/room-slider/room-slider.component';
 
 
 @NgModule({
@@ -39,14 +43,18 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     LoginComponent,
     CreateLobbyComponent,
-    AccountComponent
+    AccountComponent,
+    RoomComponent,
+    RoomcardComponent,
+    RoomSliderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
     NgSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IvyCarouselModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
