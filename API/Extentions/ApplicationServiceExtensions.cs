@@ -1,8 +1,10 @@
+using API.Clients;
 using API.Data;
 using API.Data.Repositories;
 using API.Entities.Users;
 using API.Helpers;
 using API.Interfaces;
+using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,9 @@ namespace API.Extentions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+
+            services.AddHttpClient<ISteamClient, SteamClient>();
+            services.AddHttpClient<ISteamStoreClient, SteamStoreClient>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGameRoomRepository, GameRoomRepository>();
@@ -40,6 +45,7 @@ namespace API.Extentions
                 // or from the environment variable from Heroku, use it to set up your DbContext.
                 options.UseSqlServer(connStr);
             });
+
 
             return services;
         }

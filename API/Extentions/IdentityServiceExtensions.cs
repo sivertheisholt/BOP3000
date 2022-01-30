@@ -34,6 +34,7 @@ namespace API.Extentions
                 token = Environment.GetEnvironmentVariable("JWT_TOKEN_KEY");
             }
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddSteam()
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters

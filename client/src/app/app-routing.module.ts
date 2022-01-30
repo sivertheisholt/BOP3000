@@ -7,6 +7,8 @@ import { ServerErrorComponent } from './components/errors/server-error/server-er
 import { TestErrorsComponent } from './components/errors/test-errors/test-errors.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
+import { RoomSliderComponent } from './components/room/room-slider/room-slider.component';
+import { RoomcardComponent } from './components/room/room-slider/roomcard/roomcard.component';
 import { StartComponent } from './components/start/start.component';
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'errors', component: TestErrorsComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
+  { path: 'roomcard', component: RoomcardComponent},
+  { path: 'room-slider', component: RoomSliderComponent },
   { path: '**', component: NotFoundComponent }
 ];
 
