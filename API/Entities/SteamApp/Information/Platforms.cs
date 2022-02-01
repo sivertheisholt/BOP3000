@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Entities.SteamApp.Information
-{
-    public class Platforms
+{    public class Platforms
     {
-        public bool windows { get; set; }
-        public bool mac { get; set; }
-        public bool linux { get; set; }
+        public bool Windows { get; set; }
+        public bool Mac { get; set; }
+        public bool Linux { get; set; }
+        public AppData AppData { get; set; }
+        public int AppDataId { get; set; }
     }
 }

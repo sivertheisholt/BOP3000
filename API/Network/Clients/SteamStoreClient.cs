@@ -26,7 +26,7 @@ namespace API.Clients
                 // Deserialize the JSON into the C# List<Movie> object and return
                 var dictionaryResult = await JsonSerializer.DeserializeAsync<Dictionary<string, GameInfo>>(content, JsonSerializerOptions);
                 var game = dictionaryResult.Values.First();
-                game.id = appid;
+                game.Id = appid;
                 return game;
             }
         }
