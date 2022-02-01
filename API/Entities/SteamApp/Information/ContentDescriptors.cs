@@ -8,7 +8,7 @@ namespace API.Entities.SteamApp.Information
 {
     public class ContentDescriptors
     {
-        public List<ContentDescriptorId> Ids { get; set; }
+        public ICollection<string> Ids { get; set; }
         public string Notes { get; set; }
 
         public AppData AppData { get; set; }

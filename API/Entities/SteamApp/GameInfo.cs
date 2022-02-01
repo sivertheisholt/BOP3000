@@ -8,6 +8,6 @@ namespace API.Entities.SteamApp
         [Key]
         public int Id { get; set; }
         public bool Success { get; set; }
-        public AppData AppData { get; set; }
+        public AppData Data { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace API.Entities.SteamApp.Information
@@ -24,10 +26,10 @@ namespace API.Entities.SteamApp.Information
         public string Website { get; set; }
         public string Legal_notice { get; set; }
         public string Background { get; set; }
-        public List<Dlc> Dlc { get; set; }
-        public List<Developer> Developers { get; set; }
-        public List<Publisher> Publishers { get; set; }
-        public List<PackageGroup> Package_groups { get; set; }
+        public ICollection<int> Dlc { get; set; }
+        public ICollection<string> Developers { get; set; }
+        public ICollection<string> Publishers { get; set; }
+        public ICollection<string> Package_groups { get; set; }
         public Platforms Platforms { get; set; }
         public Metacritic Metacritic { get; set; }
         public ICollection<Category> Categories { get; set; }

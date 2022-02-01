@@ -1,3 +1,4 @@
+using System.Text.Json;
 using API.Entities.GameRoom;
 using API.Entities.Roles;
 using API.Entities.SteamApp;
@@ -7,6 +8,7 @@ using API.Entities.Users.Role;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace API.Data
 {
@@ -43,9 +45,49 @@ namespace API.Data
 
             builder.Entity<AppData>()
                 .HasOne(app => app.GameInfo)
-                .WithOne(gameinfo => gameinfo.AppData)
+                .WithOne(gameinfo => gameinfo.Data)
                 .HasForeignKey<GameInfo>(gameinfo => gameinfo.Id)
                 .IsRequired();
+
+            builder.Entity<AppData>()
+                .Property(app => app.Dlc)
+                .HasConversion(
+                    dlc => JsonSerializer.Serialize(dlc, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    dlc => JsonSerializer.Deserialize<List<int>>(dlc, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<int>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, dlc) => HashCode.Combine(a, dlc.GetHashCode())),
+                        c => (ICollection<int>)c.ToList()));
+
+            builder.Entity<AppData>()
+                .Property(app => app.Developers)
+                .HasConversion(
+                    developers => JsonSerializer.Serialize(developers, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    developers => JsonSerializer.Deserialize<List<string>>(developers, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<string>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, developers) => HashCode.Combine(a, developers.GetHashCode())),
+                        c => (ICollection<string>)c.ToList()));
+
+            builder.Entity<AppData>()
+                .Property(app => app.Publishers)
+                .HasConversion(
+                    publishers => JsonSerializer.Serialize(publishers, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    publishers => JsonSerializer.Deserialize<List<string>>(publishers, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<string>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, publishers) => HashCode.Combine(a, publishers.GetHashCode())),
+                        c => (ICollection<string>)c.ToList()));
+
+            builder.Entity<AppData>()
+                .Property(app => app.Package_groups)
+                .HasConversion(
+                    package => JsonSerializer.Serialize(package, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    package => JsonSerializer.Deserialize<List<string>>(package, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<string>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, package) => HashCode.Combine(a, package.GetHashCode())),
+                        c => (ICollection<string>)c.ToList()));
 
             builder.Entity<ReleaseDate>()
                 .HasOne(release => release.AppData)
@@ -126,6 +168,16 @@ namespace API.Data
                 .IsRequired();
 
             builder.Entity<ContentDescriptors>()
+                .Property(content => content.Ids)
+                .HasConversion(
+                    content => JsonSerializer.Serialize(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    content => JsonSerializer.Deserialize<List<string>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<string>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, content) => HashCode.Combine(a, content.GetHashCode())),
+                        c => (ICollection<string>)c.ToList()));
+
+            builder.Entity<ContentDescriptors>()
                 .HasKey(contentDescriptor => contentDescriptor.AppDataId);
 
             builder.Entity<Category>()
@@ -190,61 +242,6 @@ namespace API.Data
 
             builder.Entity<Movy>()
                 .HasKey(movy => new { movy.Id, movy.AppDataId });
-
-            /*
-
-            builder.Entity<Movy>()
-                .HasOne(movy => movy.Mp4)
-                .WithOne(mp4 => mp4.Movy)
-                .IsRequired();
-
-            builder.Entity<Movy>()
-                .HasOne(movy => movy.Webm)
-                .WithOne(webm => webm.Movy)
-                .IsRequired();
-
-            */
-
-
-            builder.Entity<Dlc>()
-                .HasOne(dlc => dlc.AppData)
-                .WithMany(app => app.Dlc)
-                .IsRequired();
-
-            builder.Entity<Dlc>()
-                .HasKey(dlc => new { dlc.AppDataId, dlc.Id });
-
-            builder.Entity<Publisher>()
-                .HasOne(dlc => dlc.AppData)
-                .WithMany(app => app.Publishers)
-                .IsRequired();
-
-            builder.Entity<Publisher>()
-                .HasKey(dlc => new { dlc.AppDataId, dlc.Id });
-
-            builder.Entity<PackageGroup>()
-                .HasOne(dlc => dlc.AppData)
-                .WithMany(app => app.Package_groups)
-                .IsRequired();
-
-            builder.Entity<PackageGroup>()
-                .HasKey(dlc => new { dlc.AppDataId, dlc.Id });
-
-            builder.Entity<Developer>()
-                .HasOne(dlc => dlc.AppData)
-                .WithMany(app => app.Developers)
-                .IsRequired();
-
-            builder.Entity<Developer>()
-                .HasKey(dlc => new { dlc.AppDataId, dlc.Id });
-
-            builder.Entity<ContentDescriptorId>()
-                .HasOne(contentId => contentId.ContentDescriptors)
-                .WithMany(contentDescriptor => contentDescriptor.Ids)
-                .IsRequired();
-
-            builder.Entity<ContentDescriptorId>()
-                .HasKey(contentId => new { contentId.Id, contentId.ContentDescriptorsId });
         }
     }
 }

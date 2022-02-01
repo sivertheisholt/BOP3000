@@ -1,5 +1,6 @@
 using System.Text.Json;
 using API.Entities.SteamApp;
+using API.Entities.SteamApp.Information;
 using API.Interfaces.IClients;
 using API.Network.Clients;
 

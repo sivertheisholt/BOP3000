@@ -65,7 +65,7 @@ namespace API.Controllers
         public async Task<ActionResult> TestStoreApi()
         {
             var steam = await _steamStoreClient.GetAppInfo(872200);
-            //Console.WriteLine(steam.data.achievements.total);
+            Console.WriteLine(steam.Data.About_the_game);
             return Ok();
         }
 
