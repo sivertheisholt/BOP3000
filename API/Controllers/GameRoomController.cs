@@ -1,7 +1,9 @@
+using API.Data;
 using API.DTOs.GameRoom;
 using API.Entities.GameRoom;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
+using API.Interfaces.IRepositories.Steam;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,8 +18,12 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly ISteamAppsClient _steamAppsClient;
         private readonly ISteamStoreClient _steamStoreClient;
-        public GameRoomController(IGameRoomRepository gameRoomRepository, IMapper mapper, ISteamAppsClient steamAppsClient, ISteamStoreClient steamStoreClient)
+        private readonly ISteamAppRepository _steamAppRepository;
+        private readonly ISteamAppsRepository _steamAppsRepository1;
+        public GameRoomController(IGameRoomRepository gameRoomRepository, IMapper mapper, ISteamAppsClient steamAppsClient, ISteamStoreClient steamStoreClient, ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository1)
         {
+            _steamAppsRepository1 = steamAppsRepository1;
+            _steamAppRepository = steamAppRepository;
             _steamStoreClient = steamStoreClient;
             _steamAppsClient = steamAppsClient;
             _mapper = mapper;
@@ -65,7 +71,15 @@ namespace API.Controllers
         public async Task<ActionResult> TestStoreApi()
         {
             var steam = await _steamStoreClient.GetAppInfo(872200);
-            Console.WriteLine(steam.Data.About_the_game);
+            Console.WriteLine(steam.Data.AboutTheGame);
+            return Ok();
+        }
+
+
+        [HttpGet("seed")]
+        public async Task<ActionResult> TestSeed()
+        {
+            await Seed.SeedSteamGames(_steamAppsRepository1, _steamAppRepository, _steamStoreClient);
             return Ok();
         }
 

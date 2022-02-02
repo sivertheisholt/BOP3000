@@ -7,6 +7,7 @@ using API.Interfaces;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IRepositories.Steam;
+using API.Interfaces.IServices;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,7 +49,6 @@ namespace API.Extentions
                 // or from the environment variable from Heroku, use it to set up your DbContext.
                 options.UseSqlServer(connStr);
             });
-
 
             return services;
         }

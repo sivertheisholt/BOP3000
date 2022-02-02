@@ -1,8 +1,9 @@
-using System.Text.Json;
+using System.Collections.Generic;
 using API.Entities.SteamApp;
-using API.Entities.SteamApp.Information;
 using API.Interfaces.IClients;
 using API.Network.Clients;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace API.Clients
 {
@@ -19,15 +20,65 @@ namespace API.Clients
             using (var response = await Client.SendAsync(request))
             {
                 // Ensure we have a Success Status Code
-                response.EnsureSuccessStatusCode();
+                try
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (System.Exception)
+                {
+
+                    return new GameInfo
+                    {
+                        Success = false
+                    };
+                }
 
                 // Read Response Content (this will usually be JSON content)
-                var content = await response.Content.ReadAsStreamAsync();
+                var content = await response.Content.ReadAsStringAsync();
 
-                // Deserialize the JSON into the C# List<Movie> object and return
-                var dictionaryResult = await JsonSerializer.DeserializeAsync<Dictionary<string, GameInfo>>(content, JsonSerializerOptions);
+                JObject contentObject = JObject.Parse(content);
+                var test = contentObject;
+
+                //Check if data is present
+                if (contentObject[appid.ToString()]["data"] == null)
+                {
+                    return new GameInfo
+                    {
+                        Success = false
+                    };
+                };
+
+                // For some reason, some games treat this as an array?
+                // For example, App ID 380 has an empty array here.
+                // I don't know how to simultaneously serialize this to an object and an array, so just ignore the weird arrays.
+                var linuxRequirementsToken = contentObject[appid.ToString()]["data"]["linux_requirements"];
+                if (linuxRequirementsToken != null && linuxRequirementsToken.Type == JTokenType.Array)
+                {
+                    contentObject[appid.ToString()]["data"]["linux_requirements"] = null;
+                }
+
+                // Same here - For pc
+                var pcRequirementsToken = contentObject[appid.ToString()]["data"]["pc_requirements"];
+                if (pcRequirementsToken != null && pcRequirementsToken.Type == JTokenType.Array)
+                {
+                    contentObject[appid.ToString()]["data"]["pc_requirements"] = null;
+                }
+
+                // Same here - Same here for mac
+                var macRequirementsToken = contentObject[appid.ToString()]["data"]["mac_requirements"];
+                if (macRequirementsToken != null && macRequirementsToken.Type == JTokenType.Array)
+                {
+
+                    contentObject[appid.ToString()]["data"]["mac_requirements"] = null;
+                }
+
+                var resultString = JsonConvert.SerializeObject(contentObject);
+
+                // Deserialize the JSON string
+                var dictionaryResult = JsonConvert.DeserializeObject<Dictionary<string, GameInfo>>(resultString);
+
                 var game = dictionaryResult.Values.First();
-                game.Id = appid;
+
                 return game;
             }
         }

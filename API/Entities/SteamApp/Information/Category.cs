@@ -4,14 +4,18 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace API.Entities.SteamApp.Information
 {
-    
+
     public class Category
     {
-        
+
+        [JsonProperty("id")]
         public int Id { get; set; }
+
+        [JsonProperty("description")]
         public string Description { get; set; }
 
         public AppData AppData { get; set; }

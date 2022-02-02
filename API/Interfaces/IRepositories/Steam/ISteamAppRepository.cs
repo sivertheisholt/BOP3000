@@ -6,8 +6,10 @@ using API.Entities.SteamApp;
 
 namespace API.Interfaces.IRepositories
 {
-    public interface ISteamAppRepository
+    public interface ISteamAppRepository : IBaseRepository<GameInfo>
     {
-        Task<GameInfo> GetGameInfo();
+        Task<GameInfo> GetGameInfoAsync(int id);
+
+        void AddSteamApp(GameInfo gameInfo);
     }
 }

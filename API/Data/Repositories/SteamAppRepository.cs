@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Entities.SteamApp;
 using API.Interfaces.IRepositories;
 
@@ -14,14 +10,14 @@ namespace API.Data.Repositories
 
         }
 
-        public Task<GameInfo> GetGameInfo()
+        public async Task<GameInfo> GetGameInfoAsync(int id)
         {
-            throw new NotImplementedException();
+            return await Context.GameInfo.FindAsync(id);
         }
 
         public void AddSteamApp(GameInfo gameInfo)
         {
-            //Context.GameInfo.Add(gameInfo);
+            Context.GameInfo.Add(gameInfo);
         }
     }
 }

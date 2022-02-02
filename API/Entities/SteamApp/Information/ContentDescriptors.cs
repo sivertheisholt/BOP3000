@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace API.Entities.SteamApp.Information
 {
     public class ContentDescriptors
     {
+
+        [JsonProperty("ids")]
         public ICollection<string> Ids { get; set; }
+
+        [JsonProperty("notes")]
         public string Notes { get; set; }
 
         public AppData AppData { get; set; }

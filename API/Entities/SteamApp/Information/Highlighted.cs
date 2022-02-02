@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace API.Entities.SteamApp.Information
 {
     public class Highlighted
     {
         public int Id { get; set; }
+
+        [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("path")]
         public string Path { get; set; }
 
         public Achievements Achievements { get; set; }

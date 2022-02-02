@@ -46,8 +46,11 @@ namespace API.Data
             builder.Entity<AppData>()
                 .HasOne(app => app.GameInfo)
                 .WithOne(gameinfo => gameinfo.Data)
-                .HasForeignKey<GameInfo>(gameinfo => gameinfo.Id)
+                .HasForeignKey<AppData>(app => app.GameInfoId)
                 .IsRequired();
+
+            builder.Entity<AppData>()
+                .HasKey(app => app.Id);
 
             builder.Entity<AppData>()
                 .Property(app => app.Dlc)
@@ -79,20 +82,10 @@ namespace API.Data
                         c => c.Aggregate(0, (a, publishers) => HashCode.Combine(a, publishers.GetHashCode())),
                         c => (ICollection<string>)c.ToList()));
 
-            builder.Entity<AppData>()
-                .Property(app => app.Package_groups)
-                .HasConversion(
-                    package => JsonSerializer.Serialize(package, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
-                    package => JsonSerializer.Deserialize<List<string>>(package, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
-                    new ValueComparer<ICollection<string>>(
-                        (c1, c2) => c1.SequenceEqual(c2),
-                        c => c.Aggregate(0, (a, package) => HashCode.Combine(a, package.GetHashCode())),
-                        c => (ICollection<string>)c.ToList()));
-
             builder.Entity<ReleaseDate>()
                 .HasOne(release => release.AppData)
-                .WithOne(app => app.Release_date)
-                .HasForeignKey<AppData>(app => app.Id)
+                .WithOne(app => app.ReleaseDate)
+                .HasForeignKey<ReleaseDate>(release => release.AppDataId)
                 .IsRequired();
 
             builder.Entity<ReleaseDate>()
@@ -105,12 +98,12 @@ namespace API.Data
                 .IsRequired();
 
             builder.Entity<Screenshot>()
-                .HasKey(screenshot => new { screenshot.AppDataId, screenshot.Id });
+                .HasKey(screenshot => screenshot.ScreenshotId);
 
             builder.Entity<PcRequirements>()
                 .HasOne(pc => pc.AppData)
-                .WithOne(appdata => appdata.Pc_requirements)
-                .HasForeignKey<AppData>(app => app.Id)
+                .WithOne(appdata => appdata.PcRequirements)
+                .HasForeignKey<PcRequirements>(pc => pc.AppDataId)
                 .IsRequired();
 
             builder.Entity<PcRequirements>()
@@ -118,8 +111,8 @@ namespace API.Data
 
             builder.Entity<MacRequirements>()
                 .HasOne(mac => mac.AppData)
-                .WithOne(appdata => appdata.Mac_requirements)
-                .HasForeignKey<AppData>(app => app.Id)
+                .WithOne(appdata => appdata.MacRequirements)
+                .HasForeignKey<MacRequirements>(mac => mac.AppDataId)
                 .IsRequired();
 
             builder.Entity<MacRequirements>()
@@ -127,8 +120,8 @@ namespace API.Data
 
             builder.Entity<LinuxRequirements>()
                 .HasOne(linux => linux.AppData)
-                .WithOne(appdata => appdata.Linux_requirements)
-                .HasForeignKey<AppData>(app => app.Id)
+                .WithOne(appdata => appdata.LinuxRequirements)
+                .HasForeignKey<LinuxRequirements>(linux => linux.AppDataId)
                 .IsRequired();
 
             builder.Entity<LinuxRequirements>()
@@ -136,8 +129,8 @@ namespace API.Data
 
             builder.Entity<SupportInfo>()
                 .HasOne(support => support.AppData)
-                .WithOne(app => app.Support_info)
-                .HasForeignKey<AppData>(app => app.Id)
+                .WithOne(app => app.SupportInfo)
+                .HasForeignKey<SupportInfo>(support => support.AppDataId)
                 .IsRequired();
 
             builder.Entity<SupportInfo>()
@@ -146,7 +139,7 @@ namespace API.Data
             builder.Entity<Metacritic>()
                 .HasOne(meta => meta.AppData)
                 .WithOne(app => app.Metacritic)
-                .HasForeignKey<AppData>(app => app.Id)
+                .HasForeignKey<Metacritic>(meta => meta.AppDataId)
                 .IsRequired();
 
             builder.Entity<Metacritic>()
@@ -159,12 +152,12 @@ namespace API.Data
                 .IsRequired();
 
             builder.Entity<Genre>()
-                .HasKey(genre => new { genre.AppDataId, genre.Id });
+                .HasKey(genre => genre.GenreId);
 
             builder.Entity<ContentDescriptors>()
                 .HasOne(contentDescriptor => contentDescriptor.AppData)
-                .WithOne(app => app.Content_descriptors)
-                .HasForeignKey<AppData>(app => app.Id)
+                .WithOne(app => app.ContentDescriptors)
+                .HasForeignKey<ContentDescriptors>(contentDescriptor => contentDescriptor.AppDataId)
                 .IsRequired();
 
             builder.Entity<ContentDescriptors>()
@@ -196,12 +189,12 @@ namespace API.Data
                 .IsRequired();
 
             builder.Entity<Highlighted>()
-                .HasKey(highlighted => new { highlighted.AchievementsId, highlighted.Id });
+                .HasKey(highlighted => highlighted.Id);
 
             builder.Entity<Achievements>()
                 .HasOne(achievements => achievements.AppData)
                 .WithOne(app => app.Achievements)
-                .HasForeignKey<AppData>(app => app.Id)
+                .HasForeignKey<Achievements>(achievements => achievements.AppDataId)
                 .IsRequired();
 
             builder.Entity<Achievements>()
@@ -210,7 +203,7 @@ namespace API.Data
             builder.Entity<Platforms>()
                 .HasOne(platforms => platforms.AppData)
                 .WithOne(app => app.Platforms)
-                .HasForeignKey<AppData>(app => app.Id)
+                .HasForeignKey<Platforms>(platforms => platforms.AppDataId)
                 .IsRequired();
 
             builder.Entity<Platforms>()
@@ -219,20 +212,20 @@ namespace API.Data
             builder.Entity<Mp4>()
                 .HasOne(mp4 => mp4.Movy)
                 .WithOne(movy => movy.Mp4)
-                .HasForeignKey<Movy>(movy => movy.Id)
+                .HasForeignKey<Mp4>(mp4 => mp4.MovyId)
                 .IsRequired();
 
             builder.Entity<Mp4>()
-                .HasKey(mp4 => new { mp4.Id });
+                .HasKey(mp4 => mp4.MovyId);
 
             builder.Entity<Webm>()
                 .HasOne(webm => webm.Movy)
                 .WithOne(movy => movy.Webm)
-                .HasForeignKey<Movy>(movy => movy.Id)
+                .HasForeignKey<Webm>(webm => webm.MovyId)
                 .IsRequired();
 
             builder.Entity<Webm>()
-                .HasKey(webm => new { webm.Id });
+                .HasKey(webm => webm.MovyId);
 
             builder.Entity<Movy>()
                 .HasOne(movy => movy.AppData)
@@ -241,7 +234,43 @@ namespace API.Data
                 .IsRequired();
 
             builder.Entity<Movy>()
-                .HasKey(movy => new { movy.Id, movy.AppDataId });
+                .HasKey(movy => movy.MovyId);
+
+            builder.Entity<PackageGroup>()
+                .HasOne(package => package.AppData)
+                .WithMany(app => app.PackageGroups)
+                .HasForeignKey(package => package.AppDataId)
+                .IsRequired();
+
+            builder.Entity<PackageGroup>()
+                .HasKey(package => package.PackageGroupId);
+
+            builder.Entity<Recommendations>()
+                .HasOne(rec => rec.AppData)
+                .WithOne(app => app.Recommendations)
+                .HasForeignKey<Recommendations>(rec => rec.AppDataId)
+                .IsRequired();
+
+            builder.Entity<Recommendations>()
+                .HasKey(rec => rec.AppDataId);
+
+            builder.Entity<Price>()
+                .HasOne(price => price.AppData)
+                .WithOne(app => app.PriceOverview)
+                .HasForeignKey<Price>(price => price.AppDataId)
+                .IsRequired();
+
+            builder.Entity<Price>()
+                .HasKey(price => price.AppDataId);
+
+            builder.Entity<Sub>()
+                .HasOne(sub => sub.PackageGroup)
+                .WithMany(package => package.Subs)
+                .HasForeignKey(sub => sub.PackageGroupId)
+                .IsRequired();
+
+            builder.Entity<Sub>()
+                .HasKey(sub => sub.SubId);
         }
     }
 }

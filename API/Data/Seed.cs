@@ -1,4 +1,5 @@
 using API.Entities.Roles;
+using API.Entities.SteamApp;
 using API.Entities.SteamApps;
 using API.Entities.Users;
 using API.Enums;
@@ -45,18 +46,28 @@ namespace API.Data
             await userManager.AddToRolesAsync(admin, new[] { Role.Member.MakeString() });
         }
 
-        public static async Task SeedSteamGames(ISteamAppsRepository steamAppsRepository, ISteamAppRepository steamAppRepository)
+        public static async Task SeedSteamGames(ISteamAppsRepository steamAppsRepository, ISteamAppRepository steamAppRepository, ISteamStoreClient steamStoreClient)
         {
             var max = 100;
             var counter = 0;
 
             var apps = await steamAppsRepository.GetAppsAsync();
 
-            foreach(App app in apps.Applist.Apps)
+            foreach (App app in apps.Applist.Apps)
             {
-                if(counter == max) break;
-                
+                if (counter >= max) break;
+
+                var gameResult = await steamStoreClient.GetAppInfo(app.Appid);
+                if (!gameResult.Success) continue;
+
+                steamAppRepository.AddSteamApp(gameResult);
+
+                counter++;
+
             }
+
+            var result = await steamAppRepository.SaveAllAsync();
+            Console.WriteLine($"Finished seeding Steam data");
         }
     }
 }

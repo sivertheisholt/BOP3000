@@ -2,18 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace API.Entities.SteamApp.Information
 {
-    public class ReleaseDate
+    public class Recommendations
     {
-        [JsonProperty("coming_soon")]
-        public bool ComingSoon { get; set; }
 
-        [JsonProperty("date")]
-        public string Date { get; set; }
+        [JsonProperty("total")]
+        public uint Total { get; set; }
 
         public AppData AppData { get; set; }
         public int AppDataId { get; set; }

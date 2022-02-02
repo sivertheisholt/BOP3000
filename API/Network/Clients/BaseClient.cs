@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace API.Network.Clients
 {
@@ -6,6 +7,7 @@ namespace API.Network.Clients
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
+        private readonly JsonConverter _jsonConverter;
         protected BaseClient(HttpClient client)
         {
             _client = client;

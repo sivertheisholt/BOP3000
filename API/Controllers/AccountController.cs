@@ -2,6 +2,7 @@ using API.DTOs;
 using API.Entities.Users;
 using API.Enums;
 using API.Interfaces;
+using API.Interfaces.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -57,7 +58,7 @@ namespace API.Controllers
             var roleResult = await _userManager.AddToRoleAsync(user, Role.Member.MakeString());
 
             // Check if role was successfully given
-            if(!roleResult.Succeeded) return BadRequest(roleResult.Errors);
+            if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
             // Returns a new UserDto
             return new UserDto

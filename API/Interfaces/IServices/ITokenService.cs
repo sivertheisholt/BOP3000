@@ -1,7 +1,7 @@
 using API.Entities;
 using API.Entities.Users;
 
-namespace API.Interfaces
+namespace API.Interfaces.IServices
 {
     public interface ITokenService
     {
