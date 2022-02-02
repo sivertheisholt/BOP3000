@@ -40,8 +40,8 @@ nav{
   
 .noti-number {
     position: absolute;
-    top: 5px;
-    right: -5px;
+    top: -5px;
+    right: -10px;
     width: 25px;
     height: 25px;
     background: red;
@@ -50,4 +50,38 @@ nav{
     justify-content: center;
     align-items: center;
     border-radius: 50%;
+}
+
+.dropdown-menu {
+    left: -120px;
+}
+
+.menu-list a{
+    color: white;
+}
+
+.menu-label{
+    color: white;
+    font-size: 16px;
+}
+
+li a:hover{
+    background-color: rgba(47, 92, 112, 0.5);
+    color: rgb(226, 222, 222);
+    transform: scale(1.2);
+}
+
+.sidebar-items{
+    margin-top: 60px;
+}
+
+#navbar-burger-menu{
+    height: 100vh;
+    text-align: center;
+}
+
+@media only screen and (min-width: 1023px) {
+    #navbar-burger-menu{
+        display: none;
+    }
 }

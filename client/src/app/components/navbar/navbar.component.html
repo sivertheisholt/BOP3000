@@ -3,7 +3,7 @@
     <a class="navbar-item navbar-logo">
       <img src="https://www.hafslunddekksenter.no/wp-content/uploads/2018/01/logo-placeholder.png">
     </a>
-    <a role="button" class="navbar-burger burger" #navBurger aria-label="menu" aria-expanded="false" data-target="navbar-burger" (click)="toggleNavbar()">
+    <a (click)="toggleNavbar()" role="button" class="navbar-burger burger" #navBurger aria-label="menu" aria-expanded="false" data-target="navbar-burger-menu" [ngClass]="isNavVisible ? 'is-active' : ''">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -15,12 +15,44 @@
         <a><fa-icon class="icon is-medium fa-2x" [icon]="faUserCircle"></fa-icon></a>
       </div>
       <div class="navbar-item mr-6">
-        <a class="noti">
-          <span><fa-icon class="noti-icon fa-2x" [icon]="faBell"></fa-icon></span>
-          <span class="noti-number" *ngIf="notifications.length > 0">{{ notifications.length }}</span>
-        </a>
+        <div class="dropdown" [ngClass]="isNotiVisible ? 'is-active' : ''">
+          <div class="dropdown-trigger">
+            <a (click)="toggleNotifications()" class="noti" aria-haspopup="true" aria-controls="dropdown-menu2">
+              <span><fa-icon class="noti-icon fa-2x" [icon]="faBell"></fa-icon></span>
+              <span class="noti-number" *ngIf="totalNotifications > 0">{{ totalNotifications }}</span>
+            </a>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item" *ngFor="let notification of notifications">
+                <p>{{ notification.text }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <div id="navbar-burger-menu" class="ml-3" #navMenu *ngIf="isNavVisible">
+    <p class="menu-label has-text-centered mt-5">Navigation</p>
+    <ul class="menu-list">
+        <li><a routerLink="home"><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>Home</a></li>
+    </ul>
+    <p class="menu-label has-text-centered">Matchmaking</p>
+    <ul class="menu-list">
+        <li><a routerLink="create-lobby"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>Create Lobby</a></li>
+        <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find Lobby</a></li>
+        <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
+        <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
+        <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
+        <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
+    </ul>
+    <p class="menu-label has-text-centered">Account</p>
+    <ul class="menu-list">
+        <li><a routerLink="account"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Account</a></li>
+        <li><a><fa-icon class="fa-lg mr-2" [icon]="faCogs"></fa-icon>Settings</a></li>
+        <li><a><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>Help</a></li>
+        <li><a (click)="logOut()"><fa-icon class="fa-lg mr-2" [icon]="faSignOutAlt"></fa-icon>Log Out</a></li>
+    </ul>
+</div>
 </nav>
-
