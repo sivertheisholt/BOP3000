@@ -10,14 +10,15 @@ import { RegisterComponent } from './components/register/register.component';
 import { RoomSliderComponent } from './components/room/room-slider/room-slider.component';
 import { RoomcardComponent } from './components/room/room-slider/roomcard/roomcard.component';
 import { StartComponent } from './components/start/start.component';
+import { UnAuthGuard } from './_guards/unAuth.guard';
 import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: StartComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [AuthGuard] },
-  { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
+  { path: '', component: StartComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [UnAuthGuard] },
+  { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard] },
+  { path: 'account', component: AccountComponent, canActivate: [UnAuthGuard] },
   { path: 'errors', component: TestErrorsComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },

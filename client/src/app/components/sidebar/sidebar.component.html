@@ -2,11 +2,11 @@
     <div class="ml-3 sidebar-items">
         <p class="menu-label has-text-centered mt-5">Navigation</p>
         <ul class="menu-list">
-            <li><a><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>Home</a></li>
+            <li><a routerLink="home"><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>Home</a></li>
         </ul>
         <p class="menu-label has-text-centered">Matchmaking</p>
         <ul class="menu-list">
-            <li><a><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>Create Lobby</a></li>
+            <li><a routerLink="create-lobby"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>Create Lobby</a></li>
             <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find Lobby</a></li>
             <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
             <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
@@ -15,7 +15,7 @@
         </ul>
         <p class="menu-label has-text-centered">Account</p>
         <ul class="menu-list">
-            <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Account</a></li>
+            <li><a routerLink="account"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Account</a></li>
             <li><a><fa-icon class="fa-lg mr-2" [icon]="faCogs"></fa-icon>Settings</a></li>
             <li><a><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>Help</a></li>
             <li><a (click)="logOut()"><fa-icon class="fa-lg mr-2" [icon]="faSignOutAlt"></fa-icon>Log Out</a></li>

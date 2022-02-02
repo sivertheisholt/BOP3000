@@ -12,9 +12,8 @@ export class AccountService {
 
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
-  isLoggedIn! : boolean;
+
   constructor(private http: HttpClient) {
-    this.checkStatus();
   }
 
   login(model: any) {
@@ -54,11 +53,8 @@ export class AccountService {
     this.currentUserSource.next(undefined);
   }
 
-  checkStatus(){
-    if(localStorage.getItem('user')){
-      this.isLoggedIn = true;
-    } else {
-      this.isLoggedIn = false;
-    }
+  get isLoggedIn(): boolean{
+    let authToken = localStorage.getItem('user');
+    return (authToken !== null) ? true : false;
   }
 }

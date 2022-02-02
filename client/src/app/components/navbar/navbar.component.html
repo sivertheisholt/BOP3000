@@ -14,11 +14,10 @@
       <div class="navbar-item">
         <a><fa-icon class="icon is-medium fa-2x" [icon]="faUserCircle"></fa-icon></a>
       </div>
-      <div class="navbar-item">
-        <a>
-          <fa-icon class="noti-icon icon is-medium fa-2x mr-5" [icon]="faBell">
-            <span class="noti-num">2</span>
-          </fa-icon>
+      <div class="navbar-item mr-6">
+        <a class="noti">
+          <span><fa-icon class="noti-icon fa-2x" [icon]="faBell"></fa-icon></span>
+          <span class="noti-number" *ngIf="notifications.length > 0">{{ notifications.length }}</span>
         </a>
       </div>
     </div>

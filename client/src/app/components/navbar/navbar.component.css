@@ -26,3 +26,28 @@ nav{
     color: #fff;
     right: 2px;
 }
+
+.noti-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d6d1d1;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+  }
+  
+.noti-number {
+    position: absolute;
+    top: 5px;
+    right: -5px;
+    width: 25px;
+    height: 25px;
+    background: red;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
