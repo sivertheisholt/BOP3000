@@ -48,8 +48,10 @@ namespace API.Data
 
         public static async Task SeedSteamGames(ISteamAppsRepository steamAppsRepository, ISteamAppRepository steamAppRepository, ISteamStoreClient steamStoreClient)
         {
-            var max = 100;
+            var max = 50;
             var counter = 0;
+
+            if (await steamAppRepository.GetGameInfoAsync(1) != null) return;
 
             var apps = await steamAppsRepository.GetAppsAsync();
 
@@ -63,7 +65,6 @@ namespace API.Data
                 steamAppRepository.AddSteamApp(gameResult);
 
                 counter++;
-
             }
 
             var result = await steamAppRepository.SaveAllAsync();
