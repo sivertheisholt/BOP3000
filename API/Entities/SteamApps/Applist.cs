@@ -2,6 +2,6 @@ namespace API.Entities.SteamApps
 {
     public class Applist
     {
-        public IEnumerable<App> apps { get; set; }
+        public IEnumerable<App> Apps { get; set; }
     }
 }

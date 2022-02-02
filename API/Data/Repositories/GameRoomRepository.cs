@@ -12,7 +12,7 @@ namespace API.Data.Repositories
 
         public void addGameRoomAsync(GameRoom gameRoom)
         {
-            _context.GameRoom.Add(gameRoom);
+            Context.GameRoom.Add(gameRoom);
         }
     }
 }

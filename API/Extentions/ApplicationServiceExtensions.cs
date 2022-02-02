@@ -6,6 +6,7 @@ using API.Helpers;
 using API.Interfaces;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
+using API.Interfaces.IRepositories.Steam;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,11 +17,13 @@ namespace API.Extentions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
 
-            services.AddHttpClient<ISteamClient, SteamClient>();
+            services.AddHttpClient<ISteamAppsClient, SteamAppsClient>();
             services.AddHttpClient<ISteamStoreClient, SteamStoreClient>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGameRoomRepository, GameRoomRepository>();
+            services.AddScoped<ISteamAppRepository, SteamAppRepository>();
+            services.AddScoped<ISteamAppsRepository, SteamAppsRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {

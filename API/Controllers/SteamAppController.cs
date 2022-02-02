@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Entities.SteamApps
+namespace API.Controllers
 {
-    public class Apps
+    public class SteamAppController : BaseApiController
     {
-        public Applist Applist { get; set; }
+
     }
 }
