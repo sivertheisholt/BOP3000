@@ -2,15 +2,119 @@
     width: 100%;
     height:100vh;
     background:linear-gradient(
-      rgba(37, 35, 33, 0.85),
-      rgba(37, 37, 37, 0.85)
+      rgba(19, 19, 20, 0.85),
+      rgba(2, 15, 44, 0.9)
     ),
-    url(https://i.ibb.co/47ZDzvC/digital-technology-background-with-blue-and-orange-light-effect.jpg);
+    url(https://cdn.pixabay.com/photo/2016/03/18/15/02/ufo-1265186_960_720.jpg);
     background-size: cover;
 }
 
 .content{
-    width: 100%;
-    background-color: black;
-    height: 100vh;
+  margin-top: 50px;
+  width: 100%;
+  height: 100vh;
+}
+
+.profile-image{
+  border-radius: 20px;
+  height: 360px;
+  width: 280px;
+}
+
+.profile-content{
+  padding: 4rem;
+}
+
+.following{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(182, 170, 170);
+}
+
+.followers{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(182, 170, 170);
+}
+
+.thumbs-down{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(182, 170, 170);
+}
+
+.thumbs-up{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(182, 170, 170);
+}
+
+.profile-left{
+  background-color: rgba(22, 6, 58, 0.1);
+  margin: 4rem;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.account-favorite-game{
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-left-content{
+  margin: 2rem;
+}
+
+.columns {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+}
+
+.profile-username{
+}
+
+.profile-activity-list{
+  background: linear-gradient(180deg, rgba(70, 70, 70, 0.6) 0%, rgba(21, 20, 24, 0.95) 100%);
+  overflow: auto;
+  overflow-y: hidden;
+}
+
+table{
+  background-color: transparent;
+  width: 100%;
+  min-width: 600px;
+}
+
+thead{
+  background-color: rgb(192, 187, 187);
+}
+
+tr{
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(141, 138, 138);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(92, 84, 84);
+}
+
+.activity-list-container{
+  padding: 4rem;
+  margin: 0 auto;
 }

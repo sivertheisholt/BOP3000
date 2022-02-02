@@ -16,7 +16,6 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient, private accountService: AccountService) {
     this.loggedIn = accountService.isLoggedIn;
-    console.log(this.loggedIn);
   }
 
   ngOnInit() {

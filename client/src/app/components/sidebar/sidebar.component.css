@@ -14,16 +14,21 @@ aside{
 
 .menu-label{
     color: white;
+    font-size: 16px;
 }
 
 .sidebar-items{
     margin-top: 60px;
 }
 
+
+li a:hover{
+    background-color: rgba(47, 92, 112, 0.5);
+    color: rgb(226, 222, 222);
+}
+
 @media only screen and (max-width: 1023px) {
     .sidebar{
-        top: 50px;
-        width: 100%;
-        text-align: center;
+        display: none;
     }
 }
