@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { RoomCard } from './roomcard/room-card.model';
-@Component({
-  selector: 'app-room-slider',
-  templateUrl: './room-slider.component.html',
-  styleUrls: ['./room-slider.component.css']
-})
-export class RoomSliderComponent implements OnInit {
+import { RoomCard } from '../../../../_models/room-card.model';
 
+@Component({
+  selector: 'app-roomcard',
+  templateUrl: './roomcard.component.html',
+  styleUrls: ['./roomcard.component.css']
+})
+export class RoomcardComponent implements OnInit {
+
+  constructor() { }
   roomCard: RoomCard[] = [
     new RoomCard(
       'MMO disc',
-      'This is a very cool lobby for cool people',
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum tenetur quo rerum placeat deleniti soluta asperiores facilis quam non eius magni vitae laboriosam deserunt, ea, iste, voluptates beatae sunt. Quia repudiandae, provident quaerat ipsum natus consequatur blanditiis molestias enim ab.',
       'https://m.media-amazon.com/images/M/MV5BMjEwMTMwNjg0M15BMl5BanBnXkFtZTgwODc1ODM3MDE@._V1_.jpg',
       'https://scontent.fsvg1-1.fna.fbcdn.net/v/t1.6435-9/156623795_10221644964931544_373919933969752127_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=8kSt3JoiJTIAX9hv0zB&_nc_ht=scontent.fsvg1-1.fna&oh=00_AT9rzEAum0YSeHo2ow3jU0IuDFdPhTqSKRdGtAkDXBztsA&oe=621C8488',
       5,
@@ -75,8 +77,6 @@ export class RoomSliderComponent implements OnInit {
       'Sea of Thieves'
     )
   ];
-
-  constructor() { }
 
   ngOnInit(): void {
   }

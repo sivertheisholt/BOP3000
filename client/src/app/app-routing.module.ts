@@ -7,11 +7,12 @@ import { ServerErrorComponent } from './components/errors/server-error/server-er
 import { TestErrorsComponent } from './components/errors/test-errors/test-errors.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
-import { RoomSliderComponent } from './components/room/room-slider/room-slider.component';
-import { RoomcardComponent } from './components/room/room-slider/roomcard/roomcard.component';
 import { StartComponent } from './components/start/start.component';
 import { UnAuthGuard } from './_guards/unAuth.guard';
 import { AuthGuard } from './_guards/auth.guard';
+import { LobbyComponent } from './components/lobby/lobby.component';
+import { FindLobbyComponent } from './components/find-lobby/find-lobby.component';
+import { GameLobbyComponent } from './components/find-lobby/game-lobby/game-lobby.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent, canActivate: [AuthGuard] },
@@ -19,11 +20,12 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [UnAuthGuard] },
   { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard] },
   { path: 'account', component: AccountComponent, canActivate: [UnAuthGuard] },
+  { path: 'lobby', component: LobbyComponent, canActivate:[UnAuthGuard] },
   { path: 'errors', component: TestErrorsComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
-  { path: 'roomcard', component: RoomcardComponent},
-  { path: 'room-slider', component: RoomSliderComponent },
+  { path: 'find-lobby', component: FindLobbyComponent },
+  { path: 'game-lobby', component: GameLobbyComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

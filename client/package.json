@@ -23,7 +23,6 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@ng-select/ng-select": "^7.4.0",
-    "angular-responsive-carousel": "^2.1.2",
     "babel-plugin-polyfill-corejs2": "^0.3.1",
     "bulma": "^0.9.3",
     "fastq": "^1.13.0",

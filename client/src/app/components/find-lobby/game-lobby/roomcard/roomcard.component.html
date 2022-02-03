@@ -1,10 +1,10 @@
-<div class="container">
+<div *ngFor="let roomCard of roomCard">
     <a href="" class="card">
         <img src="https://m.media-amazon.com/images/M/MV5BMjEwMTMwNjg0M15BMl5BanBnXkFtZTgwODc1ODM3MDE@._V1_.jpg" class="card_image" alt="" />
         <div class="card_overlay">
             <div class="card_header">
                 <svg class="card_arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
-                <img class="card_profile_picture" src="https://i.pinimg.com/originals/a0/80/7e/a0807ee91a153edac9c80104f70dcd17.jpg" alt="" />
+                <img class="card_profile_picture" src="https://i.pinimg.com/originals/a0/80/7e/a0807ee91a153edac9c80104f70dcd17.jpg" alt="" style="width: 70px;"/>
                 <div class="grid-container">
                     <div class="grid-item-1">
                         <div class="card_header-text">
@@ -19,9 +19,8 @@
                         <p>Casual</p>
                     </div>
                 </div>
-                
             </div>
-            <p class="card_description">We discuss ranked arena games in this lobby, no losers!</p>
+            <p class="card_description">{{ roomCard.description }}</p>
         </div>
-    </a>  
+    </a>
 </div>

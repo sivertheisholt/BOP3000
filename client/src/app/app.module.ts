@@ -21,10 +21,11 @@ import { CreateLobbyComponent } from './components/create-lobby/create-lobby.com
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AccountComponent } from './components/account/account.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RoomComponent } from './components/room/room.component';
-import { RoomcardComponent } from './components/room/room-slider/roomcard/roomcard.component';
-import { IvyCarouselModule } from 'angular-responsive-carousel';
-import { RoomSliderComponent } from './components/room/room-slider/room-slider.component';
+import { FindLobbyComponent } from './components/find-lobby/find-lobby.component';
+import { RoomcardComponent } from './components/find-lobby/game-lobby/roomcard/roomcard.component';
+import { LobbyComponent } from './components/lobby/lobby.component';
+import { GameLobbyComponent } from './components/find-lobby/game-lobby/game-lobby.component';
+import { GamecardComponent } from './components/find-lobby/gamecard/gamecard.component';
 
 
 @NgModule({
@@ -44,17 +45,18 @@ import { RoomSliderComponent } from './components/room/room-slider/room-slider.c
     LoginComponent,
     CreateLobbyComponent,
     AccountComponent,
-    RoomComponent,
+    FindLobbyComponent,
     RoomcardComponent,
-    RoomSliderComponent,
+    LobbyComponent,
+    GamecardComponent,
+    GameLobbyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
     NgSelectModule,
-    ReactiveFormsModule,
-    IvyCarouselModule
+    ReactiveFormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
