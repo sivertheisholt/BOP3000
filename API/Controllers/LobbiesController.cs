@@ -12,15 +12,15 @@ namespace API.Controllers
     /// <summary>
     /// GameRoomController contains all the endpoints for Game Room related actions
     /// </summary>
-    public class GameRoomController : BaseApiController
+    public class LobbiesController : BaseApiController
     {
-        private readonly IGameRoomRepository _gameRoomRepository;
+        private readonly ILobbiesRepository _gameRoomRepository;
         private readonly IMapper _mapper;
         private readonly ISteamAppsClient _steamAppsClient;
         private readonly ISteamStoreClient _steamStoreClient;
         private readonly ISteamAppRepository _steamAppRepository;
         private readonly ISteamAppsRepository _steamAppsRepository1;
-        public GameRoomController(IGameRoomRepository gameRoomRepository, IMapper mapper, ISteamAppsClient steamAppsClient, ISteamStoreClient steamStoreClient, ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository1)
+        public LobbiesController(ILobbiesRepository gameRoomRepository, IMapper mapper, ISteamAppsClient steamAppsClient, ISteamStoreClient steamStoreClient, ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository1)
         {
             _steamAppsRepository1 = steamAppsRepository1;
             _steamAppRepository = steamAppRepository;
@@ -35,7 +35,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="newGameRoom"></param>
         /// <returns> </returns>
-        [HttpPost("create")]
+        [HttpPost("")]
         public async Task<ActionResult<GameRoomDto>> CreateGameRoom(NewGameRoomDto newGameRoom)
         {
 

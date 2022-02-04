@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
-    public class GameRoomRepository : BaseRepository<GameRoom>, IGameRoomRepository
+    public class LobbiesRepository : BaseRepository<GameRoom>, ILobbiesRepository
     {
-        public GameRoomRepository(DataContext context) : base(context)
+        public LobbiesRepository(DataContext context) : base(context)
         {
         }
 

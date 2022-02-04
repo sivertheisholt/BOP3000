@@ -22,7 +22,7 @@ namespace API.Extentions
             services.AddHttpClient<ISteamStoreClient, SteamStoreClient>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IGameRoomRepository, GameRoomRepository>();
+            services.AddScoped<ILobbiesRepository, LobbiesRepository>();
             services.AddScoped<ISteamAppRepository, SteamAppRepository>();
             services.AddScoped<ISteamAppsRepository, SteamAppsRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
