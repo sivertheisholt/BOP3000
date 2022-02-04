@@ -29,7 +29,7 @@ namespace API.Controllers
         /// Gets all users
         /// </summary>
         /// <returns>A collection of MemberDto</returns>
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Member")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {

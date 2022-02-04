@@ -45,6 +45,9 @@ namespace API.Controllers
                 MaxUsers = newGameRoom.MaxUsers,
                 AdminUid = newGameRoom.AdminUid,
                 Title = newGameRoom.Title,
+                LobbyDescription = newGameRoom.LobbyDescription,
+                GameId = newGameRoom.GameId,
+                GameType = newGameRoom.GameType,
                 RoomRequirement = new Requirement
                 {
                     Gender = newGameRoom.RoomRequirement.Gender
