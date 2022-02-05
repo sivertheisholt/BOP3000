@@ -1,6 +1,6 @@
-namespace API.Entities.GameRoom
+namespace API.Entities.Lobby
 {
-    public class FinishedGameRoom : GameRoom
+    public class FinishedLobby : Lobby
     {
         public Log log { get; set; }
         public DateTime FinishedDate { get; set; }

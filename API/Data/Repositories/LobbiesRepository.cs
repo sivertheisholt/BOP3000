@@ -1,18 +1,22 @@
-using API.Entities.GameRoom;
+using API.Entities.Lobby;
 using API.Interfaces.IRepositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
-    public class LobbiesRepository : BaseRepository<GameRoom>, ILobbiesRepository
+    public class LobbiesRepository : BaseRepository<Lobby>, ILobbiesRepository
     {
         public LobbiesRepository(DataContext context) : base(context)
         {
         }
 
-        public void addGameRoomAsync(GameRoom gameRoom)
+        public void AddLobby(Lobby lobby)
         {
-            Context.GameRoom.Add(gameRoom);
+            Context.Lobby.Add(lobby);
+        }
+
+        public async Task<Lobby> GetLobbyAsync(int id)
+        {
+            return await Context.Lobby.FindAsync(id);
         }
     }
 }

@@ -3,7 +3,7 @@ using API.Entities.SteamApp.Information;
 
 namespace API.Entities.SteamApp
 {
-    public class GameInfo
+    public class AppInfo
     {
         [Key]
         public int Id { get; set; }

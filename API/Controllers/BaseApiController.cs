@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -13,6 +9,14 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class BaseApiController : ControllerBase
     {
-
+        /// <summary>
+        /// Gets the userid from the claims
+        /// </summary>
+        /// <returns>int: The user ID</returns>
+        protected int GetUserIdFromClaim()
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == "uid").Value;
+            return Int32.Parse(userId);
+        }
     }
 }

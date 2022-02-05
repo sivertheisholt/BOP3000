@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using API.Entities.SteamApp;
 using API.Interfaces.IClients;
 using API.Network.Clients;
@@ -14,7 +13,7 @@ namespace API.Clients
             Client.BaseAddress = new Uri("https://store.steampowered.com/api/");
         }
 
-        public async Task<GameInfo> GetAppInfo(int appid)
+        public async Task<AppInfo> GetAppInfo(int appid)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{Client.BaseAddress}appdetails/?appids={appid}");
             using (var response = await Client.SendAsync(request))
@@ -27,7 +26,7 @@ namespace API.Clients
                 catch (System.Exception)
                 {
 
-                    return new GameInfo
+                    return new AppInfo
                     {
                         Success = false
                     };
@@ -42,7 +41,7 @@ namespace API.Clients
                 //Check if data is present
                 if (contentObject[appid.ToString()]["data"] == null)
                 {
-                    return new GameInfo
+                    return new AppInfo
                     {
                         Success = false
                     };
@@ -75,7 +74,7 @@ namespace API.Clients
                 var resultString = JsonConvert.SerializeObject(contentObject);
 
                 // Deserialize the JSON string
-                var dictionaryResult = JsonConvert.DeserializeObject<Dictionary<string, GameInfo>>(resultString);
+                var dictionaryResult = JsonConvert.DeserializeObject<Dictionary<string, AppInfo>>(resultString);
 
                 var game = dictionaryResult.Values.First();
 

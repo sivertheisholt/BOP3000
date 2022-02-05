@@ -3,21 +3,21 @@ using API.Interfaces.IRepositories;
 
 namespace API.Data.Repositories
 {
-    public class SteamAppRepository : BaseRepository<GameInfo>, ISteamAppRepository
+    public class SteamAppRepository : BaseRepository<AppInfo>, ISteamAppRepository
     {
         public SteamAppRepository(DataContext context) : base(context)
         {
 
         }
 
-        public async Task<GameInfo> GetGameInfoAsync(int id)
+        public async Task<AppInfo> GetAppInfoAsync(int id)
         {
-            return await Context.GameInfo.FindAsync(id);
+            return await Context.AppInfo.FindAsync(id);
         }
 
-        public void AddSteamApp(GameInfo gameInfo)
+        public void AddApp(AppInfo appInfo)
         {
-            Context.GameInfo.Add(gameInfo);
+            Context.AppInfo.Add(appInfo);
         }
     }
 }

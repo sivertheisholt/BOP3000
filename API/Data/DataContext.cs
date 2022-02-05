@@ -1,5 +1,5 @@
 using System.Text.Json;
-using API.Entities.GameRoom;
+using API.Entities.Lobby;
 using API.Entities.Roles;
 using API.Entities.SteamApp;
 using API.Entities.SteamApp.Information;
@@ -20,8 +20,8 @@ namespace API.Data
         {
 
         }
-        public DbSet<GameRoom> GameRoom { get; set; }
-        public DbSet<GameInfo> GameInfo { get; set; }
+        public DbSet<Lobby> Lobby { get; set; }
+        public DbSet<AppInfo> AppInfo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,9 +44,9 @@ namespace API.Data
             /*********** STEAM **************/
 
             builder.Entity<AppData>()
-                .HasOne(app => app.GameInfo)
+                .HasOne(app => app.AppInfo)
                 .WithOne(gameinfo => gameinfo.Data)
-                .HasForeignKey<AppData>(app => app.GameInfoId)
+                .HasForeignKey<AppData>(app => app.AppInfoId)
                 .IsRequired();
 
             builder.Entity<AppData>()

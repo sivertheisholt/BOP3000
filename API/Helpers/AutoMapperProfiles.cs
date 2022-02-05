@@ -1,6 +1,6 @@
 using API.DTOs;
-using API.DTOs.GameRoom;
-using API.Entities.GameRoom;
+using API.DTOs.Lobby;
+using API.Entities.Lobby;
 using API.Entities.Users;
 using AutoMapper;
 
@@ -11,9 +11,9 @@ namespace API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<AppUser, MemberDto>();
-            CreateMap<GameRoom, GameRoomDto>();
-            CreateMap<GameRoom, NewGameRoomDto>();
-            CreateMap<GameRoom, Requirement>();
+            CreateMap<Lobby, LobbyDto>();
+            CreateMap<Lobby, NewLobbyDto>();
+            CreateMap<Lobby, Requirement>();
             CreateMap<Requirement, RequirementDto>();
         }
     }

@@ -1,8 +1,6 @@
-using API.Entities.GameRoom;
-
-namespace API.DTOs.GameRoom
+namespace API.DTOs.Lobby
 {
-    public class GameRoomDto
+    public class LobbyDto
     {
         public int Id { get; set; }
         public int MaxUsers { get; set; }
@@ -11,6 +9,6 @@ namespace API.DTOs.GameRoom
         public string SteamId { get; set; }
 
         public ICollection<int> Users { get; set; }
-        public RequirementDto RoomRequirement { get; set; }
+        public RequirementDto LobbyRequirement { get; set; }
     }
 }

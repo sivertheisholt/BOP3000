@@ -51,7 +51,7 @@ namespace API.Data
             var max = 50;
             var counter = 0;
 
-            if (await steamAppRepository.GetGameInfoAsync(1) != null) return;
+            if (await steamAppRepository.GetAppInfoAsync(1) != null) return;
 
             var apps = await steamAppsRepository.GetAppsAsync();
 
@@ -62,7 +62,7 @@ namespace API.Data
                 var gameResult = await steamStoreClient.GetAppInfo(app.Appid);
                 if (!gameResult.Success) continue;
 
-                steamAppRepository.AddSteamApp(gameResult);
+                steamAppRepository.AddApp(gameResult);
 
                 counter++;
             }

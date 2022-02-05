@@ -8,6 +8,6 @@ namespace API.Interfaces.IClients
 {
     public interface ISteamStoreClient
     {
-        Task<GameInfo> GetAppInfo(int appid);
+        Task<AppInfo> GetAppInfo(int appid);
     }
 }

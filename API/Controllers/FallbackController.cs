@@ -9,7 +9,7 @@ namespace API.Controllers
     /// <summary>
     /// FallbackController is used as fallback for the client
     /// </summary>
-    public class FallbackController : Controller
+    public class FallbackController : BaseApiController
     {
         public ActionResult Index()
         {

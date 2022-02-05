@@ -1,9 +1,12 @@
-using API.Entities.GameRoom;
+using API.Entities.Lobby;
+using API.Entities.SteamApp;
 
 namespace API.Interfaces.IRepositories
 {
-    public interface ILobbiesRepository : IBaseRepository<GameRoom>
+    public interface ILobbiesRepository : IBaseRepository<Lobby>
     {
-        void addGameRoomAsync(GameRoom gameRoom);
+        void AddLobby(Lobby loby);
+
+        Task<Lobby> GetLobbyAsync(int id);
     }
 }

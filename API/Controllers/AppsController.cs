@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    public class SteamAppController : BaseApiController
+    public class AppsController : BaseApiController
     {
-
+        public AppsController()
+        {
+        }
     }
 }

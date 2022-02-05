@@ -1,6 +1,4 @@
-using API.Enums;
-
-namespace API.Entities.GameRoom
+namespace API.Entities.Lobby
 {
     public class Requirement
     {

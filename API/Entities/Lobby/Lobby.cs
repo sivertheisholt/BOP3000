@@ -1,9 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using API.Entities.Users;
 
-namespace API.Entities.GameRoom
+namespace API.Entities.Lobby
 {
-    public class GameRoom
+    public class Lobby
     {
         public int Id { get; set; }
         public int MaxUsers { get; set; }
@@ -13,6 +12,6 @@ namespace API.Entities.GameRoom
         public int GameId { get; set; }
         public string GameType { get; set; }
         public ICollection<AppUser> Users { get; set; }
-        public Requirement RoomRequirement { get; set; }
+        public Requirement LobbyRequirement { get; set; }
     }
 }

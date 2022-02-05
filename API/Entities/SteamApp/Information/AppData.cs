@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace API.Entities.SteamApp.Information
@@ -112,7 +106,7 @@ namespace API.Entities.SteamApp.Information
         [JsonProperty("recommendations")]
         public Recommendations Recommendations { get; set; }
 
-        public GameInfo GameInfo { get; set; }
-        public int GameInfoId { get; set; }
+        public AppInfo AppInfo { get; set; }
+        public int AppInfoId { get; set; }
     }
 }

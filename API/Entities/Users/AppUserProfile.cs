@@ -1,4 +1,4 @@
-using API.Entities.GameRoom;
+using API.Entities.Lobby;
 
 namespace API.Entities.Users
 {
@@ -7,6 +7,6 @@ namespace API.Entities.Users
         public int Id { get; set; }
         public AppUserConnections UserConnections { get; set; }
         public string Nickname { get; set; }
-        public ICollection<FinishedGameRoom> FinishedGameRooms { get; set; }
+        public ICollection<FinishedLobby> FinishedLobbies { get; set; }
     }
 }

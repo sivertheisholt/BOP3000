@@ -48,6 +48,7 @@ namespace API.Extentions
 
             services.AddAuthorization(opt =>
             {
+                opt.AddPolicy("RequireMemberRole", policy => policy.RequireRole(Role.Member.MakeString()));
                 opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole(Role.Admin.MakeString()));
                 opt.AddPolicy("RequirePremiumRole", policy => policy.RequireRole(Role.Premium.MakeString()));
             });

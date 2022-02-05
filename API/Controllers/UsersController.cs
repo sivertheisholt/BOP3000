@@ -29,7 +29,7 @@ namespace API.Controllers
         /// Gets all users
         /// </summary>
         /// <returns>A collection of MemberDto</returns>
-        [Authorize(Roles = "Member")]
+        [Authorize(Policy = "RequireMemberRole")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
@@ -46,6 +46,7 @@ namespace API.Controllers
         /// <param name="id"></param>
         /// <returns>A MemberDto</returns>
         //[Authorize(Roles = "Member")]
+        [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("{id}")]
         public async Task<ActionResult<MemberDto>> GetUser(int id)
         {
