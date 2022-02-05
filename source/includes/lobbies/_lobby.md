@@ -62,7 +62,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://localhost:5001/api/lobbies", requestOptions)
+fetch("https://bop3000.azurewebsites.net/api/lobbies", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));

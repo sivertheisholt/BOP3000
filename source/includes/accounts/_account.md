@@ -65,7 +65,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://localhost:5001/api/accounts/register", requestOptions)
+fetch("https://bop3000.azurewebsites.net/api/accounts/register", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
