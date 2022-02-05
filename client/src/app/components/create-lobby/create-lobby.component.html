@@ -6,38 +6,39 @@
                 <div class="card-content">
                     <ng-select [items]="games" 
                         bindLabel="name"
+                        bindValue="id"
                         placeholder="Search for a game..."
-                        formControlName="game"
+                        formControlName="gameId"
                         [closeOnSelect]='true'
                         class="custom">
                     </ng-select>
-                    <div *ngIf="!createLobbyForm.controls.game.valid && submitted" class="has-text-centered has-text-light">Choose a game</div>
-                    <label for="lobbyname"></label>
-                    <input class="input is-normal mt-6" type="text" placeholder="Lobby name" name="lobbyname" formControlName="lobbyName">
-                    <div *ngIf="!createLobbyForm.controls.lobbyName.valid && submitted" class="has-text-centered has-text-light">Please include a short name for your lobby!</div>
-                    <textarea class="textarea is-primary mt-6" placeholder="Describe what you are looking for(optional)" formControlName="desc"></textarea>
+                    <div *ngIf="!createLobbyForm.controls.gameId.valid && submitted" class="has-text-centered has-text-light">Choose a game</div>
+                    <label for="title"></label>
+                    <input class="input is-normal mt-6" type="text" placeholder="Lobby name" name="title" formControlName="title">
+                    <div *ngIf="!createLobbyForm.controls.title.valid && submitted" class="has-text-centered has-text-light">Please include a short name for your lobby!</div>
+                    <textarea class="textarea is-primary mt-6" placeholder="Describe what you are looking for(optional)" formControlName="lobbyDescription"></textarea>
                     <div class="columns">
                         <div class="column is-half">
                             <ng-select 
                                 [items]="selectedType" 
                                 bindLabel="name" 
                                 placeholder="What type of game?"
-                                formControlName="type"
+                                formControlName="gameType"
                                 [closeOnSelect]='true'
                                 class="custom mt-6">
                         </ng-select>
-                        <div *ngIf="!createLobbyForm.controls.type.valid && submitted" class="has-text-centered has-text-light">Choose the type of lobby.</div>
+                        <div *ngIf="!createLobbyForm.controls.gameType.valid && submitted" class="has-text-centered has-text-light">Choose the type of lobby.</div>
                         </div>
                         <div class="column is-half">
                             <ng-select 
                                 [items]="selectedMaxplayers" 
                                 bindLabel="name" 
                                 placeholder="How many players including yourself?"
-                                formControlName="maxPlayers"
+                                formControlName="maxUsers"
                                 [closeOnSelect]='true'
                                 class="custom mt-6">
                             </ng-select>
-                            <div *ngIf="!createLobbyForm.controls.game.valid && submitted" class="has-text-centered has-text-light">Amount of players your looking for.</div>
+                            <div *ngIf="!createLobbyForm.controls.maxUsers.valid && submitted" class="has-text-centered has-text-light">Amount of players your looking for.</div>
                         </div>
                     </div>
                     <button class="button create-lobby-button is-normal text-is-light" type="submit">Create Lobby</button>

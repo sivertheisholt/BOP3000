@@ -14,25 +14,16 @@ export class AppComponent implements OnInit {
   users: any;
   loggedIn : boolean;
 
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  constructor(private accountService: AccountService) {
     this.loggedIn = accountService.isLoggedIn;
   }
 
   ngOnInit() {
-    this.getUsers();
     this.setCurrentUser();
   }
 
   setCurrentUser() {
     const user: User = JSON.parse(localStorage.getItem('user')!);
     this.accountService.setCurrentUser(user);
-  }
-
-  getUsers() {
-    this.http.get('https://localhost:5001/api/users').subscribe(response => {
-      this.users = response;
-    }, error => {
-      console.log(error); 
-    })
   }
 }

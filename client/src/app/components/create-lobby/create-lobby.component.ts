@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AccountService } from 'src/app/_services/account.service';
+import { LobbyService } from 'src/app/_services/lobby.service';
 
 @Component({
   selector: 'app-create-lobby',
@@ -37,22 +39,32 @@ export class CreateLobbyComponent implements OnInit {
 
     model: any = {};
 
-  constructor() { }
+  constructor(private accService: AccountService, private lobbyService: LobbyService) { }
 
   ngOnInit(): void {
     this.createLobbyForm = new FormGroup({
-      game: new FormControl(null, [Validators.required]),
-      lobbyName: new FormControl(null, [Validators.required]),
-      desc: new FormControl(null),
-      type: new FormControl(null, [Validators.required]),
-      maxPlayers: new FormControl(null, [Validators.required])
+      gameId: new FormControl(null, [Validators.required]),
+      title: new FormControl(null, [Validators.required]),
+      lobbyDescription: new FormControl(null),
+      gameType: new FormControl(null, [Validators.required]),
+      maxUsers: new FormControl(null, [Validators.required]),
+      lobbyRequirement: new FormGroup({
+        gender: new FormControl(null)
+      })
     });
 
   }
 
   onSubmit(){
     this.submitted = true;
-    console.log(this.createLobbyForm);
+    this.lobbyService.postLobby(this.createLobbyForm.value).subscribe(
+      (res) => {
+        //Redirect bruker til det nye rommet
+        console.log(res);
+      }, err => {
+        console.log(err);
+      }
+    )
   }
 
 }

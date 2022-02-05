@@ -10,7 +10,6 @@ import { AccountService } from '../../_services/account.service';
 })
 export class RegisterComponent implements OnInit {
   faEnvelope = faEnvelope; faLock = faLock; faUser = faUser;
-  model: any = {}
   regUserForm! : FormGroup;
   constructor(public accountService: AccountService) { }
 

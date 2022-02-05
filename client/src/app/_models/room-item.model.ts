@@ -6,7 +6,7 @@ export class RoomItem{
     constructor(id: number, creator: string, game: string, maxplayers: number){
         this.id = id;
         this.creator = creator;
-        this.game = game;;
+        this.game = game;
         this.maxplayers = maxplayers;
     }
 }
