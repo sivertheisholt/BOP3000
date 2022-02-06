@@ -12,7 +12,7 @@ export class RoomcardComponent implements OnInit {
   roomCard: RoomCard[] = [
     new RoomCard(
       'MMO disc',
-      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum tenetur quo rerum placeat deleniti soluta asperiores facilis quam non eius magni vitae laboriosam deserunt, ea, iste, voluptates beatae sunt. Quia repudiandae, provident quaerat ipsum natus consequatur blanditiis molestias enim ab.',
+      'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ae',
       'https://m.media-amazon.com/images/M/MV5BMjEwMTMwNjg0M15BMl5BanBnXkFtZTgwODc1ODM3MDE@._V1_.jpg',
       'https://scontent.fsvg1-1.fna.fbcdn.net/v/t1.6435-9/156623795_10221644964931544_373919933969752127_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=8kSt3JoiJTIAX9hv0zB&_nc_ht=scontent.fsvg1-1.fna&oh=00_AT9rzEAum0YSeHo2ow3jU0IuDFdPhTqSKRdGtAkDXBztsA&oe=621C8488',
       5,
@@ -52,17 +52,6 @@ export class RoomcardComponent implements OnInit {
       8,
       'Chill',
       'Sivert',
-      'Sea of Thieves'
-    ),
-    new RoomCard(
-      'Athena',
-      'Lorem ipsum something something',
-      'https://compass-ssl.xboxlive.com/assets/02/fd/02fde636-f6f3-405f-b70e-50dd23de5f6f.jpg?n=mobile.jpg',
-      'https://cdn.discordapp.com/avatars/266598683246723072/fe0ef9e8041bb34171a98611fad512c2.webp?size=128',
-      9,
-      15,
-      'Adventure',
-      'Sigve',
       'Sea of Thieves'
     ),
     new RoomCard(
