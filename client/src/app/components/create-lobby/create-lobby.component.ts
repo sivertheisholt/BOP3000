@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AccountService } from 'src/app/_services/account.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/_services/auth.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
 
 @Component({
@@ -39,7 +39,7 @@ export class CreateLobbyComponent implements OnInit {
 
     model: any = {};
 
-  constructor(private accService: AccountService, private lobbyService: LobbyService) { }
+  constructor(private authService: AuthService, private lobbyService: LobbyService) { }
 
   ngOnInit(): void {
     this.createLobbyForm = new FormGroup({

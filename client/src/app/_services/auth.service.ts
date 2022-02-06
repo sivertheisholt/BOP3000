@@ -7,7 +7,7 @@ import { User } from '../_models/user';
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
+export class AuthService {
   baseUrl = 'https://localhost:5001/api/';
 
   private currentUserSource = new ReplaySubject<User>(1);

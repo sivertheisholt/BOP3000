@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 
-import { AccountService } from '../../_services/account.service';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   model: any = {};
   loginUserForm! : FormGroup;
 
-  constructor(public accountService: AccountService, public router: Router) { }
+  constructor(public authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
     this.loginUserForm = new FormGroup({
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.accountService.login(this.loginUserForm.value).subscribe(res => {
+    this.authService.login(this.loginUserForm.value).subscribe(res => {
       console.log(res);
       this.router.navigate(['/home']);
     }, err => {
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
   
   logout() {
-    this.accountService.logout();
+    this.authService.logout();
   }
 
 }

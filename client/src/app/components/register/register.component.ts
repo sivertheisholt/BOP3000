@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
-import { AccountService } from '../../_services/account.service';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +11,7 @@ import { AccountService } from '../../_services/account.service';
 export class RegisterComponent implements OnInit {
   faEnvelope = faEnvelope; faLock = faLock; faUser = faUser;
   regUserForm! : FormGroup;
-  constructor(public accountService: AccountService) { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
     this.regUserForm = new FormGroup({
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    this.accountService.register(this.regUserForm.value).subscribe(res => {
+    this.authService.register(this.regUserForm.value).subscribe(res => {
       console.log('res');
       console.log(res);
     }, err => {

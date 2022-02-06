@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { retry } from "rxjs/operators";
+import { map, retry } from "rxjs/operators";
 import { Lobby } from "../_models/lobby.model";
 
 @Injectable({providedIn: 'root'})
@@ -16,6 +16,20 @@ export class LobbyService{
         .pipe(
             retry(1)
         )
+    }
+
+    fetchLobby(id: number){
+
+    }
+
+    fetchAllLobbies(){
+        return this.http.get(this.baseUrl + 'lobbies', {
+            responseType: 'json'
+        }).pipe(
+            map(responseData => {
+                console.log(responseData);
+            })
+        );
     }
 
 }
