@@ -4,7 +4,6 @@ namespace API.DTOs.Lobbies
     {
         public int Id { get; set; }
         public int MaxUsers { get; set; }
-        public int AdminUid { get; set; }
         public string Title { get; set; }
         public string SteamId { get; set; }
 
