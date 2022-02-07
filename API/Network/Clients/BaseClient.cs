@@ -7,7 +7,6 @@ namespace API.Network.Clients
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
-        private readonly JsonConverter _jsonConverter;
         protected BaseClient(HttpClient client)
         {
             _client = client;
