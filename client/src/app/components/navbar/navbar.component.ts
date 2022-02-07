@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import { AccountService } from 'src/app/_services/account.service';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
   ];
   totalNotifications = this.notifications.length;
 
-  constructor(private accountService: AccountService, private router: Router){ 
+  constructor(private authService: AuthService, private router: Router){ 
   }
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut(){
-    this.accountService.logout();
+    this.authService.logout();
     this.router.navigate(['/']);
   }
 }

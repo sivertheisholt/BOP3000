@@ -26,6 +26,7 @@ import { RoomcardComponent } from './components/find-lobby/game-lobby/roomcard/r
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { GameLobbyComponent } from './components/find-lobby/game-lobby/game-lobby.component';
 import { GamecardComponent } from './components/find-lobby/gamecard/gamecard.component';
+import { AuthInterceptorService } from './_interceptors/auth-interceptor.service';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { GamecardComponent } from './components/find-lobby/gamecard/gamecard.com
     ReactiveFormsModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

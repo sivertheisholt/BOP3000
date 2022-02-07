@@ -1,13 +1,13 @@
-import { HttpClient, HttpStatusCode } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
+export class AuthService {
   baseUrl = 'https://localhost:5001/api/';
 
   private currentUserSource = new ReplaySubject<User>(1);
@@ -28,7 +28,6 @@ export class AccountService {
   }
 
   register(model: any) {
-    console.log(model);
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map((res: User) => {
         const user = res;
@@ -40,7 +39,7 @@ export class AccountService {
   }
 
   initCurrentUser(user: User) {
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', JSON.stringify(user.token));
     this.currentUserSource.next(user);
   }
 
@@ -49,12 +48,16 @@ export class AccountService {
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     this.currentUserSource.next(undefined);
   }
 
   get isLoggedIn(): boolean{
-    let authToken = localStorage.getItem('user');
+    let authToken = localStorage.getItem('token');
     return (authToken !== null) ? true : false;
+  }
+
+  getUserId(){
+    return JSON.parse(localStorage.getItem('token')!);
   }
 }

@@ -1,114 +1,48 @@
-.container {
-  width: 300px;
-  height: auto;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 20px;
-}
-
-.grid-item-2 {
-  display: flex;
-  color: black;
-  justify-content: center;
-  align-items: center;
-}
-
 .card {
-  position: relative;
-  display: block;
-  height: 320px;
-  width: 200px;
-  border-radius: 40px;
-  overflow: hidden;
-  text-decoration: none;
+  height: 100%;
+  width: 300px;
+  border-radius: 50px;
+  background: linear-gradient(90deg, rgba(42, 45, 80, 0.8) 0%, rgba(14, 6, 82, 0.7) 100%);
+  color: white;
 }
 
-.card_image {      
-  width: 100%;
-  height: auto;
-  transform: scale(1.1);
+.lobby-card-title{
+  text-align: center;
+  font-size: 18px;
 }
 
-.card_overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1; 
-  border-radius: 40px;
-  background-color: cornflowerblue;      
-  transform: translateY(100%);
-  transition: .2s ease-in-out;
+.lobby-card-desc{
+  text-align: center;
+  font-size: 14px;
+  margin-top: 20px;
+  height: 50px;
 }
 
-.card:hover .card_overlay {
-  transform: translateY(0);
-}
 
-.card_header {
-  position: relative;
+.lobby-btn-wrapper{
   display: flex;
-  align-items: center;
-  gap: 1em;
-  border-radius: 40px 0 0 0;
-  padding: 0.5em;  
-  background-color: cornflowerblue;
-  transform: translateY(-100%);
-  transition: .2s ease-in-out;
+  justify-content: center;
+  padding: 20px;
 }
 
-.card_arc {
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  bottom: 100%;
-  right: 0;      
-  z-index: 1;
+.lobby-card-wrapper{
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
-.card_arc path {
-  fill: cornflowerblue;
-  d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
-}       
-
-.card:hover .card_header {
-  transform: translateY(0);
+.lobby-card-type p{
+  
 }
 
-.card_profile_picture {
-  flex-shrink: 0;
-  width: 60px; 
-  height: 60px;
-  border-radius: 50%;      
+.lobby-card-players{
+  
 }
 
-.card_lobby {
-  font-size: 1.2em;
-  margin: 0 0 0em;
-  color: black;
+.lobby-card-creator{
+  
 }
 
-.card_game {
-  font-size: 0.9em;
-  margin: 0 0 .3em;
-  color: black;
+p{
+  font-size: 14px;
+  font-weight: bold;
 }
-
-.card_players {
-  font-size: .8em;
-  color: black;
-}
-
-.card_description {
-  padding: 0 2em 1em;
-  margin: 0;
-  color: black;
-  font-family: "MockFlowFont";   
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}    
