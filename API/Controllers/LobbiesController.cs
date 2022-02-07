@@ -74,7 +74,7 @@ namespace API.Controllers
             var lobbies = await _lobbiesRepository.GetLobbiesAsync();
             if (lobbies == null) return NotFound();
 
-            return _mapper.Map<List<LobbyDto>>(lobbies);
+            return Ok(_mapper.Map<List<LobbyDto>>(lobbies));
         }
     }
 }
