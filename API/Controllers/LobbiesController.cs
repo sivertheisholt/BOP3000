@@ -69,12 +69,12 @@ namespace API.Controllers
 
         [HttpGet("")]
         [Authorize(Policy = "RequireMemberRole")]
-        public async Task<ActionResult<LobbiesListDto>> GetLobbies()
+        public async Task<ActionResult<IEnumerable<LobbyDto>>> GetLobbies()
         {
             var lobbies = await _lobbiesRepository.GetLobbiesAsync();
             if (lobbies == null) return NotFound();
 
-            return _mapper.Map<LobbiesListDto>(lobbies);
+            return _mapper.Map<List<LobbyDto>>(lobbies);
         }
     }
 }
