@@ -1,6 +1,6 @@
 using API.Entities.Users;
 
-namespace API.Entities.Lobby
+namespace API.Entities.Lobbies
 {
     public class Lobby
     {

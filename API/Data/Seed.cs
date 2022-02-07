@@ -1,11 +1,9 @@
 using API.Entities.Roles;
-using API.Entities.SteamApp;
 using API.Entities.SteamApps;
 using API.Entities.Users;
 using API.Enums;
 using API.Interfaces.IClients;
-using API.Interfaces.IRepositories;
-using API.Interfaces.IRepositories.Steam;
+using API.Interfaces.IRepositories.Apps;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,14 +44,14 @@ namespace API.Data
             await userManager.AddToRolesAsync(admin, new[] { Role.Member.MakeString() });
         }
 
-        public static async Task SeedSteamGames(ISteamAppsRepository steamAppsRepository, ISteamAppRepository steamAppRepository, ISteamStoreClient steamStoreClient)
+        public static async Task SeedSteamGames(ISteamAppRepository steamAppRepository, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient)
         {
             var max = 50;
             var counter = 0;
 
             if (await steamAppRepository.GetAppInfoAsync(1) != null) return;
 
-            var apps = await steamAppsRepository.GetAppsAsync();
+            var apps = await steamAppsClient.GetAppsList();
 
             foreach (App app in apps.Applist.Apps)
             {

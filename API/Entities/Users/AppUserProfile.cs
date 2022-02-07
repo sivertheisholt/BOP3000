@@ -1,4 +1,4 @@
-using API.Entities.Lobby;
+using API.Entities.Lobbies;
 
 namespace API.Entities.Users
 {

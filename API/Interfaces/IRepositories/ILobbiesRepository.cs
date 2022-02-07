@@ -1,4 +1,4 @@
-using API.Entities.Lobby;
+using API.Entities.Lobbies;
 using API.Entities.SteamApp;
 
 namespace API.Interfaces.IRepositories
@@ -8,5 +8,8 @@ namespace API.Interfaces.IRepositories
         void AddLobby(Lobby loby);
 
         Task<Lobby> GetLobbyAsync(int id);
+
+        Task<List<Lobby>> GetLobbiesAsync();
+
     }
 }

@@ -1,6 +1,6 @@
 using API.DTOs;
-using API.DTOs.Lobby;
-using API.Entities.Lobby;
+using API.DTOs.Lobbies;
+using API.Entities.Lobbies;
 using API.Entities.Users;
 using AutoMapper;
 
@@ -15,6 +15,7 @@ namespace API.Helpers
             CreateMap<Lobby, NewLobbyDto>();
             CreateMap<Lobby, Requirement>();
             CreateMap<Requirement, RequirementDto>();
+            CreateMap<LobbiesList, LobbiesListDto>();
         }
     }
 }

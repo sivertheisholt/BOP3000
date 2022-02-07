@@ -1,12 +1,10 @@
 using API.Clients;
 using API.Data;
 using API.Data.Repositories;
-using API.Entities.Users;
 using API.Helpers;
-using API.Interfaces;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
-using API.Interfaces.IRepositories.Steam;
+using API.Interfaces.IRepositories.Apps;
 using API.Interfaces.IServices;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +22,6 @@ namespace API.Extentions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILobbiesRepository, LobbiesRepository>();
             services.AddScoped<ISteamAppRepository, SteamAppRepository>();
-            services.AddScoped<ISteamAppsRepository, SteamAppsRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {

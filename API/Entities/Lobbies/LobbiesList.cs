@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Interfaces.IRepositories
+namespace API.Entities.Lobbies
 {
-    public interface IMemberRepository
+    public class LobbiesList
     {
-
+        public ICollection<Lobby> Lobbies { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 
-namespace API.DTOs.Lobby
+namespace API.DTOs.Lobbies
 {
     public class NewLobbyDto
     {

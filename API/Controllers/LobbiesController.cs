@@ -1,6 +1,6 @@
 using System.Security.Claims;
-using API.DTOs.Lobby;
-using API.Entities.Lobby;
+using API.DTOs.Lobbies;
+using API.Entities.Lobbies;
 using API.Interfaces.IRepositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -65,6 +65,16 @@ namespace API.Controllers
             if (lobby == null) return NotFound();
 
             return _mapper.Map<LobbyDto>(lobby);
+        }
+
+        [HttpGet("")]
+        [Authorize(Policy = "RequireMemberRole")]
+        public async Task<ActionResult<LobbiesListDto>> GetLobbies()
+        {
+            var lobbies = await _lobbiesRepository.GetLobbiesAsync();
+            if (lobbies == null) return NotFound();
+
+            return _mapper.Map<LobbiesListDto>(lobbies);
         }
     }
 }

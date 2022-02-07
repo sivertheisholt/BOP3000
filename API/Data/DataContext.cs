@@ -1,5 +1,5 @@
 using System.Text.Json;
-using API.Entities.Lobby;
+using API.Entities.Lobbies;
 using API.Entities.Roles;
 using API.Entities.SteamApp;
 using API.Entities.SteamApp.Information;

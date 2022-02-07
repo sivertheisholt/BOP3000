@@ -1,5 +1,5 @@
 using API.Entities.SteamApp;
-using API.Interfaces.IRepositories;
+using API.Interfaces.IRepositories.Apps;
 
 namespace API.Data.Repositories
 {

@@ -1,4 +1,4 @@
-using API.Entities.Lobby;
+using API.Entities.Lobbies;
 using API.Interfaces.IRepositories;
 
 namespace API.Data.Repositories
@@ -12,6 +12,12 @@ namespace API.Data.Repositories
         public void AddLobby(Lobby lobby)
         {
             Context.Lobby.Add(lobby);
+        }
+
+        public Task<List<Lobby>> GetLobbiesAsync()
+        {
+            //var query = Context.Lobby.Where(x => x.GameType == "Casual").OrderBy(X => X.Id).Take(5).Skip(5).AsQueryable();
+            return Task.FromResult(Context.Lobby.ToList());
         }
 
         public async Task<Lobby> GetLobbyAsync(int id)
