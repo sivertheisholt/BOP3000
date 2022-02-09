@@ -11,6 +11,7 @@ includes:
   - users/user
   - accounts/account
   - lobbies/lobby
+  - members/member
   - errors
 
 search: true
