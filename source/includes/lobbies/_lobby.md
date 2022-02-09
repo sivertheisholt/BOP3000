@@ -19,7 +19,17 @@ fetch("https://bop3000.azurewebsites.net/api/users", requestOptions)
 > The above command returns JSON structured like this:
 
 ```json
-[]
+[
+  {
+    "id": 1,
+    "maxUsers": 10,
+    "title": "TestHello",
+    "steamId": null,
+    "users": [],
+    "lobbyRequirement": null,
+    "gameId": 0
+  }
+]
 ```
 
 This endpoint retrieves all users.
@@ -38,11 +48,14 @@ This endpoint retrieves all users.
 
 | Key              | Type             |
 | ---------------- | ---------------- |
+| id               | int              |
 | maxUsers         | int              |
 | title            | string           |
-| lobbyDescription | string           |
-| gameId           | id               |
+| lobbyDescription | string, optional |
+| gameId           | int              |
+| steamId          | int              |
 | gameType         | string           |
+| users            | int[]            |
 | lobbyRequirement | LobbyRequirement |
 
 #### LobbyRequirement
@@ -108,8 +121,8 @@ This endpoint will create a new lobby.
 | ---------------- | ---------------- |
 | maxUsers         | int              |
 | title            | string           |
-| lobbyDescription | string           |
-| gameId           | id               |
+| lobbyDescription | string, optional |
+| gameId           | int              |
 | gameType         | string           |
 | lobbyRequirement | LobbyRequirement |
 
@@ -126,7 +139,7 @@ This endpoint will create a new lobby.
 | maxUsers         | int              |
 | title            | string           |
 | lobbyDescription | string           |
-| gameId           | id               |
+| gameId           | int              |
 | gameType         | string           |
 | lobbyRequirement | LobbyRequirement |
 
