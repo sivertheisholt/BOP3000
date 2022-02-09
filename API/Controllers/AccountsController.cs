@@ -1,8 +1,10 @@
 using API.DTOs;
 using API.Entities.Users;
 using API.Enums;
-using API.Interfaces;
+
+using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +14,10 @@ namespace API.Controllers
     /// <summary>
     /// AccountController is the endpoint for actions related to accounts
     /// </summary>
-    public class AccountController : BaseApiController
+    public class AccountsController : BaseApiController
     {
         private readonly ITokenService _tokenService;
+        private readonly IUserRepository _userRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
@@ -24,11 +27,12 @@ namespace API.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="tokenService"></param>
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService)
+        public AccountsController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _tokenService = tokenService;
+            _userRepository = userRepository;
         }
 
 
@@ -92,6 +96,21 @@ namespace API.Controllers
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user)
             };
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpDelete("delete")]
+        public async Task<ActionResult> Delete()
+        {
+            var userId = GetUserIdFromClaim();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null) return NotFound();
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded) return BadRequest("Could not delete user");
+
+            return Ok("User deleted successfully!");
         }
 
         /// <summary>
