@@ -24,5 +24,10 @@ namespace API.Data.Repositories
         {
             return await Context.Users.ToListAsync();
         }
+
+        public void UpdateUsername(AppUser user, string username)
+        {
+            user.UserName = username;
+        }
     }
 }

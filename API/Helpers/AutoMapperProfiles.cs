@@ -15,6 +15,7 @@ namespace API.Helpers
             CreateMap<Lobby, NewLobbyDto>();
             CreateMap<Lobby, Requirement>();
             CreateMap<Requirement, RequirementDto>();
+            CreateMap<MemberUpdateDto, AppUser>();
         }
     }
 }

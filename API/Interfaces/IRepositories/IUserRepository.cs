@@ -7,5 +7,7 @@ namespace API.Interfaces.IRepositories
         Task<IEnumerable<AppUser>> GetUsersAsync();
         Task<AppUser> GetUserByUsernameAsync(string username);
         Task<AppUser> GetUserByIdAsync(int id);
+
+        void UpdateUsername(AppUser user, string username);
     }
 }

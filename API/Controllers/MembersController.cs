@@ -37,5 +37,24 @@ namespace API.Controllers
 
             return Ok(_mapper.Map<IEnumerable<MemberDto>>(users));
         }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPut("")]
+        public async Task<ActionResult> UpdateMember(MemberUpdateDto memberUpdateDto)
+        {
+            var userId = GetUserIdFromClaim();
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null) return NotFound();
+
+            _mapper.Map(memberUpdateDto, user);
+
+            _userRepository.Update(user);
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest();
+        }
     }
 }
