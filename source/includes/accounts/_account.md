@@ -45,7 +45,17 @@ This endpoint will authorize an account.
 
 ### Body Schema
 
-`{ "username": "dave", "token": "<Token>" }`
+| Key      | Type   |
+| -------- | ------ |
+| username | string |
+| password | string |
+
+### Response Class (Status 200)
+
+| Key      | Type   |
+| -------- | ------ |
+| username | string |
+| token    | string |
 
 ## POST Register
 
@@ -85,6 +95,20 @@ This endpoint will create a new account.
 ### HTTP Request
 
 `POST https://bop3000.azurewebsites.net/api/accounts/register`
+
+### Body Schema
+
+| Key      | Type   |
+| -------- | ------ |
+| username | string |
+| password | string |
+
+### Response Class (Status 200)
+
+| Key      | Type   |
+| -------- | ------ |
+| username | string |
+| token    | string |
 
 <!--- PUT --->
 
