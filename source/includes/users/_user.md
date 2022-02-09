@@ -64,8 +64,4 @@ This endpoint retrieves all users.
 
 <!--- PUT --->
 
-## PUT a user
-
 <!--- DELETE --->
-
-## DELETE a user
