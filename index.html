@@ -341,6 +341,9 @@
                   <li>
                     <a href="#post-register" class="toc-h2 toc-link" data-title="POST Register">POST Register</a>
                   </li>
+                  <li>
+                    <a href="#delete-account" class="toc-h2 toc-link" data-title="DELETE Account">DELETE Account</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -514,6 +517,28 @@
 <!--- PUT --->
 
 <!--- DELETE --->
+<h2 id='delete-account'>DELETE Account</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DELETE</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/accounts/delete</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns a string:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="s2">"User deleted successfully!"</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint will delete a user account</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>DELETE https://bop3000.azurewebsites.net/api/accounts/delete</code></p>
 <h1 id='lobbies'>Lobbies</h1>
 <!--- GET --->
 <h2 id='get-all-lobbies'>GET all lobbies</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
@@ -656,7 +681,7 @@
   </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint retrieves all users.</p>
+<p>This endpoint retrieves a single member.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/members/1</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
