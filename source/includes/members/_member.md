@@ -107,7 +107,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://localhost:5001/api/members", requestOptions)
+fetch("https://bop3000.azurewebsites.net/api/members", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
