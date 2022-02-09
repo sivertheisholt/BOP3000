@@ -90,4 +90,41 @@ This endpoint retrieves a single member.
 
 <!--- PUT --->
 
+## PUT Update a single member
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var raw = JSON.stringify({
+  username: "newUsername",
+});
+
+var requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow",
+};
+
+fetch("https://localhost:5001/api/members", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 (No content) status code
+
+This endpoint updates a single member
+
+### HTTP Request
+
+`PUT https://bop3000.azurewebsites.net/api/members`
+
+### Body Schema
+
+| Key      | Type   |
+| -------- | ------ |
+| username | string |
+
 <!--- DELETE --->
