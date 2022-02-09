@@ -89,3 +89,33 @@ This endpoint will create a new account.
 <!--- PUT --->
 
 <!--- DELETE --->
+
+## DELETE Account
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "DELETE",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch("https://bop3000.azurewebsites.net/api/accounts/delete", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a string:
+
+```json
+"User deleted successfully!"
+```
+
+This endpoint will delete a user account
+
+### HTTP Request
+
+`DELETE https://bop3000.azurewebsites.net/api/accounts/delete`

@@ -68,7 +68,7 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
 }
 ```
 
-This endpoint retrieves all users.
+This endpoint retrieves a single member.
 
 ### HTTP Request
 
