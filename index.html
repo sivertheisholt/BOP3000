@@ -353,12 +353,6 @@
                     <a href="#get-all-lobbies" class="toc-h2 toc-link" data-title="GET all lobbies">GET all lobbies</a>
                   </li>
                   <li>
-                    <a href="#get-a-single-lobby" class="toc-h2 toc-link" data-title="GET a single lobby">GET a single lobby</a>
-                  </li>
-                  <li>
-                    <a href="#get-a-single-lobby-users" class="toc-h2 toc-link" data-title="GET a single lobby users">GET a single lobby users</a>
-                  </li>
-                  <li>
                     <a href="#post-a-new-lobby" class="toc-h2 toc-link" data-title="POST a new lobby">POST a new lobby</a>
                   </li>
               </ul>
@@ -619,7 +613,7 @@
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[]</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint retrieves all users.</p>
 <h3 id='http-request'>HTTP Request</h3>
@@ -638,7 +632,51 @@
 <td>Each page returns 25 entries</td>
 </tr>
 </tbody></table>
-<h2 id='get-a-single-lobby'>GET a single lobby</h2><h2 id='get-a-single-lobby-users'>GET a single lobby users</h2>
+<h3 id='response-class-status-200'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>maxUsers</td>
+<td>int</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+</tr>
+<tr>
+<td>lobbyDescription</td>
+<td>string</td>
+</tr>
+<tr>
+<td>gameId</td>
+<td>id</td>
+</tr>
+<tr>
+<td>gameType</td>
+<td>string</td>
+</tr>
+<tr>
+<td>lobbyRequirement</td>
+<td>LobbyRequirement</td>
+</tr>
+</tbody></table>
+<h4 id='lobbyrequirement'>LobbyRequirement</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>gender</td>
+<td>string, optional</td>
+</tr>
+</tbody></table>
+
 <!--- POST --->
 <h2 id='post-a-new-lobby'>POST a new lobby</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
@@ -681,6 +719,94 @@
 <p>This endpoint will create a new lobby.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>POST https://bop3000.azurewebsites.net/api/lobbies</code></p>
+<h3 id='body-schema'>Body Schema</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>maxUsers</td>
+<td>int</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+</tr>
+<tr>
+<td>lobbyDescription</td>
+<td>string</td>
+</tr>
+<tr>
+<td>gameId</td>
+<td>id</td>
+</tr>
+<tr>
+<td>gameType</td>
+<td>string</td>
+</tr>
+<tr>
+<td>lobbyRequirement</td>
+<td>LobbyRequirement</td>
+</tr>
+</tbody></table>
+<h4 id='lobbyrequirement-2'>LobbyRequirement</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>gender</td>
+<td>string, optional</td>
+</tr>
+</tbody></table>
+<h3 id='response-class-status-200-2'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>maxUsers</td>
+<td>int</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+</tr>
+<tr>
+<td>lobbyDescription</td>
+<td>string</td>
+</tr>
+<tr>
+<td>gameId</td>
+<td>id</td>
+</tr>
+<tr>
+<td>gameType</td>
+<td>string</td>
+</tr>
+<tr>
+<td>lobbyRequirement</td>
+<td>LobbyRequirement</td>
+</tr>
+</tbody></table>
+<h4 id='lobbyrequirement-3'>LobbyRequirement</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>gender</td>
+<td>string, optional</td>
+</tr>
+</tbody></table>
 
 <!--- PUT --->
 
