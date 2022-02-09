@@ -19,7 +19,7 @@ fetch("https://bop3000.azurewebsites.net/api/users", requestOptions)
 > The above command returns JSON structured like this:
 
 ```json
-{}
+[]
 ```
 
 This endpoint retrieves all users.
@@ -34,9 +34,22 @@ This endpoint retrieves all users.
 | --------- | ------- | ---------------------------- |
 | page      | 1       | Each page returns 25 entries |
 
-## GET a single lobby
+### Response Class (Status 200)
 
-## GET a single lobby users
+| Key              | Type             |
+| ---------------- | ---------------- |
+| maxUsers         | int              |
+| title            | string           |
+| lobbyDescription | string           |
+| gameId           | id               |
+| gameType         | string           |
+| lobbyRequirement | LobbyRequirement |
+
+#### LobbyRequirement
+
+| Key    | Type             |
+| ------ | ---------------- |
+| gender | string, optional |
 
 <!--- POST --->
 
@@ -88,6 +101,40 @@ This endpoint will create a new lobby.
 ### HTTP Request
 
 `POST https://bop3000.azurewebsites.net/api/lobbies`
+
+### Body Schema
+
+| Key              | Type             |
+| ---------------- | ---------------- |
+| maxUsers         | int              |
+| title            | string           |
+| lobbyDescription | string           |
+| gameId           | id               |
+| gameType         | string           |
+| lobbyRequirement | LobbyRequirement |
+
+#### LobbyRequirement
+
+| Key    | Type             |
+| ------ | ---------------- |
+| gender | string, optional |
+
+### Response Class (Status 200)
+
+| Key              | Type             |
+| ---------------- | ---------------- |
+| maxUsers         | int              |
+| title            | string           |
+| lobbyDescription | string           |
+| gameId           | id               |
+| gameType         | string           |
+| lobbyRequirement | LobbyRequirement |
+
+#### LobbyRequirement
+
+| Key    | Type             |
+| ------ | ---------------- |
+| gender | string, optional |
 
 <!--- PUT --->
 
