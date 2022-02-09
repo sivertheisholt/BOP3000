@@ -372,6 +372,9 @@
                   <li>
                     <a href="#get-a-single-member" class="toc-h2 toc-link" data-title="GET a single member">GET a single member</a>
                   </li>
+                  <li>
+                    <a href="#put-update-a-single-member" class="toc-h2 toc-link" data-title="PUT Update a single member">PUT Update a single member</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -774,6 +777,44 @@
 <!--- POST --->
 
 <!--- PUT --->
+<h2 id='put-update-a-single-member'>PUT Update a single member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="na">username</span><span class="p">:</span> <span class="dl">"</span><span class="s2">newUsername</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PUT</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">raw</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://localhost:5001/api/members</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns a 204 (No content) status code</p>
+</blockquote>
+
+<p>This endpoint updates a single member</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>PUT https://bop3000.azurewebsites.net/api/members</code></p>
+<h3 id='body-schema'>Body Schema</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>string</td>
+</tr>
+</tbody></table>
 
 <!--- DELETE --->
 <h1 id='errors'>Errors</h1>
