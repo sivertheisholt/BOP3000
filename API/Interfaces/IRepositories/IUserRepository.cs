@@ -8,6 +8,9 @@ namespace API.Interfaces.IRepositories
         Task<AppUser> GetUserByUsernameAsync(string username);
         Task<AppUser> GetUserByIdAsync(int id);
 
+        Task<AppUser> GetUserByEmailAsync(string email);
+
         void UpdateUsername(AppUser user, string username);
+
     }
 }

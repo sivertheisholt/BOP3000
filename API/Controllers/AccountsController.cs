@@ -1,4 +1,5 @@
 using API.DTOs;
+using API.DTOs.Accounts;
 using API.Entities.Users;
 using API.Enums;
 
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace API.Controllers
 {
@@ -52,6 +54,7 @@ namespace API.Controllers
             var user = new AppUser
             {
                 UserName = registerDto.Username.ToLower(),
+                Email = registerDto.Email.ToLower(),
             };
 
             // Creates the user in backend
@@ -113,6 +116,36 @@ namespace API.Controllers
             return Ok("User deleted successfully!");
         }
 
+        [HttpPost("forgotten_password")]
+        public async Task<ActionResult> ForgottenPassword(ForgottenPasswordDto forgottenPasswordDto)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(forgottenPasswordDto.Email);
+
+            if (user == null) return NotFound();
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            Console.WriteLine(token);
+
+            return Accepted();
+        }
+
+        [HttpPut("change_forgotten_password")]
+        public async Task<ActionResult> ChangeForgottenPassword(ChangePasswordDto changePasswordDto, string token)
+        {
+            //Get user
+            var user = await _userRepository.GetUserByEmailAsync(changePasswordDto.Email);
+
+            if (user == null) return NotFound();
+
+            var result = await _userManager.ResetPasswordAsync(user, token, changePasswordDto.NewPassword);
+
+            //Verify token
+            if (!result.Succeeded) return Unauthorized();
+
+            return NoContent();
+        }
+
         /// <summary>
         /// Checks if a user exists
         /// </summary>
@@ -122,5 +155,7 @@ namespace API.Controllers
         {
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
+
+
     }
 }

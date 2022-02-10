@@ -3,6 +3,7 @@ using API.Data;
 using API.Entities.Roles;
 using API.Entities.Users;
 using API.Enums;
+using API.Providers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -21,7 +22,8 @@ namespace API.Extentions
                 .AddRoleManager<RoleManager<AppRole>>()
                 .AddSignInManager<SignInManager<AppUser>>()
                 .AddRoleValidator<RoleValidator<AppRole>>()
-                .AddEntityFrameworkStores<DataContext>();
+                .AddEntityFrameworkStores<DataContext>()
+                .AddTokenProvider("Default", typeof(UserTokenProvider<AppUser>));
 
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var token = "";

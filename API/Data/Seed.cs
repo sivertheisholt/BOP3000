@@ -29,12 +29,14 @@ namespace API.Data
 
             var admin = new AppUser
             {
-                UserName = "admin"
+                UserName = "adminTest",
+                Email = "admin@test.com"
             };
 
             var testUser = new AppUser
             {
-                UserName = "testbruker"
+                UserName = "membertest",
+                Email = "member@test.com"
             };
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");

@@ -10,6 +10,11 @@ namespace API.Data.Repositories
         {
         }
 
+        public async Task<AppUser> GetUserByEmailAsync(string email)
+        {
+            return await Context.Users.SingleOrDefaultAsync(x => x.Email == email);
+        }
+
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await Context.Users.FindAsync(id);
