@@ -2,7 +2,7 @@
 
 <!--- GET --->
 
-## GET all lobbies
+## GET All lobbies
 
 ```javascript
 var requestOptions = {
@@ -38,12 +38,6 @@ This endpoint retrieves all users.
 
 `GET https://bop3000.azurewebsites.net/api/lobbies`
 
-### Query Parameters
-
-| Parameter | Default | Description                  |
-| --------- | ------- | ---------------------------- |
-| page      | 1       | Each page returns 25 entries |
-
 ### Response Class (Status 200)
 
 | Key              | Type             |
@@ -66,7 +60,7 @@ This endpoint retrieves all users.
 
 <!--- POST --->
 
-## POST a new lobby
+## POST A new lobby
 
 ```javascript
 var myHeaders = new Headers();
