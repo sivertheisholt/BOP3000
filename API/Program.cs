@@ -2,7 +2,8 @@ using API.Data;
 using API.Entities.Roles;
 using API.Entities.Users;
 using API.Interfaces.IClients;
-using API.Interfaces.IRepositories.Apps;
+using API.Interfaces.IRepositories;
+using API.Interfaces.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,15 +24,20 @@ namespace API
                 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
 
                 var steamAppRepository = services.GetRequiredService<ISteamAppRepository>();
+                var steamAppsrepository = services.GetRequiredService<ISteamAppsRepository>();
+
                 var steamStoreClient = services.GetRequiredService<ISteamStoreClient>();
                 var steamAppsClient = services.GetRequiredService<ISteamAppsClient>();
 
+                var meilisearchService = services.GetRequiredService<IMeilisearchService>();
+
                 await contex.Database.MigrateAsync();
                 await Seed.SeedUsers(userManager, roleManager);
-                await Seed.SeedSteamGames(steamAppRepository, steamStoreClient, steamAppsClient);
+                await Seed.SeedSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient, meilisearchService);
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 var logger = services.GetRequiredService<ILogger>();
                 logger.LogError(ex, "An error occured during migrations");
             }

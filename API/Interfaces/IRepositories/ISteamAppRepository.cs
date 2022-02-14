@@ -4,8 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Entities.SteamApp;
 
-namespace API.Interfaces.IRepositories.Apps
+namespace API.Interfaces.IRepositories
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ISteamAppRepository : IBaseRepository<AppInfo>
     {
         Task<AppInfo> GetAppInfoAsync(int id);

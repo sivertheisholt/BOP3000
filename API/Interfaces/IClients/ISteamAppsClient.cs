@@ -4,6 +4,6 @@ namespace API.Interfaces.IClients
 {
     public interface ISteamAppsClient
     {
-        Task<Apps> GetAppsList();
+        Task<AppList> GetAppsList();
     }
 }

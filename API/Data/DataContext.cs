@@ -3,6 +3,7 @@ using API.Entities.Lobbies;
 using API.Entities.Roles;
 using API.Entities.SteamApp;
 using API.Entities.SteamApp.Information;
+using API.Entities.SteamApps;
 using API.Entities.Users;
 using API.Entities.Users.Role;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +23,7 @@ namespace API.Data
         }
         public DbSet<Lobby> Lobby { get; set; }
         public DbSet<AppInfo> AppInfo { get; set; }
+        public DbSet<AppList> AppList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,7 +43,7 @@ namespace API.Data
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
 
-            /*********** STEAM **************/
+            /*********** Steam Store **************/
 
             builder.Entity<AppData>()
                 .HasOne(app => app.AppInfo)
@@ -271,6 +273,16 @@ namespace API.Data
 
             builder.Entity<Sub>()
                 .HasKey(sub => sub.SubId);
+
+            /*********** Steam API **************/
+            builder.Entity<AppListInfo>()
+                .HasOne(app => app.AppList)
+                .WithMany(list => list.Apps)
+                .HasForeignKey(app => app.AppListId)
+                .IsRequired();
+
+            builder.Entity<AppListInfo>()
+                .HasKey(app => app.AppListInfoId);
         }
     }
 }

@@ -36,9 +36,8 @@ namespace API.Clients
                 var content = await response.Content.ReadAsStringAsync();
 
                 JObject contentObject = JObject.Parse(content);
-                var test = contentObject;
 
-                //Check if data is present
+                // Check if data is present
                 if (contentObject[appid.ToString()]["data"] == null)
                 {
                     return new AppInfo
@@ -67,7 +66,6 @@ namespace API.Clients
                 var macRequirementsToken = contentObject[appid.ToString()]["data"]["mac_requirements"];
                 if (macRequirementsToken != null && macRequirementsToken.Type == JTokenType.Array)
                 {
-
                     contentObject[appid.ToString()]["data"]["mac_requirements"] = null;
                 }
 
