@@ -48,7 +48,10 @@ namespace API.Controllers
         {
 
             // Check if username already exists
-            if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
+            if (await UsernameExists(registerDto.Username)) return BadRequest("Username is taken");
+
+            // Check if Email already exists
+            if (await EmailExists(registerDto.Email)) return BadRequest("Email is taken");
 
             // Creates a new AppUser
             var user = new AppUser
@@ -125,8 +128,6 @@ namespace API.Controllers
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            Console.WriteLine(token);
-
             return Accepted();
         }
 
@@ -147,15 +148,24 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Checks if a user exists
+        /// Checks if username exists
         /// </summary>
         /// <param name="username"></param>
-        /// <returns>Task -> True/False if the user exists</returns>
-        private async Task<bool> UserExists(string username)
+        /// <returns>Task -> True/False if the username exists</returns>
+        private async Task<bool> UsernameExists(string username)
         {
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
 
+        /// <summary>
+        /// Checks if email exists
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Task -> True/False if the email exists</returns>
+        private async Task<bool> EmailExists(string email)
+        {
+            return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
+        }
 
     }
 }
