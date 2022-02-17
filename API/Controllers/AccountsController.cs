@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace API.Controllers
 {
@@ -105,6 +104,10 @@ namespace API.Controllers
             };
         }
 
+        /// <summary>
+        /// Deletes an account from the database
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Policy = "RequireMemberRole")]
         [HttpDelete("delete")]
         public async Task<ActionResult> Delete()
@@ -120,6 +123,11 @@ namespace API.Controllers
             return Ok("User deleted successfully!");
         }
 
+        /// <summary>
+        /// Will generate a token for the user to use for resetting password
+        /// </summary>
+        /// <param name="forgottenPasswordDto"></param>
+        /// <returns></returns>
         [HttpPost("forgotten_password")]
         public async Task<ActionResult> ForgottenPassword(ForgottenPasswordDto forgottenPasswordDto)
         {
@@ -132,18 +140,43 @@ namespace API.Controllers
             return Accepted();
         }
 
+        /// <summary>
+        /// Verifies the provided token and changes the users password to the provided password 
+        /// </summary>
+        /// <param name="changeForgottenPasswordDto"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         [HttpPut("change_forgotten_password")]
-        public async Task<ActionResult> ChangeForgottenPassword(ChangePasswordDto changePasswordDto, string token)
+        public async Task<ActionResult> ChangeForgottenPassword(ChangeForgottenPasswordDto changeForgottenPasswordDto, string token)
         {
             //Get user
-            var user = await _userRepository.GetUserByEmailAsync(changePasswordDto.Email);
+            var user = await _userRepository.GetUserByEmailAsync(changeForgottenPasswordDto.Email);
 
             if (user == null) return NotFound();
 
-            var result = await _userManager.ResetPasswordAsync(user, token, changePasswordDto.NewPassword);
+            var result = await _userManager.ResetPasswordAsync(user, token, changeForgottenPasswordDto.NewPassword);
 
             //Verify token
             if (!result.Succeeded) return Unauthorized();
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Will change the password of the user
+        /// </summary>
+        /// <param name="changePasswordDto"></param>
+        /// <returns></returns>
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPut("change_password")]
+        public async Task<ActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            var userId = GetUserIdFromClaim();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            Console.WriteLine(changePasswordDto.CurrentPassword);
+
+            var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
+            if (!result.Succeeded) BadRequest(result.Errors);
 
             return NoContent();
         }

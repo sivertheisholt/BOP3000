@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace API.DTOs.Accounts
 {
-    public class ChangePasswordDto
+    public class ChangeForgottenPasswordDto
     {
-        public string CurrentPassword { get; set; }
+
+        public string Email { get; set; }
         [Required]
         [StringLength(16, MinimumLength = 8)]
         public string NewPassword { get; set; }
