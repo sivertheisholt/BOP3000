@@ -1037,7 +1037,26 @@
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"member@test.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"membertest"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"memberProfile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"age"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Male"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"countryIso"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Afghanistan"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"twoLetterCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AF"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"threeLetterCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AFG"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"numericCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"004"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"memberData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"upvotes"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"downvotes"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"userDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jeg er en veldig flink spiller!"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"followers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"following"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"userFavoriteGames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint retrieves a single member.</p>
@@ -1063,8 +1082,96 @@
 </tr>
 </thead><tbody>
 <tr>
+<td>email</td>
+<td>string</td>
+</tr>
+<tr>
 <td>username</td>
 <td>string</td>
+</tr>
+<tr>
+<td>memberProfile</td>
+<td>MemberProfile</td>
+</tr>
+</tbody></table>
+<h4 id='memberprofile'>MemberProfile</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>age</td>
+<td>int</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>string</td>
+</tr>
+<tr>
+<td>countryIso</td>
+<td>CountryIso</td>
+</tr>
+<tr>
+<td>memberData</td>
+<td>MemberData</td>
+</tr>
+</tbody></table>
+<h4 id='countryiso'>CountryIso</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+</tr>
+<tr>
+<td>twoLetterCode</td>
+<td>string</td>
+</tr>
+<tr>
+<td>ThreeLetterCode</td>
+<td>string</td>
+</tr>
+<tr>
+<td>numericCode</td>
+<td>string</td>
+</tr>
+</tbody></table>
+<h4 id='memberdata'>MemberData</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>upvotes</td>
+<td>int</td>
+</tr>
+<tr>
+<td>downvotes</td>
+<td>int</td>
+</tr>
+<tr>
+<td>userDescription</td>
+<td>string</td>
+</tr>
+<tr>
+<td>followers</td>
+<td>array</td>
+</tr>
+<tr>
+<td>following</td>
+<td>array</td>
+</tr>
+<tr>
+<td>userFavoriteGames</td>
+<td>array</td>
 </tr>
 </tbody></table>
 
