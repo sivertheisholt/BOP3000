@@ -8,12 +8,10 @@ namespace API.Controllers
 {
     public class MembersController : BaseApiController
     {
-        private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        public MembersController(IUserRepository userRepository, IMapper mapper)
+        public MembersController(IUserRepository userRepository, IMapper mapper) : base(mapper)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
         }
 
         [Authorize(Policy = "RequireMemberRole")]
@@ -24,7 +22,7 @@ namespace API.Controllers
 
             if (user == null) return NotFound();
 
-            return Ok(_mapper.Map<MemberDto>(user));
+            return Ok(Mapper.Map<MemberDto>(user));
         }
 
         [Authorize(Policy = "RequireMemberRole")]
@@ -35,7 +33,7 @@ namespace API.Controllers
 
             if (users == null) return NotFound();
 
-            return Ok(_mapper.Map<IEnumerable<MemberDto>>(users));
+            return Ok(Mapper.Map<IEnumerable<MemberDto>>(users));
         }
 
         [Authorize(Policy = "RequireMemberRole")]
@@ -48,7 +46,7 @@ namespace API.Controllers
 
             if (user == null) return NotFound();
 
-            _mapper.Map(memberUpdateDto, user);
+            Mapper.Map(memberUpdateDto, user);
 
             _userRepository.Update(user);
 

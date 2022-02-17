@@ -23,6 +23,7 @@ namespace API.Extentions
             services.AddScoped<ISteamAppRepository, SteamAppRepository>();
             services.AddScoped<ISteamAppsRepository, SteamAppsRepository>();
             services.AddScoped<IMeilisearchService, MeilisearchService>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>

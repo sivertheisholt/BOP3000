@@ -31,9 +31,12 @@ namespace API
 
                 var meilisearchService = services.GetRequiredService<IMeilisearchService>();
 
+                var countryRepository = services.GetRequiredService<ICountryRepository>();
+
                 await contex.Database.MigrateAsync();
                 await Seed.SeedUsers(userManager, roleManager);
                 await Seed.SeedSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient, meilisearchService);
+                await Seed.SeedCountryIso(countryRepository);
             }
             catch (Exception ex)
             {

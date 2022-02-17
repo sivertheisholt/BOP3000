@@ -5,6 +5,7 @@ using API.Enums;
 
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace API.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="tokenService"></param>
-        public AccountsController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository)
+        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository) : base(mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;

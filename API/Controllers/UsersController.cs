@@ -12,16 +12,14 @@ namespace API.Controllers
     public class UsersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
 
         /// <summary>
         /// Creates a new UsersController
         /// </summary>
         /// <param name="userRepository"></param>
         /// <param name="mapper"></param>
-        public UsersController(IUserRepository userRepository, IMapper mapper)
+        public UsersController(IUserRepository userRepository, IMapper mapper) : base(mapper)
         {
-            _mapper = mapper;
             _userRepository = userRepository;
         }
 
@@ -35,7 +33,7 @@ namespace API.Controllers
         {
             var users = await _userRepository.GetUsersAsync();
 
-            var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
+            var usersToReturn = Mapper.Map<IEnumerable<MemberDto>>(users);
 
             return Ok(usersToReturn);
         }
@@ -52,7 +50,7 @@ namespace API.Controllers
         {
             var user = await _userRepository.GetUserByIdAsync(id);
 
-            return _mapper.Map<MemberDto>(user);
+            return Mapper.Map<MemberDto>(user);
         }
     }
 }

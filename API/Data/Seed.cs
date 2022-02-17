@@ -1,3 +1,4 @@
+using API.Entities.Countries;
 using API.Entities.Roles;
 using API.Entities.SteamApps;
 using API.Entities.Users;
@@ -5,6 +6,7 @@ using API.Enums;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
+using ISO3166;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -95,6 +97,30 @@ namespace API.Data
             await meilisearchService.initializeIndexAsync(dbResult);
 
             Console.WriteLine($"Finished seeding Steam data");
+        }
+
+        /// <summary>
+        /// Will seed all the countries to the database
+        /// </summary>
+        /// <param name="countryRepository"></param>
+        /// <returns></returns>
+        public static async Task SeedCountryIso(ICountryRepository countryRepository)
+        {
+            if (await countryRepository.GetCountryIsoByIdAsync(1) != null) return;
+
+            foreach (Country country in ISO3166.Country.List)
+            {
+                var countryIso = new CountryIso
+                {
+                    Name = country.Name,
+                    TwoLetterCode = country.TwoLetterCode,
+                    ThreeLetterCode = country.ThreeLetterCode,
+                    NumericCode = country.NumericCode
+                };
+                countryRepository.AddCountryIso(countryIso);
+            }
+            await countryRepository.SaveAllAsync();
+            Console.WriteLine($"Finished seeding Country Data");
         }
     }
 }

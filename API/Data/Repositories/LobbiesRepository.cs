@@ -14,6 +14,11 @@ namespace API.Data.Repositories
             Context.Lobby.Add(lobby);
         }
 
+        public Task<bool> AddPlayerToLobby(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<Lobby>> GetLobbiesAsync()
         {
             //var query = Context.Lobby.Where(x => x.GameType == "Casual").OrderBy(X => X.Id).Take(5).Skip(5).AsQueryable();

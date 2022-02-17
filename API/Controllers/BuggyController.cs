@@ -1,5 +1,6 @@
 using API.Data;
 using API.Entities.Users;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace API.Controllers
         /// Constructs a new BuggyController
         /// </summary>
         /// <param name="context"></param>
-        public BuggyController(DataContext context)
+        public BuggyController(IMapper mapper, DataContext context) : base(mapper)
         {
             _context = context;
         }

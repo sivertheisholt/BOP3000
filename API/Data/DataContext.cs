@@ -1,4 +1,6 @@
 using System.Text.Json;
+using API.Entities.Applications;
+using API.Entities.Countries;
 using API.Entities.Lobbies;
 using API.Entities.Roles;
 using API.Entities.SteamApp;
@@ -24,6 +26,7 @@ namespace API.Data
         public DbSet<Lobby> Lobby { get; set; }
         public DbSet<AppInfo> AppInfo { get; set; }
         public DbSet<AppList> AppList { get; set; }
+        public DbSet<CountryIso> CountryIso { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,6 +45,52 @@ namespace API.Data
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+
+            builder.Entity<AppUserProfile>()
+                .HasOne(profile => profile.AppUser)
+                .WithOne(app => app.AppUserProfile)
+                .HasForeignKey<AppUserProfile>(profile => profile.AppUserId)
+                .IsRequired();
+
+            builder.Entity<AppUserProfile>()
+                .HasKey(profile => profile.AppUserId);
+
+            builder.Entity<AppUserConnections>()
+                .HasOne(conn => conn.AppUserProfile)
+                .WithOne(profile => profile.UserConnections)
+                .HasForeignKey<AppUserConnections>(x => x.AppUserProfileId)
+                .IsRequired();
+
+            builder.Entity<AppUserConnections>()
+                .HasKey(conn => conn.AppUserProfileId);
+
+            builder.Entity<Discord>()
+                .HasOne(discord => discord.AppUserConnections)
+                .WithOne(conn => conn.Discord)
+                .HasForeignKey<Discord>(discord => discord.AppUserConnectionsId)
+                .IsRequired();
+
+            builder.Entity<Discord>()
+                .HasKey(discord => discord.AppUserConnectionsId);
+
+            builder.Entity<Steam>()
+                .HasOne(steam => steam.AppUserConnections)
+                .WithOne(conn => conn.Steam)
+                .HasForeignKey<Steam>(steam => steam.AppUserConnectionsId)
+                .IsRequired();
+
+            builder.Entity<Steam>()
+                .HasKey(steam => steam.AppUserConnectionsId);
+
+            builder.Entity<AppUserProfile>()
+                .Property(profile => profile.FinishedLobbies)
+                .HasConversion(
+                    lobby => JsonSerializer.Serialize(lobby, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    lobby => JsonSerializer.Deserialize<List<int>>(lobby, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<int>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, lobby) => HashCode.Combine(a, lobby.GetHashCode())),
+                        c => (ICollection<int>)c.ToList()));
 
             /*********** Steam Store **************/
 

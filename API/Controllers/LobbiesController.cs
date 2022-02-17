@@ -14,12 +14,10 @@ namespace API.Controllers
     public class LobbiesController : BaseApiController
     {
         private readonly ILobbiesRepository _lobbiesRepository;
-        private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper)
+        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper) : base(mapper)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
             _lobbiesRepository = lobbiesRepository;
         }
 
@@ -51,7 +49,7 @@ namespace API.Controllers
             _lobbiesRepository.AddLobby(lobby);
 
             // Checks the result from adding the new Game Room
-            if (await _lobbiesRepository.SaveAllAsync()) return Ok(_mapper.Map<NewLobbyDto>(lobby));
+            if (await _lobbiesRepository.SaveAllAsync()) return Ok(Mapper.Map<NewLobbyDto>(lobby));
 
             return BadRequest("Failed to create room");
         }
@@ -64,7 +62,7 @@ namespace API.Controllers
 
             if (lobby == null) return NotFound();
 
-            return _mapper.Map<LobbyDto>(lobby);
+            return Mapper.Map<LobbyDto>(lobby);
         }
 
         [HttpGet("")]
@@ -74,7 +72,18 @@ namespace API.Controllers
             var lobbies = await _lobbiesRepository.GetLobbiesAsync();
             if (lobbies == null) return NotFound();
 
-            return Ok(_mapper.Map<List<LobbyDto>>(lobbies));
+            return Ok(Mapper.Map<List<LobbyDto>>(lobbies));
+        }
+
+        [HttpGet("join")]
+        [Authorize(Policy = "RequireMemberRole")]
+        public async Task<ActionResult> JoinLobby(string lobbyId)
+        {
+            var userId = GetUserIdFromClaim();
+
+            if (!await _lobbiesRepository.AddPlayerToLobby(userId)) return BadRequest("Could not join the room");
+
+            return NoContent();
         }
     }
 }
