@@ -202,6 +202,45 @@ This endpoint will update the password to the new password.
 | email       | string |
 | newPassword | string |
 
+## PUT Change password
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  currentPassword: "Playfu123!!",
+  newPassword: "Playfu123!",
+});
+
+var requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow",
+};
+
+fetch("https://localhost:5001/api/accounts/change_password", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 No Content:
+
+This endpoint will update the password to the new password.
+
+### HTTP Request
+
+`PUT https://bop3000.azurewebsites.net/api/accounts/change_password`
+
+### Body Schema
+
+| Key             | Type   |
+| --------------- | ------ |
+| currentPassword | string |
+| newPassword     | string |
+
 <!--- DELETE --->
 
 ## DELETE Account
