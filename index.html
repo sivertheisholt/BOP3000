@@ -342,6 +342,9 @@
                     <a href="#put-change-forgotten-password" class="toc-h2 toc-link" data-title="PUT Change forgotten password">PUT Change forgotten password</a>
                   </li>
                   <li>
+                    <a href="#put-change-password" class="toc-h2 toc-link" data-title="PUT Change password">PUT Change password</a>
+                  </li>
+                  <li>
                     <a href="#delete-account" class="toc-h2 toc-link" data-title="DELETE Account">DELETE Account</a>
                   </li>
               </ul>
@@ -688,6 +691,49 @@
 <td>string</td>
 </tr>
 </tbody></table>
+<h2 id='put-change-password'>PUT Change password</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="na">currentPassword</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Playfu123!!</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">newPassword</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Playfu123!</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PUT</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">raw</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://localhost:5001/api/accounts/change_password</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns a 204 No Content:</p>
+</blockquote>
+
+<p>This endpoint will update the password to the new password.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>PUT https://bop3000.azurewebsites.net/api/accounts/change_password</code></p>
+<h3 id='body-schema-5'>Body Schema</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>currentPassword</td>
+<td>string</td>
+</tr>
+<tr>
+<td>newPassword</td>
+<td>string</td>
+</tr>
+</tbody></table>
 
 <!--- DELETE --->
 <h2 id='delete-account'>DELETE Account</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
@@ -710,7 +756,7 @@
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="s2">"User deleted successfully!"</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint will delete a user account</p>
-<h3 id='http-request-5'>HTTP Request</h3>
+<h3 id='http-request-6'>HTTP Request</h3>
 <p><code>DELETE https://bop3000.azurewebsites.net/api/accounts/delete</code></p>
 <h1 id='lobbies'>Lobbies</h1>
 <!--- GET --->
