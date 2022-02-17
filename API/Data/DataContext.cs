@@ -92,6 +92,45 @@ namespace API.Data
                         c => c.Aggregate(0, (a, lobby) => HashCode.Combine(a, lobby.GetHashCode())),
                         c => (ICollection<int>)c.ToList()));
 
+            builder.Entity<AppUserData>()
+                .HasOne(data => data.AppUserProfile)
+                .WithOne(profile => profile.AppUserData)
+                .HasForeignKey<AppUserData>(data => data.AppUserProfileId)
+                .IsRequired();
+
+            builder.Entity<AppUserData>()
+                .HasKey(data => data.AppUserProfileId);
+
+            builder.Entity<AppUserData>()
+                .Property(data => data.Followers)
+                .HasConversion(
+                    follower => JsonSerializer.Serialize(follower, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    follower => JsonSerializer.Deserialize<List<int>>(follower, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<int>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, follower) => HashCode.Combine(a, follower.GetHashCode())),
+                        c => (ICollection<int>)c.ToList()));
+
+            builder.Entity<AppUserData>()
+                .Property(data => data.Following)
+                .HasConversion(
+                    following => JsonSerializer.Serialize(following, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    following => JsonSerializer.Deserialize<List<int>>(following, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<int>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, following) => HashCode.Combine(a, following.GetHashCode())),
+                        c => (ICollection<int>)c.ToList()));
+
+            builder.Entity<AppUserData>()
+                .Property(data => data.UserFavoriteGames)
+                .HasConversion(
+                    game => JsonSerializer.Serialize(game, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    game => JsonSerializer.Deserialize<List<int>>(game, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<int>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, game) => HashCode.Combine(a, game.GetHashCode())),
+                        c => (ICollection<int>)c.ToList()));
+
             /*********** Steam Store **************/
 
             builder.Entity<AppData>()
