@@ -64,7 +64,26 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
 
 ```json
 {
-  "username": "test"
+  "email": "member@test.com",
+  "username": "membertest",
+  "memberProfile": {
+    "age": 0,
+    "gender": "Male",
+    "countryIso": {
+      "name": "Afghanistan",
+      "twoLetterCode": "AF",
+      "threeLetterCode": "AFG",
+      "numericCode": "004"
+    },
+    "memberData": {
+      "upvotes": 10,
+      "downvotes": 5,
+      "userDescription": "Jeg er en veldig flink spiller!",
+      "followers": [2, 3, 4, 6, 7],
+      "following": [2, 3, 4, 6, 7],
+      "userFavoriteGames": [2, 3, 4, 6, 7]
+    }
+  }
 }
 ```
 
@@ -82,9 +101,40 @@ This endpoint retrieves a single member.
 
 ### Response Class (Status 200)
 
-| Key      | Type   |
-| -------- | ------ |
-| username | string |
+| Key           | Type          |
+| ------------- | ------------- |
+| email         | string        |
+| username      | string        |
+| memberProfile | MemberProfile |
+
+#### MemberProfile
+
+| Key        | Type       |
+| ---------- | ---------- |
+| age        | int        |
+| gender     | string     |
+| countryIso | CountryIso |
+| memberData | MemberData |
+
+#### CountryIso
+
+| Key             | Type   |
+| --------------- | ------ |
+| name            | string |
+| twoLetterCode   | string |
+| ThreeLetterCode | string |
+| numericCode     | string |
+
+#### MemberData
+
+| Key               | Type   |
+| ----------------- | ------ |
+| upvotes           | int    |
+| downvotes         | int    |
+| userDescription   | string |
+| followers         | array  |
+| following         | array  |
+| userFavoriteGames | array  |
 
 <!--- POST --->
 
