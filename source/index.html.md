@@ -12,6 +12,7 @@ includes:
   - accounts/account
   - lobbies/lobby
   - members/member
+  - apps/app
   - errors
 
 search: true
