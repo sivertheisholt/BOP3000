@@ -39,13 +39,55 @@ namespace API.Data
             var admin = new AppUser
             {
                 UserName = "adminTest",
-                Email = "admin@test.com"
+                Email = "admin@test.com",
+                AppUserProfile = new AppUserProfile
+                {
+                    Birthday = new DateTime(1998, 7, 30),
+                    Gender = "Male",
+                    CountryIso = new CountryIso
+                    {
+                        Name = ISO3166.Country.List.First().Name,
+                        TwoLetterCode = ISO3166.Country.List.First().TwoLetterCode,
+                        ThreeLetterCode = ISO3166.Country.List.First().ThreeLetterCode,
+                        NumericCode = ISO3166.Country.List.First().NumericCode
+                    },
+                    AppUserData = new AppUserData
+                    {
+                        Upvotes = 10,
+                        Downvotes = 5,
+                        UserDescription = "Jeg er en veldig flink spiller!",
+                        Followers = new[] { 2, 3, 4, 6, 7 },
+                        Following = new[] { 2, 3, 4, 6, 7 },
+                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    }
+                }
             };
 
             var testUser = new AppUser
             {
                 UserName = "membertest",
-                Email = "member@test.com"
+                Email = "member@test.com",
+                AppUserProfile = new AppUserProfile
+                {
+                    Birthday = new DateTime(1998, 7, 30),
+                    Gender = "Male",
+                    CountryIso = new CountryIso
+                    {
+                        Name = ISO3166.Country.List.First().Name,
+                        TwoLetterCode = ISO3166.Country.List.First().TwoLetterCode,
+                        ThreeLetterCode = ISO3166.Country.List.First().ThreeLetterCode,
+                        NumericCode = ISO3166.Country.List.First().NumericCode
+                    },
+                    AppUserData = new AppUserData
+                    {
+                        Upvotes = 10,
+                        Downvotes = 5,
+                        UserDescription = "Jeg er en veldig flink spiller!",
+                        Followers = new[] { 2, 3, 4, 6, 7 },
+                        Following = new[] { 2, 3, 4, 6, 7 },
+                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    }
+                }
             };
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");

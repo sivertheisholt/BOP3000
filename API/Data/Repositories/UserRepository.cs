@@ -17,7 +17,14 @@ namespace API.Data.Repositories
 
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
-            return await Context.Users.FindAsync(id);
+            var user = await Context.Users.Where(p => p.Id == id)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.AppUserData)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.CountryIso)
+                .FirstOrDefaultAsync();
+
+            return user;
         }
 
         public async Task<AppUser> GetUserByUsernameAsync(string username)

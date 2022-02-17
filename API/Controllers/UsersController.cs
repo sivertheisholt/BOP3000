@@ -1,4 +1,4 @@
-using API.DTOs;
+using API.DTOs.Members;
 using API.Interfaces.IRepositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
