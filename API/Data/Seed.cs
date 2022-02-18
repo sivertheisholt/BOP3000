@@ -1,4 +1,5 @@
 using API.Entities.Countries;
+using API.Entities.Lobbies;
 using API.Entities.Roles;
 using API.Entities.SteamApps;
 using API.Entities.Users;
@@ -163,6 +164,80 @@ namespace API.Data
             }
             await countryRepository.SaveAllAsync();
             Console.WriteLine($"Finished seeding Country Data");
+        }
+
+        public static async Task SeedSteamAppsInfo(ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository,
+                                                    ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient)
+        {
+            var apps = new Int32[] { 730, 1599340, 1172470, 381210, 427520 };
+            foreach (var app in apps)
+            {
+                var appResult = await steamStoreClient.GetAppInfo(app);
+                if (!appResult.Success) return;
+                steamAppRepository.AddApp(appResult);
+            }
+            await steamAppRepository.SaveAllAsync();
+        }
+
+        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository)
+        {
+            var lobbies = new Lobby[] {
+                new Lobby {MaxUsers = 5,
+                            AdminUid = 1,
+                            Title = "Whats up gamers",
+                            LobbyDescription = "Hello there",
+                            GameId=730,
+                            GameType="Competetive",
+                            Users=new List<int>{1},
+                            LobbyRequirement = new Requirement {
+                                Gender = "Male"
+                            }},
+                new Lobby {MaxUsers = 5,
+                            AdminUid = 1,
+                            Title = "Hey guys lets play",
+                            LobbyDescription = "Sup",
+                            GameId=730,
+                            GameType="Casual",
+                            Users=new List<int>{1},
+                            LobbyRequirement = new Requirement {
+                                Gender = "Male"
+                            }},
+                new Lobby {MaxUsers = 5,
+                            AdminUid = 1,
+                            Title = "Whats up noobs",
+                            LobbyDescription = "Hmmm",
+                            GameId=1599340,
+                            GameType="Competetive",
+                            Users=new List<int>{1},
+                            LobbyRequirement = new Requirement {
+                                Gender = "Female"
+                            }},
+                new Lobby {MaxUsers = 5,
+                            AdminUid = 1,
+                            Title = "Halla",
+                            LobbyDescription = "I dont know",
+                            GameId=1172470,
+                            GameType="Casual",
+                            Users=new List<int>{1},
+                            LobbyRequirement = new Requirement {
+                                Gender = "Male"
+                            }},
+                new Lobby {MaxUsers = 5,
+                            AdminUid = 1,
+                            Title = "Play smth?",
+                            LobbyDescription = "Sheeeeesh",
+                            GameId=381210,
+                            GameType="Casual",
+                            Users=new List<int>{1},
+                            LobbyRequirement = new Requirement {
+                                Gender = "Female"
+                            }}
+            };
+            foreach (var item in lobbies)
+            {
+                lobbiesRepository.AddLobby(item);
+            }
+            await lobbiesRepository.SaveAllAsync();
         }
     }
 }

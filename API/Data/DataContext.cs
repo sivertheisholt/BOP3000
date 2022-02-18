@@ -371,6 +371,17 @@ namespace API.Data
 
             builder.Entity<AppListInfo>()
                 .HasKey(app => app.AppListInfoId);
+
+            /*********** Lobby **************/
+            builder.Entity<Lobby>()
+                .Property(lobby => lobby.Users)
+                .HasConversion(
+                    lobby => JsonSerializer.Serialize(lobby, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    lobby => JsonSerializer.Deserialize<List<int>>(lobby, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<int>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, lobby) => HashCode.Combine(a, lobby.GetHashCode())),
+                        c => (ICollection<int>)c.ToList()));
         }
     }
 }
