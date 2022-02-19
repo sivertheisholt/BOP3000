@@ -70,6 +70,58 @@ This endpoint retrieves the results from the search.
 | title     | The ID of the user to retrieve |         |
 | limit     | The ID of the user to retrieve | 10      |
 
+## GET Active apps that has lobbies
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "");
+
+var requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch("https://localhost:5001/api/apps/active", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 51,
+    "name": "Counter-Strike: Global Offensive",
+    "headerImage": "https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg?t=1641233427",
+    "background": "https://cdn.akamai.steamstatic.com/steam/apps/730/page_bg_generated_v6b.jpg?t=1641233427"
+  },
+  {
+    "id": 52,
+    "name": "Lost Ark",
+    "headerImage": "https://cdn.akamai.steamstatic.com/steam/apps/1599340/header.jpg?t=1644892919",
+    "background": "https://cdn.akamai.steamstatic.com/steam/apps/1599340/page_bg_generated_v6b.jpg?t=1644892919"
+  }
+]
+```
+
+This endpoint retrieves all apps that has a lobby
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/apps/active`
+
+### Response Class (Status 200)
+
+| Key         | Type   |
+| ----------- | ------ |
+| id          | int    |
+| name        | string |
+| headerImage | string |
+| background  | string |
+
 <!--- POST --->
 
 <!--- PUT --->
