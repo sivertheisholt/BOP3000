@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Entities.SteamApp;
+using API.Entities.SteamApp.Information;
 
 namespace API.Interfaces.IRepositories
 {
@@ -14,5 +11,7 @@ namespace API.Interfaces.IRepositories
         Task<AppInfo> GetAppInfoAsync(int id);
 
         void AddApp(AppInfo appInfo);
+
+        Task<List<AppData>> GetActiveApps();
     }
 }

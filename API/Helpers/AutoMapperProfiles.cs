@@ -7,6 +7,9 @@ using API.Entities.Users;
 using AutoMapper;
 using API.Entities.Countries;
 using API.DTOs.Countries;
+using API.Entities.SteamApp;
+using API.DTOs.GameApps;
+using API.Entities.SteamApp.Information;
 
 namespace API.Helpers
 {
@@ -39,6 +42,8 @@ namespace API.Helpers
 
             CreateMap<CountryIso, CountryIsoDto>();
             CreateMap<CountryIsoDto, CountryIso>().ReverseMap();
+
+            CreateMap<AppData, GameAppInfoDto>();
         }
     }
 }
