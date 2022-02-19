@@ -380,6 +380,9 @@
                   <li>
                     <a href="#get-search-for-app" class="toc-h2 toc-link" data-title="GET Search for app">GET Search for app</a>
                   </li>
+                  <li>
+                    <a href="#get-active-apps-that-has-lobbies" class="toc-h2 toc-link" data-title="GET Active apps that has lobbies">GET Active apps that has lobbies</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1299,6 +1302,65 @@
 <td>limit</td>
 <td>The ID of the user to retrieve</td>
 <td>10</td>
+</tr>
+</tbody></table>
+<h2 id='get-active-apps-that-has-lobbies'>GET Active apps that has lobbies</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">""</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://localhost:5001/api/apps/active</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">51</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Counter-Strike: Global Offensive"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"headerImage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg?t=1641233427"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"background"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cdn.akamai.steamstatic.com/steam/apps/730/page_bg_generated_v6b.jpg?t=1641233427"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lost Ark"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"headerImage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cdn.akamai.steamstatic.com/steam/apps/1599340/header.jpg?t=1644892919"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"background"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cdn.akamai.steamstatic.com/steam/apps/1599340/page_bg_generated_v6b.jpg?t=1644892919"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves all apps that has a lobby</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/apps/active</code></p>
+<h3 id='response-class-status-200-2'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+</tr>
+<tr>
+<td>headerImage</td>
+<td>string</td>
+</tr>
+<tr>
+<td>background</td>
+<td>string</td>
 </tr>
 </tbody></table>
 
