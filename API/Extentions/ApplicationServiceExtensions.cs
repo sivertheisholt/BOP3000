@@ -17,7 +17,8 @@ namespace API.Extentions
             services.AddHttpClient<ISteamAppsClient, SteamAppsClient>();
             services.AddHttpClient<ISteamStoreClient, SteamStoreClient>();
 
-            services.AddScoped<IEmailService, EmailService>();
+            services.AddSingleton<IEmailService, EmailService>();
+
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IMeilisearchService, MeilisearchService>();
 
