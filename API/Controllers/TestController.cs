@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
+using API.Interfaces.IServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +19,10 @@ namespace API.Controllers
         private readonly ISteamStoreClient _steamStoreClient;
         private readonly ISteamAppsClient _steamAppsClient;
         private readonly ILobbiesRepository _lobbiesRepository;
-        public TestController(IMapper mapper, ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, ILobbiesRepository lobbiesRepository) : base(mapper)
+        private readonly IEmailService _emailservice;
+        public TestController(IMapper mapper, ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, ILobbiesRepository lobbiesRepository, IEmailService emailservice) : base(mapper)
         {
+            _emailservice = emailservice;
             _lobbiesRepository = lobbiesRepository;
             _steamAppsClient = steamAppsClient;
             _steamStoreClient = steamStoreClient;
@@ -40,6 +43,14 @@ namespace API.Controllers
         public async Task<ActionResult> SeedLobbies()
         {
             await Seed.SeedLobbies(_lobbiesRepository);
+            return NoContent();
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("send_email")]
+        public async Task<ActionResult> SendEmail()
+        {
+            await Task.Run(() => _emailservice.SendForgottenPasswordMail("test", "playfu3000@gmail.com"));
             return NoContent();
         }
     }

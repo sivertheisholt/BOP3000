@@ -14,18 +14,21 @@ namespace API.Extentions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-
             services.AddHttpClient<ISteamAppsClient, SteamAppsClient>();
             services.AddHttpClient<ISteamStoreClient, SteamStoreClient>();
+
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IMeilisearchService, MeilisearchService>();
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILobbiesRepository, LobbiesRepository>();
             services.AddScoped<ISteamAppRepository, SteamAppRepository>();
             services.AddScoped<ISteamAppsRepository, SteamAppsRepository>();
-            services.AddScoped<IMeilisearchService, MeilisearchService>();
             services.AddScoped<ICountryRepository, CountryRepository>();
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
             services.AddDbContext<DataContext>(options =>
             {
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
