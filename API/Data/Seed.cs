@@ -186,10 +186,10 @@ namespace API.Data
 
             var lobbies = new Lobby[] {
                 new Lobby {MaxUsers = 5,
-                            AdminUid = 1,
+                            AdminUid = 51,
                             Title = "Whats up gamers",
                             LobbyDescription = "Hello there",
-                            GameId=730,
+                            GameId=1,
                             GameType="Competetive",
                             Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
@@ -199,7 +199,7 @@ namespace API.Data
                             AdminUid = 1,
                             Title = "Hey guys lets play",
                             LobbyDescription = "Sup",
-                            GameId=730,
+                            GameId=51,
                             GameType="Casual",
                             Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
@@ -209,7 +209,7 @@ namespace API.Data
                             AdminUid = 1,
                             Title = "Whats up noobs",
                             LobbyDescription = "Hmmm",
-                            GameId=1599340,
+                            GameId=52,
                             GameType="Competetive",
                             Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
@@ -219,7 +219,7 @@ namespace API.Data
                             AdminUid = 1,
                             Title = "Halla",
                             LobbyDescription = "I dont know",
-                            GameId=1172470,
+                            GameId=53,
                             GameType="Casual",
                             Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
@@ -229,7 +229,7 @@ namespace API.Data
                             AdminUid = 1,
                             Title = "Play smth?",
                             LobbyDescription = "Sheeeeesh",
-                            GameId=381210,
+                            GameId=54,
                             GameType="Casual",
                             Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
