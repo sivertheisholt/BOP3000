@@ -182,7 +182,7 @@ namespace API.Data
 
         public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository)
         {
-            if (await lobbiesRepository.GetLobbyAsync(1) != null) return;
+            if (await lobbiesRepository.GetLobbyAsync(51) != null) return;
 
             var lobbies = new Lobby[] {
                 new Lobby {MaxUsers = 5,
