@@ -464,7 +464,7 @@
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
-  <span class="na">username</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dave</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">member@test.com</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">password</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DetVar1Gang!</span><span class="dl">"</span><span class="p">,</span>
 <span class="p">});</span>
 
@@ -484,7 +484,7 @@
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dave"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"member@test.com"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;Token&gt;"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -499,7 +499,7 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>username</td>
+<td>email</td>
 <td>string</td>
 </tr>
 <tr>
@@ -515,6 +515,10 @@
 </tr>
 </thead><tbody>
 <tr>
+<td>email</td>
+<td>string</td>
+</tr>
+<tr>
 <td>username</td>
 <td>string</td>
 </tr>
@@ -527,8 +531,8 @@
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
-  <span class="na">username</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dave</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">daveTest@test.com</span><span class="dl">"</span>
+  <span class="na">username</span><span class="p">:</span> <span class="dl">"</span><span class="s2">member</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">member@test.com</span><span class="dl">"</span>
   <span class="na">password</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DetVar1Gang!</span><span class="dl">"</span><span class="p">,</span>
 <span class="p">});</span>
 
@@ -548,7 +552,8 @@
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dave"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"member@test.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"member"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;Token&gt;"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -584,6 +589,10 @@
 </thead><tbody>
 <tr>
 <td>username</td>
+<td>string</td>
+</tr>
+<tr>
+<td>email</td>
 <td>string</td>
 </tr>
 <tr>
