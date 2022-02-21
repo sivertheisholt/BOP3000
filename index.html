@@ -356,6 +356,9 @@
                     <a href="#get-all-lobbies" class="toc-h2 toc-link" data-title="GET All lobbies">GET All lobbies</a>
                   </li>
                   <li>
+                    <a href="#get-lobbies-with-specific-game-id" class="toc-h2 toc-link" data-title="GET Lobbies with specific game ID">GET Lobbies with specific game ID</a>
+                  </li>
+                  <li>
                     <a href="#post-a-new-lobby" class="toc-h2 toc-link" data-title="POST A new lobby">POST A new lobby</a>
                   </li>
               </ul>
@@ -797,7 +800,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint retrieves all users.</p>
+<p>This endpoint retrieves all lobbies.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/lobbies</code></p>
 <h3 id='response-class-status-200'>Response Class (Status 200)</h3>
@@ -856,6 +859,91 @@
 <td>string, optional</td>
 </tr>
 </tbody></table>
+<h2 id='get-lobbies-with-specific-game-id'>GET Lobbies with specific game ID</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/lobbies/game/730</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"maxUsers"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Whats up gamers"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"steamId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameId"</span><span class="p">:</span><span class="w"> </span><span class="mi">730</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Competetive"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"lobbyRequirement"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves all lobbies with a specific game ID.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/lobbies/game/&lt;ID&gt;</code></p>
+<h3 id='response-class-status-200-2'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+</tr>
+<tr>
+<td>maxUsers</td>
+<td>int</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+</tr>
+<tr>
+<td>lobbyDescription</td>
+<td>string, optional</td>
+</tr>
+<tr>
+<td>gameId</td>
+<td>int</td>
+</tr>
+<tr>
+<td>steamId</td>
+<td>int</td>
+</tr>
+<tr>
+<td>gameType</td>
+<td>string</td>
+</tr>
+<tr>
+<td>users</td>
+<td>int[]</td>
+</tr>
+<tr>
+<td>lobbyRequirement</td>
+<td>LobbyRequirement</td>
+</tr>
+</tbody></table>
+<h4 id='lobbyrequirement-2'>LobbyRequirement</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>gender</td>
+<td>string, optional</td>
+</tr>
+</tbody></table>
 
 <!--- POST --->
 <h2 id='post-a-new-lobby'>POST A new lobby</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
@@ -897,7 +985,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint will create a new lobby.</p>
-<h3 id='http-request-2'>HTTP Request</h3>
+<h3 id='http-request-3'>HTTP Request</h3>
 <p><code>POST https://bop3000.azurewebsites.net/api/lobbies</code></p>
 <h3 id='body-schema'>Body Schema</h3>
 <table><thead>
@@ -931,7 +1019,7 @@
 <td>LobbyRequirement</td>
 </tr>
 </tbody></table>
-<h4 id='lobbyrequirement-2'>LobbyRequirement</h4>
+<h4 id='lobbyrequirement-3'>LobbyRequirement</h4>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -943,7 +1031,7 @@
 <td>string, optional</td>
 </tr>
 </tbody></table>
-<h3 id='response-class-status-200-2'>Response Class (Status 200)</h3>
+<h3 id='response-class-status-200-3'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -975,7 +1063,7 @@
 <td>LobbyRequirement</td>
 </tr>
 </tbody></table>
-<h4 id='lobbyrequirement-3'>LobbyRequirement</h4>
+<h4 id='lobbyrequirement-4'>LobbyRequirement</h4>
 <table><thead>
 <tr>
 <th>Key</th>
