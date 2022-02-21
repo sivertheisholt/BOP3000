@@ -85,5 +85,13 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("game/{id}")]
+        public async Task<ActionResult<IEnumerable<LobbyDto>>> GetLobbiesWithGameId(int id)
+        {
+            var lobbies = await _lobbiesRepository.GetLobbiesWithGameId(id);
+
+            return Ok(Mapper.Map<List<LobbyDto>>(lobbies));
+        }
     }
 }

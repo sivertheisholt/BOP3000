@@ -25,6 +25,12 @@ namespace API.Data.Repositories
             return Task.FromResult(Context.Lobby.ToList());
         }
 
+        public Task<List<Lobby>> GetLobbiesWithGameId(int id)
+        {
+            var lobbies = Context.Lobby.Where(lobby => lobby.GameId == id).ToList();
+            return Task.FromResult(lobbies);
+        }
+
         public async Task<Lobby> GetLobbyAsync(int id)
         {
             return await Context.Lobby.FindAsync(id);

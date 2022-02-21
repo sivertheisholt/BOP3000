@@ -13,5 +13,7 @@ namespace API.Interfaces.IRepositories
 
         Task<bool> AddPlayerToLobby(int userId);
 
+        Task<List<Lobby>> GetLobbiesWithGameId(int id);
+
     }
 }
