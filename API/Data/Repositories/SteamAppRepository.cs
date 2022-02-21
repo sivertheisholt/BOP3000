@@ -28,7 +28,7 @@ namespace API.Data.Repositories
         {
             var queryLobby = Context.Lobby.Select(u => u.GameId).Distinct().AsQueryable();
 
-            var apps = Context.AppInfo.Where(app => queryLobby.Contains(app.Data.SteamAppid)).Select(app => app.Data).ToList();
+            var apps = Context.AppInfo.Where(app => queryLobby.Contains(app.Data.Id)).Select(app => app.Data).ToList();
             return Task.FromResult(apps);
         }
     }
