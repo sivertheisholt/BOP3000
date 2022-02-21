@@ -11,7 +11,7 @@ var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
 var raw = JSON.stringify({
-  username: "dave",
+  email: "member@test.com",
   password: "DetVar1Gang!",
 });
 
@@ -32,7 +32,7 @@ fetch("https://bop3000.azurewebsites.net/api/accounts/login", requestOptions)
 
 ```json
 {
-  "username": "dave",
+  "email": "member@test.com",
   "token": "<Token>"
 }
 ```
@@ -47,13 +47,14 @@ This endpoint will authorize an account.
 
 | Key      | Type   |
 | -------- | ------ |
-| username | string |
+| email    | string |
 | password | string |
 
 ### Response Class (Status 200)
 
 | Key      | Type   |
 | -------- | ------ |
+| email    | string |
 | username | string |
 | token    | string |
 
@@ -64,8 +65,8 @@ var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
 var raw = JSON.stringify({
-  username: "dave",
-  email: "daveTest@test.com"
+  username: "member",
+  email: "member@test.com"
   password: "DetVar1Gang!",
 });
 
@@ -86,7 +87,8 @@ fetch("https://bop3000.azurewebsites.net/api/accounts/register", requestOptions)
 
 ```json
 {
-  "username": "dave",
+  "email": "member@test.com",
+  "username": "member",
   "token": "<Token>"
 }
 ```
@@ -110,6 +112,7 @@ This endpoint will create a new account.
 | Key      | Type   |
 | -------- | ------ |
 | username | string |
+| email    | string |
 | token    | string |
 
 ## POST Forgotten password
