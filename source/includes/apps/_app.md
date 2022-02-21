@@ -70,6 +70,49 @@ This endpoint retrieves the results from the search.
 | title     | The ID of the user to retrieve |         |
 | limit     | The ID of the user to retrieve | 10      |
 
+## GET Single app
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  redirect: "follow",
+};
+
+fetch("https://bop3000.azurewebsites.net/api/apps/2", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 2,
+  "name": "Carnival and Girls",
+  "headerImage": "https://cdn.akamai.steamstatic.com/steam/apps/1573430/header.jpg?t=1617118165",
+  "background": "https://cdn.akamai.steamstatic.com/steam/apps/1573430/page_bg_generated_v6b.jpg?t=1617118165"
+}
+```
+
+This endpoint retrieves a single app
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/apps/<ID>`
+
+### Response Class (Status 200)
+
+| Key         | Type   |
+| ----------- | ------ |
+| id          | int    |
+| name        | string |
+| headerImage | string |
+| background  | string |
+
 ## GET Active apps that has lobbies
 
 ```javascript

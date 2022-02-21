@@ -61,6 +61,9 @@ This endpoint retrieves all lobbies.
 ## GET Lobbies with specific game ID
 
 ```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
 var requestOptions = {
   method: "GET",
   redirect: "follow",
