@@ -34,5 +34,17 @@ namespace API.Controllers
             var apps = await _steamAppRepository.GetActiveApps();
             return Mapper.Map<List<GameAppInfoDto>>(apps);
         }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GameAppInfoDto>> GetGameAppInfo(int id)
+        {
+            var app = await _steamAppRepository.GetAppInfoAsync(id);
+            Console.WriteLine(app.Data);
+
+            if (app == null) return NotFound();
+
+            return Ok(Mapper.Map<GameAppInfoDto>(app.Data));
+        }
     }
 }

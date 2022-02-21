@@ -86,6 +86,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("game/{id}")]
         public async Task<ActionResult<IEnumerable<LobbyDto>>> GetLobbiesWithGameId(int id)
         {

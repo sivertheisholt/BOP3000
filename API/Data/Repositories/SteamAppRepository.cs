@@ -2,6 +2,8 @@ using API.Entities.Lobbies;
 using API.Entities.SteamApp;
 using API.Entities.SteamApp.Information;
 using API.Interfaces.IRepositories;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace API.Data.Repositories
 {
@@ -12,9 +14,10 @@ namespace API.Data.Repositories
 
         }
 
-        public async Task<AppInfo> GetAppInfoAsync(int id)
+        public Task<AppInfo> GetAppInfoAsync(int id)
         {
-            return await Context.AppInfo.FindAsync(id);
+            var app = Context.AppInfo.Where(app => app.Id == id).Include(test => test.Data).First();
+            return Task.FromResult(app);
         }
 
         public void AddApp(AppInfo appInfo)
