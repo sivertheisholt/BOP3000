@@ -14,10 +14,9 @@ namespace API.Data.Repositories
 
         }
 
-        public Task<AppInfo> GetAppInfoAsync(int id)
+        public async Task<AppInfo> GetAppInfoAsync(int id)
         {
-            var app = Context.AppInfo.Where(app => app.Id == id).Include(test => test.Data).First();
-            return Task.FromResult(app);
+            return await Context.AppInfo.Where(app => app.Id == id).Include(test => test.Data).FirstOrDefaultAsync();
         }
 
         public void AddApp(AppInfo appInfo)
