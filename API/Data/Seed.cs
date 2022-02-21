@@ -169,7 +169,7 @@ namespace API.Data
         public static async Task SeedSteamAppsInfo(ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository,
                                                     ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient)
         {
-            if (await steamAppRepository.GetAppInfoAsync(1) != null) return;
+            if (await steamAppRepository.GetAppInfoAsync(51) != null) return;
             var apps = new Int32[] { 730, 1599340, 1172470, 381210, 427520 };
             foreach (var app in apps)
             {
@@ -182,7 +182,7 @@ namespace API.Data
 
         public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository)
         {
-            if (await lobbiesRepository.GetLobbyAsync(51) != null) return;
+            if (await lobbiesRepository.GetLobbyAsync(1) != null) return;
 
             var lobbies = new Lobby[] {
                 new Lobby {MaxUsers = 5,
