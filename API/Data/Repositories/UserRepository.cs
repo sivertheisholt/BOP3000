@@ -34,7 +34,12 @@ namespace API.Data.Repositories
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
-            return await Context.Users.ToListAsync();
+            return await Context.Users
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.AppUserData)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.CountryIso)
+                .ToListAsync();
         }
 
         public void UpdateUsername(AppUser user, string username)

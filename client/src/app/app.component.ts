@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './_models/user';
 import { AuthService } from './_services/auth.service';
+import { LobbyHubService } from './_services/lobby-hub.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit {
   users: any;
   loggedIn : boolean;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private lobbyHub: LobbyHubService) {
     this.loggedIn = authService.isLoggedIn;
   }
 
@@ -22,7 +23,8 @@ export class AppComponent implements OnInit {
   }
 
   setCurrentUser() {
-    const user: User = JSON.parse(localStorage.getItem('user')!);
-    this.authService.setCurrentUser(user);
+    if(this.loggedIn) {
+      this.lobbyHub.createHubConnection(this.authService.getUserId());
+    }
   }
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../_models/user';
+import { LobbyHubService } from './lobby-hub.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +14,28 @@ export class AuthService {
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private lobbyHub: LobbyHubService) {
   }
 
   login(model: any) {
-    return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
+    return this.http.post<User>(this.baseUrl + 'accounts/login', model).pipe(
       map((res: User) => {
         const user = res;
         if(user) {
           this.initCurrentUser(res);
+          this.lobbyHub.createHubConnection(user.token);
         }
       })
     );
   }
 
   register(model: any) {
-    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+    return this.http.post<User>(this.baseUrl + 'accounts/register', model).pipe(
       map((res: User) => {
         const user = res;
         if(user) {
           this.initCurrentUser(res);
+          this.lobbyHub.createHubConnection(user.token);
         }
       })
     )
@@ -50,6 +53,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     this.currentUserSource.next(undefined);
+    this.lobbyHub.stopHubConnection();
   }
 
   get isLoggedIn(): boolean{

@@ -73,6 +73,7 @@ namespace API.Controllers
             // Returns a new UserDto
             return new UserDto
             {
+                Email = user.Email,
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user)
             };
@@ -86,11 +87,12 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            // Gets the user by username from the database
-            var user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+            // Gets the user by email from the database
+            //var user = await _userManager.Users.SingleOrDefaultAsync(x => x.Email == loginDto.Email.ToLower());
+            var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
 
             // Checks if user exists
-            if (user == null) return Unauthorized("Invalid username");
+            if (user == null) return Unauthorized("Invalid email");
 
             // Checks if the password matches
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
@@ -99,6 +101,7 @@ namespace API.Controllers
             // Returns a new UserDto
             return new UserDto
             {
+                Email = user.Email,
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user)
             };
