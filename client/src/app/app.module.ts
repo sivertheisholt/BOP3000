@@ -13,7 +13,7 @@ import { HomeComponent } from './components/home/home.component';
 import { StartComponent } from './components/start/start.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
-import { ActivityListComponent } from './components/activity-list/activity-list.component';
+import { ActivityListComponent } from './components/home/activity-list/activity-list.component';
 import { HomeButtonsSectionComponent } from './components/home/home-buttons-section/home-buttons-section.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
@@ -27,6 +27,15 @@ import { LobbyComponent } from './components/lobby/lobby.component';
 import { GameLobbyComponent } from './components/find-lobby/game-lobby/game-lobby.component';
 import { GamecardComponent } from './components/find-lobby/gamecard/gamecard.component';
 import { AuthInterceptorService } from './_interceptors/auth-interceptor.service';
+import { SettingsComponent } from './components/settings/settings.component';
+import { LobbyInfoComponent } from './components/lobby/lobby-info/lobby-info.component';
+import { WaitingRoomComponent } from './components/lobby/waiting-room/waiting-room.component';
+import { JoinedUsersComponent } from './components/lobby/joined-users/joined-users.component';
+import { ChatComponent } from './components/lobby/chat/chat.component';
+import { ChangePasswordComponent } from './components/settings/change-password/change-password.component';
+import { ProfileSettingsComponent } from './components/settings/profile-settings/profile-settings.component';
+import { ConnectionsComponent } from './components/settings/connections/connections.component';
+import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 
 
 @NgModule({
@@ -50,7 +59,16 @@ import { AuthInterceptorService } from './_interceptors/auth-interceptor.service
     RoomcardComponent,
     LobbyComponent,
     GamecardComponent,
-    GameLobbyComponent
+    GameLobbyComponent,
+    SettingsComponent,
+    LobbyInfoComponent,
+    WaitingRoomComponent,
+    JoinedUsersComponent,
+    ChatComponent,
+    ChangePasswordComponent,
+    ProfileSettingsComponent,
+    ConnectionsComponent,
+    ForgottenPasswordComponent
   ],
   imports: [
     BrowserModule,

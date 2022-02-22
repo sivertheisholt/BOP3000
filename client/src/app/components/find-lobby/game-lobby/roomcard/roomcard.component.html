@@ -1,29 +1,29 @@
-<div class="card" *ngFor="let roomCard of roomCard">
+<div class="card" *ngFor="let lobby of lobbies">
     <div class="has-text-centered is-flex is-justify-content-center p-3">
         <div class="image is-128x128">
-            <img class="is-rounded" [src]="roomCard.profilePicturePath">
+            <img class="is-rounded" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/75/7514b0304efd66200bc6aeb671642d925b95ca15_full.jpg">
         </div>
     </div>
     <div class="lobby-card-content mt-5">
         <div class="lobby-card-title">
-            {{ roomCard.lobby }}
+            {{ lobby.title }}
         </div>
         <div class="lobby-card-desc">
-            {{ roomCard.description }}
+            {{ lobby.lobbyDescription }}
         </div>
         <div class="lobby-card-wrapper is-flex is-justify-content-space-between mt-5">
             <div class="lobby-card-type">
                 <p>Gametype</p>
-                {{ roomCard.topic }}
+                {{ lobby.gameType }}
             </div>
             <div class="lobby-card-players">
                 <p>Players</p>
-                {{ roomCard.players }} / {{ roomCard.maxPlayers }}
+                 2  / {{ lobby.maxUsers }}
             </div>
         </div>
         <div class="lobby-card-creator mt-5">
             <p>Created By:</p>
-            {{ roomCard.creator }}
+            USER
         </div>
     </div>
     <div class="lobby-btn-wrapper">

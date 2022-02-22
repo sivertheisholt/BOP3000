@@ -1,0 +1,19 @@
+<div class="lobby-chat-wrapper">
+    <div class="lobby-chat">
+        <div class="lobby-chat-item" *ngFor="let message of chatMessages">
+            <div class="lobby-chat-user">
+                {{ message.username }} @ {{ message.timestamp }}
+            </div>
+            <div class="lobby-chat-message">
+                {{ message.message }}
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="sendMessageForm" (ngSubmit)="onSubmit()">
+        <div class="lobby-chat-input is-flex">
+            <input class="input" type="text" placeholder="Text input" formControlName="message">
+            <button class="button" type="submit">Send</button>
+        </div>
+    </form>
+</div>
+

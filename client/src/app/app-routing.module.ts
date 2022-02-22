@@ -13,19 +13,25 @@ import { AuthGuard } from './_guards/auth.guard';
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { FindLobbyComponent } from './components/find-lobby/find-lobby.component';
 import { GameLobbyComponent } from './components/find-lobby/game-lobby/game-lobby.component';
+import { LobbiesResolver } from './_resolvers/lobbies-resolver.service';
+import { SettingsComponent } from './components/settings/settings.component';
+import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
+import { GamesResolver } from './_resolvers/games-resolver.service';
 
 const routes: Routes = [
   { path: '', component: StartComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent, canActivate: [UnAuthGuard] },
+  { path: 'forgotten-password', component: ForgottenPasswordComponent, canActivate: [AuthGuard] },
   { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard] },
   { path: 'account', component: AccountComponent, canActivate: [UnAuthGuard] },
   { path: 'lobby', component: LobbyComponent, canActivate:[UnAuthGuard] },
+  { path: 'find-lobby', component: FindLobbyComponent, resolve: {games: GamesResolver}},
+  { path: 'game-lobby/:id', component: GameLobbyComponent, resolve: {posts: LobbiesResolver}},
+  { path: 'settings', component: SettingsComponent },
   { path: 'errors', component: TestErrorsComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
-  { path: 'find-lobby', component: FindLobbyComponent },
-  { path: 'game-lobby', component: GameLobbyComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

@@ -1,0 +1,35 @@
+.waiting-room-list{
+    width: 100%;
+    height: 480px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+table{
+    background-color: rgba(48, 7, 7, 0.7);
+}
+
+thead{
+    width: 100%;
+    text-align: center;
+}
+
+.table-header-text{
+    color: rgb(238, 238, 235);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+  ::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+  
+  ::-webkit-scrollbar-thumb {
+  background: rgb(141, 138, 138);
+}
+  
+  ::-webkit-scrollbar-thumb:hover {
+  background: rgb(92, 84, 84);
+}

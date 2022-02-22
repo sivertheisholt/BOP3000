@@ -4,7 +4,7 @@ export interface Lobby{
     lobbyDescription? : string;
     gameType: string;
     maxUsers: number;
-    roomRequirement: {
+    lobbyRequirement: {
         gender?: string;
     };
 }

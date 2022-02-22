@@ -1,6 +1,18 @@
 .card{
-    width: 320px;
-    height: 200px;
-    background-color: rgb(8, 56, 12);
+    width: 420px;
+    height: 350px;
+    background-color: rgb(41, 41, 41);
     color: white;
+}
+
+a{
+    color:rgb(211, 211, 211);
+}
+
+a:hover{
+    color: rgb(85, 120, 160);
+}
+
+.card-content{
+    height: 150px;
 }

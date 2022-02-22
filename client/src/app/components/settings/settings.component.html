@@ -1,0 +1,20 @@
+<div class="settings-container">
+    <div class="tabs">
+        <ul>
+          <li [class.active]="viewMode == 'tab1'" rel="tab1" ><a (click)="viewMode='tab1'">Profile</a></li>
+          <li [class.active]="viewMode == 'tab2'" rel="tab2" ><a (click)="viewMode='tab2'">Security</a></li>
+          <li [class.active]="viewMode == 'tab3'" rel="tab3" ><a (click)="viewMode='tab3'">Connections</a></li>
+        </ul>
+    </div>
+    <div class="container" [ngSwitch]="viewMode">
+        <div id="tab1" class="is-flex is-justify-content-center is-align-items-center is-flex-direction-column" *ngSwitchCase="'tab1'">
+            <app-profile-settings class="profile-wrapper"></app-profile-settings>
+        </div>
+        <div class="is-flex is-justify-content-center is-align-items-center is-flex-direction-column" *ngSwitchCase="'tab2'">
+            <app-change-password class="security-wrapper"></app-change-password>
+        </div>
+        <div class="is-flex is-justify-content-center is-align-items-center is-flex-direction-column" *ngSwitchCase="'tab3'">
+            <app-connections class="connections-wrapper"></app-connections>
+        </div>
+    </div>
+</div>

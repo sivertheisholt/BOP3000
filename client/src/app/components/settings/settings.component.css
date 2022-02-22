@@ -1,0 +1,26 @@
+.settings-container{
+    height: 100%;
+    width: 100%;
+}
+
+.profile-wrapper{
+    height: 100%;
+    width: 100%;
+    margin-top: 54px;
+}
+
+.security-wrapper{
+    height: 100%;
+    width: 100%;
+    margin-top: 54px;
+}
+
+.connections-wrapper{
+    height: 100%;
+    width: 100%;
+    margin-top: 54px;
+}
+
+.tabs{
+    margin-top: 54px;
+}

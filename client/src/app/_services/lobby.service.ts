@@ -23,13 +23,10 @@ export class LobbyService{
     }
 
     fetchAllLobbies(){
-        return this.http.get(this.baseUrl + 'lobbies', {
-            responseType: 'json'
-        }).pipe(
-            map(responseData => {
-                console.log(responseData);
-            })
-        );
+        return this.http.get<Lobby[]>(this.baseUrl + 'lobbies');
     }
 
+    fetchAllLobbiesWithGameId(id: number){
+        return this.http.get<Lobby[]>(this.baseUrl + 'lobbies/game/' + id);
+    }
 }

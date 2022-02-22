@@ -1,0 +1,18 @@
+.discordbtn{
+    width: 300px;
+    background-color: rgb(37,36,32);
+    border-radius: 10px;
+    color: white;
+}
+
+.steambtn{
+    width: 300px;
+    background-color: rgb(37,36,32);
+    border-radius: 10px;
+    color: white;
+}
+
+section{
+    background-color: rgb(37,36,32);
+    border: 1px solid rgb(207, 207, 205);
+}

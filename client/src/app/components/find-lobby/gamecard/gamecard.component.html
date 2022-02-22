@@ -1,13 +1,13 @@
-<div class="is-flex is-flex-wrap-wrap p-6">
-    <div class="card m-2">
-        <a routerLink="../game-lobby">
+<div class="is-flex is-flex-wrap-wrap is-flex-justify-content-center is-align-items-center">
+    <div class="card m-2" *ngFor="let game of activeGames">
+        <a [routerLink]="['/game-lobby', game.id]">
             <div class="card-image">
                 <div class="image">
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1438160/header.jpg?t=1602738467" alt="Placeholder image">
+                <img [src]="game.headerImage" alt="Placeholder image">
                 </div>
             </div>
-            <div class="card-content is-flex is-justify-content-space-between">
-                <p class="">Jackbox</p>
+            <div class="card-content is-flex is-justify-content-center is-flex-direction-column has-text-centered">
+                <p class="">{{ game.name }}</p>
                 <p class="">Active Lobbies: 5</p>
             </div>
         </a>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { ValidationService } from 'src/app/_services/validation.service';
 import { AuthService } from '../../_services/auth.service';
 
 @Component({
@@ -11,15 +12,16 @@ import { AuthService } from '../../_services/auth.service';
 export class RegisterComponent implements OnInit {
   faEnvelope = faEnvelope; faLock = faLock; faUser = faUser;
   regUserForm! : FormGroup;
-  constructor(public authService: AuthService) { }
+  constructor(private authService: AuthService, private validationService: ValidationService) { }
 
   ngOnInit(): void {
     this.regUserForm = new FormGroup({
-      email: new FormControl(null),
-      password: new FormControl(null),
-      repeatPassword: new FormControl(null),
-      username: new FormControl(null)
-    });
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, Validators.required),
+      repeatPassword: new FormControl(null, Validators.required),
+      username: new FormControl(null, [Validators.required, Validators.pattern(this.validationService.regexUsername)])
+    }
+    );
   }
 
   register() {
