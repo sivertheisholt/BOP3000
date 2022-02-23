@@ -395,6 +395,17 @@
               </ul>
           </li>
           <li>
+            <a href="#countries" class="toc-h1 toc-link" data-title="Countries">Countries</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-a-specific-country" class="toc-h2 toc-link" data-title="GET A specific country">GET A specific country</a>
+                  </li>
+                  <li>
+                    <a href="#get-all-countries" class="toc-h2 toc-link" data-title="GET All countries">GET All countries</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -1552,7 +1563,7 @@
 <td>string</td>
 </tr>
 </tbody></table>
-<h3 id='url-parameters'>URL Parameters</h3>
+<h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1561,13 +1572,13 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>title</td>
-<td>The ID of the user to retrieve</td>
+<td>name</td>
+<td>The name of the app</td>
 <td></td>
 </tr>
 <tr>
 <td>limit</td>
-<td>The ID of the user to retrieve</td>
+<td>Max items to return</td>
 <td>10</td>
 </tr>
 </tbody></table>
@@ -1677,6 +1688,128 @@
 </tr>
 <tr>
 <td>background</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<!--- POST --->
+
+<!--- PUT --->
+
+<!--- DELETE --->
+<h1 id='countries'>Countries</h1>
+<!--- GET --->
+<h2 id='get-a-specific-country'>GET A specific country</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/countries/1</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Afghanistan"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"twoLetterCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AF"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"threeLetterCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AFG"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"numericCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"004"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves a specific country.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/countries/&lt;ID&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the country to retrieve</td>
+</tr>
+</tbody></table>
+<h3 id='response-class-status-200'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+</tr>
+<tr>
+<td>twoLetterCode</td>
+<td>string</td>
+</tr>
+<tr>
+<td>threeLetterCode</td>
+<td>string</td>
+</tr>
+<tr>
+<td>numericCode</td>
+<td>string</td>
+</tr>
+</tbody></table>
+<h2 id='get-all-countries'>GET All countries</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/countries</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Afghanistan"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"twoLetterCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AF"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"threeLetterCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AFG"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"numericCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"004"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves all countries.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/countries</code></p>
+<h3 id='response-class-status-200-2'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+</tr>
+<tr>
+<td>twoLetterCode</td>
+<td>string</td>
+</tr>
+<tr>
+<td>threeLetterCode</td>
+<td>string</td>
+</tr>
+<tr>
+<td>numericCode</td>
 <td>string</td>
 </tr>
 </tbody></table>
