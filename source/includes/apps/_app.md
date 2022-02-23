@@ -63,12 +63,12 @@ This endpoint retrieves the results from the search.
 | appId | int    |
 | name  | string |
 
-### URL Parameters
+### Query Parameters
 
-| Parameter | Description                    | Default |
-| --------- | ------------------------------ | ------- |
-| title     | The ID of the user to retrieve |         |
-| limit     | The ID of the user to retrieve | 10      |
+| Parameter | Description         | Default |
+| --------- | ------------------- | ------- |
+| name      | The name of the app |         |
+| limit     | Max items to return | 10      |
 
 ## GET Single app
 
