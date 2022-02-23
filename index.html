@@ -367,10 +367,13 @@
             <a href="#members" class="toc-h1 toc-link" data-title="Members">Members</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-members" class="toc-h2 toc-link" data-title="GET all members">GET all members</a>
+                    <a href="#get-all-members" class="toc-h2 toc-link" data-title="GET All members">GET All members</a>
                   </li>
                   <li>
-                    <a href="#get-a-single-member" class="toc-h2 toc-link" data-title="GET a single member">GET a single member</a>
+                    <a href="#get-a-single-member" class="toc-h2 toc-link" data-title="GET A single member">GET A single member</a>
+                  </li>
+                  <li>
+                    <a href="#get-current-member-info" class="toc-h2 toc-link" data-title="GET Current member info">GET Current member info</a>
                   </li>
                   <li>
                     <a href="#put-update-a-single-member" class="toc-h2 toc-link" data-title="PUT Update a single member">PUT Update a single member</a>
@@ -1087,7 +1090,7 @@
 <!--- DELETE --->
 <h1 id='members'>Members</h1>
 <!--- GET --->
-<h2 id='get-all-members'>GET all members</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<h2 id='get-all-members'>GET All members</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
@@ -1144,7 +1147,7 @@
 <td>string</td>
 </tr>
 </tbody></table>
-<h2 id='get-a-single-member'>GET a single member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<h2 id='get-a-single-member'>GET A single member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
@@ -1299,6 +1302,148 @@
 <td>array</td>
 </tr>
 </tbody></table>
+<h2 id='get-current-member-info'>GET Current member info</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/members/current</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"member@test.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"membertest"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"memberProfile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"age"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Male"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"countryIso"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Afghanistan"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"twoLetterCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AF"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"threeLetterCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AFG"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"numericCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"004"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"memberData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"upvotes"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"downvotes"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"userDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jeg er en veldig flink spiller!"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"followers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"following"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"userFavoriteGames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves the current member.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/members/current</code></p>
+<h3 id='response-class-status-200-3'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>string</td>
+</tr>
+<tr>
+<td>username</td>
+<td>string</td>
+</tr>
+<tr>
+<td>memberProfile</td>
+<td>MemberProfile</td>
+</tr>
+</tbody></table>
+<h4 id='memberprofile-2'>MemberProfile</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>age</td>
+<td>int</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>string</td>
+</tr>
+<tr>
+<td>countryIso</td>
+<td>CountryIso</td>
+</tr>
+<tr>
+<td>memberData</td>
+<td>MemberData</td>
+</tr>
+</tbody></table>
+<h4 id='countryiso-2'>CountryIso</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+</tr>
+<tr>
+<td>twoLetterCode</td>
+<td>string</td>
+</tr>
+<tr>
+<td>ThreeLetterCode</td>
+<td>string</td>
+</tr>
+<tr>
+<td>numericCode</td>
+<td>string</td>
+</tr>
+</tbody></table>
+<h4 id='memberdata-2'>MemberData</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>upvotes</td>
+<td>int</td>
+</tr>
+<tr>
+<td>downvotes</td>
+<td>int</td>
+</tr>
+<tr>
+<td>userDescription</td>
+<td>string</td>
+</tr>
+<tr>
+<td>followers</td>
+<td>array</td>
+</tr>
+<tr>
+<td>following</td>
+<td>array</td>
+</tr>
+<tr>
+<td>userFavoriteGames</td>
+<td>array</td>
+</tr>
+</tbody></table>
 
 <!--- POST --->
 
@@ -1327,7 +1472,7 @@
 </blockquote>
 
 <p>This endpoint updates a single member</p>
-<h3 id='http-request-3'>HTTP Request</h3>
+<h3 id='http-request-4'>HTTP Request</h3>
 <p><code>PUT https://bop3000.azurewebsites.net/api/members</code></p>
 <h3 id='body-schema'>Body Schema</h3>
 <table><thead>
