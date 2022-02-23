@@ -13,6 +13,7 @@ includes:
   - lobbies/lobby
   - members/member
   - apps/app
+  - countries/country
   - errors
 
 search: true
