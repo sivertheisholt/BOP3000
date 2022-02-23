@@ -56,4 +56,15 @@
   color: rgb(221, 220, 212);
 }
 
+.error{
+  width: 100%;
+  background-color: #ffffff;
+  padding:5px;
+  border:3px solid #eee;
+  border-radius: 3px;
+}
 
+.danger{
+  border-color: #d9534f;
+  background-color: rgba(217, 83, 79, 0.1);
+}

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/_services/auth.service';
 import { GamesService } from 'src/app/_services/games.service';
+import { passwordMatchingValidator } from 'src/app/_validators/password-matching';
 
 @Component({
   selector: 'app-change-password',
@@ -9,24 +11,30 @@ import { GamesService } from 'src/app/_services/games.service';
 })
 export class ChangePasswordComponent implements OnInit {
   changePasswordForm! : FormGroup;
-
-  constructor(private gamesService: GamesService) { }
+  submitted: boolean = false;
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    
     this.changePasswordForm = new FormGroup({
-      oldPassword: new FormControl(null, Validators.required),
+      currentPassword: new FormControl(null, Validators.required),
       newPassword: new FormControl(null, Validators.required),
       repeatNewPassword: new FormControl(null, Validators.required)
-    });
+    },
+    {
+      validators: passwordMatchingValidator 
+    }
+    );
   }
 
   onSubmit(){
-    this.gamesService.searchGame('count').subscribe(
-      (res) => {
-        console.log(res);
-      }
-    );
-    console.log(this.changePasswordForm);
+    this.submitted = true;
+    if(this.changePasswordForm.valid){
+      this.authService.updateUserPassword({
+        currentPassword: this.changePasswordForm.value.currentPassword,
+        newPassword: this.changePasswordForm.value.newPassword
+      });
+    }
   }
 
 }
