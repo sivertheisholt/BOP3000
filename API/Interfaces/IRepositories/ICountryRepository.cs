@@ -12,5 +12,6 @@ namespace API.Interfaces.IRepositories
 
         Task<CountryIso> GetCountryIsoByIdAsync(int id);
 
+        Task<ICollection<CountryIso>> GetAllCountriesAsync();
     }
 }

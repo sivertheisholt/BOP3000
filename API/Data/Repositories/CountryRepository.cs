@@ -18,6 +18,11 @@ namespace API.Data.Repositories
             Context.CountryIso.Add(countryIso);
         }
 
+        public async Task<ICollection<CountryIso>> GetAllCountriesAsync()
+        {
+            return await Task.FromResult(Context.CountryIso.ToList());
+        }
+
         public async Task<CountryIso> GetCountryIsoByIdAsync(int id)
         {
             return await Context.CountryIso.FindAsync(id);

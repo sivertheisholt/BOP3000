@@ -21,7 +21,7 @@ namespace API.Data
         /// <param name="userManager"></param>
         /// <param name="roleManager"></param>
         /// <returns></returns>
-        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ICountryRepository countryRepository)
         {
             if (await userManager.Users.AnyAsync()) return;
 
@@ -45,13 +45,7 @@ namespace API.Data
                 {
                     Birthday = new DateTime(1998, 7, 30),
                     Gender = "Male",
-                    CountryIso = new CountryIso
-                    {
-                        Name = ISO3166.Country.List.First().Name,
-                        TwoLetterCode = ISO3166.Country.List.First().TwoLetterCode,
-                        ThreeLetterCode = ISO3166.Country.List.First().ThreeLetterCode,
-                        NumericCode = ISO3166.Country.List.First().NumericCode
-                    },
+                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
                     AppUserData = new AppUserData
                     {
                         Upvotes = 10,
@@ -72,13 +66,7 @@ namespace API.Data
                 {
                     Birthday = new DateTime(1998, 7, 30),
                     Gender = "Male",
-                    CountryIso = new CountryIso
-                    {
-                        Name = ISO3166.Country.List.First().Name,
-                        TwoLetterCode = ISO3166.Country.List.First().TwoLetterCode,
-                        ThreeLetterCode = ISO3166.Country.List.First().ThreeLetterCode,
-                        NumericCode = ISO3166.Country.List.First().NumericCode
-                    },
+                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
                     AppUserData = new AppUserData
                     {
                         Upvotes = 10,
@@ -137,7 +125,7 @@ namespace API.Data
 
             //Seed to search
             var dbResult = await steamAppsRepository.GetAppsList(1);
-            await meilisearchService.initializeIndexAsync(dbResult);
+            await meilisearchService.initializeIndexAsync(apps);
 
             Console.WriteLine($"Finished seeding Steam data");
         }

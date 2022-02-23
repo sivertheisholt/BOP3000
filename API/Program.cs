@@ -35,9 +35,9 @@ namespace API
                 var lobbiesRepository = services.GetRequiredService<ILobbiesRepository>();
 
                 await contex.Database.MigrateAsync();
-                await Seed.SeedUsers(userManager, roleManager);
-                await Seed.SeedSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient, meilisearchService);
                 await Seed.SeedCountryIso(countryRepository);
+                await Seed.SeedUsers(userManager, roleManager, countryRepository);
+                await Seed.SeedSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient, meilisearchService);
                 await Seed.SeedSteamAppsInfo(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient);
                 await Seed.SeedLobbies(lobbiesRepository);
             }
