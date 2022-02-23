@@ -54,5 +54,18 @@ namespace API.Controllers
 
             return BadRequest();
         }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("current")]
+        public async Task<ActionResult<MemberDto>> GetCurrentUser()
+        {
+            var userId = GetUserIdFromClaim();
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null) return NotFound();
+
+            return Ok(Mapper.Map<MemberDto>(user));
+        }
     }
 }
