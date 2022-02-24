@@ -246,7 +246,9 @@ This endpoint retrieves the current member.
 
 <!--- PUT --->
 
-## PUT Update a single member
+<!--- PATCH --->
+
+## PATCH Update a single member
 
 ```javascript
 var myHeaders = new Headers();
@@ -262,7 +264,7 @@ var raw = JSON.stringify({
 });
 
 var requestOptions = {
-  method: "PUT",
+  method: "PATCH",
   headers: myHeaders,
   body: raw,
   redirect: "follow",
@@ -280,7 +282,7 @@ This endpoint updates a single member
 
 ### HTTP Request
 
-`PUT https://bop3000.azurewebsites.net/api/members`
+`PATCH https://bop3000.azurewebsites.net/api/members`
 
 ### Body Schema
 
