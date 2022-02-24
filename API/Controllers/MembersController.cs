@@ -28,7 +28,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireMemberRole")]
-        [HttpGet("")]
+        [HttpPatch("")]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembers()
         {
             var users = await _userRepository.GetUsersAsync();
