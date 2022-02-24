@@ -156,7 +156,7 @@ namespace API.Controllers
         /// <param name="changeForgottenPasswordDto"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        [HttpPost("change_forgotten_password")]
+        [HttpPatch("change_forgotten_password")]
         public async Task<ActionResult> ChangeForgottenPassword(ChangeForgottenPasswordDto changeForgottenPasswordDto, string token)
         {
             //Get user
@@ -178,7 +178,7 @@ namespace API.Controllers
         /// <param name="changePasswordDto"></param>
         /// <returns></returns>
         [Authorize(Policy = "RequireMemberRole")]
-        [HttpPost("change_password")]
+        [HttpPatch("change_password")]
         public async Task<ActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
         {
             var userId = GetUserIdFromClaim();
