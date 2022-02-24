@@ -339,10 +339,10 @@
                     <a href="#post-forgotten-password" class="toc-h2 toc-link" data-title="POST Forgotten password">POST Forgotten password</a>
                   </li>
                   <li>
-                    <a href="#post-change-forgotten-password" class="toc-h2 toc-link" data-title="POST Change forgotten password">POST Change forgotten password</a>
+                    <a href="#patch-change-forgotten-password" class="toc-h2 toc-link" data-title="PATCH Change forgotten password">PATCH Change forgotten password</a>
                   </li>
                   <li>
-                    <a href="#post-change-password" class="toc-h2 toc-link" data-title="POST Change password">POST Change password</a>
+                    <a href="#patch-change-password" class="toc-h2 toc-link" data-title="PATCH Change password">PATCH Change password</a>
                   </li>
                   <li>
                     <a href="#delete-account" class="toc-h2 toc-link" data-title="DELETE Account">DELETE Account</a>
@@ -661,7 +661,11 @@
 <td>string</td>
 </tr>
 </tbody></table>
-<h2 id='post-change-forgotten-password'>POST Change forgotten password</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+
+<!--- PUT --->
+
+<!--- PATCH --->
+<h2 id='patch-change-forgotten-password'>PATCH Change forgotten password</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
@@ -670,7 +674,7 @@
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PATCH</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
   <span class="na">body</span><span class="p">:</span> <span class="nx">raw</span><span class="p">,</span>
   <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
@@ -690,7 +694,7 @@
 
 <p>This endpoint will update the password to the new password.</p>
 <h3 id='http-request-4'>HTTP Request</h3>
-<p><code>POST https://bop3000.azurewebsites.net/api/accounts/change_forgotten_password?token=&lt;Token&gt;</code></p>
+<p><code>PATCH https://bop3000.azurewebsites.net/api/accounts/change_forgotten_password?token=&lt;Token&gt;</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
@@ -721,7 +725,7 @@
 <td>string</td>
 </tr>
 </tbody></table>
-<h2 id='post-change-password'>POST Change password</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<h2 id='patch-change-password'>PATCH Change password</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
@@ -730,7 +734,7 @@
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PATCH</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
   <span class="na">body</span><span class="p">:</span> <span class="nx">raw</span><span class="p">,</span>
   <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
@@ -747,7 +751,7 @@
 
 <p>This endpoint will update the password to the new password.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
-<p><code>POST https://bop3000.azurewebsites.net/api/accounts/change_password</code></p>
+<p><code>PATCH https://bop3000.azurewebsites.net/api/accounts/change_password</code></p>
 <h3 id='body-schema-5'>Body Schema</h3>
 <table><thead>
 <tr>
@@ -764,8 +768,6 @@
 <td>string</td>
 </tr>
 </tbody></table>
-
-<!--- PUT --->
 
 <!--- DELETE --->
 <h2 id='delete-account'>DELETE Account</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
