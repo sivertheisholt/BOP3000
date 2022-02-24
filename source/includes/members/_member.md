@@ -61,7 +61,7 @@ This endpoint retrieves all members.
 | -------- | ------ |
 | username | string |
 
-## GET A single member
+## GET A specific member
 
 ```javascript
 var myHeaders = new Headers();
@@ -106,7 +106,7 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
 }
 ```
 
-This endpoint retrieves a single member.
+This endpoint retrieves a specific member.
 
 ### HTTP Request
 
@@ -251,9 +251,14 @@ This endpoint retrieves the current member.
 ```javascript
 var myHeaders = new Headers();
 myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
 
 var raw = JSON.stringify({
-  username: "newUsername",
+  userName: "TestName",
+  email: "member@test.com",
+  Countryid: 1,
+  Gender: "Male",
+  Birthday: "10/09/1998",
 });
 
 var requestOptions = {
@@ -279,8 +284,12 @@ This endpoint updates a single member
 
 ### Body Schema
 
-| Key      | Type   |
-| -------- | ------ |
-| username | string |
+| Key       | Type   |
+| --------- | ------ |
+| username  | string |
+| email     | string |
+| countryId | id     |
+| gender    | string |
+| birthday  | string |
 
 <!--- DELETE --->

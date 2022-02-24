@@ -46,6 +46,7 @@ This endpoint retrieves a specific country.
 
 | Key             | Type   |
 | --------------- | ------ |
+| id              | int    |
 | name            | string |
 | twoLetterCode   | string |
 | threeLetterCode | string |
@@ -91,6 +92,7 @@ This endpoint retrieves all countries.
 
 | Key             | Type   |
 | --------------- | ------ |
+| id              | int    |
 | name            | string |
 | twoLetterCode   | string |
 | threeLetterCode | string |
