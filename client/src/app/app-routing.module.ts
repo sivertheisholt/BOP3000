@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'forgotten-password', component: ForgottenPasswordComponent, canActivate: [AuthGuard] },
   { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard] },
   { path: 'account', component: AccountComponent, canActivate: [UnAuthGuard] },
-  { path: 'lobby', component: LobbyComponent, canActivate:[UnAuthGuard] },
+  { path: 'lobby/:id', component: LobbyComponent, canActivate:[UnAuthGuard] },
   { path: 'find-lobby', component: FindLobbyComponent, canActivate: [UnAuthGuard], resolve: {games: GamesResolver}},
   { path: 'game-lobby/:id', component: GameLobbyComponent, canActivate: [UnAuthGuard], resolve: {posts: LobbiesResolver}},
   { path: 'settings', component: SettingsComponent, canActivate: [UnAuthGuard], resolve: {countries: CountryResolver} },
