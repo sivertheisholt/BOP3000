@@ -3,19 +3,7 @@
     width: 100%;
 }
 
-.profile-wrapper{
-    height: 100%;
-    width: 100%;
-    margin-top: 54px;
-}
-
-.security-wrapper{
-    height: 100%;
-    width: 100%;
-    margin-top: 54px;
-}
-
-.connections-wrapper{
+.content-wrapper{
     height: 100%;
     width: 100%;
     margin-top: 54px;
