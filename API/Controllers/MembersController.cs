@@ -9,8 +9,10 @@ namespace API.Controllers
     public class MembersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
-        public MembersController(IUserRepository userRepository, IMapper mapper) : base(mapper)
+        private readonly ICountryRepository _countryRepository;
+        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository) : base(mapper)
         {
+            _countryRepository = countryRepository;
             _userRepository = userRepository;
         }
 
@@ -46,9 +48,12 @@ namespace API.Controllers
 
             if (user == null) return NotFound();
 
-            Mapper.Map(memberUpdateDto, user);
+            var member = Mapper.Map(memberUpdateDto, user);
+            member.AppUserProfile.CountryIso = await _countryRepository.GetCountryIsoByIdAsync(memberUpdateDto.CountryId);
+            member.AppUserProfile.Birthday = DateTime.Parse(memberUpdateDto.Birthday);
+            member.AppUserProfile.Gender = memberUpdateDto.Gender;
 
-            _userRepository.Update(user);
+            _userRepository.Update(member);
 
             if (await _userRepository.SaveAllAsync()) return NoContent();
 

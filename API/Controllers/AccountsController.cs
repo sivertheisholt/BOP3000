@@ -58,6 +58,13 @@ namespace API.Controllers
             {
                 UserName = registerDto.Username.ToLower(),
                 Email = registerDto.Email.ToLower(),
+                AppUserProfile = new AppUserProfile
+                {
+                    AppUserData = new AppUserData
+                    {
+
+                    }
+                }
             };
 
             // Creates the user in backend
@@ -176,10 +183,11 @@ namespace API.Controllers
         {
             var userId = GetUserIdFromClaim();
             var user = await _userRepository.GetUserByIdAsync(userId);
-            Console.WriteLine(changePasswordDto.CurrentPassword);
 
             var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
             if (!result.Succeeded) BadRequest(result.Errors);
+
+            Console.WriteLine(result.Succeeded);
 
             return NoContent();
         }
