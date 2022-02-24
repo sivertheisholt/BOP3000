@@ -155,9 +155,7 @@ This endpoint will create a new token for resetting password.
 | ----- | ------ |
 | email | string |
 
-<!--- PUT --->
-
-## PUT Change forgotten password
+## POST Change forgotten password
 
 ```javascript
 var myHeaders = new Headers();
@@ -169,7 +167,7 @@ var raw = JSON.stringify({
 });
 
 var requestOptions = {
-  method: "PUT",
+  method: "POST",
   headers: myHeaders,
   body: raw,
   redirect: "follow",
@@ -190,7 +188,7 @@ This endpoint will update the password to the new password.
 
 ### HTTP Request
 
-`PUT https://bop3000.azurewebsites.net/api/accounts/change_forgotten_password?token=<Token>`
+`POST https://bop3000.azurewebsites.net/api/accounts/change_forgotten_password?token=<Token>`
 
 ### Query Parameters
 
@@ -205,7 +203,7 @@ This endpoint will update the password to the new password.
 | email       | string |
 | newPassword | string |
 
-## PUT Change password
+## POST Change password
 
 ```javascript
 var myHeaders = new Headers();
@@ -217,7 +215,7 @@ var raw = JSON.stringify({
 });
 
 var requestOptions = {
-  method: "PUT",
+  method: "POST",
   headers: myHeaders,
   body: raw,
   redirect: "follow",
@@ -235,7 +233,7 @@ This endpoint will update the password to the new password.
 
 ### HTTP Request
 
-`PUT https://bop3000.azurewebsites.net/api/accounts/change_password`
+`POST https://bop3000.azurewebsites.net/api/accounts/change_password`
 
 ### Body Schema
 
@@ -243,6 +241,8 @@ This endpoint will update the password to the new password.
 | --------------- | ------ |
 | currentPassword | string |
 | newPassword     | string |
+
+<!--- PUT --->
 
 <!--- DELETE --->
 
