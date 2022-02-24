@@ -370,7 +370,7 @@
                     <a href="#get-all-members" class="toc-h2 toc-link" data-title="GET All members">GET All members</a>
                   </li>
                   <li>
-                    <a href="#get-a-single-member" class="toc-h2 toc-link" data-title="GET A single member">GET A single member</a>
+                    <a href="#get-a-specific-member" class="toc-h2 toc-link" data-title="GET A specific member">GET A specific member</a>
                   </li>
                   <li>
                     <a href="#get-current-member-info" class="toc-h2 toc-link" data-title="GET Current member info">GET Current member info</a>
@@ -1158,7 +1158,7 @@
 <td>string</td>
 </tr>
 </tbody></table>
-<h2 id='get-a-single-member'>GET A single member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<h2 id='get-a-specific-member'>GET A specific member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
@@ -1198,7 +1198,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint retrieves a single member.</p>
+<p>This endpoint retrieves a specific member.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/members/1</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
@@ -1461,9 +1461,14 @@
 <!--- PUT --->
 <h2 id='put-update-a-single-member'>PUT Update a single member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
-  <span class="na">username</span><span class="p">:</span> <span class="dl">"</span><span class="s2">newUsername</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">userName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">TestName</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">member@test.com</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">Countryid</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">Gender</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Male</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">Birthday</span><span class="p">:</span> <span class="dl">"</span><span class="s2">10/09/1998</span><span class="dl">"</span><span class="p">,</span>
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
@@ -1494,6 +1499,22 @@
 </thead><tbody>
 <tr>
 <td>username</td>
+<td>string</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+</tr>
+<tr>
+<td>countryId</td>
+<td>id</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>string</td>
+</tr>
+<tr>
+<td>birthday</td>
 <td>string</td>
 </tr>
 </tbody></table>
@@ -1745,6 +1766,10 @@
 </tr>
 </thead><tbody>
 <tr>
+<td>id</td>
+<td>int</td>
+</tr>
+<tr>
 <td>name</td>
 <td>string</td>
 </tr>
@@ -1796,6 +1821,10 @@
 <th>Type</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+</tr>
 <tr>
 <td>name</td>
 <td>string</td>
