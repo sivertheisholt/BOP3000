@@ -376,7 +376,7 @@
                     <a href="#get-current-member-info" class="toc-h2 toc-link" data-title="GET Current member info">GET Current member info</a>
                   </li>
                   <li>
-                    <a href="#put-update-a-single-member" class="toc-h2 toc-link" data-title="PUT Update a single member">PUT Update a single member</a>
+                    <a href="#patch-update-a-single-member" class="toc-h2 toc-link" data-title="PATCH Update a single member">PATCH Update a single member</a>
                   </li>
               </ul>
           </li>
@@ -1461,7 +1461,9 @@
 <!--- POST --->
 
 <!--- PUT --->
-<h2 id='put-update-a-single-member'>PUT Update a single member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+
+<!--- PATCH --->
+<h2 id='patch-update-a-single-member'>PATCH Update a single member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
 
@@ -1474,7 +1476,7 @@
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PUT</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PATCH</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
   <span class="na">body</span><span class="p">:</span> <span class="nx">raw</span><span class="p">,</span>
   <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
@@ -1491,7 +1493,7 @@
 
 <p>This endpoint updates a single member</p>
 <h3 id='http-request-4'>HTTP Request</h3>
-<p><code>PUT https://bop3000.azurewebsites.net/api/members</code></p>
+<p><code>PATCH https://bop3000.azurewebsites.net/api/members</code></p>
 <h3 id='body-schema'>Body Schema</h3>
 <table><thead>
 <tr>
