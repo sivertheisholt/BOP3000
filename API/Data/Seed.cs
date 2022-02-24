@@ -124,8 +124,22 @@ namespace API.Data
             await steamAppsRepository.SaveAllAsync();
 
             //Seed to search
-            var dbResult = await steamAppsRepository.GetAppsList(1);
-            await meilisearchService.initializeIndexAsync(apps);
+            var createTask = meilisearchService.CreateIndexAsync("apps");
+
+            var cont = createTask.ContinueWith(task =>
+            {
+                var index = meilisearchService.GetIndex("apps");
+
+                var docsTask = meilisearchService.AddDocumentsAsync(apps.Apps.ToArray(), index);
+
+                var docs = docsTask.ContinueWith(docsTask =>
+                {
+                    Console.WriteLine("Meilisearch docs successfully uploaded");
+                });
+                docs.Wait();
+            });
+
+            cont.Wait();
 
             Console.WriteLine($"Finished seeding Steam data");
         }

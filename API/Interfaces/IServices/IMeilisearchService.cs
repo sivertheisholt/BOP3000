@@ -9,8 +9,12 @@ namespace API.Interfaces.IServices
 {
     public interface IMeilisearchService
     {
-        Task initializeIndexAsync(AppList appList);
+        Task<SearchResult<T>> SearchAsync<T>(Meilisearch.Index index, string title, SearchQuery searchAttributes = null);
 
-        Task<SearchResult<AppListInfo>> SearchForAppAsync(string title, SearchQuery searchAttributes = null);
+        Meilisearch.Index GetIndex(string indexName);
+
+        Task CreateIndexAsync(string indexName);
+
+        Task AddDocumentsAsync<T>(T[] entities, Meilisearch.Index index);
     }
 }

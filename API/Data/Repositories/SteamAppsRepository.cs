@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Entities.SteamApps;
 using API.Interfaces.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
@@ -25,7 +26,9 @@ namespace API.Data.Repositories
 
         public async Task<AppList> GetAppsList(int id)
         {
-            return await Context.AppList.FindAsync(id);
+            return await Context.AppList.Where(app => app.Id == id)
+                .Include(app => app.Apps)
+                .FirstOrDefaultAsync();
         }
     }
 }

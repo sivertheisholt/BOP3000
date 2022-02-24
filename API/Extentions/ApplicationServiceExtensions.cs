@@ -20,7 +20,7 @@ namespace API.Extentions
             services.AddSingleton<IEmailService, EmailService>();
 
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IMeilisearchService, MeilisearchService>();
+            services.AddSingleton<IMeilisearchService, MeilisearchService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILobbiesRepository, LobbiesRepository>();

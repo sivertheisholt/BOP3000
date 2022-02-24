@@ -1,5 +1,6 @@
 using API.DTOs.GameApps;
 using API.DTOs.SteamApps;
+using API.Entities.SteamApps;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using AutoMapper;
@@ -23,7 +24,8 @@ namespace API.Controllers
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<AppListInfoDto>>> SearchForApp(string name, int limit = 10)
         {
-            var hits = await _meilisearchService.SearchForAppAsync(name, new SearchQuery { Limit = limit });
+            var index = _meilisearchService.GetIndex("apps");
+            var hits = await _meilisearchService.SearchAsync<AppListInfo>(index, name, new SearchQuery { Limit = limit });
             return Ok(Mapper.Map<IEnumerable<AppListInfoDto>>(hits.Hits));
         }
 
