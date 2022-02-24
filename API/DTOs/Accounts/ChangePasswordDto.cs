@@ -10,7 +10,7 @@ namespace API.DTOs.Accounts
     {
         public string CurrentPassword { get; set; }
         [Required]
-        [StringLength(16, MinimumLength = 8)]
+        [StringLength(32, MinimumLength = 8)]
         public string NewPassword { get; set; }
     }
 }
