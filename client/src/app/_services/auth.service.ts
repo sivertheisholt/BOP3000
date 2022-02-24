@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map, retry } from 'rxjs/operators';
 import { User } from '../_models/user';
 import { LobbyHubService } from './lobby-hub.service';
 
@@ -39,6 +39,17 @@ export class AuthService {
         }
       })
     )
+  }
+
+  updateUserPassword(model : any){
+    console.log(JSON.stringify(model));
+    return this.http.post(this.baseUrl + 'accounts/change_password', JSON.stringify(model), {responseType: 'text'}).pipe(
+      map((response) => {
+        console.log(response);
+      })
+    ).subscribe((res) => {
+      console.log(res);
+    })
   }
 
   initCurrentUser(user: User) {

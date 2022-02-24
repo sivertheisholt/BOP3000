@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Country } from 'src/app/_models/country.model';
 
 @Component({
   selector: 'app-profile-settings',
@@ -8,19 +10,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class ProfileSettingsComponent implements OnInit {
   profileSettingsForm! : FormGroup
-  countries = [
-    {code: 'no', name: 'Norway'},
-    {code: 'zh', name: 'China'},
-    {code: 'fr', name: 'France'},
-    {code: 'de', name: 'Germany'},
-    {code: 'se', name: 'Sweden'},
-  ];
-
+  countries : Country[] = [];
   genders = ['Male', 'Female', 'Other', 'Hidden'];
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.countries = this.route.snapshot.data['countries'];
     this.profileSettingsForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       email: new FormControl(null, Validators.required),

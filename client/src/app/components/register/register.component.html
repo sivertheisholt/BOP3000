@@ -59,14 +59,30 @@
                 </span>
               </p>
             </div>
-            <div class="control has-text-light has-text-centered">
-              <label class="radio">
-                <input type="radio" name="answer" value="male">Male</label>
-              <label class="radio">
-                <input type="radio" name="answer" value="female">Female</label>
-              <label class="radio">
-                <input type="radio" name="answer" value="other">Other</label>
-            </div>
+            <div class="is-flex mt-3 mb-3 is-justify-content-space-between">
+              <div class="control dropdown-ng">
+                  <label for="location">Country</label>
+                  <ng-select 
+                      [items]="countries" 
+                      bindLabel="name" 
+                      bindValue="twoLetterCode"
+                      placeholder="Country"
+                      formControlName="country"
+                      [closeOnSelect]='true'
+                      class="custom">
+                  </ng-select>
+              </div>
+              <div class="control dropdown-ng">
+                  <label for="gender">Gender</label>
+                  <ng-select 
+                      [items]="genders" 
+                      placeholder="Gender"
+                      formControlName="gender"
+                      [closeOnSelect]='true'
+                      class="custom">
+                  </ng-select>
+              </div>
+          </div>
           </div>
           <div class="has-text-centered">
             <button type="submit" class="column is-half button is-info">Register</button>

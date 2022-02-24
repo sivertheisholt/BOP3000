@@ -3,19 +3,7 @@
     width: 100%;
 }
 
-.profile-wrapper{
-    height: 100%;
-    width: 100%;
-    margin-top: 54px;
-}
-
-.security-wrapper{
-    height: 100%;
-    width: 100%;
-    margin-top: 54px;
-}
-
-.connections-wrapper{
+.content-wrapper{
     height: 100%;
     width: 100%;
     margin-top: 54px;
@@ -23,4 +11,18 @@
 
 .tabs{
     margin-top: 54px;
+    padding: 30px;
+}
+
+a{
+    color: rgb(221, 220, 212);
+}
+
+a:hover{
+    color: rgb(176, 225, 245);
+    border-bottom-color: rgb(59, 200, 255);
+}
+
+.tabs ul {
+    justify-content: center;
 }
