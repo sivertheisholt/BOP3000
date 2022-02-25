@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/_services/auth.service';
 
@@ -20,11 +20,18 @@ export class NavbarComponent implements OnInit {
   ];
   totalNotifications = this.notifications.length;
 
-  constructor(private authService: AuthService, private router: Router){ 
+  constructor(private authService: AuthService, private router: Router){
   }
 
   ngOnInit(): void {
+
+    this.router.events.subscribe(
+      (val) => {
+        this.isNavVisible = false;
+      }
+    )
   }
+
   
   toggleNavbar(){
     this.isNavVisible = !this.isNavVisible;
