@@ -3,6 +3,7 @@ namespace API.DTOs.Lobbies
 {
     public class NewLobbyDto
     {
+        public int Id { get; set; }
         public int MaxUsers { get; set; }
         public string Title { get; set; }
         public string LobbyDescription { get; set; }
