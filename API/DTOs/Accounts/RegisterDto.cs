@@ -13,5 +13,8 @@ namespace API.DTOs.Accounts
         [Required]
         [StringLength(16, MinimumLength = 8)]
         public string Password { get; set; }
+
+        public string Gender { get; set; }
+        public int CountryId { get; set; }
     }
 }

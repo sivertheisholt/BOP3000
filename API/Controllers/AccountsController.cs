@@ -29,8 +29,10 @@ namespace API.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="tokenService"></param>
-        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository) : base(mapper)
+        private readonly ICountryRepository _countryRepository;
+        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository, ICountryRepository countryRepository) : base(mapper)
         {
+            _countryRepository = countryRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _tokenService = tokenService;
@@ -60,6 +62,8 @@ namespace API.Controllers
                 Email = registerDto.Email.ToLower(),
                 AppUserProfile = new AppUserProfile
                 {
+                    CountryIso = await _countryRepository.GetCountryIsoByIdAsync(registerDto.CountryId),
+                    Gender = registerDto.Gender,
                     AppUserData = new AppUserData
                     {
 
