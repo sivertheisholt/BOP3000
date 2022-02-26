@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/_services/auth.service';
+import { Router } from '@angular/router';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { GamesService } from 'src/app/_services/games.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
 
 @Component({
@@ -11,39 +14,25 @@ import { LobbyService } from 'src/app/_services/lobby.service';
 export class CreateLobbyComponent implements OnInit {
   createLobbyForm!: FormGroup;
   submitted = false;
-  games = [
-    {id: 1, name: 'Counter-Strike: Global Offensive'},
-    {id: 2, name: 'League of Legends'},
-    {id: 3, name: 'Sea of Thieves'},
-    {id: 4, name: 'Dota 2'},
-    {id: 5, name: 'DayZ'},
-    {id: 6, name: 'Minecraft'},
-    {id: 7, name: 'Grand Theft Auto V'},
-    {id: 8, name: 'Project Zomboid'},
-    {id: 9, name: 'PUBG'},
-    {id: 10, name: 'Escape From Tarkov'},
-    {id: 11, name: 'Valorant'},
-    {id: 12, name: 'Fortnite'},
-    {id: 13, name: 'Red Dead Redemption 2'},
-    {id: 14, name: 'World of Warcraft'},
-    {id: 15, name: 'Rainbow Six'},
-    {id: 16, name: 'Ready or Not'},
-    {id: 17, name: 'Terraria'},
-    {id: 18, name: 'Apex Legends'},
-    {id: 19, name: 'Other'}];
+  games: any;
+  selectedType = ['Fun', 'Competitive', 'Ranked', 'Tryhard', 'Chill'];
+  selectedMaxplayers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16, 17, 18, 19, 20];
 
 
-    selectedType = ['Fun', 'Competitive', 'Ranked', 'Tryhard', 'Chill'];
+  model: any = {};
 
-    selectedMaxplayers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16, 17, 18, 19, 20];
+  @ViewChild('gameInput', {static: true}) gameInput? : ElementRef;
 
-    model: any = {};
+  isSearching: boolean;
 
-  constructor(private authService: AuthService, private lobbyService: LobbyService) { }
+  constructor(private lobbyService: LobbyService, private gamesService: GamesService, private router: Router) {
+    this.isSearching = false;
+
+  }
 
   ngOnInit(): void {
     this.createLobbyForm = new FormGroup({
-      gameId: new FormControl(null, [Validators.required]),
+      gameId: new FormControl(null),
       title: new FormControl(null, [Validators.required]),
       lobbyDescription: new FormControl(null),
       gameType: new FormControl(null, [Validators.required]),
@@ -53,6 +42,23 @@ export class CreateLobbyComponent implements OnInit {
       })
     });
 
+    fromEvent(this.gameInput?.nativeElement, 'keyup').pipe(
+      map((event: any) => {
+        return event.target.value;
+      })
+      ,filter(response => response.length > 2)
+      , debounceTime(1000)
+      ,distinctUntilChanged()
+    ).subscribe((input: string) => {
+      this.isSearching = true;
+      this.gamesService.searchGame(input).subscribe((response) => {
+        this.isSearching = false;
+        this.games = response;
+      }, (err) => {
+        this.isSearching = false;
+        console.log(err);
+      })
+    })
   }
 
   onSubmit(){
@@ -61,10 +67,17 @@ export class CreateLobbyComponent implements OnInit {
       (res) => {
         //Redirect bruker til det nye rommet
         console.log(res);
+        this.router.navigate(['lobby', res.id]);
       }, err => {
         console.log(err);
       }
     )
+  }
+
+  selectGame(game: any){
+    this.gameInput!.nativeElement.value = game.name;
+    this.games = [];
+    this.createLobbyForm.controls.gameId.setValue(game.appId);
   }
 
 }

@@ -11,11 +11,12 @@ export class LobbyService{
     constructor(private http: HttpClient){}
 
     postLobby(body : Lobby){
-        console.log(JSON.stringify(body));
-        return this.http.post<Lobby>(this.baseUrl + 'lobbies', JSON.stringify(body))
+        return this.http.post<Lobby>(this.baseUrl + 'lobbies', body)
         .pipe(
-            retry(1)
-        )
+            map(response => {
+                return response;
+            })
+        );
     }
 
     fetchLobby(id: number){

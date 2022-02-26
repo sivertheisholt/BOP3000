@@ -1,12 +1,15 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map } from "rxjs/operators";
+import { interval, Observable, of, Subject, timer } from "rxjs";
+import { debounce, delay, map } from "rxjs/operators";
+import { GameSearch } from "../_models/game-search.model";
 import { Game } from "../_models/game.model";
 
 @Injectable({providedIn: 'root'})
 export class GamesService{
 
     baseUrl = 'https://localhost:5001/api/';
+
     
     constructor(private http: HttpClient){}
     getActiveGames(){
@@ -23,18 +26,13 @@ export class GamesService{
         );
     }
 
+
+
     searchGame(input: string){
-        return this.http.get<Game>(this.baseUrl + 'apps/search', {
+        return this.http.get<GameSearch>(this.baseUrl + 'apps/search', {
             params: {
                 name: input
             }
-        }).pipe(
-            map(response => {
-                console.log(response);
-                let gameInfo: Game;
-                gameInfo = response;
-                return gameInfo;
-            })
-        );
+        });
     }
 }
