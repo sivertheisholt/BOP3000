@@ -6,6 +6,7 @@ client/ssl/private.pem
 API/Data/Migrations
 API/wwwroot
 *.mdb
+.VSCodeCounter/
 
 # Created by https://www.toptal.com/developers/gitignore/api/aspnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=aspnetcore

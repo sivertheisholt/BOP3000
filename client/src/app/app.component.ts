@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   users: any;
   loggedIn : boolean;
 
-  constructor(private authService: AuthService, private lobbyHub: LobbyHubService) {
+  constructor(private authService: AuthService) {
     this.loggedIn = authService.isLoggedIn;
   }
 
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   setCurrentUser() {
     if(this.loggedIn) {
-      this.lobbyHub.createHubConnection(this.authService.getUserId());
+      
     }
   }
 }

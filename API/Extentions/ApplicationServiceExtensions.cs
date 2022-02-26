@@ -6,6 +6,7 @@ using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using API.Services;
+using API.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extentions
@@ -14,6 +15,8 @@ namespace API.Extentions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddSingleton<LobbyTracker>();
+
             services.AddHttpClient<ISteamAppsClient, SteamAppsClient>();
             services.AddHttpClient<ISteamStoreClient, SteamStoreClient>();
 

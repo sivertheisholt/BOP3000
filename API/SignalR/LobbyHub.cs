@@ -9,13 +9,65 @@ namespace API.SignalR
 {
     public class LobbyHub : Hub
     {
+        private readonly LobbyTracker _lobbyTracker;
+        public LobbyHub(LobbyTracker lobbyTracker)
+        {
+            _lobbyTracker = lobbyTracker;
+        }
+
+        private async Task AddToGroup(string groupName)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+
+            //await Clients.Group(groupName).SendAsync("JoinedLobbyQueue", $"{Context.ConnectionId} has joined the group {groupName}.");
+        }
+
+        private async Task RemoveFromGroup(string groupName)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+
+            //await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has left the group {groupName}.");
+        }
+
+        public async Task OnMemberAccepted()
+        {
+            var httpContext = Context.GetHttpContext();
+            var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
+            try
+            {
+                await _lobbyTracker.MemberAccepted(lobbyId, Context.User.GetUserId());
+            }
+            catch (System.Exception)
+            {
+                //Return failed here to frontend
+            }
+
+            var users = await _lobbyTracker.GetUsersInLobby(lobbyId);
+        }
+
         public override async Task OnConnectedAsync()
         {
-            await Clients.Others.SendAsync("UserIsOnline", Context.User.GetUserId());
+            var httpContext = Context.GetHttpContext();
+            var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
+            try
+            {
+                await _lobbyTracker.MemberJoinedQueue(lobbyId, Context.User.GetUserId());
+            }
+            catch (System.Exception)
+            {
+                //Return failed here to frontend
+            }
+            var groupName = lobbyId + "-Queue";
+            await AddToGroup(groupName);
+            await Clients.Group(lobbyId.ToString()).SendAsync("JoinedLobbyQueue", Context.User.GetUserId());
+            await Clients.Group(groupName).SendAsync("JoinedLobbyQueue", Context.User.GetUserId());
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            await Clients.Others.SendAsync("UserIsOffline", Context.User.GetUserId());
+            var httpContext = Context.GetHttpContext();
+            var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
+
+            await Clients.Others.SendAsync("LeftLobby", Context.User.GetUserId());
 
             await base.OnDisconnectedAsync(exception);
         }

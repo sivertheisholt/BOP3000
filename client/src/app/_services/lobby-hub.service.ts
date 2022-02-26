@@ -13,9 +13,9 @@ export class LobbyHubService {
 
   constructor() {}
 
-  createHubConnection(token: string) {
+  createHubConnection(token: string, lobbyId: string) {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'lobby', {
+      .withUrl(this.hubUrl + 'lobby?lobbyId=' + lobbyId, {
         accessTokenFactory: () => token
       })
       .withAutomaticReconnect()
@@ -25,16 +25,19 @@ export class LobbyHubService {
         .start()
         .catch(error => console.log(error));
 
-      this.hubConnection.on('UserIsOnline', id => {
-        console.log("User with id: " + id + " has connected");
+      this.hubConnection.on('JoinedLobbyQueue', id => {
+
+        console.log("User with id: " + id + " has connected to lobby");
       })
 
-      this.hubConnection.on('UserIsOffline', id => {
-        console.log("User with id: " + id + " has connected");
+      this.hubConnection.on('LeftLobby', id => {
+        console.log("User with id: " + id + " has left");
       })
   }
 
   stopHubConnection() {
     this.hubConnection.stop().catch(error => console.log(error));
   }
+
+  
 }

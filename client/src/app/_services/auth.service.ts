@@ -23,7 +23,6 @@ export class AuthService {
         const user = res;
         if(user) {
           this.initCurrentUser(res);
-          this.lobbyHub.createHubConnection(user.token);
         }
       })
     );
@@ -35,7 +34,6 @@ export class AuthService {
         const user = res;
         if(user) {
           this.initCurrentUser(res);
-          this.lobbyHub.createHubConnection(user.token);
         }
       })
     )
