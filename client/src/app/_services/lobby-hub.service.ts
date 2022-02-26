@@ -33,6 +33,15 @@ export class LobbyHubService {
       this.hubConnection.on('LeftLobby', id => {
         console.log("User with id: " + id + " has left");
       })
+      this.hubConnection.on("LeftQueue", id => {
+        console.log("User with id: " + id + " has left Queue");
+      })
+      this.hubConnection.on("JoinedLobbyQueue", id => {
+        console.log("User with id: " + id + " has joined lobby queue");
+      })
+      this.hubConnection.on("MemberAccepted", id => {
+        console.log("User with id: " + id + " was accepted");
+      })
   }
 
   stopHubConnection() {

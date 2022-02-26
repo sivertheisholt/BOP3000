@@ -37,6 +37,7 @@ import { ProfileSettingsComponent } from './components/settings/profile-settings
 import { ConnectionsComponent } from './components/settings/connections/connections.component';
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 import { ManageAccountComponent } from './components/settings/manage-account/manage-account.component';
+import { MemberCardComponent } from './components/lobby/waiting-room/member-card/member-card.component';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { ManageAccountComponent } from './components/settings/manage-account/man
     ProfileSettingsComponent,
     ConnectionsComponent,
     ForgottenPasswordComponent,
-    ManageAccountComponent
+    ManageAccountComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
