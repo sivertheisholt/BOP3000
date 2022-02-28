@@ -28,7 +28,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireMemberRole")]
-        [HttpPatch("")]
+        [HttpGet("")]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembers()
         {
             var users = await _userRepository.GetUsersAsync();
@@ -39,7 +39,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireMemberRole")]
-        [HttpPut("")]
+        [HttpPatch("")]
         public async Task<ActionResult> UpdateMember(MemberUpdateDto memberUpdateDto)
         {
             var userId = GetUserIdFromClaim();
