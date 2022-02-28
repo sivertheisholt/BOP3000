@@ -50,6 +50,20 @@ export class AuthService {
     })
   }
 
+  postEmailForgottenPassword(email: string){
+    return this.http.post(this.baseUrl + 'accounts/forgotten_password', {
+      email
+    });
+  }
+
+  updateUserPasswordFromEmail(body: any){
+    return this.http.patch(this.baseUrl + 'accounts/change_forgotten_password?token=' + this.getUserId(), body).pipe(
+      map(response => {
+        console.log(response);
+      })
+    );
+  }
+
   initCurrentUser(user: User) {
     localStorage.setItem('token', JSON.stringify(user.token));
     this.currentUserSource.next(user);

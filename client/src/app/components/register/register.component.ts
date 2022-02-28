@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -14,24 +15,31 @@ import { AuthService } from '../../_services/auth.service';
 export class RegisterComponent implements OnInit {
   faEnvelope = faEnvelope; faLock = faLock; faUser = faUser;
   regUserForm! : FormGroup;
-  countries : Country[] = [];
+  countries : Country[] = [
+    {id: 1, name: 'Test', twoLetterCode: 'AB', threeLetterCode: 'ABC', numericCode: '123'},
+    {id: 2, name: 'Test2', twoLetterCode: 'AB', threeLetterCode: 'ABC', numericCode: '123'},
+    {id: 3, name: 'Test3', twoLetterCode: 'AB', threeLetterCode: 'ABC', numericCode: '123'}
+  ];
   genders = ['Male', 'Female', 'Other', 'Hidden'];
 
-  constructor(private authService: AuthService, private validationService: ValidationService, private route: ActivatedRoute) { }
+  constructor(private authService: AuthService, private validationService: ValidationService, private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
-    //this.countries = this.route.snapshot.data['countries'];
+    this.countries = this.route.snapshot.data['countries'];
     this.regUserForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, Validators.required),
       repeatPassword: new FormControl(null, Validators.required),
       username: new FormControl(null, [Validators.required, Validators.pattern(this.validationService.regexUsername)]),
-      country: new FormControl(null, Validators.required),
-      gender: new FormControl(null, Validators.required)
+      memberProfile: new FormGroup({
+        gender: new FormControl(null, Validators.required),
+        countryId: new FormControl(null, Validators.required)
+      })
     });
   }
 
   register() {
+    console.log(this.regUserForm.value);
     this.authService.register(this.regUserForm.value).subscribe(res => {
       console.log('res');
       console.log(res);
