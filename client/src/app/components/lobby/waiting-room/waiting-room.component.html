@@ -5,23 +5,14 @@
                 Waiting to join...
             </th>
         </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div #queueLobby class="is-flex is-justify-content-space-around is-align-items-center">
-                        <app-member-card></app-member-card>
-                        
-                        <div class="waiting-room-btn-wrapper">
-                            <a (click)="kickMemberQueue()">
-                                <fa-icon class="fa-lg mr-2" [icon]="faMinus"></fa-icon>
-                            </a>
-                            <a (click)="acceptMember()">
-                                <fa-icon class="fa-lg mr-2" [icon]="faPlus"></fa-icon>
-                            </a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+        <tbody >
+            <ng-template #queueLobby>
+                <tr>
+                    <td >
+                        <app-member-card (acceptMemberEvent)="memberJoinedQueue(queueLobby)"></app-member-card>
+                    </td>
+                </tr>
+            </ng-template>
         </tbody>
     </table>
 </div>
