@@ -76,11 +76,13 @@ namespace API.SignalR
 
             if (await _lobbyTracker.CheckIfMemberInQueue(lobbyId, Context.User.GetUserId()))
             {
+                await _lobbyTracker.MemberLeftQueueLobby(lobbyId, Context.User.GetUserId());
                 await Clients.Group(groupNameQueue).SendAsync("LeftLobbyQueue", Context.User.GetUserId());
                 await Clients.Group(lobbyId.ToString()).SendAsync("LeftLobbyQueue", Context.User.GetUserId());
             }
             else
             {
+                await _lobbyTracker.MemberLeftLobby(lobbyId, Context.User.GetUserId());
                 await Clients.Group(groupNameQueue).SendAsync("LeftLobby", Context.User.GetUserId());
                 await Clients.Group(lobbyId.ToString()).SendAsync("LeftLobby", Context.User.GetUserId());
             }
