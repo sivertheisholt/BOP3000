@@ -21,7 +21,7 @@ import { CountryResolver } from './_resolvers/country-resolver.service';
 
 const routes: Routes = [
   { path: '', component: StartComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], resolve: {countries: CountryResolver} },
   { path: 'home', component: HomeComponent, canActivate: [UnAuthGuard] },
   { path: 'forgotten-password', component: ForgottenPasswordComponent, canActivate: [AuthGuard] },
   { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard] },

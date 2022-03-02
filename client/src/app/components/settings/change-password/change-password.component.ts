@@ -18,8 +18,8 @@ export class ChangePasswordComponent implements OnInit {
     
     this.changePasswordForm = new FormGroup({
       currentPassword: new FormControl(null, Validators.required),
-      newPassword: new FormControl(null, Validators.required),
-      repeatNewPassword: new FormControl(null, Validators.required)
+      password: new FormControl(null, Validators.required),
+      repeatPassword: new FormControl(null, Validators.required)
     },
     {
       validators: passwordMatchingValidator 
