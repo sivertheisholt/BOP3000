@@ -4,16 +4,16 @@
         <div class="is-flex is-flex-direction-column">
             <div class="control">
                 <label for="newusername">Change Username</label>
-                <input class="input mt-3 mb-3" id="newusername" type="text" formControlName="username">
+                <input class="input mt-3 mb-3" id="newusername" type="text" formControlName="username" [value]="user?.username">
             </div>
             <div class="control">
                 <label for="newusername">Change Email</label>
-                <input class="input mt-3 mb-3" id="newemail" type="email" formControlName="email">
+                <input class="input mt-3 mb-3" id="newemail" type="email" formControlName="email" [value]="user?.email">
             </div>
             <div class="field">
                 <div class="control">
                     <label for="profiledesc">Bio</label>
-                    <textarea class="textarea has-fixed-size mt-3 mb-3" id="profiledesc" formControlName="description"></textarea>
+                    <textarea class="textarea has-fixed-size mt-3 mb-3" id="profiledesc" [value]="user?.memberProfile?.memberData?.userDescription" formControlName="description"></textarea>
                 </div>
             </div>
             <div class="is-flex mt-3 mb-3 is-justify-content-space-between">
@@ -22,7 +22,7 @@
                     <ng-select 
                         [items]="countries" 
                         bindLabel="name" 
-                        bindValue="twoLetterCode"
+                        bindValue="id"
                         placeholder="Country"
                         formControlName="country"
                         [closeOnSelect]='true'
@@ -44,11 +44,11 @@
             <div class="control">
                 <label for="date">Date</label>
                 <div class="date-wrapper is-flex mt-3 mb-3">
-                    <input class="input day-input" id="day" type="text" placeholder="DD" maxlength="2">
+                    <input class="input day-input" id="day" type="text" placeholder="DD" maxlength="2" formControlName="dateDay">
                     <div class="date-divider">-</div>
-                    <input class="input month-input" id="month" type="text" placeholder="MM" maxlength="2">
+                    <input class="input month-input" id="month" type="text" placeholder="MM" maxlength="2" formControlName="dateMonth">
                     <div class="date-divider">-</div>
-                    <input class="input year-input" id="year" type="text" placeholder="YYYY" maxlength="4">
+                    <input class="input year-input" id="year" type="text" placeholder="YYYY" maxlength="4" formControlName="dateYear">
                 </div>
             </div>
         </div>

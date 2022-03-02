@@ -59,18 +59,18 @@
                 </span>
               </p>
             </div>
-            <div class="is-flex mt-3 mb-3 is-justify-content-space-between">
+            <div formGroupName="memberProfile">
               <div class="control dropdown-ng">
-                  <label for="location">Country</label>
-                  <ng-select 
-                      [items]="countries" 
-                      bindLabel="name" 
-                      bindValue="twoLetterCode"
-                      placeholder="Country"
-                      formControlName="country"
-                      [closeOnSelect]='true'
-                      class="custom">
-                  </ng-select>
+                <label for="location">Country</label>
+                <ng-select 
+                    [items]="countries" 
+                    bindLabel="name" 
+                    bindValue="id"
+                    placeholder="Country"
+                    formControlName="countryId"
+                    [closeOnSelect]='true'
+                    class="custom">
+                </ng-select>
               </div>
               <div class="control dropdown-ng">
                   <label for="gender">Gender</label>
@@ -82,7 +82,7 @@
                       class="custom">
                   </ng-select>
               </div>
-          </div>
+            </div>
           </div>
           <div class="has-text-centered">
             <button type="submit" class="column is-half button is-info">Register</button>

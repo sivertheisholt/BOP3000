@@ -18,7 +18,6 @@ namespace API.Controllers
             _countryRepository = countryRepository;
         }
 
-        [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("{id}")]
         public async Task<ActionResult<CountryIsoDto>> GetCountry(int id)
         {
@@ -29,7 +28,6 @@ namespace API.Controllers
             return Ok(Mapper.Map<CountryIsoDto>(country));
         }
 
-        [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("")]
         public async Task<ActionResult<IEnumerable<CountryIsoDto>>> GetCountries()
         {

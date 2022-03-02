@@ -15,19 +15,19 @@
                         <div class="image-content mt-5 text-is-light">
                             <div class="following mb-3">
                                 <p>FOLLOWING</p>
-                                <p>6</p>
+                                <p> {{ user?.memberProfile?.memberData?.following?.length }} </p>
                             </div>
                             <div class="followers mb-3">
                                 <p>FOLLOWERS</p>
-                                <p>22</p>
+                                <p> {{ user?.memberProfile?.memberData?.followers?.length }} </p>
                             </div>
                             <div class="thumbs-up mb-3">
                                 <p><fa-icon class="fa-lg" [icon]="faThumbsUp"></fa-icon></p>
-                                <p>66</p>
+                                <p> {{ user?.memberProfile?.memberData?.upvotes }} </p>
                             </div>
                             <div class="thumbs-down">
                                 <p><fa-icon class="fa-lg" [icon]="faThumbsDown"></fa-icon></p>
-                                <p>3</p>
+                                <p> {{ user?.memberProfile?.memberData?.downvotes }} </p>
                             </div>
                         </div>
                     </div>
@@ -36,8 +36,8 @@
                 <div class="column account-right-content">
                     <div class="column is-full profile-info-container">
                         <div class="profile-content text-is-light">
-                            <h1 class="has-text-light">USERNAME</h1>
-                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque ratione vero aliquid, tempore quaerat doloribus quo exercitationem blanditiis eius corporis dicta magni ducimus sint vel et facere nihil reiciendis corrupti, nesciunt, aperiam est temporibus soluta ea vitae. Ipsa tenetur numquam eligendi libero dignissimos iusto necessitatibus harum assumenda? Earum, eius veniam?</p>
+                            <h1 class="has-text-light"> {{ user?.username }} </h1>
+                            <p> {{ user?.memberProfile?.memberData?.userDescription }} </p>
                             <p><strong class="text-is-light">Favorite Game:</strong> League of Legends</p>
                             <p><strong class="text-is-light">Favorite Game:</strong> League of Legends</p>
                             <p><strong class="text-is-light">Favorite Game:</strong> League of Legends</p>
