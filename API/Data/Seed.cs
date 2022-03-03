@@ -188,10 +188,10 @@ namespace API.Data
 
             var lobbies = new Lobby[] {
                 new Lobby {MaxUsers = 5,
-                            AdminUid = 51,
+                            AdminUid = 1,
                             Title = "Whats up gamers",
                             LobbyDescription = "Hello there",
-                            GameId=1,
+                            GameId=51,
                             GameType="Competetive",
                             Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
