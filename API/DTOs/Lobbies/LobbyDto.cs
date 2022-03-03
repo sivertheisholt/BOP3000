@@ -8,6 +8,7 @@ namespace API.DTOs.Lobbies
         public string SteamId { get; set; }
         public int GameId { get; set; }
         public string GameType { get; set; }
+        public string lobbyDescription { get; set; }
 
         public ICollection<int> Users { get; set; }
         public RequirementDto LobbyRequirement { get; set; }
