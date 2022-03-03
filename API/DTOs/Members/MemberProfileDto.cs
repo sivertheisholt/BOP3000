@@ -8,6 +8,8 @@ namespace API.DTOs.Members
 {
     public class MemberProfileDto
     {
+
+        public DateTime Birthday { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
         public CountryIsoDto CountryIso { get; set; }
