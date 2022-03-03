@@ -7,6 +7,7 @@ namespace API.Entities.Users
     {
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
+        public string Description { get; set; }
         public AppUserConnections UserConnections { get; set; }
         public ICollection<int> FinishedLobbies { get; set; }
         public CountryIso CountryIso { get; set; }
