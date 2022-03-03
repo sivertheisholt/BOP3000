@@ -11,12 +11,7 @@ export class UserService{
     constructor(private http: HttpClient){}
 
     getUserData(){
-        return this.http.get<UserProfile>(this.baseUrl + 'members/current').pipe(
-            map(response => {
-                console.log(response);
-                return response;
-            })
-        )
+        return this.http.get<UserProfile>(this.baseUrl + 'members/current');
     }
 
     deleteAccount(){
