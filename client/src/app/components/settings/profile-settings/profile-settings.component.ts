@@ -27,7 +27,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.profileSettingsForm = new FormGroup({
       username: new FormControl(this.user?.username),
       email: new FormControl(this.user?.email),
-      description: new FormControl(this.user?.memberProfile?.memberData?.userDescription),
+      description: new FormControl(this.user?.memberProfile?.description),
       gender: new FormControl(this.user?.memberProfile?.gender),
       country: new FormControl(this.user.memberProfile?.countryIso?.id),
       dateDay: new FormControl(userBirthday.getDay(), [Validators.max(31), Validators.min(1)]),
