@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import { UserProfile } from 'src/app/_models/user-profile.model';
@@ -11,23 +12,14 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class AccountComponent implements OnInit {
   faThumbsDown = faThumbsDown; faThumbsUp = faThumbsUp;
-  user?: UserProfile;
+  user: UserProfile;
 
-  constructor(private userService: UserService) {
-    this.userService.getUserData().subscribe(
-      (response) => {
-        this.user = response;
-        console.log(this.user);
-      }
-    );
+  constructor(private route: ActivatedRoute) {
+    this.user = this.route.snapshot.data['user'];
   }
 
   ngOnInit(): void {
-/*     this.userService.getUserData().subscribe(
-      (response) => {
-        console.log(response);
-      }
-    ) */
+    
   }
 
 }
