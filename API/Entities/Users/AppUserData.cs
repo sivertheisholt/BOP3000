@@ -9,7 +9,6 @@ namespace API.Entities.Users
     {
         public int Upvotes { get; set; }
         public int Downvotes { get; set; }
-        public string UserDescription { get; set; }
         public ICollection<int> Followers { get; set; }
         public ICollection<int> Following { get; set; }
         public ICollection<int> UserFavoriteGames { get; set; }
