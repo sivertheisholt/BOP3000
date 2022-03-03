@@ -45,12 +45,12 @@ namespace API.Data
                 {
                     Birthday = new DateTime(1998, 7, 30),
                     Gender = "Male",
+                    Description = "Jeg er en veldig flink spiller!",
                     CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
                     AppUserData = new AppUserData
                     {
                         Upvotes = 10,
                         Downvotes = 5,
-                        UserDescription = "Jeg er en veldig flink spiller!",
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
@@ -66,12 +66,12 @@ namespace API.Data
                 {
                     Birthday = new DateTime(1998, 7, 30),
                     Gender = "Male",
+                    Description = "Jeg er en veldig flink spiller!",
                     CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
                     AppUserData = new AppUserData
                     {
                         Upvotes = 10,
                         Downvotes = 5,
-                        UserDescription = "Jeg er en veldig flink spiller!",
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
