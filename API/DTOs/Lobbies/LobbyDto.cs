@@ -9,6 +9,7 @@ namespace API.DTOs.Lobbies
         public int GameId { get; set; }
         public string GameType { get; set; }
         public string lobbyDescription { get; set; }
+        public int AdminUid { get; set; }
 
         public ICollection<int> Users { get; set; }
         public RequirementDto LobbyRequirement { get; set; }
