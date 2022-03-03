@@ -19,6 +19,14 @@
                   <fa-icon [icon]="faEnvelope"></fa-icon>
                 </span>
               </p>
+              <div class="error danger mt-2" *ngIf="regUserForm.get('email')?.invalid && regUserForm.get('email')?.errors && (regUserForm.get('email')?.dirty || regUserForm.get('email')?.touched)">
+                <div *ngIf="regUserForm.get('email')?.hasError('required')">
+                  This field is required.
+                </div>
+                <div *ngIf="regUserForm.get('email')?.hasError('email')">
+                  This has to be a valid email.
+                </div>
+              </div>
             </div>
             <div class="field mt-5 mb-5">
               <p class="control has-icons-left">
@@ -32,6 +40,24 @@
                   <fa-icon [icon]="faLock"></fa-icon>
                 </span>
               </p>
+              <div class="error neutral mt-2">
+                <div [ngClass]="regUserForm.controls['password'].hasError('required') || regUserForm.controls['password'].hasError('minlength') ? 'has-text-danger' : 'has-text-success' ">
+                  Must be atleast 8 characters!
+                </div>
+                <div [ngClass]="regUserForm.controls['password'].hasError('required') || regUserForm.controls['password'].hasError('hasNumber') ? 'has-text-danger' : 'has-text-success' ">
+                  Must contain atleast 1 number!
+                </div>
+                <div [ngClass]="regUserForm.controls['password'].hasError('required') || regUserForm.controls['password'].hasError('hasCapitalCase') ? 'has-text-danger' : 'has-text-success' ">
+                  Must contain atleast 1 capital case!
+                </div>
+                <div [ngClass]="regUserForm.controls['password'].hasError('required') || regUserForm.controls['password'].hasError('hasSmallCase') ? 'has-text-danger' : 'has-text-success' ">
+                  Must contain atleast 1 lower case!
+                </div>
+                <div [ngClass]="regUserForm.controls['password'].hasError('required') || regUserForm.controls['password'].hasError('hasSpecialCharacter') ? 'has-text-danger' : 'has-text-success' ">
+                  Must contain atleast 1 special character!
+                </div>
+              </div>
+
             </div>
             <div class="field mt-5 mb-5">
               <p class="control has-icons-left">
@@ -45,6 +71,16 @@
                   <fa-icon [icon]="faLock"></fa-icon>
                 </span>
               </p>
+              <div class="error danger mt-2" *ngIf="regUserForm.get('repeatPassword')?.invalid && regUserForm.get('repeatPassword')?.errors && (regUserForm.get('repeatPassword')?.dirty || regUserForm.get('repeatPassword')?.touched)">
+                <div *ngIf="regUserForm.get('repeatPassword')?.hasError('required')">
+                  This field is required.
+                </div>
+              </div>
+              <div class="error danger mt-2" *ngIf="regUserForm.invalid && regUserForm.errors && (regUserForm.dirty || regUserForm.touched)">
+                <div *ngIf="regUserForm.errors?.notmatched">
+                  Passwords do not match.
+                </div>
+              </div>
             </div>
             <div class="field mt-5 mb-5">
               <p class="control has-icons-left">
@@ -58,30 +94,44 @@
                   <fa-icon [icon]="faUser"></fa-icon>
                 </span>
               </p>
+              <div class="error danger mt-2" *ngIf="regUserForm.get('username')?.invalid && regUserForm.get('username')?.errors && (regUserForm.get('username')?.dirty || regUserForm.get('username')?.touched)">
+                <div *ngIf="regUserForm.get('username')?.hasError('required')">
+                  This field is required.
+                </div>
+                <div *ngIf="regUserForm.get('username')?.hasError('hasSpecialCharacter')">
+                  No special characters allowed in username.
+                </div>
+              </div>
             </div>
-            <div formGroupName="memberProfile">
-              <div class="control dropdown-ng">
-                <label for="location">Country</label>
+            <div class="control dropdown-ng mt-5 mb-5">
+              <ng-select 
+                  [items]="countries" 
+                  bindLabel="name" 
+                  bindValue="id"
+                  placeholder="Country"
+                  formControlName="countryId"
+                  [closeOnSelect]='true'
+                  class="custom">
+              </ng-select>
+              <div *ngIf="regUserForm.get('countryId')?.invalid && regUserForm.get('countryId')?.errors && (regUserForm.get('countryId')?.dirty || regUserForm.get('countryId')?.touched)">
+                <div class="error danger mt-2" *ngIf="regUserForm.get('countryId')?.hasError('required')">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+            <div class="control dropdown-ng mt-5 mb-5">
                 <ng-select 
-                    [items]="countries" 
-                    bindLabel="name" 
-                    bindValue="id"
-                    placeholder="Country"
-                    formControlName="countryId"
+                    [items]="genders" 
+                    placeholder="Gender"
+                    formControlName="gender"
                     [closeOnSelect]='true'
                     class="custom">
                 </ng-select>
-              </div>
-              <div class="control dropdown-ng">
-                  <label for="gender">Gender</label>
-                  <ng-select 
-                      [items]="genders" 
-                      placeholder="Gender"
-                      formControlName="gender"
-                      [closeOnSelect]='true'
-                      class="custom">
-                  </ng-select>
-              </div>
+                <div *ngIf="regUserForm.get('gender')?.invalid && regUserForm.get('gender')?.errors && (regUserForm.get('gender')?.dirty || regUserForm.get('gender')?.touched)">
+                  <div class="error danger mt-2" *ngIf="regUserForm.get('gender')?.hasError('required')">
+                    This field is required.
+                  </div>
+                </div>
             </div>
           </div>
           <div class="has-text-centered">
