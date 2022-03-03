@@ -42,7 +42,6 @@ namespace API.Controllers
         public async Task<ActionResult<GameAppInfoDto>> GetGameAppInfo(int id)
         {
             var app = await _steamAppRepository.GetAppInfoAsync(id);
-            Console.WriteLine(app.Data);
 
             if (app == null) return NotFound();
 
