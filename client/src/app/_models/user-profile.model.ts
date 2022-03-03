@@ -5,6 +5,7 @@ export interface UserProfile{
         birthday?: string;
         age?: number,
         gender?: string;
+        description?: string;
         countryIso?:{
             id?: number;
             name?: string;
@@ -15,7 +16,6 @@ export interface UserProfile{
         memberData?: {
             upvotes?: number;
             downvotes?: number;
-            userDescription?: string;
             followers?: [];
             following?: [];
             userFavoriteGames?: [];
