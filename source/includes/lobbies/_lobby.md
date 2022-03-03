@@ -36,7 +36,7 @@ This endpoint retrieves a specific lobby.
 
 ### HTTP Request
 
-`GET https://bop3000.azurewebsites.net/api/lobbies`
+`GET https://bop3000.azurewebsites.net/api/lobbies/<ID>`
 
 ### Response Class (Status 200)
 
@@ -66,7 +66,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://bop3000.azurewebsites.net/api/users", requestOptions)
+fetch("https://bop3000.azurewebsites.net/api/lobbies", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -78,12 +78,14 @@ fetch("https://bop3000.azurewebsites.net/api/users", requestOptions)
 [
   {
     "id": 1,
-    "maxUsers": 10,
-    "title": "TestHello",
+    "maxUsers": 5,
+    "title": "Whats up gamers",
     "steamId": null,
-    "users": [],
-    "lobbyRequirement": null,
-    "gameId": 0
+    "gameId": 1,
+    "gameType": "Competetive",
+    "lobbyDescription": "Hello there",
+    "users": [1],
+    "lobbyRequirement": null
   }
 ]
 ```
