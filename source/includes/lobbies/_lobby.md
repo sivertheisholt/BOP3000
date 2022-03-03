@@ -49,7 +49,6 @@ This endpoint retrieves a specific lobby.
 | gameId           | int              |
 | steamId          | int              |
 | gameType         | string           |
-| lobbyDescription | string           |
 | users            | int[]            |
 | lobbyRequirement | LobbyRequirement |
 
