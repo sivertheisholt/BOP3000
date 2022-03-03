@@ -27,6 +27,7 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/1", requestOptions)
   "gameId": 1,
   "gameType": "Competetive",
   "lobbyDescription": "Hello there",
+  "adminUid": 1,
   "users": [1],
   "lobbyRequirement": null
 }
@@ -45,10 +46,11 @@ This endpoint retrieves a specific lobby.
 | id               | int              |
 | maxUsers         | int              |
 | title            | string           |
-| lobbyDescription | string, optional |
 | gameId           | int              |
 | steamId          | int              |
 | gameType         | string           |
+| lobbyDescription | string, optional |
+| adminUid         | string           |
 | users            | int[]            |
 | lobbyRequirement | LobbyRequirement |
 
@@ -81,9 +83,10 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies", requestOptions)
     "maxUsers": 5,
     "title": "Whats up gamers",
     "steamId": null,
-    "gameId": 1,
+    "gameId": 51,
     "gameType": "Competetive",
     "lobbyDescription": "Hello there",
+    "adminUid": 1,
     "users": [1],
     "lobbyRequirement": null
   }
@@ -103,10 +106,11 @@ This endpoint retrieves all lobbies.
 | id               | int              |
 | maxUsers         | int              |
 | title            | string           |
-| lobbyDescription | string, optional |
 | gameId           | int              |
 | steamId          | int              |
 | gameType         | string           |
+| lobbyDescription | string, optional |
+| adminUid         | string           |
 | users            | int[]            |
 | lobbyRequirement | LobbyRequirement |
 
@@ -127,7 +131,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://bop3000.azurewebsites.net/api/lobbies/game/730", requestOptions)
+fetch("https://bop3000.azurewebsites.net/api/lobbies/game/51", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -142,10 +146,14 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/game/730", requestOptions)
     "maxUsers": 5,
     "title": "Whats up gamers",
     "steamId": null,
-    "gameId": 730,
+    "gameId": 51,
     "gameType": "Competetive",
+    "lobbyDescription": "Hello there",
+    "adminUid": 1,
     "users": [1],
-    "lobbyRequirement": null
+    "lobbyRequirement": {
+      "gender": "Male"
+    }
   }
 ]
 ```
@@ -163,10 +171,11 @@ This endpoint retrieves all lobbies with a specific game ID.
 | id               | int              |
 | maxUsers         | int              |
 | title            | string           |
-| lobbyDescription | string, optional |
 | gameId           | int              |
 | steamId          | int              |
 | gameType         | string           |
+| lobbyDescription | string, optional |
+| adminUid         | string           |
 | users            | int[]            |
 | lobbyRequirement | LobbyRequirement |
 
