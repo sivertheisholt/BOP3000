@@ -31,6 +31,7 @@ fetch("https://bop3000.azurewebsites.net/api/members", requestOptions)
       "birthday": "1998-07-30T00:00:00",
       "age": 0,
       "gender": "Male",
+      "description": "Test2",
       "countryIso": {
         "id": 1,
         "name": "Afghanistan",
@@ -41,7 +42,6 @@ fetch("https://bop3000.azurewebsites.net/api/members", requestOptions)
       "memberData": {
         "upvotes": 10,
         "downvotes": 5,
-        "userDescription": "Jeg er en veldig flink spiller!",
         "followers": [2, 3, 4, 6, 7],
         "following": [2, 3, 4, 6, 7],
         "userFavoriteGames": [2, 3, 4, 6, 7]
@@ -91,6 +91,7 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
     "birthday": "1998-07-30T00:00:00",
     "age": 0,
     "gender": "Male",
+    "description": "Test2",
     "countryIso": {
       "id": 1,
       "name": "Afghanistan",
@@ -101,7 +102,6 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
     "memberData": {
       "upvotes": 10,
       "downvotes": 5,
-      "userDescription": "Jeg er en veldig flink spiller!",
       "followers": [2, 3, 4, 6, 7],
       "following": [2, 3, 4, 6, 7],
       "userFavoriteGames": [2, 3, 4, 6, 7]
@@ -132,13 +132,14 @@ This endpoint retrieves a specific member.
 
 #### MemberProfile
 
-| Key        | Type       |
-| ---------- | ---------- |
-| birthday   | string     |
-| age        | int        |
-| gender     | string     |
-| countryIso | CountryIso |
-| memberData | MemberData |
+| Key         | Type       |
+| ----------- | ---------- |
+| birthday    | string     |
+| age         | int        |
+| gender      | string     |
+| description | string     |
+| countryIso  | CountryIso |
+| memberData  | MemberData |
 
 #### CountryIso
 
@@ -152,14 +153,13 @@ This endpoint retrieves a specific member.
 
 #### MemberData
 
-| Key               | Type   |
-| ----------------- | ------ |
-| upvotes           | int    |
-| downvotes         | int    |
-| userDescription   | string |
-| followers         | array  |
-| following         | array  |
-| userFavoriteGames | array  |
+| Key               | Type  |
+| ----------------- | ----- |
+| upvotes           | int   |
+| downvotes         | int   |
+| followers         | array |
+| following         | array |
+| userFavoriteGames | array |
 
 ## GET Current member info
 
@@ -188,6 +188,7 @@ fetch("https://bop3000.azurewebsites.net/api/members/current", requestOptions)
     "birthday": "1998-07-30T00:00:00",
     "age": 0,
     "gender": "Male",
+    "description": "Test2",
     "countryIso": {
       "id": 1,
       "name": "Afghanistan",
@@ -198,7 +199,6 @@ fetch("https://bop3000.azurewebsites.net/api/members/current", requestOptions)
     "memberData": {
       "upvotes": 10,
       "downvotes": 5,
-      "userDescription": "Jeg er en veldig flink spiller!",
       "followers": [2, 3, 4, 6, 7],
       "following": [2, 3, 4, 6, 7],
       "userFavoriteGames": [2, 3, 4, 6, 7]
@@ -223,13 +223,14 @@ This endpoint retrieves the current member.
 
 #### MemberProfile
 
-| Key        | Type       |
-| ---------- | ---------- |
-| birthday   | string     |
-| age        | int        |
-| gender     | string     |
-| countryIso | CountryIso |
-| memberData | MemberData |
+| Key         | Type       |
+| ----------- | ---------- |
+| birthday    | string     |
+| age         | int        |
+| gender      | string     |
+| description | string     |
+| countryIso  | CountryIso |
+| memberData  | MemberData |
 
 #### CountryIso
 
@@ -243,14 +244,13 @@ This endpoint retrieves the current member.
 
 #### MemberData
 
-| Key               | Type   |
-| ----------------- | ------ |
-| upvotes           | int    |
-| downvotes         | int    |
-| userDescription   | string |
-| followers         | array  |
-| following         | array  |
-| userFavoriteGames | array  |
+| Key               | Type  |
+| ----------------- | ----- |
+| upvotes           | int   |
+| downvotes         | int   |
+| followers         | array |
+| following         | array |
+| userFavoriteGames | array |
 
 <!--- POST --->
 
@@ -268,9 +268,10 @@ myHeaders.append("Content-Type", "application/json");
 var raw = JSON.stringify({
   userName: "TestName",
   email: "member@test.com",
-  Countryid: 1,
-  Gender: "Male",
-  Birthday: "10/09/1998",
+  countryid: 1,
+  gender: "Male",
+  birthday: "2012-04-23T00:00:00.000Z",
+  description: "Test",
 });
 
 var requestOptions = {
@@ -296,12 +297,13 @@ This endpoint updates a single member
 
 ### Body Schema
 
-| Key       | Type   |
-| --------- | ------ |
-| username  | string |
-| email     | string |
-| countryId | id     |
-| gender    | string |
-| birthday  | string |
+| Key         | Type   |
+| ----------- | ------ |
+| username    | string |
+| email       | string |
+| countryId   | id     |
+| gender      | string |
+| birthday    | string |
+| description | string |
 
 <!--- DELETE --->
