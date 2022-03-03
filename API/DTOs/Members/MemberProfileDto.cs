@@ -12,6 +12,7 @@ namespace API.DTOs.Members
         public DateTime Birthday { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
+        public string Description { get; set; }
         public CountryIsoDto CountryIso { get; set; }
         public MemberDataDto MemberData { get; set; }
     }
