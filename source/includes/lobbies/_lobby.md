@@ -2,6 +2,63 @@
 
 <!--- GET --->
 
+## GET Specific lobby
+
+```javascript
+var requestOptions = {
+  method: "GET",
+  redirect: "follow",
+};
+
+fetch("https://bop3000.azurewebsites.net/api/lobbies/1", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 1,
+  "maxUsers": 5,
+  "title": "Whats up gamers",
+  "steamId": null,
+  "gameId": 1,
+  "gameType": "Competetive",
+  "lobbyDescription": "Hello there",
+  "users": [1],
+  "lobbyRequirement": null
+}
+```
+
+This endpoint retrieves a specific lobby.
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/lobbies`
+
+### Response Class (Status 200)
+
+| Key              | Type             |
+| ---------------- | ---------------- |
+| id               | int              |
+| maxUsers         | int              |
+| title            | string           |
+| lobbyDescription | string, optional |
+| gameId           | int              |
+| steamId          | int              |
+| gameType         | string           |
+| lobbyDescription | string           |
+| users            | int[]            |
+| lobbyRequirement | LobbyRequirement |
+
+#### LobbyRequirement
+
+| Key    | Type             |
+| ------ | ---------------- |
+| gender | string, optional |
+
 ## GET All lobbies
 
 ```javascript
