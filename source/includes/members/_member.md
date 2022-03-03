@@ -31,6 +31,7 @@ fetch("https://bop3000.azurewebsites.net/api/members", requestOptions)
       "age": 0,
       "gender": "Male",
       "countryIso": {
+        "id": 1,
         "name": "Afghanistan",
         "twoLetterCode": "AF",
         "threeLetterCode": "AFG",
@@ -89,6 +90,7 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
     "age": 0,
     "gender": "Male",
     "countryIso": {
+      "id": 1,
       "name": "Afghanistan",
       "twoLetterCode": "AF",
       "threeLetterCode": "AFG",
@@ -139,6 +141,7 @@ This endpoint retrieves a specific member.
 
 | Key             | Type   |
 | --------------- | ------ |
+| id              | int    |
 | name            | string |
 | twoLetterCode   | string |
 | ThreeLetterCode | string |
@@ -182,6 +185,7 @@ fetch("https://bop3000.azurewebsites.net/api/members/current", requestOptions)
     "age": 0,
     "gender": "Male",
     "countryIso": {
+      "id": 1,
       "name": "Afghanistan",
       "twoLetterCode": "AF",
       "threeLetterCode": "AFG",
@@ -226,6 +230,7 @@ This endpoint retrieves the current member.
 
 | Key             | Type   |
 | --------------- | ------ |
+| id              | int    |
 | name            | string |
 | twoLetterCode   | string |
 | ThreeLetterCode | string |
