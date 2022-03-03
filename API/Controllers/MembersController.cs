@@ -52,6 +52,7 @@ namespace API.Controllers
             member.AppUserProfile.CountryIso = await _countryRepository.GetCountryIsoByIdAsync(memberUpdateDto.CountryId);
             member.AppUserProfile.Birthday = DateTime.Parse(memberUpdateDto.Birthday);
             member.AppUserProfile.Gender = memberUpdateDto.Gender;
+            member.AppUserProfile.Description = memberUpdateDto.Description;
 
             _userRepository.Update(member);
 
