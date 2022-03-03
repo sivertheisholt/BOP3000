@@ -28,6 +28,7 @@ fetch("https://bop3000.azurewebsites.net/api/members", requestOptions)
     "email": "member@test.com",
     "username": "membertest",
     "memberProfile": {
+      "birthday": "1998-07-30T00:00:00",
       "age": 0,
       "gender": "Male",
       "countryIso": {
@@ -87,6 +88,7 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
   "email": "member@test.com",
   "username": "membertest",
   "memberProfile": {
+    "birthday": "1998-07-30T00:00:00",
     "age": 0,
     "gender": "Male",
     "countryIso": {
@@ -132,6 +134,7 @@ This endpoint retrieves a specific member.
 
 | Key        | Type       |
 | ---------- | ---------- |
+| birthday   | string     |
 | age        | int        |
 | gender     | string     |
 | countryIso | CountryIso |
@@ -182,6 +185,7 @@ fetch("https://bop3000.azurewebsites.net/api/members/current", requestOptions)
   "email": "member@test.com",
   "username": "membertest",
   "memberProfile": {
+    "birthday": "1998-07-30T00:00:00",
     "age": 0,
     "gender": "Male",
     "countryIso": {
@@ -221,6 +225,7 @@ This endpoint retrieves the current member.
 
 | Key        | Type       |
 | ---------- | ---------- |
+| birthday   | string     |
 | age        | int        |
 | gender     | string     |
 | countryIso | CountryIso |
