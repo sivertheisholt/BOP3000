@@ -1,0 +1,23 @@
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+    <div class="card column is-two-thirds m-3">
+        <h1 class="title has-text-centered text-is-light">Contact Form</h1>
+        <div class="card-content">
+            <ng-select 
+                [items]="selectSubject" 
+                bindLabel="subject"
+                bindValue="id" 
+                placeholder="Subject"
+                formControlName="contactSubject"
+                [closeOnSelect]='true'
+                class="custom">
+            </ng-select>
+            <textarea class="textarea is-primary mt-3" placeholder="" formControlName="contactDescription"></textarea>
+            <div *ngIf="!contactForm.controls['contactDescription'].invalid || !contactForm.controls['contactSubject'].invalid ">
+                <div class="error danger">
+                    
+                </div>
+            </div>
+            <button class="button is-info is-normal text-is-light mt-3" type="submit">Send</button>
+        </div>
+    </div> 
+</form>

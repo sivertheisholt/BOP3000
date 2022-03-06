@@ -14,8 +14,9 @@ export class AppComponent implements OnInit {
   users: any;
   loggedIn : boolean;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private lobbyHubService: LobbyHubService) {
     this.loggedIn = authService.isLoggedIn;
+    lobbyHubService.createHubConnection(this.authService.getUserId());
   }
 
   ngOnInit() {

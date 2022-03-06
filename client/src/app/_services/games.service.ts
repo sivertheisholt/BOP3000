@@ -26,8 +26,6 @@ export class GamesService{
         );
     }
 
-
-
     searchGame(input: string){
         return this.http.get<GameSearch>(this.baseUrl + 'apps/search', {
             params: {

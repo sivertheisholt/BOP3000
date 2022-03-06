@@ -20,7 +20,7 @@ export class LobbyService{
     }
 
     fetchLobby(id: number){
-
+        return this.http.get<Lobby>(this.baseUrl + 'lobbies/' + id);
     }
 
     fetchAllLobbies(){

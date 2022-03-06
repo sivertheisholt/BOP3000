@@ -1,10 +1,13 @@
 export interface Lobby{
-    gameId: number;
-    title: string;
     id: number;
-    lobbyDescription? : string;
-    gameType: string;
     maxUsers: number;
+    title: string;
+    lobbyDescription? : string;
+    gameId: number;
+    steamId: number;
+    gameType: string;
+    users: number[];
+    adminUid: number;
     lobbyRequirement: {
         gender?: string;
     };

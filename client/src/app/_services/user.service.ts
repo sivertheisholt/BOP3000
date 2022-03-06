@@ -31,5 +31,15 @@ export class UserService{
             console.log(response);
         });
     }
+
+    getSpecificUser(id: number){
+        return this.http.get<UserProfile>(this.baseUrl + 'members/' + id).pipe(
+            map(response => {
+                let user: UserProfile;
+                user = response;
+                return user;
+            })
+        );
+    }
     
 }

@@ -15,12 +15,14 @@ export class LobbyHubService {
 
   lobbyQueueMembersSource = new BehaviorSubject<Number[]>([]);
   lobbyQueueMembers$ = this.lobbyQueueMembersSource.asObservable();
+  lobbyPartyMembersSource = new BehaviorSubject<Number[]>([]);
+  lobbyPartyMembers$ = this.lobbyQueueMembersSource.asObservable();
 
   constructor() {}
 
-  createHubConnection(token: string, lobbyId: string) {
+  createHubConnection(token: string) {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'lobby?lobbyId=' + lobbyId, {
+      .withUrl(this.hubUrl + 'lobby', {
         accessTokenFactory: () => token
       })
       .withAutomaticReconnect()
@@ -58,6 +60,15 @@ export class LobbyHubService {
         })
         console.log("Getting users");
       })
+
+      this.hubConnection.on("test",() => {
+        
+        console.log("DETTE ER EN TEST");
+      })
+  }
+
+  goInQueue(lobbyId: number){
+    this.hubConnection.invoke("OnQueuePending", lobbyId);
   }
 
   stopHubConnection() {

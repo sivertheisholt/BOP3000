@@ -1,17 +1,22 @@
 .waiting-room-list{
     width: 100%;
     height: 480px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
+    background-color: rgba(37, 37, 37, 0.7);
 }
 
-table{
-    background-color: rgba(48, 7, 7, 0.7);
+.waiting-room-header{
+  background-color: khaki;
+  font-size: 10px;
+  height: 40px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
-thead{
-    width: 100%;
-    text-align: center;
+.waiting-room-item{
+  
 }
 
 .table-header-text{

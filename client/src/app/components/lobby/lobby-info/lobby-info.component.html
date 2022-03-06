@@ -1,12 +1,12 @@
 <div class="lobby-info-wrapper">
     <div class="header-lobby is-flex">
         <div class="header-lobby-image">
-            <img src="https://cdn.akamai.steamstatic.com/steam/apps/1438160/header.jpg?t=1602738467">
+            <h1>{{ game?.name }}</h1>
+            <img [src]="game?.headerImage">
         </div>
-        <div class="lobby-text p-4">
-            <h1>Counter-Strike: Global Offensive</h1>
-            <p>Created By: USERNAME</p>
-            <p>Lobbysize: 1 / 5</p>
+        <div class="lobby-text text-is-light">
+            <p>Created By: {{ lobby?.gameType }}</p>
+            <p>Lobbysize: {{ lobby?.users?.length }} / {{ lobby?.maxUsers }}</p>
         </div>
 
     </div>

@@ -1,18 +1,10 @@
 <div class="waiting-room-list">
-    <table class="table">
-        <thead>
-            <th class="table-header-text">
-                Waiting to join...
-            </th>
-        </thead>
-        <tbody >
-            <ng-template #queueLobby>
-                <tr>
-                    <td >
-                        <app-member-card (acceptMemberEvent)="memberJoinedQueue(queueLobby)"></app-member-card>
-                    </td>
-                </tr>
-            </ng-template>
-        </tbody>
-    </table>
+    <div class="waiting-room-header">
+        <h1>Waiting to join...</h1>
+    </div>
+    <ng-template #queueLobby>
+        <div class="waiting-room-item">
+            <app-member-card (acceptMemberEvent)="memberJoinedQueue(queueLobby)"></app-member-card>
+        </div>
+    </ng-template>
 </div>

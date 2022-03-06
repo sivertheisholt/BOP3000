@@ -1,30 +1,10 @@
 <div class="joined-users-list">
-    <table class="table">
-        <thead>
-            <th class="table-header-text">
-                Party
-            </th>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div class="is-flex is-justify-content-space-around is-align-items-center">
-                        <div class="image is-32x32">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/United-kingdom_flag_icon_round.svg/1200px-United-kingdom_flag_icon_round.svg.png">
-                        </div>
-                        <div class="joined-users-user-wrapper is-flex is-align-items-center">
-                            <div class="image is-32x32 mr-2">
-                                <img class="is-rounded" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/75/7514b0304efd66200bc6aeb671642d925b95ca15_full.jpg">
-                            </div>
-                            <div class="text-is-light">S0meon3</div>
-                        </div>
-                        <a>
-                            Remove
-                            <!-- <fa-icon class="fa-lg mr-2" [icon]="faPlus"></fa-icon> -->
-                        </a>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="joined-users-header">
+        <h1>Lobby</h1>
+    </div>
+    
+        <div class="joined-users-item">
+            <app-joined-member-item></app-joined-member-item>
+        </div>
+    
 </div>

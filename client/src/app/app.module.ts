@@ -38,6 +38,10 @@ import { ConnectionsComponent } from './components/settings/connections/connecti
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 import { ManageAccountComponent } from './components/settings/manage-account/manage-account.component';
 import { MemberCardComponent } from './components/lobby/waiting-room/member-card/member-card.component';
+import { JoinedMemberItemComponent } from './components/lobby/joined-users/joined-member-item/joined-member-item.component';
+import { HelpComponent } from './components/help/help.component';
+import { AccordionDirective } from './_directives/accordion.directive';
+import { ContactFormComponent } from './components/help/contact-form/contact-form.component';
 
 
 @NgModule({
@@ -72,7 +76,11 @@ import { MemberCardComponent } from './components/lobby/waiting-room/member-card
     ConnectionsComponent,
     ForgottenPasswordComponent,
     ManageAccountComponent,
-    MemberCardComponent
+    MemberCardComponent,
+    JoinedMemberItemComponent,
+    HelpComponent,
+    AccordionDirective,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,
