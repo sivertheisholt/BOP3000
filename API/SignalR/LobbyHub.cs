@@ -59,8 +59,8 @@ namespace API.SignalR
 
             if (Context.User.GetUserId() == 2)
             {
-                await _lobbyTracker.CreateLobby(2, 2);
-                await AddToGroup("2");
+                await _lobbyTracker.CreateLobby(1, 2);
+                await AddToGroup("1");
             }
         }
         public override async Task OnDisconnectedAsync(Exception exception)
