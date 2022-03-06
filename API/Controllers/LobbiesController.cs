@@ -18,10 +18,8 @@ namespace API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly LobbyChatTracker _lobbyChatTracker;
         private readonly LobbyTracker _lobbyTracker;
-        private readonly LobbyHub _lobbyHub;
         public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyChatTracker lobbyChatTracker, LobbyTracker lobbyTracker) : base(mapper)
         {
-            _lobbyHub = lobbyHub;
             _lobbyTracker = lobbyTracker;
             _lobbyChatTracker = lobbyChatTracker;
             _userRepository = userRepository;
