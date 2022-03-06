@@ -80,10 +80,9 @@ namespace API.SignalR
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task OnQueuePending()
+        public async Task OnQueuePending(int lobbyId)
         {
             var httpContext = Context.GetHttpContext();
-            var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
             try
             {
                 await _lobbyTracker.MemberJoinedQueue(lobbyId, Context.User.GetUserId());
