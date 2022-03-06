@@ -53,27 +53,6 @@ namespace API.SignalR
             await AddToGroup(lobbyId.ToString());
             await Clients.Group(lobbyId.ToString()).SendAsync("MemberAccepted", Context.User.GetUserId());
         }
-
-        public override async Task OnConnectedAsync()
-        {
-            var httpContext = Context.GetHttpContext();
-            var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
-            try
-            {
-                await _lobbyTracker.MemberJoinedQueue(lobbyId, Context.User.GetUserId());
-            }
-            catch (System.Exception err)
-            {
-                Console.WriteLine(err);
-                await Clients.Caller.SendAsync("GetQueueMembers", await _lobbyTracker.GetMembersInQueueLobby(lobbyId));
-                return;
-            }
-            var groupNameQueue = lobbyId + "-Queue";
-            await AddToGroup(groupNameQueue);
-            await Clients.OthersInGroup(lobbyId.ToString()).SendAsync("JoinedLobbyQueue", Context.User.GetUserId());
-            await Clients.OthersInGroup(groupNameQueue).SendAsync("JoinedLobbyQueue", Context.User.GetUserId());
-            await Clients.Caller.SendAsync("GetQueueMembers", await _lobbyTracker.GetMembersInQueueLobby(lobbyId));
-        }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             var lobbyId = await _lobbyTracker.GetLobbyIdFromUser(Context.User.GetUserId());
@@ -94,6 +73,27 @@ namespace API.SignalR
                 await Clients.Group(lobbyId.ToString()).SendAsync("LeftLobby", Context.User.GetUserId());
             }
             await base.OnDisconnectedAsync(exception);
+        }
+
+        public async Task OnQueuePending()
+        {
+            var httpContext = Context.GetHttpContext();
+            var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
+            try
+            {
+                await _lobbyTracker.MemberJoinedQueue(lobbyId, Context.User.GetUserId());
+            }
+            catch (System.Exception err)
+            {
+                Console.WriteLine(err);
+                await Clients.Caller.SendAsync("GetQueueMembers", await _lobbyTracker.GetMembersInQueueLobby(lobbyId));
+                return;
+            }
+            var groupNameQueue = lobbyId + "-Queue";
+            await AddToGroup(groupNameQueue);
+            await Clients.OthersInGroup(lobbyId.ToString()).SendAsync("JoinedLobbyQueue", Context.User.GetUserId());
+            await Clients.OthersInGroup(groupNameQueue).SendAsync("JoinedLobbyQueue", Context.User.GetUserId());
+            await Clients.Caller.SendAsync("GetQueueMembers", await _lobbyTracker.GetMembersInQueueLobby(lobbyId));
         }
     }
 }
