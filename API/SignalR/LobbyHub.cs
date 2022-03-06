@@ -53,6 +53,11 @@ namespace API.SignalR
             await AddToGroup(lobbyId.ToString());
             await Clients.Group(lobbyId.ToString()).SendAsync("MemberAccepted", Context.User.GetUserId());
         }
+
+        public override async Task OnConnectedAsync()
+        {
+            await Clients.All.SendAsync("test");
+        }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             var lobbyId = await _lobbyTracker.GetLobbyIdFromUser(Context.User.GetUserId());
