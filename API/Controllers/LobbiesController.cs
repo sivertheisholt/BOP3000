@@ -19,7 +19,7 @@ namespace API.Controllers
         private readonly LobbyChatTracker _lobbyChatTracker;
         private readonly LobbyTracker _lobbyTracker;
         private readonly LobbyHub _lobbyHub;
-        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyChatTracker lobbyChatTracker, LobbyTracker lobbyTracker, LobbyHub lobbyHub) : base(mapper)
+        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyChatTracker lobbyChatTracker, LobbyTracker lobbyTracker) : base(mapper)
         {
             _lobbyHub = lobbyHub;
             _lobbyTracker = lobbyTracker;
