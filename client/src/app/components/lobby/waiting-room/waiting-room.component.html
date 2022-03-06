@@ -2,9 +2,25 @@
     <div class="waiting-room-header">
         <h1>Waiting to join...</h1>
     </div>
-    <ng-template #queueLobby>
-        <div class="waiting-room-item">
-            <app-member-card (acceptMemberEvent)="memberJoinedQueue(queueLobby)"></app-member-card>
+    <div class="waiting-room-item" *ngFor="let user of usersInQueue; let i = index">
+        <div class="is-flex is-justify-content-space-around is-align-items-center mt-3">
+            <div class="image is-32x32">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/United-kingdom_flag_icon_round.svg/1200px-United-kingdom_flag_icon_round.svg.png">
+            </div>
+            <div class="waiting-room-user-wrapper is-flex is-align-items-center">
+                <div class="image is-32x32 mr-2">
+                    <img class="is-rounded" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/75/7514b0304efd66200bc6aeb671642d925b95ca15_full.jpg">
+                </div>
+                <div class="text-is-light">{{ user.username }}</div>
+            </div>
+            <div class="waiting-room-btn-wrapper">
+                <a (click)="denyUserToJoin(i)">
+                    <fa-icon class="fa-lg mr-2" [icon]="faMinus"></fa-icon>
+                </a>
+                <a (click)="acceptUserToJoin()">
+                    <fa-icon class="fa-lg mr-2" [icon]="faPlus"></fa-icon>
+                </a>
+            </div>
         </div>
-    </ng-template>
+    </div>
 </div>
