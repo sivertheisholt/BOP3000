@@ -15,7 +15,6 @@ namespace API.SignalR
 
         public LobbyTracker()
         {
-            CreateLobby(1, 1);
         }
 
         public Task CreateLobby(int lobbyId, int adminUid)
