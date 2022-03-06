@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Extentions;
+using API.Interfaces.IRepositories;
 using Microsoft.AspNetCore.SignalR;
 
 namespace API.SignalR
@@ -10,10 +11,12 @@ namespace API.SignalR
     public class LobbyHub : Hub
     {
         private readonly LobbyTracker _lobbyTracker;
-        public LobbyHub(LobbyTracker lobbyTracker)
-        {
-            _lobbyTracker = lobbyTracker;
 
+        private readonly ILobbiesRepository _lobbiesRepository;
+        public LobbyHub(LobbyTracker lobbyTracker, ILobbiesRepository lobbiesRepository)
+        {
+            _lobbiesRepository = lobbiesRepository;
+            _lobbyTracker = lobbyTracker;
         }
 
         private async Task AddToGroup(string groupName)
@@ -30,6 +33,10 @@ namespace API.SignalR
         {
             var httpContext = Context.GetHttpContext();
             var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
+            var adminUid = await _lobbyTracker.GetLobbyAdmin(lobbyId);
+
+            if (adminUid != Context.User.GetUserId()) return;
+
             try
             {
                 await _lobbyTracker.MemberAccepted(lobbyId, Context.User.GetUserId());

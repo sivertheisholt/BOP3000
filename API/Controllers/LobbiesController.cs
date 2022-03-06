@@ -2,6 +2,7 @@ using System.Security.Claims;
 using API.DTOs.Lobbies;
 using API.Entities.Lobbies;
 using API.Interfaces.IRepositories;
+using API.SignalR;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +16,14 @@ namespace API.Controllers
     {
         private readonly ILobbiesRepository _lobbiesRepository;
         private readonly IUserRepository _userRepository;
-        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper) : base(mapper)
+        private readonly LobbyChatTracker _lobbyChatTracker;
+        private readonly LobbyTracker _lobbyTracker;
+        private readonly LobbyHub _lobbyHub;
+        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyChatTracker lobbyChatTracker, LobbyTracker lobbyTracker, LobbyHub lobbyHub) : base(mapper)
         {
+            _lobbyHub = lobbyHub;
+            _lobbyTracker = lobbyTracker;
+            _lobbyChatTracker = lobbyChatTracker;
             _userRepository = userRepository;
             _lobbiesRepository = lobbiesRepository;
         }
@@ -49,7 +56,13 @@ namespace API.Controllers
             _lobbiesRepository.AddLobby(lobby);
 
             // Checks the result from adding the new Game Room
-            if (await _lobbiesRepository.SaveAllAsync()) return Ok(Mapper.Map<NewLobbyDto>(lobby));
+            if (await _lobbiesRepository.SaveAllAsync())
+            {
+                var createdLobby = Mapper.Map<NewLobbyDto>(lobby);
+                await _lobbyTracker.CreateLobby(createdLobby.Id, GetUserIdFromClaim());
+                await _lobbyChatTracker.CreateChat(createdLobby.Id);
+                return Ok(createdLobby);
+            }
 
             return BadRequest("Failed to create room");
         }

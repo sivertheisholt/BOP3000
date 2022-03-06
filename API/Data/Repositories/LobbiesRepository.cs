@@ -1,5 +1,6 @@
 using API.Entities.Lobbies;
 using API.Interfaces.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
@@ -27,7 +28,9 @@ namespace API.Data.Repositories
 
         public Task<List<Lobby>> GetLobbiesWithGameId(int id)
         {
-            var lobbies = Context.Lobby.Where(lobby => lobby.GameId == id).ToList();
+            var lobbies = Context.Lobby.Where(lobby => lobby.GameId == id)
+            .Include(lobby => lobby.LobbyRequirement)
+            .ToList();
             return Task.FromResult(lobbies);
         }
 

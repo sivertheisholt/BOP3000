@@ -52,6 +52,7 @@ namespace API
                 endpoints.MapControllers();
                 endpoints.MapFallbackToController("Index", "Fallback");
                 endpoints.MapHub<LobbyHub>("hubs/lobby");
+                endpoints.MapHub<LobbyChatHub>("hubs/lobby-chat");
             });
         }
     }

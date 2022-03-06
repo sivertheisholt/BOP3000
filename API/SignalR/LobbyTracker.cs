@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Interfaces.IRepositories;
 
 namespace API.SignalR
 {
@@ -10,16 +11,27 @@ namespace API.SignalR
         private static readonly Dictionary<int, List<int>> LobbiesQueue = new Dictionary<int, List<int>>();
         private static readonly Dictionary<int, List<int>> Lobbies = new Dictionary<int, List<int>>();
         private static readonly Dictionary<int, int> MemberTracker = new Dictionary<int, int>();
+        private static readonly Dictionary<int, int> LobbiesAdminTracker = new Dictionary<int, int>();
 
         public LobbyTracker()
         {
-            CreateLobby(1);
+            CreateLobby(1, 1);
         }
 
-        public Task CreateLobby(int lobbyId)
+        public Task CreateLobby(int lobbyId, int adminUid)
         {
-            LobbiesQueue.Add(lobbyId, new List<int>());
-            Lobbies.Add(lobbyId, new List<int>());
+            lock (LobbiesQueue)
+            {
+                lock (Lobbies)
+                {
+                    lock (LobbiesAdminTracker)
+                    {
+                        LobbiesQueue.Add(lobbyId, new List<int>());
+                        Lobbies.Add(lobbyId, new List<int>());
+                        LobbiesAdminTracker.Add(lobbyId, adminUid);
+                    }
+                }
+            }
             return Task.CompletedTask;
         }
 
@@ -36,7 +48,10 @@ namespace API.SignalR
                     if (LobbiesQueue.Where(lobby => lobby.Key == lobbyId).FirstOrDefault().Value.Contains(uid)) return Task.FromException(new Exception("Member already exists in lobby queue"));
 
                     LobbiesQueue[lobbyId].Add(uid);
-                    MemberTracker.Add(uid, lobbyId);
+                    lock (MemberTracker)
+                    {
+                        MemberTracker.Add(uid, lobbyId);
+                    }
                 }
             }
 
@@ -53,7 +68,10 @@ namespace API.SignalR
                     if (Lobbies.Where(lobby => lobby.Key == lobbyId).FirstOrDefault().Value.Contains(uid)) return Task.FromException(new Exception("User already exists"));
 
                     Lobbies[lobbyId].Add(uid);
-                    LobbiesQueue[lobbyId].Remove(uid);
+                    lock (LobbiesQueue)
+                    {
+                        LobbiesQueue[lobbyId].Remove(uid);
+                    }
                 }
             }
 
@@ -67,7 +85,10 @@ namespace API.SignalR
                 if (MemberTracker.ContainsKey(uid))
                 {
                     Lobbies[lobbyId].Remove(uid);
-                    MemberTracker.Remove(uid);
+                    lock (MemberTracker)
+                    {
+                        MemberTracker.Remove(uid);
+                    }
                 }
             }
 
@@ -81,7 +102,10 @@ namespace API.SignalR
                 if (MemberTracker.ContainsKey(uid))
                 {
                     LobbiesQueue[lobbyId].Remove(uid);
-                    MemberTracker.Remove(uid);
+                    lock (MemberTracker)
+                    {
+                        MemberTracker.Remove(uid);
+                    }
                 }
             }
 
@@ -106,6 +130,10 @@ namespace API.SignalR
         public Task<int> GetLobbyIdFromUser(int uid)
         {
             return Task.FromResult(MemberTracker.Where(member => member.Key == uid).FirstOrDefault().Value);
+        }
+        public Task<int> GetLobbyAdmin(int lobbyId)
+        {
+            return Task.FromResult(LobbiesAdminTracker[lobbyId]);
         }
     }
 }
