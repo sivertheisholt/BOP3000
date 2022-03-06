@@ -57,12 +57,9 @@ namespace API.SignalR
         public override async Task OnConnectedAsync()
         {
 
-            if (!await _lobbyTracker.CheckIfMemberInQueue(2, 2))
+            if (Context.User.GetUserId() == 2)
             {
-                if (!await _lobbyTracker.CheckIfMemberInLobby(2, 2))
-                {
-                    await _lobbyTracker.CreateLobby(2, 2);
-                }
+                await _lobbyTracker.CreateLobby(2, 2);
             }
         }
         public override async Task OnDisconnectedAsync(Exception exception)
