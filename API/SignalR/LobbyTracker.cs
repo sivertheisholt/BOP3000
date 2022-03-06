@@ -135,5 +135,10 @@ namespace API.SignalR
         {
             return Task.FromResult(LobbiesAdminTracker[lobbyId]);
         }
+
+        public Task<bool> CheckIfMemberInLobby(int lobbyId, int uid)
+        {
+            return Task.FromResult(Lobbies[lobbyId].Contains(uid));
+        }
     }
 }
