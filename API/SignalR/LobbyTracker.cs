@@ -34,18 +34,18 @@ namespace API.SignalR
             return Task.CompletedTask;
         }
 
-        public Task MemberJoinedQueue(int lobbyId, int uid)
+        public Task<bool> JoinQueue(int lobbyId, int uid)
         {
             lock (LobbiesQueue)
             {
-                if (MemberTracker.ContainsKey(uid)) return Task.FromException(new Exception("Member is already in a lobby queue"));
+                if (MemberTracker.ContainsKey(uid))
+                {
+                    Console.WriteLine("User is already in another queue or lobby!");
+                    return Task.FromResult(false);
+                }
 
                 if (Lobbies.ContainsKey(lobbyId))
                 {
-                    if (Lobbies.Where(lobby => lobby.Key == lobbyId).FirstOrDefault().Value.Contains(uid)) return Task.FromException(new Exception("Member already exists in lobby"));
-
-                    if (LobbiesQueue.Where(lobby => lobby.Key == lobbyId).FirstOrDefault().Value.Contains(uid)) return Task.FromException(new Exception("Member already exists in lobby queue"));
-
                     LobbiesQueue[lobbyId].Add(uid);
                     lock (MemberTracker)
                     {
@@ -54,17 +54,17 @@ namespace API.SignalR
                 }
             }
 
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
-        public Task MemberAccepted(int lobbyId, int uid)
+        public Task<bool> AcceptMember(int lobbyId, int uid)
         {
             lock (Lobbies)
             {
-                if (MemberTracker.ContainsKey(uid)) return Task.FromException(new Exception("User is already in a lobby"));
+                if (MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
 
                 if (Lobbies.ContainsKey(lobbyId))
                 {
-                    if (Lobbies.Where(lobby => lobby.Key == lobbyId).FirstOrDefault().Value.Contains(uid)) return Task.FromException(new Exception("User already exists"));
+                    if (Lobbies.Where(lobby => lobby.Key == lobbyId).FirstOrDefault().Value.Contains(uid)) Task.FromResult(false);
 
                     Lobbies[lobbyId].Add(uid);
                     lock (LobbiesQueue)
@@ -74,7 +74,7 @@ namespace API.SignalR
                 }
             }
 
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
 
         public Task MemberLeftLobby(int lobbyId, int uid)

@@ -32,44 +32,48 @@ export class LobbyHubService {
         .start()
         .catch(error => console.log(error));
 
-      // Everyone will get this except the caller
-      this.hubConnection.on('JoinedLobbyQueue', id => {
-        this.lobbyQueueMembersSource.next(id);
-        console.log("User with id: " + id + " has connected to lobby queue");
+      
+
+      // Member that is accepted will get this
+      this.hubConnection.on('Accepted', id => {
+        console.log("You have been accepted!");
       })
 
-      // Everyone will get this
-      this.hubConnection.on("LeftLobbyQueue", id => {
-        console.log("User with id: " + id + " has left Queue");
-      })
-
-      // Everyone will get this
-      this.hubConnection.on('LeftLobby', id => {
-        console.log("User with id: " + id + " has left");
-      })
-
-      // Everyone will get this
+      // Everyone in lobby will get this
       this.hubConnection.on("MemberAccepted", id => {
         this.lobbyPartyMembersSource.next(id);
-        console.log("User with id: " + id + " was accepted");
+        console.log("User with id: " + id + " was accepted!");
+      })
+
+      // Everyone in lobby will get this
+      this.hubConnection.on("JoinedLobbyQueue", id => {
+        this.lobbyQueueMembersSource.next(id);
+        console.log("User with id: " + id + " joined lobby queue!");
       })
 
       //Only caller will get this
-      this.hubConnection.on("GetQueueMembers", ids => {
+      this.hubConnection.on("QueueMembers", ids => {
         ids.forEach((id: Number[]) => {
           this.lobbyQueueMembersSource.next(id);
         })
-        console.log("Getting users");
       })
 
-      this.hubConnection.on("test",() => {
-        
-        console.log("DETTE ER EN TEST");
+      //Only caller will get this
+      this.hubConnection.on("LobbyMembers", ids => {
+        ids.forEach((id: Number[]) => {
+          this.lobbyPartyMembersSource.next(id);
+        })
       })
   }
 
   goInQueue(lobbyId: number){
-    this.hubConnection.invoke("OnQueuePending", lobbyId);
+    this.hubConnection.invoke("JoinQueue", lobbyId);
+  }
+  getQueueMembers(lobbyId: number){
+    this.hubConnection.invoke("GetQueueMembers", lobbyId);
+  }
+  getLobbyMembers(lobbyId: number){
+    this.hubConnection.invoke("GetLobbyMembers", lobbyId);
   }
 
   stopHubConnection() {
