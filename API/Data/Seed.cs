@@ -80,7 +80,7 @@ namespace API.Data
             };
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(admin, new[] { "Admin", "Premium" });
+            await userManager.AddToRolesAsync(admin, new[] { "Member", "Admin", "Premium" });
 
             await userManager.CreateAsync(testUser, "Playfu123!");
             await userManager.AddToRolesAsync(testUser, new[] { Role.Member.MakeString() });
