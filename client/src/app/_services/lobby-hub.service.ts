@@ -16,7 +16,7 @@ export class LobbyHubService {
   lobbyQueueMembersSource = new BehaviorSubject<Number[]>([]);
   lobbyQueueMembers$ = this.lobbyQueueMembersSource.asObservable();
   lobbyPartyMembersSource = new BehaviorSubject<Number[]>([]);
-  lobbyPartyMembers$ = this.lobbyQueueMembersSource.asObservable();
+  lobbyPartyMembers$ = this.lobbyPartyMembersSource.asObservable();
 
   constructor() {}
 
@@ -50,6 +50,7 @@ export class LobbyHubService {
 
       // Everyone will get this
       this.hubConnection.on("MemberAccepted", id => {
+        this.lobbyPartyMembersSource.next(id);
         console.log("User with id: " + id + " was accepted");
       })
 

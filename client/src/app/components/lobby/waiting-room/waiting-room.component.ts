@@ -1,11 +1,9 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit} from '@angular/core';
 import { UserProfile } from 'src/app/_models/user-profile.model';
-
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 import { UserService } from 'src/app/_services/user.service';
 
-import { MemberCardComponent } from './member-card/member-card.component';
 
 @Component({
   selector: 'app-waiting-room',
@@ -14,41 +12,35 @@ import { MemberCardComponent } from './member-card/member-card.component';
 })
 export class WaitingRoomComponent implements OnInit {
   message!: string;
-  @ViewChild('queueLobby', { read: ViewContainerRef })
-  container!: ViewContainerRef;
+  faMinus = faMinus; faPlus = faPlus;
+  usersInQueue : UserProfile[] = [];
 
-  constructor(private lobbyHubService: LobbyHubService, private componentFactoryResolver: ComponentFactoryResolver, private userService: UserService) { 
+  constructor(private lobbyHubService: LobbyHubService, private userService: UserService) { 
     
   }
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
     this.lobbyHubService.lobbyQueueMembers$.subscribe(
       member => {
-        //console.log(member)
         if(member.length == 0) return;
-        this.memberJoinedQueue(MemberCardComponent);
+        this.userService.getSpecificUser(+member).subscribe(
+          (response) => {
+            this.usersInQueue.push(response);
+          }
+        )
       },
       error => console.log(error)
     )
   }
 
-  memberJoinedQueue(componentClass: any): void {
-    
-    // Create component dynamically inside the ng-template
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
-    const component = this.container.createComponent(componentFactory);
+  denyUserToJoin(index: number){
+    if(index > -1){
+      this.usersInQueue.splice(index, 1);
+    }
   }
 
-  updateQueueList(componentClass: any, users: Observable<string[]>): void {
-    users.forEach(user => {
-      //console.log(user)
-      // Create component dynamically inside the ng-template
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
-      const component = this.container.createComponent(componentFactory);
-    })
+  acceptUserToJoin(){
+    
   }
 }
 
