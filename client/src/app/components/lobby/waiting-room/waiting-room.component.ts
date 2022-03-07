@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
-import { UserProfile } from 'src/app/_models/user-profile.model';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Member } from 'src/app/_models/member.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 import { UserService } from 'src/app/_services/user.service';
 
@@ -13,7 +13,7 @@ import { UserService } from 'src/app/_services/user.service';
 export class WaitingRoomComponent implements OnInit {
   message!: string;
   faMinus = faMinus; faPlus = faPlus;
-  usersInQueue : UserProfile[] = [];
+  usersInQueue : Member[] = [];
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) { 
     

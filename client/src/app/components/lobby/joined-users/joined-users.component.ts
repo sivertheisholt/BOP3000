@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { UserProfile } from 'src/app/_models/user-profile.model';
+import { Member } from 'src/app/_models/member.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 import { UserService } from 'src/app/_services/user.service';
 
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class JoinedUsersComponent implements OnInit {
   faPlus = faPlus;
-  usersInParty : UserProfile[] = [];
+  usersInParty : Member[] = [];
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) { }
 
   ngOnInit(): void {

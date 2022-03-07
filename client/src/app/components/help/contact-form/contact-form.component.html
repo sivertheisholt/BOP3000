@@ -4,19 +4,17 @@
         <div class="card-content">
             <ng-select 
                 [items]="selectSubject" 
-                bindLabel="subject"
-                bindValue="id" 
                 placeholder="Subject"
-                formControlName="contactSubject"
+                formControlName="subject"
                 [closeOnSelect]='true'
                 class="custom">
             </ng-select>
-            <textarea class="textarea is-primary mt-3" placeholder="" formControlName="contactDescription"></textarea>
-            <div *ngIf="!contactForm.controls['contactDescription'].invalid || !contactForm.controls['contactSubject'].invalid ">
+            <textarea class="textarea is-primary mt-3" placeholder="" formControlName="description"></textarea>
+<!--             <div *ngIf="!contactForm.controls['contactDescription'].invalid || !contactForm.controls['contactSubject'].invalid ">
                 <div class="error danger">
                     
                 </div>
-            </div>
+            </div> -->
             <button class="button is-info is-normal text-is-light mt-3" type="submit">Send</button>
         </div>
     </div> 

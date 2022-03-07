@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { Member } from "../_models/member.model";
-import { UserProfile } from "../_models/user-profile.model";
 
 @Injectable({providedIn: 'root'})
 export class UserService{
@@ -11,7 +10,7 @@ export class UserService{
     constructor(private http: HttpClient){}
 
     getUserData(){
-        return this.http.get<UserProfile>(this.baseUrl + 'members/current');
+        return this.http.get<Member>(this.baseUrl + 'members/current');
     }
 
     deleteAccount(){
@@ -33,9 +32,9 @@ export class UserService{
     }
 
     getSpecificUser(id: number){
-        return this.http.get<UserProfile>(this.baseUrl + 'members/' + id).pipe(
+        return this.http.get<Member>(this.baseUrl + 'members/' + id).pipe(
             map(response => {
-                let user: UserProfile;
+                let user: Member;
                 user = response;
                 return user;
             })

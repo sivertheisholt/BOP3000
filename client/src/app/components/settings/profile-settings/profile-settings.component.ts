@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Country } from 'src/app/_models/country.model';
-import { UserProfile } from 'src/app/_models/user-profile.model';
+import { Member } from 'src/app/_models/member.model';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class ProfileSettingsComponent implements OnInit {
   profileSettingsForm! : FormGroup
   countries : Country[];
   genders = ['Male', 'Female', 'Other', 'Hidden'];
-  user: UserProfile;
+  user: Member;
 
   constructor(private route: ActivatedRoute, private userService: UserService) {
     this.countries = this.route.snapshot.data['countries'];

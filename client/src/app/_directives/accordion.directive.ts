@@ -13,7 +13,6 @@ export class AccordionDirective implements OnInit{
 
     @HostListener('click') toggleAccordion(){
         let element = this.el.nativeElement.nextElementSibling;
-        console.log(element.style);
         if (element.style.maxHeight == '0px' || element.style.maxHeight == '') {
           element.style.maxHeight = '1000px';
         } else {

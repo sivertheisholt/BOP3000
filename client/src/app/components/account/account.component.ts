@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
-import { UserProfile } from 'src/app/_models/user-profile.model';
+import { Member } from 'src/app/_models/member.model';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -12,10 +12,14 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class AccountComponent implements OnInit {
   faThumbsDown = faThumbsDown; faThumbsUp = faThumbsUp;
-  user: UserProfile;
+  user?: Member;
 
-  constructor(private route: ActivatedRoute) {
-    this.user = this.route.snapshot.data['user'];
+  constructor(private route: ActivatedRoute, private userService: UserService) {
+    this.userService.getSpecificUser(this.route.snapshot.params.id).subscribe(
+      (response) => {
+        this.user = response;
+      }
+    )
   }
 
   ngOnInit(): void {

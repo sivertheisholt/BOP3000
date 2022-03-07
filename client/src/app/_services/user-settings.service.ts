@@ -2,7 +2,7 @@ import { HttpBackend, HttpClient, HttpContext } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { Country } from "../_models/country.model";
-import { UserProfile } from "../_models/user-profile.model";
+import { Member } from "../_models/member.model";
 
 @Injectable({providedIn: 'root'})
 export class UserSettingsService{
