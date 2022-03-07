@@ -139,5 +139,9 @@ namespace API.SignalR
         {
             return Task.FromResult(Lobbies[lobbyId].Contains(uid));
         }
+        public Task<bool> CheckIfLobbyExists(int lobbyId)
+        {
+            return Task.FromResult(Lobbies.ContainsKey(lobbyId));
+        }
     }
 }

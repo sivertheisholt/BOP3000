@@ -15,6 +15,8 @@ namespace API.Extentions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+
+            services.AddScoped<LobbyHub>();
             services.AddSingleton<LobbyTracker>();
             services.AddSingleton<LobbyChatTracker>();
 

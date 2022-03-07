@@ -29,6 +29,12 @@ namespace API.SignalR
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
 
+        public async Task CreateLobby(int lobbyId)
+        {
+            await _lobbyTracker.CreateLobby(lobbyId, Context.User.GetUserId());
+            await AddToGroup(lobbyId.ToString());
+        }
+
         public async Task OnMemberAccepted()
         {
             var httpContext = Context.GetHttpContext();
@@ -56,10 +62,13 @@ namespace API.SignalR
 
         public override async Task OnConnectedAsync()
         {
-
-            if (Context.User.GetUserId() == 2)
+            if (Context.User.GetUserId() == 1)
             {
-                await _lobbyTracker.CreateLobby(1, 2);
+                if (!await _lobbyTracker.CheckIfLobbyExists(1))
+                {
+                    Console.WriteLine("LOBBY DOES NOT EXIST");
+                    await _lobbyTracker.CreateLobby(1, 1);
+                }
                 await AddToGroup("1");
             }
         }
@@ -87,7 +96,6 @@ namespace API.SignalR
 
         public async Task OnQueuePending(int lobbyId)
         {
-            var httpContext = Context.GetHttpContext();
             try
             {
                 await _lobbyTracker.MemberJoinedQueue(lobbyId, Context.User.GetUserId());

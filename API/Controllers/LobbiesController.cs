@@ -17,10 +17,10 @@ namespace API.Controllers
         private readonly ILobbiesRepository _lobbiesRepository;
         private readonly IUserRepository _userRepository;
         private readonly LobbyChatTracker _lobbyChatTracker;
-        private readonly LobbyTracker _lobbyTracker;
-        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyChatTracker lobbyChatTracker, LobbyTracker lobbyTracker) : base(mapper)
+        private readonly LobbyHub _lobbyHub;
+        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyChatTracker lobbyChatTracker, LobbyHub lobbyHub) : base(mapper)
         {
-            _lobbyTracker = lobbyTracker;
+            _lobbyHub = lobbyHub;
             _lobbyChatTracker = lobbyChatTracker;
             _userRepository = userRepository;
             _lobbiesRepository = lobbiesRepository;
@@ -57,8 +57,7 @@ namespace API.Controllers
             if (await _lobbiesRepository.SaveAllAsync())
             {
                 var createdLobby = Mapper.Map<NewLobbyDto>(lobby);
-                await _lobbyTracker.CreateLobby(createdLobby.Id, GetUserIdFromClaim());
-                await _lobbyChatTracker.CreateChat(createdLobby.Id);
+                await _lobbyHub.CreateLobby(createdLobby.Id);
                 return Ok(createdLobby);
             }
 
