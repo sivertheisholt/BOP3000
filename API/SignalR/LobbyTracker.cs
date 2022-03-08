@@ -8,10 +8,21 @@ namespace API.SignalR
 {
     public class LobbyTracker
     {
+
+        // <lobbyId, uid's>
         private static readonly Dictionary<int, List<int>> LobbiesQueue = new Dictionary<int, List<int>>();
+
+        // <lobbyId, uid's>
         private static readonly Dictionary<int, List<int>> Lobbies = new Dictionary<int, List<int>>();
-        private static readonly Dictionary<int, int> MemberTracker = new Dictionary<int, int>();
+
+        // <lobbyId, uid's>
         private static readonly Dictionary<int, int> LobbiesAdminTracker = new Dictionary<int, int>();
+
+        // <lobbyId, uid's>
+        private static readonly Dictionary<int, List<int>> BannedMembers = new Dictionary<int, List<int>>();
+
+        // <uid, lobbyId>
+        private static readonly Dictionary<int, int> MemberTracker = new Dictionary<int, int>();
 
         public LobbyTracker()
         {
@@ -21,13 +32,21 @@ namespace API.SignalR
         {
             lock (LobbiesQueue)
             {
+                LobbiesQueue.Add(lobbyId, new List<int>());
                 lock (Lobbies)
                 {
+                    Lobbies.Add(lobbyId, new List<int>());
                     lock (LobbiesAdminTracker)
                     {
-                        LobbiesQueue.Add(lobbyId, new List<int>());
-                        Lobbies.Add(lobbyId, new List<int>());
                         LobbiesAdminTracker.Add(lobbyId, adminUid);
+                        lock (MemberTracker)
+                        {
+                            MemberTracker.Add(adminUid, lobbyId);
+                            lock (BannedMembers)
+                            {
+                                BannedMembers.Add(lobbyId, new List<int>());
+                            }
+                        }
                     }
                 }
             }
@@ -77,6 +96,16 @@ namespace API.SignalR
             return Task.FromResult(true);
         }
 
+        public Task<bool> DeclineMember(int lobbyId, int uid)
+        {
+            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            lock (LobbiesQueue)
+            {
+                LobbiesQueue[lobbyId].Remove(uid);
+            }
+            return Task.FromResult(true);
+        }
+
         public Task MemberLeftLobby(int lobbyId, int uid)
         {
             lock (Lobbies)
@@ -109,6 +138,15 @@ namespace API.SignalR
             }
 
             return Task.CompletedTask;
+        }
+
+        public Task<bool> BanMember(int lobbyId, int uid)
+        {
+            lock (BannedMembers)
+            {
+                BannedMembers[lobbyId].Add(uid);
+            }
+            return Task.FromResult(true);
         }
 
         public Task<List<int>> GetMembersInLobby(int lobbyId)

@@ -22,7 +22,7 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
             await _lobbyTracker.CreateLobby(lobbyId, uid);
-            await AddToGroup(lobbyId.ToString());
+            await AddToGroup($"lobby_{lobbyId.ToString()}");
         }
 
         public async Task AcceptMember(int lobbyId, int acceptedUid)
@@ -38,15 +38,34 @@ namespace API.SignalR
             await Clients.Group($"user_{acceptedUid.ToString()}").SendAsync("Accepted");
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAccepted", uid);
         }
+        public async Task DeclineMember(int lobbyId, int declinedUid)
+        {
+            var uid = Context.User.GetUserId();
+            var adminUid = await _lobbyTracker.GetLobbyAdmin(lobbyId);
 
+            if (adminUid != uid) return;
+
+            if (!await _lobbyTracker.DeclineMember(lobbyId, declinedUid)) return;
+
+            await Clients.Group($"user_{declinedUid.ToString()}").SendAsync("Declined");
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclined", uid);
+        }
+        public async Task BanMember(int lobbyId, int declinedUid)
+        {
+            var uid = Context.User.GetUserId();
+            var adminUid = await _lobbyTracker.GetLobbyAdmin(lobbyId);
+
+            if (adminUid != uid) return;
+
+            if (!await _lobbyTracker.BanMember(lobbyId, declinedUid)) return;
+            await Clients.Group($"user_{declinedUid.ToString()}").SendAsync("Banned");
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberBanned", uid);
+        }
         public async Task JoinQueue(int lobbyId)
         {
             var uid = Context.User.GetUserId();
-            var groupNameQueue = $"lobbyQueue_{lobbyId.ToString()}";
 
             if (!await _lobbyTracker.JoinQueue(lobbyId, uid)) return;
-
-            await AddToGroup(groupNameQueue);
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("JoinedLobbyQueue", uid);
         }
