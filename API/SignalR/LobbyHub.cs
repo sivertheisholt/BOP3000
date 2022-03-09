@@ -53,18 +53,18 @@ namespace API.SignalR
             if (!await _lobbyTracker.DeclineMember(lobbyId, declinedUid)) return;
 
             await Clients.Group($"user_{declinedUid.ToString()}").SendAsync("Declined");
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclined", uid);
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclined", declinedUid);
         }
-        public async Task BanMember(int lobbyId, int declinedUid)
+        public async Task BanMember(int lobbyId, int bannedUid)
         {
             var uid = Context.User.GetUserId();
             var adminUid = await _lobbyTracker.GetLobbyAdmin(lobbyId);
 
             if (adminUid != uid) return;
 
-            if (!await _lobbyTracker.BanMember(lobbyId, declinedUid)) return;
-            await Clients.Group($"user_{declinedUid.ToString()}").SendAsync("Banned");
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberBanned", uid);
+            if (!await _lobbyTracker.BanMember(lobbyId, bannedUid)) return;
+            await Clients.Group($"user_{bannedUid.ToString()}").SendAsync("Banned");
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberBanned", bannedUid);
         }
         public async Task JoinQueue(int lobbyId)
         {

@@ -36,6 +36,7 @@ namespace API.SignalR
                 lock (Lobbies)
                 {
                     Lobbies.Add(lobbyId, new List<int>());
+                    Lobbies[lobbyId].Add(adminUid);
                     lock (LobbiesAdminTracker)
                     {
                         LobbiesAdminTracker.Add(lobbyId, adminUid);
