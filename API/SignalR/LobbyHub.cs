@@ -41,7 +41,7 @@ namespace API.SignalR
 
             await AddToGroup($"lobby_{lobbyId.ToString()}");
             await Clients.Group($"user_{acceptedUid.ToString()}").SendAsync("Accepted");
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAccepted", uid);
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAccepted", acceptedUid);
         }
         public async Task DeclineMember(int lobbyId, int declinedUid)
         {
