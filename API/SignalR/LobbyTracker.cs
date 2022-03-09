@@ -79,11 +79,11 @@ namespace API.SignalR
         {
             lock (Lobbies)
             {
-                if (MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+                if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
 
                 if (Lobbies.ContainsKey(lobbyId))
                 {
-                    if (Lobbies.Where(lobby => lobby.Key == lobbyId).FirstOrDefault().Value.Contains(uid)) Task.FromResult(false);
+                    if (!LobbiesQueue[lobbyId].Contains(uid)) return Task.FromResult(false);
 
                     Lobbies[lobbyId].Add(uid);
                     lock (LobbiesQueue)

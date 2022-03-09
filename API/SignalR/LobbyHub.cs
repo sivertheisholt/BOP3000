@@ -30,9 +30,14 @@ namespace API.SignalR
             var uid = Context.User.GetUserId();
             var adminUid = await _lobbyTracker.GetLobbyAdmin(lobbyId);
 
+            Console.WriteLine("Admin = " + adminUid + " uid = " + uid);
+
             if (adminUid != uid) return;
 
-            if (!await _lobbyTracker.AcceptMember(lobbyId, uid)) return;
+            var result = await _lobbyTracker.AcceptMember(lobbyId, acceptedUid);
+            Console.WriteLine(result);
+
+            if (!result) return;
 
             await AddToGroup($"lobby_{lobbyId.ToString()}");
             await Clients.Group($"user_{acceptedUid.ToString()}").SendAsync("Accepted");
