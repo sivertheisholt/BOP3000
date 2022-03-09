@@ -16,13 +16,12 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class LobbyComponent implements OnInit {
   lobby: Lobby;
-  game?: Game;
+  game!: Game;
   hostUser? : Member;
   queueMembers : Number[] = [];
 
   constructor(private route: ActivatedRoute, private lobbyHub: LobbyHubService, private authService: AuthService, private gamesService: GamesService, private userService: UserService, private lobbyChatHub: LobbyChatHubService) { 
     this.lobby = route.snapshot.data['lobby'];
-    console.log(this.lobby);
     this.gamesService.fetchGame(this.lobby.gameId).subscribe(
       (response) => {
         this.game = response;
@@ -46,6 +45,13 @@ export class LobbyComponent implements OnInit {
       (item => {
         console.log(item);
       })
+    )
+
+    this.lobbyHub.lobbyPartyMembers$.subscribe(
+      member => {
+        console.log("member");
+      },
+      error => console.log(error)
     )
     
   }

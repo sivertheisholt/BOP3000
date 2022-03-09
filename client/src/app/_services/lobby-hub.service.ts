@@ -92,6 +92,17 @@ export class LobbyHubService {
   getLobbyMembers(lobbyId: number){
     this.hubConnection.invoke("GetLobbyMembers", lobbyId);
   }
+  acceptMember(lobbyId: number, uid: number){
+    console.log("accept member invoke");
+    this.hubConnection.invoke("AcceptMember", lobbyId, uid);
+  }
+  declineMember(lobbyId: number, uid: number){
+    this.hubConnection.invoke("DeclineMember", lobbyId, uid);
+  }
+  banMember(lobbyId: number, uid: number){
+    this.hubConnection.invoke("BanMember", lobbyId, uid);
+  }
+
 
   stopHubConnection() {
     this.hubConnection.stop().catch(error => console.log(error));

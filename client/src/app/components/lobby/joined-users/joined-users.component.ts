@@ -22,9 +22,11 @@ export class JoinedUsersComponent implements OnInit {
     )
     this.lobbyHubService.lobbyPartyMembers$.subscribe(
       member => {
+        console.log(member);
         if(member.length == 0) return;
         this.userService.getSpecificUser(+member).subscribe(
           (response) => {
+            console.log(response);
             this.usersInParty.push(response);
           }
         )
