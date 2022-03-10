@@ -103,6 +103,10 @@ namespace API.SignalR
             lock (LobbiesQueue)
             {
                 LobbiesQueue[lobbyId].Remove(uid);
+                lock (MemberTracker)
+                {
+                    MemberTracker.Remove(uid);
+                }
             }
             return Task.FromResult(true);
         }
@@ -146,6 +150,10 @@ namespace API.SignalR
             lock (BannedMembers)
             {
                 BannedMembers[lobbyId].Add(uid);
+                lock (MemberTracker)
+                {
+                    MemberTracker.Remove(uid);
+                }
             }
             return Task.FromResult(true);
         }
