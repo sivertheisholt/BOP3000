@@ -111,6 +111,11 @@ namespace API.SignalR
             return Task.FromResult(true);
         }
 
+        internal Task<bool> CheckIfMemberIsBanned(int lobbyId, int uid)
+        {
+            return Task.FromResult(BannedMembers[uid].Contains(lobbyId));
+        }
+
         public Task<bool> DeclineMember(int lobbyId, int uid)
         {
             if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
