@@ -252,6 +252,48 @@ This endpoint retrieves the current member.
 | following         | array |
 | userFavoriteGames | array |
 
+## GET Current member lobby status
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/lobby-status",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "inQueue": true,
+  "lobbyId": 1
+}
+```
+
+This endpoint retrieves the current member lobby status.
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/members/lobby-status`
+
+### Response Class (Status 200)
+
+| Key     | Type |
+| ------- | ---- |
+| inQueue | bool |
+| lobbyId | int  |
+
 <!--- POST --->
 
 <!--- PUT --->
