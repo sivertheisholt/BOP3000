@@ -379,6 +379,9 @@
                     <a href="#get-current-member-info" class="toc-h2 toc-link" data-title="GET Current member info">GET Current member info</a>
                   </li>
                   <li>
+                    <a href="#get-current-member-lobby-status" class="toc-h2 toc-link" data-title="GET Current member lobby status">GET Current member lobby status</a>
+                  </li>
+                  <li>
                     <a href="#patch-update-a-single-member" class="toc-h2 toc-link" data-title="PATCH Update a single member">PATCH Update a single member</a>
                   </li>
               </ul>
@@ -1586,6 +1589,49 @@
 <td>array</td>
 </tr>
 </tbody></table>
+<h2 id='get-current-member-lobby-status'>GET Current member lobby status</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/members/lobby-status</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">requestOptions</span>
+<span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"inQueue"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lobbyId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves the current member lobby status.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/members/lobby-status</code></p>
+<h3 id='response-class-status-200-4'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>inQueue</td>
+<td>bool</td>
+</tr>
+<tr>
+<td>lobbyId</td>
+<td>int</td>
+</tr>
+</tbody></table>
 
 <!--- POST --->
 
@@ -1622,7 +1668,7 @@
 </blockquote>
 
 <p>This endpoint updates a single member</p>
-<h3 id='http-request-4'>HTTP Request</h3>
+<h3 id='http-request-5'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members</code></p>
 <h3 id='body-schema'>Body Schema</h3>
 <table><thead>
