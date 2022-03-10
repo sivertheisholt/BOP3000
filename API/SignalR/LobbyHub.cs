@@ -88,8 +88,9 @@ namespace API.SignalR
 
         public override async Task OnConnectedAsync()
         {
-            await AddToGroup($"user_{Context.User.GetUserId().ToString()}");
+            var uid = Context.User.GetUserId();
 
+            //Testing lobby 1 admin user 1
             if (Context.User.GetUserId() == 1)
             {
                 if (!await _lobbyTracker.CheckIfLobbyExists(1))
@@ -97,7 +98,16 @@ namespace API.SignalR
                     Console.WriteLine("LOBBY DOES NOT EXIST");
                     await _lobbyTracker.CreateLobby(1, 1);
                 }
-                await AddToGroup($"lobby_1");
+            }
+
+            await AddToGroup($"user_{Context.User.GetUserId().ToString()}");
+            if (await _lobbyTracker.CheckIfMemberInAnyLobby(uid))
+            {
+                var lobbyId = await _lobbyTracker.GetLobbyIdFromUser(uid);
+                if (await _lobbyTracker.CheckIfMemberInLobby(lobbyId, uid))
+                {
+                    await AddToGroup($"lobby_{lobbyId}");
+                }
             }
             await base.OnConnectedAsync();
         }
