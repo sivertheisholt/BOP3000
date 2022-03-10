@@ -78,12 +78,12 @@ namespace API.SignalR
         public async Task GetQueueMembers(int lobbyId)
         {
             var members = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("QueueMembers", members);
+            await Clients.Caller.SendAsync("QueueMembers", members);
         }
         public async Task GetLobbyMembers(int lobbyId)
         {
             var members = await _lobbyTracker.GetMembersInLobby(lobbyId);
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyMembers", members);
+            await Clients.Caller.SendAsync("LobbyMembers", members);
         }
 
         public override async Task OnConnectedAsync()
