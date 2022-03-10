@@ -165,6 +165,11 @@ namespace API.SignalR
             return Task.FromResult(LobbiesQueue[lobbyId].Contains(uid));
         }
 
+        public Task<bool> CheckIfMemberInAnyLobby(int uid)
+        {
+            return Task.FromResult(MemberTracker.ContainsKey(uid));
+        }
+
         public Task<int> GetLobbyIdFromUser(int uid)
         {
             return Task.FromResult(MemberTracker.Where(member => member.Key == uid).FirstOrDefault().Value);

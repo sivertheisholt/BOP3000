@@ -1,5 +1,6 @@
 using API.DTOs.Members;
 using API.Interfaces.IRepositories;
+using API.SignalR;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +11,10 @@ namespace API.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly ICountryRepository _countryRepository;
-        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository) : base(mapper)
+        private readonly LobbyTracker _lobbyTracker;
+        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository, LobbyTracker lobbyTracker) : base(mapper)
         {
+            _lobbyTracker = lobbyTracker;
             _countryRepository = countryRepository;
             _userRepository = userRepository;
         }
@@ -72,6 +75,27 @@ namespace API.Controllers
             if (user == null) return NotFound();
 
             return Ok(Mapper.Map<MemberDto>(user));
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("lobby-status")]
+        public async Task<ActionResult<int>> GetLobbyStatus()
+        {
+            var userId = GetUserIdFromClaim();
+            var status = new MemberLobbyStatusDto
+            {
+                InQueue = false,
+                LobbyId = 0
+            };
+
+            if (!await _lobbyTracker.CheckIfMemberInAnyLobby(userId)) return Ok(status);
+            var lobbyId = await _lobbyTracker.GetLobbyIdFromUser(userId);
+
+            status.InQueue = await _lobbyTracker.CheckIfMemberInQueue(lobbyId, userId);
+            status.LobbyId = lobbyId;
+
+            return Ok(status);
+
         }
     }
 }
