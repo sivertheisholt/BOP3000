@@ -25,11 +25,10 @@ namespace API.SignalR
             await AddToGroup($"lobby_{lobbyId.ToString()}");
         }
 
-        public async Task AcceptMember(int lobbyId, string acceptedUidString)
+        public async Task AcceptMember(int lobbyId, int acceptedUid)
         {
             var uid = Context.User.GetUserId();
             var adminUid = await _lobbyTracker.GetLobbyAdmin(lobbyId);
-            var acceptedUid = Int32.Parse(acceptedUidString);
 
             Console.WriteLine("Admin = " + adminUid + " uid = " + uid);
 
