@@ -97,6 +97,20 @@ namespace API.SignalR
             return Task.FromResult(true);
         }
 
+        internal Task<bool> KickMember(int lobbyId, int uid)
+        {
+            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            lock (Lobbies)
+            {
+                Lobbies[lobbyId].Remove(uid);
+                lock (MemberTracker)
+                {
+                    MemberTracker.Remove(uid);
+                }
+            }
+            return Task.FromResult(true);
+        }
+
         public Task<bool> DeclineMember(int lobbyId, int uid)
         {
             if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
