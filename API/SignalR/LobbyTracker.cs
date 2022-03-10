@@ -113,7 +113,7 @@ namespace API.SignalR
 
         internal Task<bool> CheckIfMemberIsBanned(int lobbyId, int uid)
         {
-            return Task.FromResult(BannedMembers[uid].Contains(lobbyId));
+            return Task.FromResult(BannedMembers[lobbyId].Contains(uid));
         }
 
         public Task<bool> DeclineMember(int lobbyId, int uid)
