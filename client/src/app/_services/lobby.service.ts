@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, retry } from "rxjs/operators";
 import { Lobby } from "../_models/lobby.model";
+import { QueueStatus } from "../_models/queuestatus.model";
 
 @Injectable({providedIn: 'root'})
 export class LobbyService{
@@ -29,5 +30,13 @@ export class LobbyService{
 
     fetchAllLobbiesWithGameId(id: number){
         return this.http.get<Lobby[]>(this.baseUrl + 'lobbies/game/' + id);
+    }
+
+    getLobbyStatus(){
+        return this.http.get<QueueStatus>(this.baseUrl + 'members/lobby-status').pipe(
+            map((response) => {
+                return response;
+            })
+        )
     }
 }

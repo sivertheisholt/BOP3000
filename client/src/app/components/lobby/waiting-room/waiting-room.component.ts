@@ -18,10 +18,6 @@ export class WaitingRoomComponent implements OnInit {
   @Input('lobby') lobby! : Lobby;
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) { 
-    
-  }
-
-  ngOnInit(): void {
     this.lobbyHubService.lobbyQueueMembers$.subscribe(
       member => {
         if(member.length == 0) return;
@@ -33,17 +29,40 @@ export class WaitingRoomComponent implements OnInit {
       },
       error => console.log(error)
     )
+
+    this.lobbyHubService.kickedQueueMembers$.subscribe(
+      response => {
+        this.usersInQueue?.forEach(user => {
+          if(user.id == response){
+            let index = this.usersInQueue?.indexOf(user);
+            this.usersInQueue?.splice(index!, 1);
+          }
+        });
+      }
+    )
+
+    this.lobbyHubService.acceptedMembers$.subscribe(
+      response => {
+        this.usersInQueue?.forEach(user => {
+          if(user.id == response){
+            let index = this.usersInQueue?.indexOf(user);
+            this.usersInQueue?.splice(index!, 1);
+          }
+        });
+      }
+    )
   }
 
-  denyUserToJoin(index: number){
-    if(index > -1){
-      this.usersInQueue?.splice(index, 1);
-    }
+  ngOnInit(): void {
+    this.lobbyHubService.getQueueMembers(this.lobby.id);
+  }
+
+  denyUserToJoin(uid: number){
+    this.lobbyHubService.declineMemberFromQueue(this.lobby.id, uid);
   }
 
   acceptUserToJoin(uid: number){
-    console.log("accept");
-    this.lobbyHubService.acceptMember(this.lobby.id, uid);
+    this.lobbyHubService.acceptMemberFromQueue(this.lobby.id, uid);
   }
 }
 
