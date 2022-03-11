@@ -3,7 +3,6 @@
 appsettings.json
 client/ssl/privateKey.pem
 client/ssl/private.pem
-API/Data/Migrations
 API/wwwroot
 *.mdb
 .VSCodeCounter/
