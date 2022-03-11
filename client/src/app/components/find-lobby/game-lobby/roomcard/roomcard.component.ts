@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { Lobby } from 'src/app/_models/lobby.model';
-import { AuthService } from 'src/app/_services/auth.service';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
-import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-roomcard',
@@ -13,24 +11,28 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class RoomcardComponent implements OnInit {
   lobbies: Lobby[] = [];
-  waitingToJoin = false;
-  goTo = false;
+  inQueue? : boolean;
+  currentId?: number;
 
 
-  constructor(private lobbyService: LobbyService, private route: ActivatedRoute, private lobbyHubService: LobbyHubService, private authService: AuthService) { }
+  constructor(private route: ActivatedRoute, private lobbyHubService: LobbyHubService, private lobbyService: LobbyService) { }
 
   ngOnInit(): void {
     this.lobbies = this.route.snapshot.data['posts'];
+    this.lobbyService.getLobbyStatus().subscribe(
+      (response) => {
+        this.inQueue = response.inQueue;
+        this.currentId = response.lobbyId;
+      }
+    );
   }
 
   requestToJoin(id: number){
-    //this.lobbyHubService.createHubConnection(this.authService.getUserId(), id.toString());
     this.lobbyHubService.goInQueue(id);
-    this.waitingToJoin = true;
+    this.inQueue = true;
   }
 
   cancelJoin(){
-    this.waitingToJoin = false;
+    this.inQueue = false;
   }
-
 }

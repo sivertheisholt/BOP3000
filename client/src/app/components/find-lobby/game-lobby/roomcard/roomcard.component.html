@@ -27,8 +27,8 @@
         </div>
     </div>
     <div class="lobby-btn-wrapper">
-        <button (click)="requestToJoin(lobby.id)" *ngIf="!waitingToJoin && !goTo" class="button is-info">Request to join</button>
-        <button (click)="cancelJoin()" *ngIf="waitingToJoin && !goTo" class="button is-info">Waiting...</button>
-        <button *ngIf="goTo" class="button is-info" [routerLink]="['/lobby', lobby.id]">Go to lobby</button>
+        <button (click)="requestToJoin(lobby.id)" *ngIf="currentId == 0 && !inQueue" class="button is-info">Request to join</button>
+        <button (click)="cancelJoin()" *ngIf="inQueue && currentId != 0" class="button is-info">Waiting...</button>
+        <button *ngIf="!inQueue && currentId == lobby.id" class="button is-info" [routerLink]="['/lobby', lobby.id]">Go to lobby</button>
     </div>
 </div>

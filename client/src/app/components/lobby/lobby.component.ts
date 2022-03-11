@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { GamesService } from 'src/app/_services/games.service';
 import { LobbyChatHubService } from 'src/app/_services/lobby-chat-hub.service';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
+import { LobbyService } from 'src/app/_services/lobby.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class LobbyComponent implements OnInit {
   hostUser? : Member;
   queueMembers : Number[] = [];
 
-  constructor(private route: ActivatedRoute, private lobbyHub: LobbyHubService, private authService: AuthService, private gamesService: GamesService, private userService: UserService, private lobbyChatHub: LobbyChatHubService) { 
+  constructor(private route: ActivatedRoute, private gamesService: GamesService, private userService: UserService, private lobbyChatHub: LobbyChatHubService) { 
     this.lobby = route.snapshot.data['lobby'];
     this.gamesService.fetchGame(this.lobby.gameId).subscribe(
       (response) => {
@@ -33,31 +34,9 @@ export class LobbyComponent implements OnInit {
         //console.log(this.hostUser);
       }
     )
-
-    this.lobbyHub.lobbyQueueMembers$.subscribe(
-      member => {
-        //console.log(member)
-        
-      },
-      error => console.log(error)
-    )
-    this.lobbyHub.lobbyQueueMembers$.forEach(
-      (item => {
-        console.log(item);
-      })
-    )
-
-    this.lobbyHub.lobbyPartyMembers$.subscribe(
-      member => {
-        console.log("member");
-      },
-      error => console.log(error)
-    )
-    
   }
 
   ngOnInit(): void {
-    //this.lobbyHub.createHubConnection(this.authService.getUserId(), this.route.snapshot.params['id']);
-    //this.lobbyChatHub.createHubConnection(this.authService.getUserId(), this.route.snapshot.params['id']);
+    
   }
 }
