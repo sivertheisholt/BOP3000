@@ -19,16 +19,19 @@ namespace API.Services
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
             string apiToken;
+            string url;
 
             if (env == "Development")
             {
                 apiToken = config.GetConnectionString("MEILISEARCH_TOKEN_KEY");
+                url = "http://localhost:7700";
             }
             else
             {
                 apiToken = Environment.GetEnvironmentVariable("MEILISEARCH_TOKEN_KEY");
+                url = Environment.GetEnvironmentVariable("MEILISEARCH_URL");
             }
-            _meilisearchClient = new MeilisearchClient("http://localhost:7700");
+            _meilisearchClient = new MeilisearchClient(url, apiToken);
             InitializeIndexes();
         }
 
