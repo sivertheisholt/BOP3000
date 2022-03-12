@@ -1,5 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { Member } from 'src/app/_models/member.model';
@@ -14,7 +13,7 @@ import { UserService } from 'src/app/_services/user.service';
 export class WaitingRoomComponent implements OnInit {
   message!: string;
   faMinus = faMinus; faPlus = faPlus;
-  usersInQueue? : Member[] = [];
+  usersInQueue : Member[] = [];
   @Input('lobby') lobby! : Lobby;
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) { 

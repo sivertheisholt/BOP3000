@@ -1,0 +1,24 @@
+<div class="host-panel-wrapper is-flex is-justify-content-center is-flex-direction-column is-align-items-center">
+    <h1 class="subtitle text-is-light">Only the creator of this lobby can see this.</h1>
+    <div class="p-2">
+        <button class="button is-success" data-target="modal-delete-account" (click)="readyCheck()">Ready Check</button>
+    </div>
+    <div class="p-2">
+        <button class="button is-danger">Contact Admin</button>
+    </div>
+    <div id="modal-ready-check" class="modal" [ngClass]="status ? 'is-active' : ''">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div class="box is-flex is-justify-content-center is-align-items-center is-flex-direction-column">
+                <div class="subtitle">
+                    <p class="is-flex is-justify-content-center numberCircle">{{ start }}</p>
+                    <p>The host has started a ready check...</p>
+                </div>
+                <div class="">
+                    <button class="button is-success" (click)="acceptReadyCheck()">Accept</button>
+                    <button class="button is-danger" (click)="declineReadyCheck()">Decline</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

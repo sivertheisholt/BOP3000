@@ -3,17 +3,19 @@
         <h1>Waiting to join...</h1>
     </div>
     <div class="waiting-room-item" *ngFor="let user of usersInQueue">
-        <div class="is-flex is-justify-content-space-around is-align-items-center mt-3">
-            <div class="image is-32x32">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/United-kingdom_flag_icon_round.svg/1200px-United-kingdom_flag_icon_round.svg.png">
+        <div class="is-flex is-justify-content-center is-align-items-center mt-3">
+            <div class="quarter-width is-flex is-align-items-center is-justify-content-center">
+                <div class="image is-32x32">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/United-kingdom_flag_icon_round.svg/1200px-United-kingdom_flag_icon_round.svg.png">
+                </div>
             </div>
-            <div class="waiting-room-user-wrapper is-flex is-align-items-center">
+            <div class="waiting-room-user-wrapper is-flex is-align-items-center is-justify-content-center half-width">
                 <div class="image is-32x32 mr-2">
                     <img class="is-rounded" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/75/7514b0304efd66200bc6aeb671642d925b95ca15_full.jpg">
                 </div>
                 <div class="text-is-light">{{ user.username }}</div>
             </div>
-            <div class="waiting-room-btn-wrapper">
+            <div class="waiting-room-btn-wrapper quarter-width is-flex is-align-items-center is-justify-content-center">
                 <a (click)="denyUserToJoin(user.id!)">
                     <fa-icon class="fa-lg mr-2" [icon]="faMinus"></fa-icon>
                 </a>

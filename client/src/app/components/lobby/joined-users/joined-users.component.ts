@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { Member } from 'src/app/_models/member.model';
@@ -13,8 +13,10 @@ import { UserService } from 'src/app/_services/user.service';
 export class JoinedUsersComponent implements OnInit{
   faPlus = faPlus;
   usersInParty : Member[] = [];
-  usersIdsInParty : Number[] = [];
+  usersInPartyTotal: number = 0;
   @Input('lobby') lobby! : Lobby;
+  @Output() totalUsersInPartyEvent = new EventEmitter<number>();
+
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) {
     this.lobbyHubService.lobbyPartyMembers$.subscribe(
       member => {
@@ -22,6 +24,7 @@ export class JoinedUsersComponent implements OnInit{
         this.userService.getSpecificUser(+member).subscribe(
           (response) => {
             this.usersInParty.push(response);
+            this.totalUsersInPartyEvent.emit(this.usersInParty.length);
           }
         )
       },

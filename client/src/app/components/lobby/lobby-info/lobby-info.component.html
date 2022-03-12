@@ -1,13 +1,16 @@
 <div class="lobby-info-wrapper">
     <div class="header-lobby is-flex">
         <div class="header-lobby-image">
-            <h1>{{ game?.name }}</h1>
             <img [src]="game?.headerImage">
         </div>
-        <div class="lobby-text text-is-light">
-            <p>Created By: {{ lobby?.gameType }}</p>
-            <p>Lobbysize: {{ lobby?.users?.length }} / {{ lobby?.maxUsers }}</p>
+        <div class="header-lobby-game-title">
+            <h1>{{ game?.name }}</h1>
+            <p>{{ lobby?.lobbyDescription }}</p>
         </div>
-
+        <div class="lobby-text text-is-light">
+            <p>Created By: {{ hostUser?.username }}</p>
+            <p>Lobbysize: {{ count }} / {{ lobby?.maxUsers }}</p>
+            
+        </div>
     </div>
 </div>
