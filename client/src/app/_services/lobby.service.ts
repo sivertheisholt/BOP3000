@@ -3,11 +3,11 @@ import { Injectable } from "@angular/core";
 import { map, retry } from "rxjs/operators";
 import { Lobby } from "../_models/lobby.model";
 import { QueueStatus } from "../_models/queuestatus.model";
+import { environment } from '../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class LobbyService{
-
-    baseUrl = 'https://localhost:5001/api/';
+    baseUrl = environment.apiUrl;
 
     constructor(private http: HttpClient){}
 

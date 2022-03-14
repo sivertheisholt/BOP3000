@@ -4,11 +4,11 @@ import { interval, Observable, of, Subject, timer } from "rxjs";
 import { debounce, delay, map } from "rxjs/operators";
 import { GameSearch } from "../_models/game-search.model";
 import { Game } from "../_models/game.model";
+import { environment } from '../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class GamesService{
-
-    baseUrl = 'https://localhost:5001/api/';
+    baseUrl = environment.apiUrl;
 
     
     constructor(private http: HttpClient){}

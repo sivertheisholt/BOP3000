@@ -4,12 +4,13 @@ import { ReplaySubject } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { User } from '../_models/user';
 import { LobbyHubService } from './lobby-hub.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
 
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
