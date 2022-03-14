@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  hubUrl: 'http://bop3000.azurewebsites.net/hubs/',
-  apiUrl: "http://bop3000.azurewebsites.net/api/"
+  hubUrl: 'https://bop3000.azurewebsites.net/hubs/',
+  apiUrl: "https://bop3000.azurewebsites.net/api/"
 };
