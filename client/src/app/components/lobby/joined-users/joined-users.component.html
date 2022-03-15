@@ -1,20 +1,23 @@
 <div class="joined-users-list">
     <div class="joined-users-header">
-        <h1>Lobby</h1>
+        <h1>Party</h1>
     </div>
     
     <div class="joined-users-item" *ngFor="let user of usersInParty; let i = index;">
-        <div class="is-flex is-justify-content-space-around is-align-items-center mt-3">
-            <div class="image is-32x32">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/United-kingdom_flag_icon_round.svg/1200px-United-kingdom_flag_icon_round.svg.png">
+        <div class="is-flex is-align-items-center is-align-items-center mt-3">
+            <div class="quarter-width is-flex is-align-items-center is-justify-content-center">
+                <div class="image is-32x32 ">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/United-kingdom_flag_icon_round.svg/1200px-United-kingdom_flag_icon_round.svg.png">
+                </div>
             </div>
-            <div class="joined-users-user-wrapper is-flex is-align-items-center">
+
+            <div class="joined-users-user-wrapper is-flex is-align-items-center is-justify-content-center half-width">
                 <div class="image is-32x32 mr-2">
                     <img class="is-rounded" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/75/7514b0304efd66200bc6aeb671642d925b95ca15_full.jpg">
                 </div>
                 <div class="text-is-light">{{ user.username }}</div>
             </div>
-            <a (click)="kickFromParty(user.id!)">
+            <a class="quarter-width is-flex is-align-items-center is-justify-content-center" *ngIf="user.id != lobby.adminUid" (click)="kickFromParty(user.id!)">
                 Remove
                 <!-- <fa-icon class="fa-lg mr-2" [icon]="faPlus"></fa-icon> -->
             </a>

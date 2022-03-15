@@ -7,7 +7,7 @@
 }
 
 .waiting-room-header{
-  background-color: khaki;
+  background-color: rgb(92, 209, 255);
   font-size: 10px;
   height: 40px;
   justify-content: center;
@@ -15,8 +15,13 @@
   align-items: center;
 }
 
-.waiting-room-item{
-  
+
+.half-width{
+  width: 50%;
+}
+
+.quarter-width{
+  width: 25%;
 }
 
 .table-header-text{

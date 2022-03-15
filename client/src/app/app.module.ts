@@ -40,6 +40,7 @@ import { ManageAccountComponent } from './components/settings/manage-account/man
 import { HelpComponent } from './components/help/help.component';
 import { AccordionDirective } from './_directives/accordion.directive';
 import { ContactFormComponent } from './components/help/contact-form/contact-form.component';
+import { HostPanelComponent } from './components/lobby/host-panel/host-panel.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { ContactFormComponent } from './components/help/contact-form/contact-for
     ManageAccountComponent,
     HelpComponent,
     AccordionDirective,
-    ContactFormComponent
+    ContactFormComponent,
+    HostPanelComponent
   ],
   imports: [
     BrowserModule,

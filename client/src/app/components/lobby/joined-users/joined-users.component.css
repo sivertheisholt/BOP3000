@@ -7,18 +7,13 @@
 }
 
 .joined-users-header{
-  background-color: khaki;
+  background-color: rgb(92, 209, 255);
   font-size: 10px;
   height: 40px;
   justify-content: center;
   display: flex;
   align-items: center;
 }
-
-.joined-users-item{
-
-}
-
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -34,4 +29,12 @@
   
   ::-webkit-scrollbar-thumb:hover {
   background: rgb(92, 84, 84);
+}
+
+.half-width{
+  width: 50%;
+}
+
+.quarter-width{
+  width: 25%;
 }
