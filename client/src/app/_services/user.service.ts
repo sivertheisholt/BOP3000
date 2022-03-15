@@ -41,5 +41,29 @@ export class UserService{
             })
         );
     }
+
+    followUser(id: number){
+        return this.http.patch(this.baseUrl + 'members/follow?memberId=' + id, '').pipe(
+            map(response => {
+                return response;
+            })
+        );
+    }
+
+    unfollowUser(id: number){
+        return this.http.patch(this.baseUrl + 'members/unfollow?memberId=' + id, '').pipe(
+            map(response => {
+                return response;
+            })
+        );
+    }
+
+    checkFollowing(id: number){
+        return this.http.get<boolean>(this.baseUrl + 'members/check-follow?memberId=' + id).pipe(
+            map(response => {
+                return response;
+            })
+        );
+    }
     
 }

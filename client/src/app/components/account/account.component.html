@@ -9,8 +9,22 @@
                                 <img class="is-rounded" src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs2/114486158/original/ef1ebd076e28c081a69c83cee374fb56f29d27e5/make-you-a-custom-gaming-profile-picture.png">
                             </div>
                         </div>
-                        <div class="has-text-centered mt-5">
-                            <button class="button is-dark">Follow</button>
+                        <div class="file mt-5 is-centered" *ngIf="user?.id == currentUser?.id">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="resume">
+                                <span class="file-cta">
+                                    <span class="file-icon">
+                                        <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+                                    </span>
+                                    <span class="file-label">
+                                        Upload
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="has-text-centered mt-5" *ngIf="user?.id != currentUser?.id">
+                            <button class="button is-dark" *ngIf="!isFollowing" (click)="onFollowUser()">Follow</button>
+                            <button class="button is-dark" *ngIf="isFollowing" (click)="onUnFollowUser()">Unfollow</button>
                         </div>
                         <div class="image-content mt-5 text-is-light">
                             <div class="following mb-3">
@@ -38,9 +52,6 @@
                         <div class="profile-content text-is-light">
                             <h1 class="has-text-light"> {{ user?.username }} </h1>
                             <p> {{ user?.memberProfile?.description }} </p>
-                            <p><strong class="text-is-light">Favorite Game:</strong> League of Legends</p>
-                            <p><strong class="text-is-light">Favorite Game:</strong> League of Legends</p>
-                            <p><strong class="text-is-light">Favorite Game:</strong> League of Legends</p>
                             <p><strong class="text-is-light">Favorite Game:</strong> League of Legends</p>
                         </div>
                     </div>
