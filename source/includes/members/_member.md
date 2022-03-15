@@ -294,6 +294,38 @@ This endpoint retrieves the current member lobby status.
 | inQueue | bool |
 | lobbyId | int  |
 
+## GET Check if following member
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/check-follow?memberId=1",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns true/False
+
+This endpoint checks if member is followed
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/members/check-follow?memberId=1`
+
+### Response Class (Status 200)
+
+True/False
+
 <!--- POST --->
 
 <!--- PUT --->
@@ -347,5 +379,75 @@ This endpoint updates a single member
 | gender      | string |
 | birthday    | string |
 | description | string |
+
+## PATCH Follow a member
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var requestOptions = {
+  method: "PATCH",
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/follow?memberId=1",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 (No content) status code
+
+This endpoint will follow another member
+
+### HTTP Request
+
+`PATCH https://bop3000.azurewebsites.net/api/members/follow?memberId=1`
+
+### Query Parameters
+
+| Key      | Type |
+| -------- | ---- |
+| memberId | int  |
+
+## PATCH Unfollow a member
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var requestOptions = {
+  method: "PATCH",
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/unfollow?memberId=1",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 (No content) status code
+
+This endpoint will unfollow another member
+
+### HTTP Request
+
+`PATCH https://bop3000.azurewebsites.net/api/members/unfollow?memberId=1`
+
+### Query Parameters
+
+| Key      | Type |
+| -------- | ---- |
+| memberId | int  |
 
 <!--- DELETE --->
