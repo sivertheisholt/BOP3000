@@ -10,6 +10,11 @@ namespace API.Data.Repositories
         {
         }
 
+        public async Task<bool> CheckIfUserExists(int id)
+        {
+            return await Context.Users.AnyAsync(x => x.Id == id);
+        }
+
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
             return await Context.Users.SingleOrDefaultAsync(x => x.Email == email);

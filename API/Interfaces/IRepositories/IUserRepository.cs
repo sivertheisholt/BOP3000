@@ -12,5 +12,6 @@ namespace API.Interfaces.IRepositories
 
         void UpdateUsername(AppUser user, string username);
 
+        Task<bool> CheckIfUserExists(int id);
     }
 }

@@ -79,7 +79,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("lobby-status")]
-        public async Task<ActionResult<int>> GetLobbyStatus()
+        public async Task<ActionResult> GetLobbyStatus()
         {
             var userId = GetUserIdFromClaim();
             var status = new MemberLobbyStatusDto
@@ -95,7 +95,62 @@ namespace API.Controllers
             status.LobbyId = lobbyId;
 
             return Ok(status);
+        }
 
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("follow")]
+        public async Task<ActionResult> FollowMember(int memberId)
+        {
+            var userId = GetUserIdFromClaim();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null) return NotFound();
+
+            if (!await _userRepository.CheckIfUserExists(memberId)) return NotFound("Member you are trying to follow doesn't exist");
+
+            if (user.AppUserProfile.AppUserData.Following.Contains(memberId)) return NoContent();
+
+            user.AppUserProfile.AppUserData.Following.Add(memberId);
+            _userRepository.Update(user);
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest();
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("unfollow")]
+        public async Task<ActionResult> UnFollowMember(int memberId)
+        {
+            var userId = GetUserIdFromClaim();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null) return NotFound();
+
+            if (!await _userRepository.CheckIfUserExists(memberId)) return NotFound("Member you are trying to follow doesn't exist");
+
+            if (!user.AppUserProfile.AppUserData.Following.Contains(memberId)) return NoContent();
+
+            user.AppUserProfile.AppUserData.Following.Remove(memberId);
+            _userRepository.Update(user);
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest();
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("check-follow")]
+        public async Task<ActionResult<bool>> CheckIfFollowed(int memberId)
+        {
+            var userId = GetUserIdFromClaim();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null) return NotFound();
+
+            if (user.AppUserProfile.AppUserData.Following.Contains(memberId)) return Ok(true);
+
+            return Ok(false);
         }
     }
 }
