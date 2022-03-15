@@ -57,7 +57,7 @@ namespace API.Controllers
             if (await _lobbiesRepository.SaveAllAsync())
             {
                 var createdLobby = Mapper.Map<NewLobbyDto>(lobby);
-                await _lobbyHub.CreateLobby(createdLobby.Id);
+                await _lobbyHub.CreateLobby(createdLobby.Id, GetUserIdFromClaim());
                 return Ok(createdLobby);
             }
 

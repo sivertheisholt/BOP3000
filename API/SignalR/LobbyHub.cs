@@ -18,9 +18,8 @@ namespace API.SignalR
             _lobbyTracker = lobbyTracker;
         }
 
-        public async Task CreateLobby(int lobbyId)
+        public async Task CreateLobby(int lobbyId, int uid)
         {
-            var uid = Context.User.GetUserId();
             await _lobbyTracker.CreateLobby(lobbyId, uid);
             await AddToGroup($"lobby_{lobbyId.ToString()}");
         }
