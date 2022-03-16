@@ -14,12 +14,17 @@
         </div>
     </section>
     <section class="section">
-        <a href="#" class="button steambtn">
-            <span>Connect Your Steam</span>
-            <div class="icon">
-                <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">
-            </div>
-        </a>
+        <form [formGroup]="connectToSteamForm" (ngSubmit)="onSubmit()">
+            <input type="hidden" name="Provider" value="" formGroupName="Name"/>
+            <input type="hidden" name="ReturnUrl" value="" formGroupName="ReturnUrl" />
+        
+            <button type="submit" class="button steambtn">
+                <span>Connect Your Steam</span>
+                <div class="icon">
+                    <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">
+                </div>
+            </button>
+        </form>
         <div class="connections-text mt-4 text-is-light">
             <p>
                 By connecting your Discord... Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo placeat vitae quidem amet reprehenderit distinctio libero nulla delectus, enim voluptates dolorum? Tempora earum provident perspiciatis quos hic temporibus consectetur aperiam!
