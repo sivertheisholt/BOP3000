@@ -2,10 +2,21 @@ nav{
     background-color: rgb(27, 29, 38);
     width: 100%;
     position: fixed;
+    z-index: 1000;
+}
+
+.navbar-item img {
+    width: 48px;
+    height: 48px;
+    max-height: none;
 }
 
 .icon{
     color: rgb(206, 202, 202);
+}
+
+.input{
+    max-width: 250px;
 }
 
 .navbar-burger{
