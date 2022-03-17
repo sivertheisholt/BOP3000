@@ -41,6 +41,7 @@ import { HelpComponent } from './components/help/help.component';
 import { AccordionDirective } from './_directives/accordion.directive';
 import { ContactFormComponent } from './components/help/contact-form/contact-form.component';
 import { HostPanelComponent } from './components/lobby/host-panel/host-panel.component';
+import { SpinnerComponent } from './core/spinner/spinner.component';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { HostPanelComponent } from './components/lobby/host-panel/host-panel.com
     HelpComponent,
     AccordionDirective,
     ContactFormComponent,
-    HostPanelComponent
+    HostPanelComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
