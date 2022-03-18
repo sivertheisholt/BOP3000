@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { map } from 'rxjs/operators';
@@ -21,8 +21,17 @@ export class ConnectionsComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.connectToSteamForm.value);
-    this.http.post('URL HER', this.connectToSteamForm.value).pipe(
+    const formData = new FormData();
+    Object.keys(this.connectToSteamForm.value).forEach((key) => {
+      console.log(key);
+      formData.append(key, this.connectToSteamForm.value[key]);
+    });
+    formData.append("Name", this.connectToSteamForm.controls['Name'].value);
+    formData.append("ReturnUrl", this.connectToSteamForm.controls['ReturnUrl'].value);
+    console.log(formData);
+    console.log(formData.get('Name'));
+/*     console.log(this.connectToSteamForm.value);
+    this.http.post('URL HER', formData).pipe(
       map((response) => {
         console.log(response);
       })
@@ -30,7 +39,7 @@ export class ConnectionsComponent implements OnInit {
       response => {
         console.log(response);
       }
-    )
+    ) */
   }
 
 }

@@ -22,7 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       tap(
         (event) => {
           if(event instanceof HttpResponse){
-            console.log(event);
+            //console.log(event);
           }
         },
         (error: HttpErrorResponse) => {

@@ -17,7 +17,7 @@ export class WaitingRoomComponent implements OnInit {
   @Input('lobby') lobby! : Lobby;
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) { 
-    this.lobbyHubService.lobbyQueueMembers$.subscribe(
+    this.lobbyHubService.getLobbyQueueMembersObserver().subscribe(
       member => {
         if(member.length == 0) return;
         this.userService.getSpecificUser(+member).subscribe(
@@ -29,7 +29,7 @@ export class WaitingRoomComponent implements OnInit {
       error => console.log(error)
     )
 
-    this.lobbyHubService.kickedQueueMembers$.subscribe(
+    this.lobbyHubService.getLobbyKickedQueueMembersObserver().subscribe(
       response => {
         this.usersInQueue?.forEach(user => {
           if(user.id == response){
@@ -40,7 +40,7 @@ export class WaitingRoomComponent implements OnInit {
       }
     )
 
-    this.lobbyHubService.acceptedMembers$.subscribe(
+    this.lobbyHubService.getAcceptedMemberObserver().subscribe(
       response => {
         this.usersInQueue?.forEach(user => {
           if(user.id == response){
