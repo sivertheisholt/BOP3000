@@ -117,7 +117,7 @@ namespace API.SignalR
                 }
             }
 
-            await AddToGroup($"user_{Context.User.GetUserId().ToString()}");
+            await AddToGroup($"user_{uid}");
             if (await _lobbyTracker.CheckIfMemberInAnyLobby(uid))
             {
                 var lobbyId = await _lobbyTracker.GetLobbyIdFromUser(uid);

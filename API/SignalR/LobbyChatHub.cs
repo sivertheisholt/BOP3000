@@ -46,11 +46,12 @@ namespace API.SignalR
             {
                 if (await _lobbyChatTracker.MemberJoinedChat(lobbyId, uid))
                 {
-                    await AddToGroup($"lobby_{lobbyId}");
                     await Clients.OthersInGroup($"lobby_{lobbyId}").SendAsync("JoinedChat", uid);
                 }
             }
 
+            await AddToGroup($"lobby_{lobbyId}");
+            
             await Clients.Caller.SendAsync("GetMessages", await _lobbyChatTracker.GetMessages(lobbyId));
 
             await base.OnConnectedAsync();
