@@ -11,6 +11,7 @@ namespace API.SignalR
         private static readonly Dictionary<int, Dictionary<int, List<Message>>> Chat =
             new Dictionary<int, Dictionary<int, List<Message>>>();
 
+        // <uid, lobbyId>
         private static readonly Dictionary<int, int> MemberTracker = new Dictionary<int, int>();
 
         public Task CreateChat(int lobbyId)
@@ -78,6 +79,10 @@ namespace API.SignalR
         public Task<bool> CheckIfChatExists(int lobbyId)
         {
             return Task.FromResult(Chat.ContainsKey(lobbyId));
+        }
+        public Task<bool> CheckIfUserInChat(int uid)
+        {
+            return Task.FromResult(MemberTracker.ContainsKey(uid));
         }
     }
 }
