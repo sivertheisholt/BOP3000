@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { map } from 'rxjs/operators';
 
@@ -11,24 +12,23 @@ import { map } from 'rxjs/operators';
 export class ConnectionsComponent implements OnInit {
   connectToSteamForm!: FormGroup;
 
-  constructor(private http: HttpClient) { }
+  private httpClient: HttpClient;
+
+  constructor(private handler: HttpBackend, @Inject(DOCUMENT) private document: Document) {
+    this.httpClient = new HttpClient(handler);
+  }
 
   ngOnInit(): void {
     this.connectToSteamForm = new FormGroup({
-      Name: new FormControl("Steam"),
+      Provider: new FormControl("Steam"),
       ReturnUrl: new FormControl("/")
     });
   }
 
   onSubmit(){
-    console.log(this.connectToSteamForm.value);
-    this.http.post('URL HER', this.connectToSteamForm.value).pipe(
-      map((response) => {
-        console.log(response);
-      })
-    ).subscribe(
+    this.httpClient.post('https://localhost:5001/api/accounts/steam', this.connectToSteamForm.value, {responseType: "text", observe: 'response'}, ).subscribe(
       response => {
-        console.log(response);
+        this.document.location.href = response.url!;
       }
     )
   }
