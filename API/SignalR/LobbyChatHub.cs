@@ -20,11 +20,22 @@ namespace API.SignalR
             _lobbyChatTracker = lobbyChatTracker;
         }
 
+        public async Task CreateChat(int lobbyId)
+        {
+            await _lobbyChatTracker.CreateChat(lobbyId);
+        }
+
         public override async Task OnConnectedAsync()
         {
             var httpContext = Context.GetHttpContext();
             var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
             var uid = Context.User.GetUserId();
+
+            if (!await _lobbyChatTracker.CheckIfChatExists(1))
+            {
+                Console.WriteLine("CHAT DOES NOT EXIST");
+                await _lobbyChatTracker.CreateChat(1);
+            }
 
             await AddToGroup($"user_{Context.User.GetUserId().ToString()}");
             if (await _lobbyChatTracker.MemberJoinedChat(lobbyId, Context.User.GetUserId()))

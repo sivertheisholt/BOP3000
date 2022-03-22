@@ -39,8 +39,16 @@ namespace API.SignalR
         {
             lock (Chat)
             {
-                if (!Chat.ContainsKey(lobbyId)) return Task.FromResult(false);
-                if (!Chat[lobbyId].ContainsKey(uid)) return Task.FromResult(false);
+                if (!Chat.ContainsKey(lobbyId))
+                {
+                    Console.WriteLine("Lobby doesnt exist");
+                    return Task.FromResult(false);
+                }
+                if (!Chat[lobbyId].ContainsKey(uid))
+                {
+                    Console.WriteLine("User doesnt exist");
+                    return Task.FromResult(false);
+                }
 
                 Chat[lobbyId][uid].Add(message);
             }
@@ -67,6 +75,10 @@ namespace API.SignalR
         public Task<int> GetLobbyIdFromUser(int uid)
         {
             return Task.FromResult(MemberTracker.Where(member => member.Key == uid).FirstOrDefault().Value);
+        }
+        public Task<bool> CheckIfChatExists(int lobbyId)
+        {
+            return Task.FromResult(Chat.ContainsKey(lobbyId));
         }
     }
 }
