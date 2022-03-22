@@ -18,7 +18,7 @@ export class JoinedUsersComponent implements OnInit{
   @Output() totalUsersInPartyEvent = new EventEmitter<number>();
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) {
-    this.lobbyHubService.lobbyPartyMembers$.subscribe(
+    this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(
       member => {
         if(member.length == 0) return;
         this.userService.getSpecificUser(+member).subscribe(
@@ -31,7 +31,7 @@ export class JoinedUsersComponent implements OnInit{
       error => console.log(error)
     )
 
-    this.lobbyHubService.kickedPartyMembers$.subscribe(
+    this.lobbyHubService.getLobbyKickedPartyMembersObserver().subscribe(
       response => {
         this.usersInParty.forEach(element => {
           if(response == element.id){

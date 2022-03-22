@@ -16,7 +16,7 @@ export class LobbyInfoComponent implements OnInit {
   count: number = 0;
 
   constructor(private lobbyHubService: LobbyHubService) {
-    this.lobbyHubService.lobbyPartyMembers$.subscribe(
+    this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(
       member => {
         if(member.length == 0) return;
         this.count++;

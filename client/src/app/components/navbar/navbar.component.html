@@ -1,8 +1,11 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item navbar-logo">
-      <img src="https://www.hafslunddekksenter.no/wp-content/uploads/2018/01/logo-placeholder.png">
+      <img src="../../../assets/images/playfu.png">
     </a>
+    <div class="navbar-item">
+      <input class="input is-primary is-small" type="text" placeholder="Search..." #searchInput>
+    </div>
     <a (click)="toggleNavbar()" role="button" class="navbar-burger burger" #navBurger aria-label="menu" aria-expanded="false" data-target="navbar-burger-menu" [ngClass]="isNavVisible ? 'is-active' : ''">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>

@@ -5,6 +5,7 @@ import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { GamesService } from 'src/app/_services/games.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
+import { SpinnerService } from 'src/app/_services/spinner.service';
 
 @Component({
   selector: 'app-create-lobby',
@@ -23,10 +24,7 @@ export class CreateLobbyComponent implements OnInit {
 
   @ViewChild('gameInput', {static: true}) gameInput? : ElementRef;
 
-  isSearching: boolean;
-
-  constructor(private lobbyService: LobbyService, private gamesService: GamesService, private router: Router) {
-    this.isSearching = false;
+  constructor(private lobbyService: LobbyService, private gamesService: GamesService, private router: Router, private spinnerService: SpinnerService) {
 
   }
 
@@ -44,18 +42,25 @@ export class CreateLobbyComponent implements OnInit {
 
     fromEvent(this.gameInput?.nativeElement, 'keyup').pipe(
       map((event: any) => {
+        if(event.target.value == ''){
+          this.games = [];
+          this.spinnerService.resetSpinner();
+          this.spinnerService.requestEnded();
+          return event.target.value;
+        }
+        this.spinnerService.requestStarted();
         return event.target.value;
       })
       ,filter(response => response.length > 2)
       , debounceTime(1000)
       ,distinctUntilChanged()
     ).subscribe((input: string) => {
-      this.isSearching = true;
       this.gamesService.searchGame(input).subscribe((response) => {
-        this.isSearching = false;
+        this.spinnerService.resetSpinner();
+        this.spinnerService.requestEnded();
         this.games = response;
       }, (err) => {
-        this.isSearching = false;
+        this.spinnerService.requestEnded();
         console.log(err);
       })
     })

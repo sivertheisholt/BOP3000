@@ -24,3 +24,25 @@ a:hover{
     justify-items: center;
     align-items: center;
 }
+
+@media only screen and (max-width: 1180px) {
+    .games-container{
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    }
+}
+
+
+@media only screen and (max-width: 956px) {
+    .games-container{
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+    
+}
+
+@media only screen and (max-width: 471px) {
+    .games-container{
+        grid: none;
+        display: block;
+        margin: 0 auto;
+    }
+}

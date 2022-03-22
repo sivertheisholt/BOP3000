@@ -16,10 +16,6 @@
     align-items: center;
 }
 
-.custom{
-    width: 100%;
-}
-
 .card{
     background-color: rgba(38, 38, 39, 0.75);
     border-radius: 20px;
@@ -43,30 +39,27 @@
     z-index: 10;
     color: white;
     position: absolute;
+    width: 92%;
 }
 
 .result-item{
     padding: 10px;
+    border-left: 5px solid;
 }
 
 .result-item a {
-    color: rgb(46, 46, 46);
+    color: rgb(207, 207, 207);
 }
 
 .result-item:nth-child(even){
-    background-color: rgb(236, 198, 198);
+    background-color: rgb(37, 37, 37);
+    border-left-color: rgb(0, 19, 187);
 }
 .result-item:nth-child(odd){
-    background-color: rgb(197, 194, 197);
+    background-color: rgb(48, 48, 48);
+    border-left-color: rgb(192, 77, 0);
 }
 
 .result-item a:hover{
     color: rgb(52, 70, 146);
-}
-
-.test:nth-child(even){
-    background-color: rgb(236, 198, 198);
-}
-.test:nth-child(odd){
-    background-color: rgb(143, 140, 143);
 }

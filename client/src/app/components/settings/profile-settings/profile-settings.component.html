@@ -42,13 +42,22 @@
             </div>
 
             <div class="control">
-                <label for="date">Date</label>
+                <label for="date">Birthday</label>
                 <div class="date-wrapper is-flex mt-3 mb-3">
-                    <input class="input day-input" id="day" type="text" placeholder="DD" maxlength="2" formControlName="dateDay">
+                    <select name="" id="day" formControlName="dateDay" [value]="22">
+                        <option *ngFor="let day of days" [value]="day"> {{ day }}</option>
+                    </select>
+                    <!-- <input class="input day-input" id="day" type="text" placeholder="DD" maxlength="2" formControlName="dateDay"> -->
                     <div class="date-divider">-</div>
-                    <input class="input month-input" id="month" type="text" placeholder="MM" maxlength="2" formControlName="dateMonth">
+                    <select name="" id="day" formControlName="dateMonth">
+                        <option *ngFor="let month of months" [value]="month"> {{ month }}</option>
+                    </select>
+                    <!-- <input class="input month-input" id="month" type="text" placeholder="MM" maxlength="2" formControlName="dateMonth"> -->
                     <div class="date-divider">-</div>
-                    <input class="input year-input" id="year" type="text" placeholder="YYYY" maxlength="4" formControlName="dateYear">
+                    <select name="" id="day" formControlName="dateYear">
+                        <option *ngFor="let year of years" [value]="year"> {{ year }}</option>
+                    </select>
+                    <!-- <input class="input year-input" id="year" type="text" placeholder="YYYY" maxlength="4" formControlName="dateYear"> -->
                 </div>
             </div>
         </div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { min } from 'rxjs/operators';
 import { ChatMessage } from 'src/app/_models/chatmessage.model';
+import { AuthService } from 'src/app/_services/auth.service';
+import { LobbyChatHubService } from 'src/app/_services/lobby-chat-hub.service';
+import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,9 +16,10 @@ export class ChatComponent implements OnInit {
     { username: 'test', timestamp: new Date(), message: ' test' }
   ]
 
-  constructor() { }
+  constructor(private lobbyChatHubService: LobbyChatHubService, private userService: UserService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.lobbyChatHubService.createHubConnection(this.authService.getUserId(), '1');
     this.sendMessageForm = new FormGroup({
       message: new FormControl(null, [Validators.required]),
       timestamp: new FormControl(this.setTimestamp()),
