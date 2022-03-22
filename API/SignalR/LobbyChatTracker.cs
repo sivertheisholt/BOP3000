@@ -27,10 +27,9 @@ namespace API.SignalR
             lock (Chat)
             {
                 if (!Chat.ContainsKey(lobbyId)) return Task.FromResult(false);
-                {
-                    Chat[lobbyId].Add(uid, null);
-                    MemberTracker.Add(uid, lobbyId);
-                }
+
+                Chat[lobbyId].Add(uid, null);
+                MemberTracker.Add(uid, lobbyId);
             }
             return Task.FromResult(true);
         }

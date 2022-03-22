@@ -37,8 +37,8 @@ namespace API.SignalR
                 await _lobbyChatTracker.CreateChat(1);
             }
 
-            await AddToGroup($"user_{Context.User.GetUserId().ToString()}");
-            if (await _lobbyChatTracker.MemberJoinedChat(lobbyId, Context.User.GetUserId()))
+            await AddToGroup($"user_{uid}");
+            if (await _lobbyChatTracker.MemberJoinedChat(lobbyId, uid))
             {
                 await AddToGroup($"lobby_{lobbyId}");
                 await Clients.Caller.SendAsync("GetMessages", await _lobbyChatTracker.GetMessages(lobbyId));
