@@ -17,6 +17,7 @@ namespace API.Extentions
         {
 
             services.AddScoped<LobbyHub>();
+            services.AddScoped<LobbyChatHub>();
             services.AddSingleton<LobbyTracker>();
             services.AddSingleton<LobbyChatTracker>();
 
