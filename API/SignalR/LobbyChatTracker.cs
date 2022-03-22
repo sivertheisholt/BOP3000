@@ -17,7 +17,7 @@ namespace API.SignalR
         {
             lock (Chat)
             {
-                Chat.Add(lobbyId, null);
+                Chat.Add(lobbyId, new Dictionary<int, List<Message>>());
             }
             return Task.CompletedTask;
         }
@@ -28,7 +28,7 @@ namespace API.SignalR
             {
                 if (!Chat.ContainsKey(lobbyId)) return Task.FromResult(false);
 
-                Chat[lobbyId].Add(uid, null);
+                Chat[lobbyId].Add(uid, new List<Message>());
                 MemberTracker.Add(uid, lobbyId);
             }
             return Task.FromResult(true);
