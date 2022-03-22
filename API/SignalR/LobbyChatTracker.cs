@@ -22,17 +22,17 @@ namespace API.SignalR
             return Task.CompletedTask;
         }
 
-        public Task MemberJoinedChat(int lobbyId, int uid)
+        public Task<bool> MemberJoinedChat(int lobbyId, int uid)
         {
             lock (Chat)
             {
-                if (!Chat.ContainsKey(lobbyId)) return Task.FromException(new Exception("Lobby doesn't exist"));
+                if (!Chat.ContainsKey(lobbyId)) return Task.FromResult(false);
                 {
                     Chat[lobbyId].Add(uid, null);
                     MemberTracker.Add(uid, lobbyId);
                 }
             }
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
 
         public Task SendMessage(int lobbyId, int uid)

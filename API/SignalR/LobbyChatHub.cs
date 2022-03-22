@@ -19,17 +19,15 @@ namespace API.SignalR
         {
             var httpContext = Context.GetHttpContext();
             var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
+            var uid = Context.User.GetUserId();
 
-            try
+            await AddToGroup($"user_{Context.User.GetUserId().ToString()}");
+            if (await _lobbyChatTracker.MemberJoinedChat(lobbyId, Context.User.GetUserId()))
             {
-                await _lobbyChatTracker.MemberJoinedChat(lobbyId, Context.User.GetUserId());
-            }
-            catch (System.Exception err)
-            {
-                Console.WriteLine(err);
+                await AddToGroup($"lobby_{lobbyId}");
                 await Clients.Caller.SendAsync("GetMessages", await _lobbyChatTracker.GetMessages(lobbyId));
-                return;
             }
+            await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
@@ -38,6 +36,16 @@ namespace API.SignalR
             if (lobbyId == 0) return;
 
             await base.OnDisconnectedAsync(exception);
+        }
+
+        private async Task AddToGroup(string groupName)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+        }
+
+        private async Task RemoveFromGroup(string groupName)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
     }
 }
