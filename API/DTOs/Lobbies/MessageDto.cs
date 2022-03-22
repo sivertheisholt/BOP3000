@@ -9,6 +9,7 @@ namespace API.DTOs.Lobbies
     {
         public int Uid { get; set; }
         public DateTime DateSent { get; set; }
+        public string Username { get; set; }
 
         public string ChatMessage { get; set; }
     }
