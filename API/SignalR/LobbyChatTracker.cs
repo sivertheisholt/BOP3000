@@ -35,21 +35,16 @@ namespace API.SignalR
             return Task.FromResult(true);
         }
 
-        public Task SendMessage(int lobbyId, int uid)
+        public Task<bool> SendMessage(int lobbyId, int uid, Message message)
         {
             lock (Chat)
             {
-                if (!Chat.ContainsKey(lobbyId)) return Task.FromException(new Exception("Lobby doesn't exist"));
-                if (!Chat[lobbyId].ContainsKey(uid)) return Task.FromException(new Exception("User doesn't exist"));
+                if (!Chat.ContainsKey(lobbyId)) return Task.FromResult(false);
+                if (!Chat[lobbyId].ContainsKey(uid)) return Task.FromResult(false);
 
-                Chat[lobbyId][uid].Add(new Message
-                {
-                    LobbyId = lobbyId,
-                    Uid = uid,
-                    DateSent = DateTime.Now
-                });
+                Chat[lobbyId][uid].Add(message);
             }
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
 
         public Task<List<Message>> GetMessages(int lobbyId)

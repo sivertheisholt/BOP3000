@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Entities.Lobbies
+namespace API.DTOs.Lobbies
 {
-    public class Message
+    public class MessageDto
     {
-        public int Id { get; set; }
-        public int LobbyId { get; set; }
         public int Uid { get; set; }
         public DateTime DateSent { get; set; }
 

@@ -44,6 +44,8 @@ namespace API.Helpers
             CreateMap<CountryIsoDto, CountryIso>().ReverseMap();
 
             CreateMap<AppData, GameAppInfoDto>();
+
+            CreateMap<Message, MessageDto>();
         }
     }
 }
