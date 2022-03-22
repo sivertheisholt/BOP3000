@@ -66,7 +66,7 @@ namespace API.SignalR
 
             if (await _lobbyChatTracker.SendMessage(lobbyId, uid, Chatmessage))
             {
-                await Clients.Group($"lobby_{lobbyId}").SendAsync("NewMessage", _mapper.Map<MessageDto>(message));
+                await Clients.Group($"lobby_{lobbyId}").SendAsync("NewMessage", _mapper.Map<MessageDto>(Chatmessage));
             }
         }
 
