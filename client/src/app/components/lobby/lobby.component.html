@@ -21,7 +21,7 @@
             <div class="columns">
                 <div class="column is-half">
                     <div class="bottom-left-content">
-                        <app-chat></app-chat>
+                        <app-chat [lobby]="lobby"></app-chat>
                     </div>
                 </div>
                 <div class="column is-half" *ngIf="hostUser?.id == lobby.adminUid">

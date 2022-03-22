@@ -32,5 +32,4 @@ export class ConnectionsComponent implements OnInit {
       }
     )
   }
-
 }

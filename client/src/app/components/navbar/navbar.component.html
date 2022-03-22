@@ -3,21 +3,18 @@
     <a class="navbar-item navbar-logo">
       <img src="../../../assets/images/playfu.png">
     </a>
-    <div class="navbar-item">
-      <input class="input is-primary is-small" type="text" placeholder="Search..." #searchInput>
-    </div>
     <a (click)="toggleNavbar()" role="button" class="navbar-burger burger" #navBurger aria-label="menu" aria-expanded="false" data-target="navbar-burger-menu" [ngClass]="isNavVisible ? 'is-active' : ''">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
-  <div id="navbar-desktop" class="navbar-menu">
-    <div class="navbar-end">
+  <div class="navbar-menu">
+    <div class="navbar-end mr-6">
       <div class="navbar-item">
-        <a><fa-icon class="icon is-medium fa-2x" [icon]="faUserCircle"></fa-icon></a>
+        <input class="input is-primary is-small" type="text" placeholder="Search..." #searchInput>
       </div>
-      <div class="navbar-item mr-6">
+      <div class="navbar-item">
         <div class="dropdown" [ngClass]="isNotiVisible ? 'is-active' : ''">
           <div class="dropdown-trigger">
             <a (click)="toggleNotifications()" class="noti" aria-haspopup="true" aria-controls="dropdown-menu2">
@@ -57,5 +54,5 @@
         <li><a><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>Help</a></li>
         <li><a (click)="logOut()"><fa-icon class="fa-lg mr-2" [icon]="faSignOutAlt"></fa-icon>Log Out</a></li>
     </ul>
-</div>
+  </div>
 </nav>

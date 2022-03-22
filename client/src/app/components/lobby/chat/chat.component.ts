@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChatMessage } from 'src/app/_models/chatmessage.model';
+import { Lobby } from 'src/app/_models/lobby.model';
 import { AuthService } from 'src/app/_services/auth.service';
 import { LobbyChatHubService } from 'src/app/_services/lobby-chat-hub.service';
 import { UserService } from 'src/app/_services/user.service';
@@ -11,32 +12,41 @@ import { UserService } from 'src/app/_services/user.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  sendMessageForm! : FormGroup;
-  chatMessages : ChatMessage[] = [
-    { username: 'test', timestamp: new Date(), message: ' test' }
-  ]
+  @Input('lobby') lobby! : Lobby;
+  @ViewChild('chatMessage') chatMessage!: ElementRef;
+  chatMessages : ChatMessage[] = []
 
-  constructor(private lobbyChatHubService: LobbyChatHubService, private userService: UserService, private authService: AuthService) { }
+  constructor(private lobbyChatHubService: LobbyChatHubService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.lobbyChatHubService.createHubConnection(this.authService.getUserId(), '1');
-    this.sendMessageForm = new FormGroup({
-      message: new FormControl(null, [Validators.required]),
-      timestamp: new FormControl(this.setTimestamp()),
-      username: new FormControl('testbruker')
-    })
+    this.lobbyChatHubService.createHubConnection(this.authService.getUserId(), this.lobby.id.toString());
+
+    this.lobbyChatHubService.getChatAllMessagesObserver().subscribe(
+      (messages) => {
+        messages.forEach((message) => {
+          message.dateSent = this.convertDate(message.dateSent)
+          this.chatMessages.push(message);
+        });
+      }
+    )
   }
 
   onSubmit(){
-    this.chatMessages.push(this.sendMessageForm.value);
-    console.log(this.chatMessages);
+    if(this.chatMessage.nativeElement.value.length !== 0){
+      this.lobbyChatHubService.sendMessage(1, this.chatMessage.nativeElement.value);
+      this.chatMessage.nativeElement.value = '';
+      this.chatMessage.nativeElement.focus();
+    }
   }
 
-  setTimestamp(){
-    const time = new Date();
-    const hours = time.getHours();
-    const minutes = time.getMinutes();
-    return hours + ':' + minutes;
+  convertDate(date: string){
+    let d = new Date(date);
+    let hour = d.getHours().toString();
+    let minutes = d.getMinutes().toString();
+    let seconds = d.getSeconds().toString();
+    if(hour.length < 2) hour = '0' + hour;
+    if(minutes.length < 2) minutes = '0' + minutes;
+    if(seconds.length < 2) seconds = '0' + seconds;
+    return hour + ':' + minutes + ':' + seconds;
   }
-
 }

@@ -7,7 +7,8 @@ import { Subscription, timer } from 'rxjs';
   styleUrls: ['./host-panel.component.css']
 })
 export class HostPanelComponent implements OnInit {
-  status: boolean = false;
+  readyCheckModal: boolean = false;
+  endLobbyModal: boolean = false;
   subscription?: Subscription;
   start = 30;
 
@@ -17,7 +18,7 @@ export class HostPanelComponent implements OnInit {
   }
 
   readyCheck(){
-    this.status = !this.status;
+    this.readyCheckModal = !this.readyCheckModal;
     const source = timer(1000, 1000);
     this.subscription = source.subscribe(
       val => {
@@ -30,7 +31,7 @@ export class HostPanelComponent implements OnInit {
   }
 
   acceptReadyCheck(){
-    this.status = false;
+    this.readyCheckModal = false;
     this.subscription?.unsubscribe();
     this.start = 30;
   }
@@ -38,5 +39,13 @@ export class HostPanelComponent implements OnInit {
   declineReadyCheck(){
     this.subscription?.unsubscribe();
     this.start = 30;
+  }
+
+  confirmEndLobby(){
+    this.endLobbyModal = !this.endLobbyModal;
+  }
+  
+  closeEndLobbyModal(){
+    this.endLobbyModal = false;
   }
 }
