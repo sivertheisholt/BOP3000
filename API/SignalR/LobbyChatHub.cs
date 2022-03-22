@@ -51,7 +51,7 @@ namespace API.SignalR
             }
 
             await AddToGroup($"lobby_{lobbyId}");
-            
+
             await Clients.Caller.SendAsync("GetMessages", await _lobbyChatTracker.GetMessages(lobbyId));
 
             await base.OnConnectedAsync();
@@ -74,7 +74,10 @@ namespace API.SignalR
 
             if (await _lobbyChatTracker.SendMessage(lobbyId, uid, Chatmessage))
             {
-                await Clients.Group($"lobby_{lobbyId}").SendAsync("NewMessage", _mapper.Map<MessageDto>(Chatmessage));
+                var messageDto = _mapper.Map<MessageDto>(Chatmessage);
+                var messageFakeArray = new List<MessageDto>();
+                messageFakeArray.Add(messageDto);
+                await Clients.Group($"lobby_{lobbyId}").SendAsync("NewMessage", messageFakeArray);
             }
         }
 
