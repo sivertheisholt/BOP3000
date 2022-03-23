@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   faEnvelope = faEnvelope; faLock = faLock;
   model: any = {};
   loginUserForm! : FormGroup;
+  invalidInput: boolean = false;
 
   constructor(public authService: AuthService, public router: Router) { }
 
@@ -25,16 +26,18 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.loginUserForm.value).subscribe(res => {
-      console.log(res);
-      this.router.navigate(['/home']);
-    }, err => {
-      console.log(err);
-    })
+    if(this.loginUserForm.valid){
+      this.authService.login(this.loginUserForm.value).subscribe(res => {
+        this.router.navigate(['/home']);
+      }, err => {
+        this.invalidInput = true;
+      });
+    } else {
+      this.invalidInput = true;
+    }
   }
   
   logout() {
     this.authService.logout();
   }
-
 }

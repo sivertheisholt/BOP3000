@@ -17,7 +17,7 @@
                                 </span>
                             </p>
                         </div>
-                        <div class="field mt-5 mb-5">
+                        <div class="field mt-5">
                             <p class="control has-icons-left">
                                 <input
                                 name="password"
@@ -30,7 +30,11 @@
                                 </span>
                             </p>
                         </div>
+                        <div class="error danger p-2" *ngIf="invalidInput">
+                            Invalid email/password
+                        </div>
                     </div>
+
                     <div class="has-text-centered">
                         <button class="column is-half button is-info" type="submit">Login</button>
                     </div>

@@ -52,6 +52,7 @@
         align-items: baseline;
         margin-top: 10px;
     }
+
     .lobby-text p{
         margin-left: 20px;
         margin-right: 20px;
@@ -66,5 +67,4 @@
         flex-direction: column;
         padding: 40px;
     }
-    
 }
