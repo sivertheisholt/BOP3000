@@ -1,0 +1,33 @@
+.lobby-info-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-lobby-image{
+   width: 100%;
+}
+
+.lobby-text{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.header-lobby-game-title h1{
+    color: rgb(221, 220, 212);
+}
+
+.header-lobby-game-title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: rgb(221, 220, 212);
+    text-align: center;
+}

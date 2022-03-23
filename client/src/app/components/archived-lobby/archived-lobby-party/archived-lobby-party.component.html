@@ -1,0 +1,23 @@
+<div class="joined-users-list">
+    <div class="joined-users-header">
+        <h1>Party</h1>
+    </div>
+    <div class="joined-users-item">
+        <div class="is-flex is-align-items-center is-align-items-center mt-3" *ngFor="let user of users">
+            <div class="joined-users-user-wrapper is-flex is-align-items-center is-justify-content-center half-width">
+                <div class="image is-32x32 mr-2">
+                    <img class="is-rounded" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/75/7514b0304efd66200bc6aeb671642d925b95ca15_full.jpg">
+                </div>
+                <div class="text-is-light"> {{ user.username }}</div>
+            </div>
+            <div class="half-width is-flex is-align-items-center is-justify-content-center">
+                <a (click)="upvoteUser()">
+                    <fa-icon class="fa-lg mr-4 test" [icon]="faThumbsUp"></fa-icon>
+                </a>
+                <a (click)="downvoteUser()">
+                    <fa-icon class="fa-lg" [icon]="faThumbsDown"></fa-icon>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -42,6 +42,9 @@ import { AccordionDirective } from './_directives/accordion.directive';
 import { ContactFormComponent } from './components/help/contact-form/contact-form.component';
 import { HostPanelComponent } from './components/lobby/host-panel/host-panel.component';
 import { SpinnerComponent } from './core/spinner/spinner.component';
+import { ArchivedLobbyComponent } from './components/archived-lobby/archived-lobby.component';
+import { ArchivedLobbyPartyComponent } from './components/archived-lobby/archived-lobby-party/archived-lobby-party.component';
+import { ArchivedLobbyInfoComponent } from './components/archived-lobby/archived-lobby-info/archived-lobby-info.component';
 
 
 @NgModule({
@@ -80,7 +83,10 @@ import { SpinnerComponent } from './core/spinner/spinner.component';
     AccordionDirective,
     ContactFormComponent,
     HostPanelComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ArchivedLobbyComponent,
+    ArchivedLobbyPartyComponent,
+    ArchivedLobbyInfoComponent
   ],
   imports: [
     BrowserModule,

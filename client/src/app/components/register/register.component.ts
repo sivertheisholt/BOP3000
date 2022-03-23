@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faCheckCircle, faEnvelope, faLock, faUser, faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { Country } from 'src/app/_models/country.model';
 import { CustomValidator } from 'src/app/_validators/custom-validator';
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   countries : Country[] = [];
   genders = ['Male', 'Female', 'Other', 'Hidden'];
 
-  constructor(private authService: AuthService, private route: ActivatedRoute) { }
+  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.countries = this.route.snapshot.data['countries'];
@@ -46,8 +46,7 @@ export class RegisterComponent implements OnInit {
   register() {
     if(this.regUserForm.valid){
       this.authService.register(this.regUserForm.value).subscribe(res => {
-        console.log('res');
-        console.log(res);
+        this.router.navigate(['/home']);
     }, err => {
         console.log('error');
         console.log(err);

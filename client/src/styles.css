@@ -20,6 +20,10 @@
   font-size: 28px;
 }
 
+.center{
+  margin: 0 auto;
+}
+
 
 @media only screen and (max-width: 1023px) {
   .title{

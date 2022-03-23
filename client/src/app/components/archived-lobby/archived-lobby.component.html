@@ -1,0 +1,16 @@
+<div class="archived-lobby-background" [ngStyle]="{'background-image': 'url(' + game?.background + ')'}">
+    <div class="container">
+        <div class="content">
+            <div class="column is-full">
+                <div class="info-content">
+                    <app-archived-lobby-info [game]="game" [lobby]="lobby"></app-archived-lobby-info>
+                </div>
+            </div>
+            <div class="column is-half center">
+                <div class="party-content">
+                    <app-archived-lobby-party [lobby]="lobby"></app-archived-lobby-party>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
