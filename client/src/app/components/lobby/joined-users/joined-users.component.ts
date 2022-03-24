@@ -15,6 +15,7 @@ export class JoinedUsersComponent implements OnInit{
   usersInParty : Member[] = [];
   count: number = 0;
   @Input('lobby') lobby! : Lobby;
+  @Input('currentUser') currentUser?: Member;
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) {
     this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(

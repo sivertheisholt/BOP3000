@@ -17,9 +17,9 @@
                 <div class="text-is-light">{{ user.username }}</div>
             </div>
             <div class="quarter-width is-flex is-align-items-center is-justify-content-center">
-                <a *ngIf="user.id != lobby.adminUid" (click)="kickFromParty(user.id!)">
-                    Remove
-                </a>
+                <div *ngIf="currentUser?.id == lobby.adminUid && user.id != lobby.adminUid">
+                    <a (click)="kickFromParty(user.id!)">Remove</a>
+                </div>
             </div>
         </div>
     </div>

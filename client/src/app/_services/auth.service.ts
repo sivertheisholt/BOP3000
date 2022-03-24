@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { catchError, map, retry } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { User } from '../_models/user';
 import { LobbyHubService } from './lobby-hub.service';
 import { environment } from '../../environments/environment';

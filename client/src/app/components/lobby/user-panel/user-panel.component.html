@@ -1,0 +1,19 @@
+<div class="host-panel-wrapper is-flex is-justify-content-center is-flex-direction-column is-align-items-center">
+    <div class="p-2">
+        <button class="button is-success" data-target="modal-leave-lobby" (click)="leaveLobbyModal()">Leave</button>
+    </div>
+    <div id="modal-leave-lobby" class="modal" [ngClass]="leaveLobbyStatus ? 'is-active' : ''">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div class="box is-flex is-justify-content-center is-align-items-center is-flex-direction-column">
+                <div class="subtitle">
+                    Are you sure you want to leave?
+                </div>
+                <div>
+                    <button class="button is-success" (click)="leaveLobby()">Leave</button>
+                    <button class="button is-danger" (click)="goBack()">Go Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

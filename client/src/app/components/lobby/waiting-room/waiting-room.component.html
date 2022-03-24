@@ -13,12 +13,14 @@
                 <div class="text-is-light">{{ user.username }}</div>
             </div>
             <div class="waiting-room-btn-wrapper quarter-width is-flex is-align-items-center is-justify-content-center">
-                <a (click)="denyUserToJoin(user.id!)">
-                    <fa-icon class="fa-lg mr-2" [icon]="faMinus"></fa-icon>
-                </a>
-                <a (click)="acceptUserToJoin(user.id!)">
-                    <fa-icon class="fa-lg mr-2" [icon]="faPlus"></fa-icon>
-                </a>
+                <div *ngIf="currentUser?.id == lobby.adminUid">
+                    <a (click)="denyUserToJoin(user.id!)">
+                        <fa-icon class="fa-lg mr-2" [icon]="faMinus"></fa-icon>
+                    </a>
+                    <a (click)="acceptUserToJoin(user.id!)">
+                        <fa-icon class="fa-lg mr-2" [icon]="faPlus"></fa-icon>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

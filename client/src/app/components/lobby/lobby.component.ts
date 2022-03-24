@@ -14,13 +14,19 @@ import { UserService } from 'src/app/_services/user.service';
 export class LobbyComponent implements OnInit {
   lobby: Lobby;
   game!: Game;
-  hostUser? : Member;
+  currentUser? : Member;
 
   constructor(private route: ActivatedRoute, private gamesService: GamesService, private userService: UserService) { 
     this.lobby = this.route.snapshot.data['lobby'];
     this.gamesService.fetchGame(this.lobby.gameId).subscribe(
       (response) => {
         this.game = response;
+      }
+    );
+
+    this.userService.getUserData().subscribe(
+      (response) => {
+        this.currentUser = response;
       }
     );
   }
