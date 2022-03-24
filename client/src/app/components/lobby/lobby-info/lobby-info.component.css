@@ -11,16 +11,7 @@
 
 .header-lobby-image{
     height: 100%;
-    width: 35%;
-}
-
-.lobby-text{
-    display: flex;
-    width: 30%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    width: 40%;
 }
 
 .header-lobby-game-title h1{
@@ -28,10 +19,11 @@
 }
 
 .header-lobby-game-title{
-    width: 35%;
+    width: 60%;
+    padding: 10px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     flex-direction: column;
     color: rgb(221, 220, 212);
     text-align: center;
@@ -40,27 +32,15 @@
 
 @media only screen and (max-width: 663px) {
     .header-lobby-image{
-        width: 180px;
-        height: 100px;
+        width: 240px;
+        height: 120px;
         margin: 0 auto;
-    }
-    
-    .lobby-text{
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: baseline;
-        margin-top: 10px;
-    }
-
-    .lobby-text p{
-        margin-left: 20px;
-        margin-right: 20px;
     }
     
     .header-lobby-game-title{
         margin-top: 25px;
         width: 100%;
+        align-items: center;
     }
 
     .header-lobby{
