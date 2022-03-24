@@ -1,16 +1,11 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item navbar-logo">
-      <img src="../../../assets/images/playfu.png">
-    </a>
-    <a (click)="toggleNavbar()" role="button" class="navbar-burger burger" #navBurger aria-label="menu" aria-expanded="false" data-target="navbar-burger-menu" [ngClass]="isNavVisible ? 'is-active' : ''">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-end mr-6">
+  <div class="nav-items-wrapper">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo">
+        <img src="../../../assets/images/playfu.png">
+      </a>
+    </div>
+    <div class="nav-items">
       <div class="navbar-item">
         <input class="input is-primary is-small" type="text" placeholder="Search..." #searchInput>
       </div>
@@ -32,7 +27,15 @@
         </div>
       </div>
     </div>
+    <div class="navbar-brand nav-burger">
+      <a (click)="toggleNavbar()" role="button" class="navbar-burger burger" #navBurger aria-label="menu" aria-expanded="false" data-target="navbar-burger-menu" [ngClass]="isNavVisible ? 'is-active' : ''">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
   </div>
+
   <div id="navbar-burger-menu" class="ml-3" #navMenu *ngIf="isNavVisible">
     <p class="menu-label has-text-centered mt-5">Navigation</p>
     <ul class="menu-list">
