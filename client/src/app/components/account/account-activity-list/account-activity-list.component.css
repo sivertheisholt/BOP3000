@@ -1,0 +1,28 @@
+.profile-activity-list{
+  background: linear-gradient(180deg, rgba(70, 70, 70, 0.6) 0%, rgba(21, 20, 24, 0.95) 100%);
+  width: 100%;
+  height: 380px;
+  overflow-y: auto;
+  overflow-x: auto; 
+}
+
+.profile-activity-list-header{
+  background-color: rgb(94, 36, 36);
+  padding: 10px;
+  height: 60px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: white;
+}
+
+.profile-activity-list-item{
+  background-color: rgb(226, 226, 226);
+  padding: 10px;
+  height: 40px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}

@@ -24,6 +24,18 @@
   margin: 0 auto;
 }
 
+.three-quarter-width{
+  width: 75%;
+}
+
+.two-quarter-width{
+  width: 50%;
+}
+
+.one-quarter-width{
+  width: 25%;
+}
+
 
 @media only screen and (max-width: 1023px) {
   .title{

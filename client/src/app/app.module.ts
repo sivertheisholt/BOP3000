@@ -45,6 +45,10 @@ import { SpinnerComponent } from './core/spinner/spinner.component';
 import { ArchivedLobbyComponent } from './components/archived-lobby/archived-lobby.component';
 import { ArchivedLobbyPartyComponent } from './components/archived-lobby/archived-lobby-party/archived-lobby-party.component';
 import { ArchivedLobbyInfoComponent } from './components/archived-lobby/archived-lobby-info/archived-lobby-info.component';
+import { AccountInfoComponent } from './components/account/account-info/account-info.component';
+import { AccountCardComponent } from './components/account/account-card/account-card.component';
+import { AccountActivityListComponent } from './components/account/account-activity-list/account-activity-list.component';
+import { AccountLobbyHistoryComponent } from './components/account/account-lobby-history/account-lobby-history.component';
 
 
 @NgModule({
@@ -86,7 +90,11 @@ import { ArchivedLobbyInfoComponent } from './components/archived-lobby/archived
     SpinnerComponent,
     ArchivedLobbyComponent,
     ArchivedLobbyPartyComponent,
-    ArchivedLobbyInfoComponent
+    ArchivedLobbyInfoComponent,
+    AccountInfoComponent,
+    AccountCardComponent,
+    AccountActivityListComponent,
+    AccountLobbyHistoryComponent
   ],
   imports: [
     BrowserModule,

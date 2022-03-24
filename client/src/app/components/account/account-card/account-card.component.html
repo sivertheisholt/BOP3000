@@ -1,0 +1,40 @@
+<div class="has-text-centered is-flex is-justify-content-center">
+    <div class="image is-128x128">
+        <img class="is-rounded" src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs2/114486158/original/ef1ebd076e28c081a69c83cee374fb56f29d27e5/make-you-a-custom-gaming-profile-picture.png">
+    </div>
+</div>
+<div class="file mt-5 is-centered" *ngIf="user?.id == currentUser?.id">
+    <label class="file-label">
+        <input class="file-input" type="file" name="resume">
+        <span class="file-cta">
+            <span class="file-icon">
+                <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+            </span>
+            <span class="file-label">
+                Upload
+            </span>
+        </span>
+    </label>
+</div>
+<div class="has-text-centered mt-5" *ngIf="user?.id != currentUser?.id">
+    <button class="button is-dark" *ngIf="!isFollowing" (click)="onFollowUser()">Follow</button>
+    <button class="button is-dark" *ngIf="isFollowing" (click)="onUnFollowUser()">Unfollow</button>
+</div>
+<div class="image-content mt-5 text-is-light">
+    <div class="following mb-3">
+        <p>FOLLOWING</p>
+        <p> {{ user?.memberProfile?.memberData?.following?.length }} </p>
+    </div>
+    <div class="followers mb-3">
+        <p>FOLLOWERS</p>
+        <p> {{ user?.memberProfile?.memberData?.followers?.length }} </p>
+    </div>
+    <div class="thumbs-up mb-3">
+        <p><fa-icon class="fa-lg" [icon]="faThumbsUp"></fa-icon></p>
+        <p> {{ user?.memberProfile?.memberData?.upvotes }} </p>
+    </div>
+    <div class="thumbs-down">
+        <p><fa-icon class="fa-lg" [icon]="faThumbsDown"></fa-icon></p>
+        <p> {{ user?.memberProfile?.memberData?.downvotes }} </p>
+    </div>
+</div>
