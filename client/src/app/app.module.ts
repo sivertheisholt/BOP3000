@@ -42,6 +42,14 @@ import { AccordionDirective } from './_directives/accordion.directive';
 import { ContactFormComponent } from './components/help/contact-form/contact-form.component';
 import { HostPanelComponent } from './components/lobby/host-panel/host-panel.component';
 import { SpinnerComponent } from './core/spinner/spinner.component';
+import { ArchivedLobbyComponent } from './components/archived-lobby/archived-lobby.component';
+import { ArchivedLobbyPartyComponent } from './components/archived-lobby/archived-lobby-party/archived-lobby-party.component';
+import { ArchivedLobbyInfoComponent } from './components/archived-lobby/archived-lobby-info/archived-lobby-info.component';
+import { AccountInfoComponent } from './components/account/account-info/account-info.component';
+import { AccountCardComponent } from './components/account/account-card/account-card.component';
+import { AccountActivityListComponent } from './components/account/account-activity-list/account-activity-list.component';
+import { AccountLobbyHistoryComponent } from './components/account/account-lobby-history/account-lobby-history.component';
+import { UserPanelComponent } from './components/lobby/user-panel/user-panel.component';
 
 
 @NgModule({
@@ -80,7 +88,15 @@ import { SpinnerComponent } from './core/spinner/spinner.component';
     AccordionDirective,
     ContactFormComponent,
     HostPanelComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ArchivedLobbyComponent,
+    ArchivedLobbyPartyComponent,
+    ArchivedLobbyInfoComponent,
+    AccountInfoComponent,
+    AccountCardComponent,
+    AccountActivityListComponent,
+    AccountLobbyHistoryComponent,
+    UserPanelComponent
   ],
   imports: [
     BrowserModule,

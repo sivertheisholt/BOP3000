@@ -7,14 +7,14 @@ import { GamesService } from 'src/app/_services/games.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
-  selector: 'app-lobby',
-  templateUrl: './lobby.component.html',
-  styleUrls: ['./lobby.component.css']
+  selector: 'app-archived-lobby',
+  templateUrl: './archived-lobby.component.html',
+  styleUrls: ['./archived-lobby.component.css']
 })
-export class LobbyComponent implements OnInit {
+export class ArchivedLobbyComponent implements OnInit {
   lobby: Lobby;
   game!: Game;
-  currentUser? : Member;
+  hostUser? : Member;
 
   constructor(private route: ActivatedRoute, private gamesService: GamesService, private userService: UserService) { 
     this.lobby = this.route.snapshot.data['lobby'];
@@ -23,15 +23,10 @@ export class LobbyComponent implements OnInit {
         this.game = response;
       }
     );
-
-    this.userService.getUserData().subscribe(
-      (response) => {
-        this.currentUser = response;
-      }
-    );
   }
 
   ngOnInit(): void {
     
   }
+
 }

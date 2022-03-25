@@ -15,6 +15,7 @@ export class WaitingRoomComponent implements OnInit {
   faMinus = faMinus; faPlus = faPlus;
   usersInQueue : Member[] = [];
   @Input('lobby') lobby! : Lobby;
+  @Input('currentUser') currentUser?: Member;
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) { 
     this.lobbyHubService.getLobbyQueueMembersObserver().subscribe(

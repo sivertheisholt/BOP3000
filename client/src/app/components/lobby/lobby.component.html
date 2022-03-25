@@ -3,18 +3,18 @@
         <div class="content">
             <div class="column is-full">
                 <div class="top-content">
-                    <app-lobby-info [lobby]="lobby" [game]="game" [hostUser]="hostUser"></app-lobby-info>
+                    <app-lobby-info [lobby]="lobby" [game]="game"></app-lobby-info>
                 </div>
             </div>
             <div class="columns">
                 <div class="column is-half">
                     <div class="left-section">
-                        <app-waiting-room [lobby]="lobby"></app-waiting-room>
+                        <app-waiting-room [lobby]="lobby" [currentUser]="currentUser"></app-waiting-room>
                     </div>
                 </div>
                 <div class="column is-half">
                     <div class="right-content">
-                        <app-joined-users [lobby]="lobby"></app-joined-users>
+                        <app-joined-users [lobby]="lobby" [currentUser]="currentUser"></app-joined-users>
                     </div>
                 </div>
             </div>
@@ -24,9 +24,10 @@
                         <app-chat [lobby]="lobby"></app-chat>
                     </div>
                 </div>
-                <div class="column is-half" *ngIf="hostUser?.id == lobby.adminUid">
+                <div class="column is-half">
                     <div class="bottom-right-content">
-                        <app-host-panel></app-host-panel>
+                        <app-host-panel *ngIf="currentUser?.id == lobby.adminUid"></app-host-panel>
+                        <app-user-panel [currentUser]="currentUser" [lobby]="lobby" *ngIf="currentUser?.id != lobby.adminUid"></app-user-panel>
                     </div>
                 </div>
             </div>

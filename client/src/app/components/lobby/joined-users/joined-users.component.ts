@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input, OnInit } from '@angular/core';
+import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { Member } from 'src/app/_models/member.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
@@ -11,11 +11,11 @@ import { UserService } from 'src/app/_services/user.service';
   styleUrls: ['./joined-users.component.css']
 })
 export class JoinedUsersComponent implements OnInit{
-  faPlus = faPlus;
+  faCrown = faCrown;
   usersInParty : Member[] = [];
-  usersInPartyTotal: number = 0;
+  count: number = 0;
   @Input('lobby') lobby! : Lobby;
-  @Output() totalUsersInPartyEvent = new EventEmitter<number>();
+  @Input('currentUser') currentUser?: Member;
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) {
     this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(
@@ -24,7 +24,6 @@ export class JoinedUsersComponent implements OnInit{
         this.userService.getSpecificUser(+member).subscribe(
           (response) => {
             this.usersInParty.push(response);
-            this.totalUsersInPartyEvent.emit(this.usersInParty.length);
           }
         )
       },
@@ -39,6 +38,13 @@ export class JoinedUsersComponent implements OnInit{
             this.usersInParty.splice(index, 1);
           }
         });
+      }
+    )
+
+    this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(
+      member => {
+        if(member.length == 0) return;
+        this.count++;
       }
     )
   }

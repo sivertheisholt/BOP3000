@@ -1,4 +1,4 @@
-.waiting-room-list{
+.joined-users-list{
     width: 100%;
     height: 480px;
     overflow-y: auto;
@@ -6,27 +6,13 @@
     background-color: rgba(37, 37, 37, 0.7);
 }
 
-.waiting-room-header{
+.joined-users-header{
   background-color: rgb(92, 209, 255);
   font-size: 10px;
   height: 40px;
   justify-content: center;
   display: flex;
   align-items: center;
-  font-size: 18px;
-}
-
-
-.half-width{
-  width: 50%;
-}
-
-.quarter-width{
-  width: 25%;
-}
-
-.table-header-text{
-    color: rgb(238, 238, 235);
 }
 
 ::-webkit-scrollbar {
@@ -43,4 +29,8 @@
   
   ::-webkit-scrollbar-thumb:hover {
   background: rgb(92, 84, 84);
+}
+
+.half-width{
+  width: 50%;
 }

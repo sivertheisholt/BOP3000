@@ -63,6 +63,19 @@ nav{
     border-radius: 50%;
 }
 
+.nav-items-wrapper{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.nav-items{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 50px;
+}
+
 .dropdown-menu {
     left: -120px;
 }
@@ -93,6 +106,18 @@ li a:hover{
 
 @media only screen and (min-width: 1023px) {
     #navbar-burger-menu{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1023px) {
+    .nav-items{
+        margin-right: 0;
+    }
+}
+
+@media only screen and (max-width: 405px) {
+    .navbar-logo{
         display: none;
     }
 }

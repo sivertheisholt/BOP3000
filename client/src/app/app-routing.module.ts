@@ -21,6 +21,7 @@ import { CountryResolver } from './_resolvers/country-resolver.service';
 import { UserResolver } from './_resolvers/user-resolver.service';
 import { LobbyResolver } from './_resolvers/lobby-resolver.service';
 import { HelpComponent } from './components/help/help.component';
+import { ArchivedLobbyComponent } from './components/archived-lobby/archived-lobby.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent, canActivate: [AuthGuard] },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard] },
   { path: 'account/:id', component: AccountComponent, canActivate: [UnAuthGuard] },
   { path: 'lobby/:id', component: LobbyComponent, canActivate:[UnAuthGuard], resolve: {lobby: LobbyResolver} },
+  { path: 'archived-lobby/:id', component: ArchivedLobbyComponent, canActivate:[UnAuthGuard], resolve: {lobby: LobbyResolver} },
   { path: 'find-lobby', component: FindLobbyComponent, canActivate: [UnAuthGuard], resolve: {games: GamesResolver}},
   { path: 'game-lobby/:id', component: GameLobbyComponent, canActivate: [UnAuthGuard], resolve: {posts: LobbiesResolver}},
   { path: 'settings', component: SettingsComponent, canActivate: [UnAuthGuard], resolve: {countries: CountryResolver, user: UserResolver} },

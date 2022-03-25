@@ -12,16 +12,10 @@ import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 export class LobbyInfoComponent implements OnInit {
   @Input('lobby') lobby? : Lobby;
   @Input('game') game? : Game;
-  @Input('hostUser') hostUser?: Member;
-  count: number = 0;
+  
 
-  constructor(private lobbyHubService: LobbyHubService) {
-    this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(
-      member => {
-        if(member.length == 0) return;
-        this.count++;
-      }
-    )
+  constructor() {
+
   }
 
   ngOnInit(): void {

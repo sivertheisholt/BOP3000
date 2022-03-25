@@ -1,0 +1,42 @@
+.profile-image{
+    border-radius: 20px;
+    height: 360px;
+    width: 280px;
+  }
+  
+
+  
+  .following{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(182, 170, 170);
+  }
+  
+  .followers{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(182, 170, 170);
+  }
+  
+  .thumbs-down{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(182, 170, 170);
+  }
+  
+  .thumbs-up{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(182, 170, 170);
+  }
+  
+  .profile-left{
+    background-color: rgba(22, 6, 58, 0.1);
+    margin: 4rem;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  }
