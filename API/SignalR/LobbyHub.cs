@@ -91,6 +91,26 @@ namespace API.SignalR
 
                 await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("JoinedLobbyQueue", uid);
         }
+        public async Task LeaveQueue(int lobbyId)
+        {
+            var uid = Context.User.GetUserId();
+
+            if (!await _lobbyTracker.CheckIfMemberInQueue(lobbyId, uid)) return;
+
+            await _lobbyTracker.MemberLeftQueueLobby(lobbyId, uid);
+
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftQueue", uid);
+        }
+        public async Task LeaveLobby(int lobbyId)
+        {
+            var uid = Context.User.GetUserId();
+
+            if (!await _lobbyTracker.CheckIfMemberInLobby(lobbyId, uid)) return;
+
+            await _lobbyTracker.MemberLeftLobby(lobbyId, uid);
+
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftLobby", uid);
+        }
 
         public async Task GetQueueMembers(int lobbyId)
         {
