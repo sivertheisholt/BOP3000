@@ -25,7 +25,7 @@ export class UserPanelComponent implements OnInit {
 
   leaveLobby(){
     this.leaveLobbyStatus = false;
-    this.lobbyHubService.kickMemberFromParty(this.lobby?.id, this.currentUser?.id!);
+    this.lobbyHubService.leaveParty(this.lobby.id);
     this.router.navigate(['/home']);
   }
 

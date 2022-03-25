@@ -9,7 +9,6 @@ export class GamesResolver implements Resolve<any>{
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this.gamesService.getActiveGames().pipe(
             map(response => {
-                console.log(response);
                 return response;
             })
         )

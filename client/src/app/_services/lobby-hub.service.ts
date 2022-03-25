@@ -83,25 +83,34 @@ export class LobbyHubService {
         this.acceptedMembers$.next(ids[1]);
         console.log("User with id: " + ids[1] + " was accepted!");
       });
-      // Everyone in lobby will get this
+
       this.hubConnection.on("MemberDeclined", ids => {
         this.kickedQueueMembers$.next(ids[1]);
         console.log("User with id: " + ids[1] + " was declined!");
       });
-      // Everyone in lobby will get this
+
       this.hubConnection.on("MemberBanned", id => {
         console.log("User with id: " + id + " was banned!");
       });
-      // Everyone in lobby will get this
+
       this.hubConnection.on("MemberKicked", ids => {
         this.kickedPartyMembers$.next(ids[1])
         console.log("User with id: " + ids[1] + " was kicked!");
       });
 
-      // Everyone in lobby will get this
       this.hubConnection.on("JoinedLobbyQueue", id => {
         this.lobbyQueueMembers$.next(id);
         console.log("User with id: " + id + " joined lobby queue!");
+      });
+
+      this.hubConnection.on("LeftLobby", id => {
+        this.kickedPartyMembers$.next(id);
+        console.log("User with id: " + id + " left lobby party!");
+      });
+
+      this.hubConnection.on("LeftQueue", id => {
+        this.kickedQueueMembers$.next(id);
+        console.log("User with id: " + id + " left lobby queue!");
       });
 
       // Only caller will get this
@@ -111,6 +120,7 @@ export class LobbyHubService {
         })
         console.log("Getting users in queue");
       });
+
       // Only caller will get this
       this.hubConnection.on("LobbyMembers", ids => {
         ids.forEach((id: number[]) => {
@@ -147,6 +157,14 @@ export class LobbyHubService {
   async kickMemberFromParty(lobbyId: number, uid: number){
     await this.connectionStatus;
     this.hubConnection.invoke("KickMember", lobbyId, +uid);
+  }
+  async leaveQueue(lobbyId: number){
+    await this.connectionStatus;
+    this.hubConnection.invoke("LeaveQueue", lobbyId);
+  }
+  async leaveParty(lobbyId: number){
+    await this.connectionStatus;
+    this.hubConnection.invoke("LeaveLobby", lobbyId);
   }
 
 
