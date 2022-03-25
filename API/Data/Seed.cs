@@ -193,7 +193,6 @@ namespace API.Data
                             LobbyDescription = "Hello there",
                             GameId=51,
                             GameType="Competetive",
-                            Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
                                 Gender = "Male"
                             }},
@@ -203,7 +202,6 @@ namespace API.Data
                             LobbyDescription = "Sup",
                             GameId=51,
                             GameType="Casual",
-                            Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
                                 Gender = "Male"
                             }},
@@ -213,7 +211,6 @@ namespace API.Data
                             LobbyDescription = "Hmmm",
                             GameId=52,
                             GameType="Competetive",
-                            Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
                                 Gender = "Female"
                             }},
@@ -223,7 +220,6 @@ namespace API.Data
                             LobbyDescription = "I dont know",
                             GameId=53,
                             GameType="Casual",
-                            Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
                                 Gender = "Male"
                             }},
@@ -233,7 +229,6 @@ namespace API.Data
                             LobbyDescription = "Sheeeeesh",
                             GameId=54,
                             GameType="Casual",
-                            Users=new List<int>{1},
                             LobbyRequirement = new Requirement {
                                 Gender = "Female"
                             }}

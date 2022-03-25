@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using API.DTOs.Lobbies;
 using API.Entities.Lobbies;
 using API.Interfaces.IRepositories;
@@ -18,8 +17,10 @@ namespace API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly LobbyHub _lobbyHub;
         private readonly LobbyChatHub _lobbyChatHub;
-        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyHub lobbyHub, LobbyChatHub lobbyChatHub) : base(mapper)
+        private readonly LobbyTracker _lobbyTracker;
+        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyHub lobbyHub, LobbyTracker lobbyTracker, LobbyChatHub lobbyChatHub) : base(mapper)
         {
+            _lobbyTracker = lobbyTracker;
             _lobbyChatHub = lobbyChatHub;
             _lobbyHub = lobbyHub;
             _userRepository = userRepository;
@@ -73,7 +74,11 @@ namespace API.Controllers
 
             if (lobby == null) return NotFound();
 
-            return Mapper.Map<LobbyDto>(lobby);
+            var lobbyDto = Mapper.Map<LobbyDto>(lobby);
+
+            lobbyDto.Users = await _lobbyTracker.GetMembersInLobby(id);
+
+            return lobbyDto;
         }
 
         [HttpGet("")]
@@ -81,20 +86,17 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<LobbyDto>>> GetLobbies()
         {
             var lobbies = await _lobbiesRepository.GetLobbiesAsync();
+
             if (lobbies == null) return NotFound();
 
-            return Ok(Mapper.Map<List<LobbyDto>>(lobbies));
-        }
+            var lobbiesDto = Mapper.Map<List<LobbyDto>>(lobbies);
 
-        [HttpGet("join")]
-        [Authorize(Policy = "RequireMemberRole")]
-        public async Task<ActionResult> JoinLobby(string lobbyId)
-        {
-            var userId = GetUserIdFromClaim();
+            lobbiesDto.ForEach(async lobby =>
+            {
+                lobby.Users = await _lobbyTracker.GetMembersInLobby(lobby.Id);
+            });
 
-            if (!await _lobbiesRepository.AddPlayerToLobby(userId)) return BadRequest("Could not join the room");
-
-            return NoContent();
+            return lobbiesDto;
         }
 
         [Authorize(Policy = "RequireMemberRole")]
@@ -103,7 +105,14 @@ namespace API.Controllers
         {
             var lobbies = await _lobbiesRepository.GetLobbiesWithGameId(id);
 
-            return Ok(Mapper.Map<List<LobbyDto>>(lobbies));
+            var lobbiesDto = Mapper.Map<List<LobbyDto>>(lobbies);
+
+            lobbiesDto.ForEach(async lobby =>
+            {
+                lobby.Users = await _lobbyTracker.GetMembersInLobby(lobby.Id);
+            });
+
+            return lobbiesDto;
         }
     }
 }

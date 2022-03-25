@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220325121817_removedUsers")]
+    partial class removedUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,53 +69,6 @@ namespace API.Data.Migrations
                     b.ToTable("CountryIso");
                 });
 
-            modelBuilder.Entity("API.Entities.Lobbies.FinishedLobby", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AdminUid")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("FinishedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("GameType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LobbyDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LobbyRequirementId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaxUsers")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Users")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("logId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LobbyRequirementId");
-
-                    b.HasIndex("logId");
-
-                    b.ToTable("FinishedLobby");
-                });
-
             modelBuilder.Entity("API.Entities.Lobbies.Lobby", b =>
                 {
                     b.Property<int>("Id")
@@ -124,6 +79,10 @@ namespace API.Data.Migrations
 
                     b.Property<int>("AdminUid")
                         .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GameId")
                         .HasColumnType("int");
@@ -148,6 +107,8 @@ namespace API.Data.Migrations
                     b.HasIndex("LobbyRequirementId");
 
                     b.ToTable("Lobby");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Lobby");
                 });
 
             modelBuilder.Entity("API.Entities.Lobbies.Log", b =>
@@ -995,6 +956,24 @@ namespace API.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("API.Entities.Lobbies.FinishedLobby", b =>
+                {
+                    b.HasBaseType("API.Entities.Lobbies.Lobby");
+
+                    b.Property<DateTime>("FinishedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Users")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("logId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("logId");
+
+                    b.HasDiscriminator().HasValue("FinishedLobby");
+                });
+
             modelBuilder.Entity("API.Entities.Applications.Discord", b =>
                 {
                     b.HasOne("API.Entities.Users.AppUserConnections", "AppUserConnections")
@@ -1015,21 +994,6 @@ namespace API.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("AppUserConnections");
-                });
-
-            modelBuilder.Entity("API.Entities.Lobbies.FinishedLobby", b =>
-                {
-                    b.HasOne("API.Entities.Lobbies.Requirement", "LobbyRequirement")
-                        .WithMany()
-                        .HasForeignKey("LobbyRequirementId");
-
-                    b.HasOne("API.Entities.Lobbies.Log", "log")
-                        .WithMany()
-                        .HasForeignKey("logId");
-
-                    b.Navigation("LobbyRequirement");
-
-                    b.Navigation("log");
                 });
 
             modelBuilder.Entity("API.Entities.Lobbies.Lobby", b =>
@@ -1375,6 +1339,15 @@ namespace API.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("API.Entities.Lobbies.FinishedLobby", b =>
+                {
+                    b.HasOne("API.Entities.Lobbies.Log", "log")
+                        .WithMany()
+                        .HasForeignKey("logId");
+
+                    b.Navigation("log");
                 });
 
             modelBuilder.Entity("API.Entities.Roles.AppRole", b =>

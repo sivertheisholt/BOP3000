@@ -11,7 +11,6 @@ namespace API.Entities.Lobbies
         public string LobbyDescription { get; set; }
         public int GameId { get; set; }
         public string GameType { get; set; }
-        public ICollection<int> Users { get; set; }
         public Requirement LobbyRequirement { get; set; }
     }
 }

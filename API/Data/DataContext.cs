@@ -372,8 +372,8 @@ namespace API.Data
             builder.Entity<AppListInfo>()
                 .HasKey(app => app.AppListInfoId);
 
-            /*********** Lobby **************/
-            builder.Entity<Lobby>()
+            /*********** Finished Lobby **************/
+            builder.Entity<FinishedLobby>()
                 .Property(lobby => lobby.Users)
                 .HasConversion(
                     lobby => JsonSerializer.Serialize(lobby, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
