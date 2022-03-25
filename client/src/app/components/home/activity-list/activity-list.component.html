@@ -18,9 +18,9 @@
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/United-kingdom_flag_icon_round.svg/1200px-United-kingdom_flag_icon_round.svg.png">
                         </figure>
                     </td>
-                    <td>{{ gameroom.creator }}</td>
-                    <td>{{ gameroom.game }}</td>
-                    <td> 2 / {{ gameroom.maxplayers }}</td>
+                    <td>{{ gameroom.adminUid }}</td>
+                    <td>{{ gameroom.gameId }}</td>
+                    <td> {{ gameroom.users.length }} / {{ gameroom.maxUsers }}</td>
                     <td><button class="button is-info">Join</button></td>
                 </tr>
             </tbody>

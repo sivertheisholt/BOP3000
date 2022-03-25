@@ -50,6 +50,7 @@ import { AccountCardComponent } from './components/account/account-card/account-
 import { AccountActivityListComponent } from './components/account/account-activity-list/account-activity-list.component';
 import { AccountLobbyHistoryComponent } from './components/account/account-lobby-history/account-lobby-history.component';
 import { UserPanelComponent } from './components/lobby/user-panel/user-panel.component';
+import { UpgradeAccountComponent } from './components/upgrade-account/upgrade-account.component';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { UserPanelComponent } from './components/lobby/user-panel/user-panel.com
     AccountCardComponent,
     AccountActivityListComponent,
     AccountLobbyHistoryComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    UpgradeAccountComponent
   ],
   imports: [
     BrowserModule,

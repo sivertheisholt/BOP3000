@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RoomItem } from 'src/app/_models/room-item.model';
+import { Lobby } from 'src/app/_models/lobby.model';
 
 @Component({
   selector: 'app-activity-list',
@@ -7,12 +7,12 @@ import { RoomItem } from 'src/app/_models/room-item.model';
   styleUrls: ['./activity-list.component.css']
 })
 export class ActivityListComponent implements OnInit {
-  gameRooms: RoomItem[] = [
-    new RoomItem(1, 'Dr4g0nsl4y3r', 'Counter-Strike Global Offensive', 5),
-    new RoomItem(2, 'pu55ysl4y3r69', 'League of Legends', 5),
-    new RoomItem(3, 'somebody', 'Counter-Strike Global Offensive', 3),
-  ]
+  gameRooms: Lobby[] = [
+    {id: 1, maxUsers: 5, title: 'test', lobbyDescription: '', gameId: 5, steamId: 1, gameType: 'Ranked', users: [1,2], adminUid: 1, lobbyRequirement: {gender: ''}},
+    {id: 2, maxUsers: 5, title: 'test', lobbyDescription: '', gameId: 3, steamId: 1, gameType: 'Ranked', users: [1,2], adminUid: 1, lobbyRequirement: {gender: ''}},
+    {id: 3, maxUsers: 5, title: 'test', lobbyDescription: '', gameId: 2, steamId: 1, gameType: 'Ranked', users: [1,2], adminUid: 1, lobbyRequirement: {gender: ''}},
 
+  ]
   constructor() { }
 
   ngOnInit(): void {

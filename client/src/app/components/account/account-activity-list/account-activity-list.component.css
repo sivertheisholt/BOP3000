@@ -7,9 +7,9 @@
 }
 
 .profile-activity-list-header{
-  background-color: rgb(94, 36, 36);
+  background-color: rgb(141, 53, 53);
   padding: 10px;
-  height: 60px;
+  height: 40px;
   justify-content: center;
   display: flex;
   align-items: center;
@@ -25,4 +25,13 @@
   display: flex;
   align-items: center;
   font-size: 14px;
+}
+
+.date-width{
+  width: 15%;
+  text-align: center;
+}
+
+.text-width{
+  width: 85%;
 }
