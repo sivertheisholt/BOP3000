@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
@@ -32,7 +32,8 @@ export class RoomcardComponent implements OnInit {
     this.inQueue = true;
   }
 
-  cancelJoin(){
+  cancelJoin(id: number){
+    this.lobbyHubService.leaveQueue(id);
     this.inQueue = false;
   }
 }

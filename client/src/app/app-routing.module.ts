@@ -22,6 +22,7 @@ import { UserResolver } from './_resolvers/user-resolver.service';
 import { LobbyResolver } from './_resolvers/lobby-resolver.service';
 import { HelpComponent } from './components/help/help.component';
 import { ArchivedLobbyComponent } from './components/archived-lobby/archived-lobby.component';
+import { LobbyGuard } from './_guards/lobby.guard';
 
 const routes: Routes = [
   { path: '', component: StartComponent, canActivate: [AuthGuard] },
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: 'forgotten-password', component: ForgottenPasswordComponent, canActivate: [AuthGuard] },
   { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard] },
   { path: 'account/:id', component: AccountComponent, canActivate: [UnAuthGuard] },
-  { path: 'lobby/:id', component: LobbyComponent, canActivate:[UnAuthGuard], resolve: {lobby: LobbyResolver} },
+  { path: 'lobby/:id', component: LobbyComponent, canActivate:[UnAuthGuard, LobbyGuard], resolve: {lobby: LobbyResolver} },
   { path: 'archived-lobby/:id', component: ArchivedLobbyComponent, canActivate:[UnAuthGuard], resolve: {lobby: LobbyResolver} },
   { path: 'find-lobby', component: FindLobbyComponent, canActivate: [UnAuthGuard], resolve: {games: GamesResolver}},
   { path: 'game-lobby/:id', component: GameLobbyComponent, canActivate: [UnAuthGuard], resolve: {posts: LobbiesResolver}},

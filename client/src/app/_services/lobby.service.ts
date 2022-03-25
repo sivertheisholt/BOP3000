@@ -39,4 +39,12 @@ export class LobbyService{
             })
         )
     }
+
+    fetchLobbyWithId(id: number){
+        return this.http.get<Lobby>(this.baseUrl + 'lobbies/' + id).pipe(
+            map((response) => {
+                return response;
+            })
+        );
+    }
 }
