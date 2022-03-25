@@ -7,6 +7,7 @@ using API.Enums;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
+using API.SignalR;
 using ISO3166;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -78,12 +79,130 @@ namespace API.Data
                     }
                 }
             };
+            var testUser2 = new AppUser
+            {
+                UserName = "membertest2",
+                Email = "member2@test.com",
+                AppUserProfile = new AppUserProfile
+                {
+                    Birthday = new DateTime(1998, 7, 30),
+                    Gender = "Male",
+                    Description = "Jeg er en veldig flink spiller 2!",
+                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
+                    AppUserData = new AppUserData
+                    {
+                        Upvotes = 10,
+                        Downvotes = 5,
+                        Followers = new[] { 2, 3, 4, 6, 7 },
+                        Following = new[] { 2, 3, 4, 6, 7 },
+                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    }
+                }
+            };
+
+            var testUser3 = new AppUser
+            {
+                UserName = "membertest3",
+                Email = "member3@test.com",
+                AppUserProfile = new AppUserProfile
+                {
+                    Birthday = new DateTime(1998, 7, 30),
+                    Gender = "Male",
+                    Description = "Jeg er en veldig flink spiller 3!",
+                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
+                    AppUserData = new AppUserData
+                    {
+                        Upvotes = 10,
+                        Downvotes = 5,
+                        Followers = new[] { 2, 3, 4, 6, 7 },
+                        Following = new[] { 2, 3, 4, 6, 7 },
+                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    }
+                }
+            };
+
+            var testUser4 = new AppUser
+            {
+                UserName = "membertest4",
+                Email = "member4@test.com",
+                AppUserProfile = new AppUserProfile
+                {
+                    Birthday = new DateTime(1998, 7, 30),
+                    Gender = "Male",
+                    Description = "Jeg er en veldig flink spiller 4!",
+                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
+                    AppUserData = new AppUserData
+                    {
+                        Upvotes = 10,
+                        Downvotes = 5,
+                        Followers = new[] { 2, 3, 4, 6, 7 },
+                        Following = new[] { 2, 3, 4, 6, 7 },
+                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    }
+                }
+            };
+            var testUser5 = new AppUser
+            {
+                UserName = "membertest5",
+                Email = "member5@test.com",
+                AppUserProfile = new AppUserProfile
+                {
+                    Birthday = new DateTime(1998, 7, 30),
+                    Gender = "Male",
+                    Description = "Jeg er en veldig flink spiller 5!",
+                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
+                    AppUserData = new AppUserData
+                    {
+                        Upvotes = 10,
+                        Downvotes = 5,
+                        Followers = new[] { 2, 3, 4, 6, 7 },
+                        Following = new[] { 2, 3, 4, 6, 7 },
+                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    }
+                }
+            };
+
+            var testUser6 = new AppUser
+            {
+                UserName = "membertest6",
+                Email = "member6@test.com",
+                AppUserProfile = new AppUserProfile
+                {
+                    Birthday = new DateTime(1998, 7, 30),
+                    Gender = "Male",
+                    Description = "Jeg er en veldig flink spiller 6!",
+                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
+                    AppUserData = new AppUserData
+                    {
+                        Upvotes = 10,
+                        Downvotes = 5,
+                        Followers = new[] { 2, 3, 4, 6, 7 },
+                        Following = new[] { 2, 3, 4, 6, 7 },
+                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    }
+                }
+            };
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");
             await userManager.AddToRolesAsync(admin, new[] { "Member", "Admin", "Premium" });
 
             await userManager.CreateAsync(testUser, "Playfu123!");
             await userManager.AddToRolesAsync(testUser, new[] { Role.Member.MakeString() });
+
+            await userManager.CreateAsync(testUser2, "Playfu123!");
+            await userManager.AddToRolesAsync(testUser2, new[] { Role.Member.MakeString() });
+
+            await userManager.CreateAsync(testUser3, "Playfu123!");
+            await userManager.AddToRolesAsync(testUser3, new[] { Role.Member.MakeString() });
+
+            await userManager.CreateAsync(testUser4, "Playfu123!");
+            await userManager.AddToRolesAsync(testUser4, new[] { Role.Member.MakeString() });
+
+            await userManager.CreateAsync(testUser5, "Playfu123!");
+            await userManager.AddToRolesAsync(testUser5, new[] { Role.Member.MakeString() });
+
+            await userManager.CreateAsync(testUser6, "Playfu123!");
+            await userManager.AddToRolesAsync(testUser6, new[] { Role.Member.MakeString() });
         }
 
         /// <summary>
@@ -182,7 +301,7 @@ namespace API.Data
             await steamAppRepository.SaveAllAsync();
         }
 
-        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository)
+        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository, LobbyHub lobbyHub)
         {
             if (await lobbiesRepository.GetLobbyAsync(1) != null) return;
 
@@ -197,7 +316,7 @@ namespace API.Data
                                 Gender = "Male"
                             }},
                 new Lobby {MaxUsers = 5,
-                            AdminUid = 1,
+                            AdminUid = 3,
                             Title = "Hey guys lets play",
                             LobbyDescription = "Sup",
                             GameId=51,
@@ -206,7 +325,7 @@ namespace API.Data
                                 Gender = "Male"
                             }},
                 new Lobby {MaxUsers = 5,
-                            AdminUid = 1,
+                            AdminUid = 4,
                             Title = "Whats up noobs",
                             LobbyDescription = "Hmmm",
                             GameId=52,
@@ -215,7 +334,7 @@ namespace API.Data
                                 Gender = "Female"
                             }},
                 new Lobby {MaxUsers = 5,
-                            AdminUid = 1,
+                            AdminUid = 5,
                             Title = "Halla",
                             LobbyDescription = "I dont know",
                             GameId=53,
@@ -224,7 +343,7 @@ namespace API.Data
                                 Gender = "Male"
                             }},
                 new Lobby {MaxUsers = 5,
-                            AdminUid = 1,
+                            AdminUid = 6,
                             Title = "Play smth?",
                             LobbyDescription = "Sheeeeesh",
                             GameId=54,
@@ -233,9 +352,12 @@ namespace API.Data
                                 Gender = "Female"
                             }}
             };
+            var counter = 1;
             foreach (var item in lobbies)
             {
                 lobbiesRepository.AddLobby(item);
+                await lobbyHub.CreateLobbyTest(counter, item.AdminUid);
+                counter++;
             }
             await lobbiesRepository.SaveAllAsync();
         }

@@ -18,6 +18,12 @@ namespace API.SignalR
             _lobbyTracker = lobbyTracker;
         }
 
+        public async Task CreateLobbyTest(int lobbyId, int uid)
+        {
+            if (lobbyId == 1) return;
+            await _lobbyTracker.CreateLobby(lobbyId, uid);
+        }
+
         public async Task CreateLobby(int lobbyId, int uid)
         {
             await _lobbyTracker.CreateLobby(lobbyId, uid);

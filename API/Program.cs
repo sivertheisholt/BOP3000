@@ -4,6 +4,7 @@ using API.Entities.Users;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
+using API.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,12 +35,14 @@ namespace API
                 var countryRepository = services.GetRequiredService<ICountryRepository>();
                 var lobbiesRepository = services.GetRequiredService<ILobbiesRepository>();
 
+                var lobbyHub = services.GetRequiredService<LobbyHub>();
+
                 await contex.Database.MigrateAsync();
                 await Seed.SeedCountryIso(countryRepository);
                 await Seed.SeedUsers(userManager, roleManager, countryRepository);
                 await Seed.SeedSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient, meilisearchService);
                 await Seed.SeedSteamAppsInfo(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient);
-                await Seed.SeedLobbies(lobbiesRepository);
+                await Seed.SeedLobbies(lobbiesRepository, lobbyHub);
             }
             catch (Exception ex)
             {

@@ -41,14 +41,6 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireMemberRole")]
-        [HttpGet("seed_lobbies")]
-        public async Task<ActionResult> SeedLobbies()
-        {
-            await Seed.SeedLobbies(_lobbiesRepository);
-            return NoContent();
-        }
-
-        [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("send_email")]
         public async Task<ActionResult> SendEmail()
         {
