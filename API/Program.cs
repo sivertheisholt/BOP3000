@@ -43,6 +43,7 @@ namespace API
                 await Seed.SeedSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient, meilisearchService);
                 await Seed.SeedSteamAppsInfo(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient);
                 await Seed.SeedLobbies(lobbiesRepository, lobbyHub);
+                await Seed.SeedLobbyHub(lobbiesRepository, lobbyHub);
             }
             catch (Exception ex)
             {

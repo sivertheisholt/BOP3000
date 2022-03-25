@@ -20,7 +20,6 @@ namespace API.SignalR
 
         public async Task CreateLobbyTest(int lobbyId, int uid)
         {
-            if (lobbyId == 1) return;
             await _lobbyTracker.CreateLobby(lobbyId, uid);
         }
 
@@ -136,11 +135,7 @@ namespace API.SignalR
             //Testing lobby 1 admin user 1
             if (Context.User.GetUserId() == 1)
             {
-                if (!await _lobbyTracker.CheckIfLobbyExists(1))
-                {
-                    Console.WriteLine("LOBBY DOES NOT EXIST");
-                    await _lobbyTracker.CreateLobby(1, 1);
-                }
+                await AddToGroup($"lobby_{1}");
             }
 
             await AddToGroup($"user_{uid}");

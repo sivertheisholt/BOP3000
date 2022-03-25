@@ -356,10 +356,19 @@ namespace API.Data
             foreach (var item in lobbies)
             {
                 lobbiesRepository.AddLobby(item);
-                await lobbyHub.CreateLobbyTest(counter, item.AdminUid);
+
                 counter++;
             }
             await lobbiesRepository.SaveAllAsync();
+        }
+        public static async Task SeedLobbyHub(ILobbiesRepository lobbiesRepository, LobbyHub lobbyHub)
+        {
+            await lobbyHub.CreateLobbyTest(1, 1);
+            await lobbyHub.CreateLobbyTest(2, 7);
+            for (int i = 3; i < 6; i++)
+            {
+                await lobbyHub.CreateLobbyTest(i, i);
+            }
         }
     }
 }
