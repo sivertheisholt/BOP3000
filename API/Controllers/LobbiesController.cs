@@ -78,6 +78,10 @@ namespace API.Controllers
 
             lobbyDto.Users = await _lobbyTracker.GetMembersInLobby(id);
 
+            var lobbyAdmin = await _userRepository.GetUserByIdAsync(lobby.AdminUid);
+            lobbyDto.AdminUsername = lobbyAdmin.UserName;
+
+
             return lobbyDto;
         }
 
@@ -91,11 +95,13 @@ namespace API.Controllers
 
             var lobbiesDto = Mapper.Map<List<LobbyDto>>(lobbies);
 
-            lobbiesDto.ForEach(async lobby =>
+            foreach (var lobby in lobbiesDto)
             {
-                lobby.Users = await _lobbyTracker.GetMembersInLobby(lobby.Id);
-            });
+                var lobbyAdmin = await _userRepository.GetUserByIdAsync(lobby.AdminUid);
 
+                lobby.Users = await _lobbyTracker.GetMembersInLobby(lobby.Id);
+                lobby.AdminUsername = lobbyAdmin.UserName;
+            }
             return lobbiesDto;
         }
 
@@ -107,10 +113,13 @@ namespace API.Controllers
 
             var lobbiesDto = Mapper.Map<List<LobbyDto>>(lobbies);
 
-            lobbiesDto.ForEach(async lobby =>
+            foreach (var lobby in lobbiesDto)
             {
+                var lobbyAdmin = await _userRepository.GetUserByIdAsync(lobby.AdminUid);
+
                 lobby.Users = await _lobbyTracker.GetMembersInLobby(lobby.Id);
-            });
+                lobby.AdminUsername = lobbyAdmin.UserName;
+            }
 
             return lobbiesDto;
         }
