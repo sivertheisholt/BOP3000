@@ -28,6 +28,7 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/1", requestOptions)
   "gameType": "Competetive",
   "lobbyDescription": "Hello there",
   "adminUid": 1,
+  "adminUsername": "adminTest",
   "users": [1],
   "lobbyRequirement": null
 }
@@ -51,6 +52,7 @@ This endpoint retrieves a specific lobby.
 | gameType         | string           |
 | lobbyDescription | string, optional |
 | adminUid         | string           |
+| adminUsername    | string           |
 | users            | int[]            |
 | lobbyRequirement | LobbyRequirement |
 
@@ -87,6 +89,7 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies", requestOptions)
     "gameType": "Competetive",
     "lobbyDescription": "Hello there",
     "adminUid": 1,
+    "adminUsername": "adminTest",
     "users": [1],
     "lobbyRequirement": null
   }
@@ -111,6 +114,7 @@ This endpoint retrieves all lobbies.
 | gameType         | string           |
 | lobbyDescription | string, optional |
 | adminUid         | string           |
+| adminUsername    | string           |
 | users            | int[]            |
 | lobbyRequirement | LobbyRequirement |
 
@@ -150,6 +154,7 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/game/51", requestOptions)
     "gameType": "Competetive",
     "lobbyDescription": "Hello there",
     "adminUid": 1,
+    "adminUsername": "AdminTest",
     "users": [1],
     "lobbyRequirement": {
       "gender": "Male"
@@ -175,7 +180,8 @@ This endpoint retrieves all lobbies with a specific game ID.
 | steamId          | int              |
 | gameType         | string           |
 | lobbyDescription | string, optional |
-| adminUid         | string           |
+| adminUid         | int              |
+| adminUsername    | string           |
 | users            | int[]            |
 | lobbyRequirement | LobbyRequirement |
 
