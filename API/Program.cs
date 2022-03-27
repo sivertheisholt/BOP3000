@@ -34,6 +34,7 @@ namespace API
 
                 var countryRepository = services.GetRequiredService<ICountryRepository>();
                 var lobbiesRepository = services.GetRequiredService<ILobbiesRepository>();
+                var finishedLobbiesRepository = services.GetRequiredService<IFinishedLobbyRepository>();
 
                 var lobbyHub = services.GetRequiredService<LobbyHub>();
 
@@ -42,7 +43,7 @@ namespace API
                 await Seed.SeedUsers(userManager, roleManager, countryRepository);
                 await Seed.SeedSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient, meilisearchService);
                 await Seed.SeedSteamAppsInfo(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient);
-                await Seed.SeedLobbies(lobbiesRepository, lobbyHub);
+                await Seed.SeedLobbies(lobbiesRepository, finishedLobbiesRepository, lobbyHub);
                 await Seed.SeedLobbyHub(lobbiesRepository, lobbyHub);
             }
             catch (Exception ex)

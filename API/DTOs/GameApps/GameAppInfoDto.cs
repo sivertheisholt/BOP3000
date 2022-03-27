@@ -11,5 +11,6 @@ namespace API.DTOs.GameApps
         public string Name { get; set; }
         public string HeaderImage { get; set; }
         public string Background { get; set; }
+        public int ActiveLobbies { get; set; }
     }
 }

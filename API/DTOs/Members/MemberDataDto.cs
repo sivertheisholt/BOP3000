@@ -12,5 +12,6 @@ namespace API.DTOs.Members
         public ICollection<int> Followers { get; set; }
         public ICollection<int> Following { get; set; }
         public ICollection<int> UserFavoriteGames { get; set; }
+        public ICollection<int> FinishedLobbies { get; set; }
     }
 }

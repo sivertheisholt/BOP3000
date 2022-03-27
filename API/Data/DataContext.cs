@@ -24,6 +24,8 @@ namespace API.Data
 
         }
         public DbSet<Lobby> Lobby { get; set; }
+
+        public DbSet<FinishedLobby> FinishedLobby { get; set; }
         public DbSet<AppInfo> AppInfo { get; set; }
         public DbSet<AppList> AppList { get; set; }
         public DbSet<CountryIso> CountryIso { get; set; }
@@ -82,7 +84,7 @@ namespace API.Data
             builder.Entity<Steam>()
                 .HasKey(steam => steam.AppUserConnectionsId);
 
-            builder.Entity<AppUserProfile>()
+            builder.Entity<AppUserData>()
                 .Property(profile => profile.FinishedLobbies)
                 .HasConversion(
                     lobby => JsonSerializer.Serialize(lobby, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),

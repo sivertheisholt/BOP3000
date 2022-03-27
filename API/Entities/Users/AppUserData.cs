@@ -12,6 +12,7 @@ namespace API.Entities.Users
         public ICollection<int> Followers { get; set; }
         public ICollection<int> Following { get; set; }
         public ICollection<int> UserFavoriteGames { get; set; }
+        public ICollection<int> FinishedLobbies { get; set; }
         public AppUserProfile AppUserProfile { get; set; }
         public int AppUserProfileId { get; set; }
     }

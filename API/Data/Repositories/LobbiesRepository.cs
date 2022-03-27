@@ -15,9 +15,9 @@ namespace API.Data.Repositories
             Context.Lobby.Add(lobby);
         }
 
-        public Task<bool> AddPlayerToLobby(int userId)
+        public Task<int> CountLobbiesWithGameId(int id)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(Context.Lobby.Where(o => o.GameId == id).Count());
         }
 
         public Task<List<Lobby>> GetLobbiesAsync()

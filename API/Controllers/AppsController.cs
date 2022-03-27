@@ -14,8 +14,10 @@ namespace API.Controllers
     {
         private readonly IMeilisearchService _meilisearchService;
         private readonly ISteamAppRepository _steamAppRepository;
-        public AppsController(IMapper mapper, IMeilisearchService meilisearchService, ISteamAppRepository steamAppRepository) : base(mapper)
+        private readonly ILobbiesRepository _lobbiesRepository;
+        public AppsController(IMapper mapper, IMeilisearchService meilisearchService, ISteamAppRepository steamAppRepository, ILobbiesRepository lobbiesRepository) : base(mapper)
         {
+            _lobbiesRepository = lobbiesRepository;
             _steamAppRepository = steamAppRepository;
             _meilisearchService = meilisearchService;
         }
@@ -34,7 +36,13 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<GameAppInfoDto>>> GetActiveApps()
         {
             var apps = await _steamAppRepository.GetActiveApps();
-            return Mapper.Map<List<GameAppInfoDto>>(apps);
+            var appsDto = Mapper.Map<List<GameAppInfoDto>>(apps);
+
+            foreach (var app in appsDto)
+            {
+                app.ActiveLobbies = await _lobbiesRepository.CountLobbiesWithGameId(app.Id);
+            }
+            return appsDto;
         }
 
         [Authorize(Policy = "RequireMemberRole")]
@@ -45,7 +53,11 @@ namespace API.Controllers
 
             if (app == null) return NotFound();
 
-            return Ok(Mapper.Map<GameAppInfoDto>(app.Data));
+            var appDto = Mapper.Map<GameAppInfoDto>(app.Data);
+
+            appDto.ActiveLobbies = await _lobbiesRepository.CountLobbiesWithGameId(app.Id);
+
+            return appDto;
         }
     }
 }

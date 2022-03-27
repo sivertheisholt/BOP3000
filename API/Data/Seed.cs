@@ -54,7 +54,8 @@ namespace API.Data
                         Downvotes = 5,
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
-                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 },
+                        FinishedLobbies = new[] { 1, 3 }
                     }
                 }
             };
@@ -75,7 +76,8 @@ namespace API.Data
                         Downvotes = 5,
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
-                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 },
+                        FinishedLobbies = new[] { 2 }
                     }
                 }
             };
@@ -203,6 +205,7 @@ namespace API.Data
 
             await userManager.CreateAsync(testUser6, "Playfu123!");
             await userManager.AddToRolesAsync(testUser6, new[] { Role.Member.MakeString() });
+            Console.WriteLine($"Finished seeding user Data");
         }
 
         /// <summary>
@@ -299,9 +302,10 @@ namespace API.Data
                 steamAppRepository.AddApp(appResult);
             }
             await steamAppRepository.SaveAllAsync();
+            Console.WriteLine($"Finished seeding custom steam apps Data");
         }
 
-        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository, LobbyHub lobbyHub)
+        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository, IFinishedLobbyRepository finishedLobbyRepository, LobbyHub lobbyHub)
         {
             if (await lobbiesRepository.GetLobbyAsync(1) != null) return;
 
@@ -352,14 +356,70 @@ namespace API.Data
                                 Gender = "Female"
                             }}
             };
-            var counter = 1;
+
+            var finishedLobbies = new FinishedLobby[]
+            {
+                new FinishedLobby{
+                    MaxUsers = 5,
+                    AdminUid = 2,
+                    Title = "Play smth?",
+                    LobbyDescription = "Hah",
+                    GameId=54,
+                    GameType="Casual",
+                    LobbyRequirement = new Requirement {
+                        Gender = "Female"
+                    },
+                    Log = new Log{
+
+                    },
+                    FinishedDate = DateTime.Now,
+                    Users = new List<int>(){1, 2, 3}
+                },
+                new FinishedLobby{
+                    MaxUsers = 5,
+                    AdminUid = 1,
+                    Title = "The fuck are you looking at",
+                    LobbyDescription = "Sheeeeesh",
+                    GameId=54,
+                    GameType="Casual",
+                    LobbyRequirement = new Requirement {
+                        Gender = "Male"
+                    },
+                    Log = new Log{
+
+                    },
+                    FinishedDate = DateTime.Now,
+                    Users = new List<int>(){1, 3, 5}
+                },
+                new FinishedLobby{
+                    MaxUsers = 5,
+                    AdminUid = 6,
+                    Title = "Lol noob",
+                    LobbyDescription = "Lmao",
+                    GameId=54,
+                    GameType="Competetive",
+                    LobbyRequirement = new Requirement {
+                        Gender = "Female"
+                    },
+                    Log = new Log{
+
+                    },
+                    FinishedDate = DateTime.Now,
+                    Users = new List<int>(){2, 4, 6}
+                }
+            };
+
             foreach (var item in lobbies)
             {
                 lobbiesRepository.AddLobby(item);
+            }
 
-                counter++;
+            foreach (var item in finishedLobbies)
+            {
+                finishedLobbyRepository.AddLobby(item);
             }
             await lobbiesRepository.SaveAllAsync();
+            Console.WriteLine($"Finished seeding lobbies data");
         }
         public static async Task SeedLobbyHub(ILobbiesRepository lobbiesRepository, LobbyHub lobbyHub)
         {
@@ -369,6 +429,7 @@ namespace API.Data
             {
                 await lobbyHub.CreateLobbyTest(i, i);
             }
+            Console.WriteLine($"Finished seeding lobby hub data");
         }
     }
 }
