@@ -44,7 +44,8 @@ fetch("https://bop3000.azurewebsites.net/api/members", requestOptions)
         "downvotes": 5,
         "followers": [2, 3, 4, 6, 7],
         "following": [2, 3, 4, 6, 7],
-        "userFavoriteGames": [2, 3, 4, 6, 7]
+        "userFavoriteGames": [2, 3, 4, 6, 7],
+        "finishedLobbies": [2, 3, 4, 6, 7]
       }
     }
   }
@@ -59,9 +60,43 @@ This endpoint retrieves all members.
 
 ### Response Class (Status 200)
 
-| Key      | Type   |
-| -------- | ------ |
-| username | string |
+| Key           | Type          |
+| ------------- | ------------- |
+| username      | string        |
+| email         | string        |
+| memberProfile | MemberProfile |
+
+#### MemberProfile
+
+| Key         | Type       |
+| ----------- | ---------- |
+| birthday    | string     |
+| age         | int        |
+| gender      | string     |
+| description | string     |
+| countryIso  | CountryIso |
+| memberData  | MemberData |
+
+#### CountryIso
+
+| Key             | Type   |
+| --------------- | ------ |
+| id              | int    |
+| name            | string |
+| twoLetterCode   | string |
+| ThreeLetterCode | string |
+| numericCode     | string |
+
+#### MemberData
+
+| Key               | Type  |
+| ----------------- | ----- |
+| upvotes           | int   |
+| downvotes         | int   |
+| followers         | int[] |
+| following         | int[] |
+| userFavoriteGames | int[] |
+| finishedLobbies   | int[] |
 
 ## GET A specific member
 
@@ -104,7 +139,8 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
       "downvotes": 5,
       "followers": [2, 3, 4, 6, 7],
       "following": [2, 3, 4, 6, 7],
-      "userFavoriteGames": [2, 3, 4, 6, 7]
+      "userFavoriteGames": [2, 3, 4, 6, 7],
+      "finishedLobbies": [2, 3, 4, 6, 7]
     }
   }
 }
@@ -157,9 +193,10 @@ This endpoint retrieves a specific member.
 | ----------------- | ----- |
 | upvotes           | int   |
 | downvotes         | int   |
-| followers         | array |
-| following         | array |
-| userFavoriteGames | array |
+| followers         | int[] |
+| following         | int[] |
+| userFavoriteGames | int[] |
+| finishedLobbies   | int[] |
 
 ## GET Current member info
 
@@ -201,7 +238,8 @@ fetch("https://bop3000.azurewebsites.net/api/members/current", requestOptions)
       "downvotes": 5,
       "followers": [2, 3, 4, 6, 7],
       "following": [2, 3, 4, 6, 7],
-      "userFavoriteGames": [2, 3, 4, 6, 7]
+      "userFavoriteGames": [2, 3, 4, 6, 7],
+      "finishedLobbies": [2, 3, 4, 6, 7]
     }
   }
 }
@@ -248,9 +286,10 @@ This endpoint retrieves the current member.
 | ----------------- | ----- |
 | upvotes           | int   |
 | downvotes         | int   |
-| followers         | array |
-| following         | array |
-| userFavoriteGames | array |
+| followers         | int[] |
+| following         | int[] |
+| userFavoriteGames | int[] |
+| finishedLobbies   | int[] |
 
 ## GET Current member lobby status
 

@@ -94,7 +94,8 @@ fetch("https://bop3000.azurewebsites.net/api/apps/2", requestOptions)
   "id": 2,
   "name": "Carnival and Girls",
   "headerImage": "https://cdn.akamai.steamstatic.com/steam/apps/1573430/header.jpg?t=1617118165",
-  "background": "https://cdn.akamai.steamstatic.com/steam/apps/1573430/page_bg_generated_v6b.jpg?t=1617118165"
+  "background": "https://cdn.akamai.steamstatic.com/steam/apps/1573430/page_bg_generated_v6b.jpg?t=1617118165",
+  "activeLobbies": 1
 }
 ```
 
@@ -106,12 +107,13 @@ This endpoint retrieves a single app
 
 ### Response Class (Status 200)
 
-| Key         | Type   |
-| ----------- | ------ |
-| id          | int    |
-| name        | string |
-| headerImage | string |
-| background  | string |
+| Key           | Type   |
+| ------------- | ------ |
+| id            | int    |
+| name          | string |
+| headerImage   | string |
+| background    | string |
+| activeLobbies | int    |
 
 ## GET Active apps that has lobbies
 
@@ -139,13 +141,15 @@ fetch("https://localhost:5001/api/apps/active", requestOptions)
     "id": 51,
     "name": "Counter-Strike: Global Offensive",
     "headerImage": "https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg?t=1641233427",
-    "background": "https://cdn.akamai.steamstatic.com/steam/apps/730/page_bg_generated_v6b.jpg?t=1641233427"
+    "background": "https://cdn.akamai.steamstatic.com/steam/apps/730/page_bg_generated_v6b.jpg?t=1641233427",
+    "activeLobbies": 1
   },
   {
     "id": 52,
     "name": "Lost Ark",
     "headerImage": "https://cdn.akamai.steamstatic.com/steam/apps/1599340/header.jpg?t=1644892919",
-    "background": "https://cdn.akamai.steamstatic.com/steam/apps/1599340/page_bg_generated_v6b.jpg?t=1644892919"
+    "background": "https://cdn.akamai.steamstatic.com/steam/apps/1599340/page_bg_generated_v6b.jpg?t=1644892919",
+    "activeLobbies": 1
   }
 ]
 ```
@@ -158,12 +162,13 @@ This endpoint retrieves all apps that has a lobby
 
 ### Response Class (Status 200)
 
-| Key         | Type   |
-| ----------- | ------ |
-| id          | int    |
-| name        | string |
-| headerImage | string |
-| background  | string |
+| Key           | Type   |
+| ------------- | ------ |
+| id            | int    |
+| name          | string |
+| headerImage   | string |
+| background    | string |
+| activeLobbies | int    |
 
 <!--- POST --->
 
