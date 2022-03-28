@@ -25,6 +25,10 @@ a:hover{
     align-items: center;
 }
 
+.input{
+    width: 250px;
+}
+
 @media only screen and (max-width: 1180px) {
     .games-container{
         grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));

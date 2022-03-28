@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'lobby/:id', component: LobbyComponent, canActivate:[UnAuthGuard, LobbyGuard], resolve: {lobby: LobbyResolver} },
   { path: 'archived-lobby/:id', component: ArchivedLobbyComponent, canActivate:[UnAuthGuard], resolve: {lobby: LobbyResolver} },
   { path: 'find-lobby', component: FindLobbyComponent, canActivate: [UnAuthGuard], resolve: {games: GamesResolver}},
-  { path: 'game-lobby/:id', component: GameLobbyComponent, canActivate: [UnAuthGuard], resolve: {posts: LobbiesResolver}},
+  { path: 'game-lobby/:id', component: GameLobbyComponent, canActivate: [UnAuthGuard], resolve: {lobbies: LobbiesResolver}},
   { path: 'settings', component: SettingsComponent, canActivate: [UnAuthGuard], resolve: {countries: CountryResolver, user: UserResolver} },
   { path: 'help', component: HelpComponent, canActivate: [UnAuthGuard], resolve: {user: UserResolver} },
   { path: 'errors', component: TestErrorsComponent },
