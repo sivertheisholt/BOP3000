@@ -47,6 +47,11 @@ namespace API.Data.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<AppUser>> GetUsersMeiliAsync()
+        {
+            return await Context.Users.ToListAsync();
+        }
+
         public void UpdateUsername(AppUser user, string username)
         {
             user.UserName = username;

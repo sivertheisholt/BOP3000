@@ -1,7 +1,10 @@
 using API.DTOs.Members;
+using API.Entities.Users;
 using API.Interfaces.IRepositories;
+using API.Interfaces.IServices;
 using API.SignalR;
 using AutoMapper;
+using Meilisearch;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,8 +15,10 @@ namespace API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly ICountryRepository _countryRepository;
         private readonly LobbyTracker _lobbyTracker;
-        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository, LobbyTracker lobbyTracker) : base(mapper)
+        private readonly IMeilisearchService _meilisearchService;
+        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository, LobbyTracker lobbyTracker, IMeilisearchService meilisearchService) : base(mapper)
         {
+            _meilisearchService = meilisearchService;
             _lobbyTracker = lobbyTracker;
             _countryRepository = countryRepository;
             _userRepository = userRepository;
@@ -151,6 +156,15 @@ namespace API.Controllers
             if (user.AppUserProfile.AppUserData.Following.Contains(memberId)) return Ok(true);
 
             return Ok(false);
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<MemberMeiliDto>>> SearchForMember(string name, int limit = 10)
+        {
+            var index = _meilisearchService.GetIndex("members");
+            var hits = await _meilisearchService.SearchAsync<AppUserMeili>(index, name, new SearchQuery { Limit = limit });
+            return Ok(Mapper.Map<IEnumerable<AppUserMeili>>(hits.Hits));
         }
     }
 }

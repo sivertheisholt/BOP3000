@@ -46,6 +46,8 @@ namespace API.Helpers
             CreateMap<AppData, GameAppInfoDto>();
 
             CreateMap<Message, MessageDto>();
+
+            CreateMap<AppUser, AppUserMeili>();
         }
     }
 }

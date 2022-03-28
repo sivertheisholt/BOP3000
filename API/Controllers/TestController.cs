@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Entities.Users;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
@@ -21,8 +22,10 @@ namespace API.Controllers
         private readonly ILobbiesRepository _lobbiesRepository;
         private readonly IEmailService _emailservice;
         private readonly IMeilisearchService _meilisearchService;
-        public TestController(IMapper mapper, ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, ILobbiesRepository lobbiesRepository, IMeilisearchService meilisearchService) : base(mapper)
+        private readonly IUserRepository _userRepository;
+        public TestController(IMapper mapper, ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, ILobbiesRepository lobbiesRepository, IMeilisearchService meilisearchService, IUserRepository userRepository) : base(mapper)
         {
+            _userRepository = userRepository;
             _meilisearchService = meilisearchService;
             //_emailservice = emailservice;
             _lobbiesRepository = lobbiesRepository;
@@ -47,6 +50,33 @@ namespace API.Controllers
             await Task.Run(() => _emailservice.SendForgottenPasswordMail("test", "playfu3000@gmail.com"));
             return NoContent();
         }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("seed_user_index")]
+        public async Task<ActionResult> SeedUsersMeili()
+        {
+            var createTask = _meilisearchService.CreateIndexAsync("members");
+
+            var users = Mapper.Map<List<AppUserMeili>>(await _userRepository.GetUsersMeiliAsync());
+
+            var cont = createTask.ContinueWith(task =>
+            {
+                var index = _meilisearchService.GetIndex("members");
+
+                var docsTask = _meilisearchService.AddDocumentsAsync(users.ToArray(), index);
+
+                var docs = docsTask.ContinueWith(docsTask =>
+                {
+                    Console.WriteLine("Meilisearch docs successfully uploaded");
+                });
+                docs.Wait();
+            });
+
+            cont.Wait();
+            return Ok();
+        }
+
+
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("seed_index")]
@@ -74,5 +104,7 @@ namespace API.Controllers
             cont.Wait();
             return NoContent();
         }
+
+
     }
 }

@@ -8,6 +8,7 @@ using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using API.SignalR;
+using AutoMapper;
 using ISO3166;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,7 @@ namespace API.Data
         /// <param name="userManager"></param>
         /// <param name="roleManager"></param>
         /// <returns></returns>
-        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ICountryRepository countryRepository)
+        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ICountryRepository countryRepository, IMeilisearchService meilisearchService, IUserRepository userRepository, IMapper mapper)
         {
             if (await userManager.Users.AnyAsync()) return;
 
@@ -205,6 +206,27 @@ namespace API.Data
 
             await userManager.CreateAsync(testUser6, "Playfu123!");
             await userManager.AddToRolesAsync(testUser6, new[] { Role.Member.MakeString() });
+
+            //Seed to search
+            var createTask = meilisearchService.CreateIndexAsync("members");
+
+            var users = mapper.Map<List<AppUserMeili>>(await userRepository.GetUsersMeiliAsync());
+
+            var cont = createTask.ContinueWith(task =>
+            {
+                var index = meilisearchService.GetIndex("members");
+
+                var docsTask = meilisearchService.AddDocumentsAsync(users.ToArray(), index);
+
+                var docs = docsTask.ContinueWith(docsTask =>
+                {
+                    Console.WriteLine("Meilisearch docs successfully uploaded");
+                });
+                docs.Wait();
+            });
+
+            cont.Wait();
+
             Console.WriteLine($"Finished seeding user Data");
         }
 
