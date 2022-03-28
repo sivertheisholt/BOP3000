@@ -2,13 +2,13 @@
     <div class="lobby-history-header">
         History
     </div>
-    <div class="lobby-history-item p-3">
-        <div class="one-quarter-width">21.05.2021</div>
+    <div class="lobby-history-item p-3" *ngFor="let lobby of finishedLobbies">
+        <div class="one-quarter-width"> {{ lobby.title }} </div>
         <div class="one-quarter-width">
             <a>
-                #23321
+                #{{ lobby.id }}
             </a>
         </div>
-        <div class="two-quarter-width">League of Legends</div>
+        <div class="two-quarter-width" >{{ lobby.gameName }}</div>
     </div>
 </div>

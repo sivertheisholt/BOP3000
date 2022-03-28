@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { UserSearch } from 'src/app/_models/user-search.model';
 import { AuthService } from 'src/app/_services/auth.service';
+import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +16,7 @@ export class NavbarComponent implements OnInit {
   faUser = faUser; faSignOutAlt = faSignOutAlt; faUserCircle = faUserCircle; faBell = faBell; faHome = faHome; faCogs = faCogs; faQuestionCircle = faQuestionCircle; faBullseye = faBullseye;
   @ViewChild('navBurger') navBurger!: ElementRef;
   @ViewChild('navMenu') navMenu!: ElementRef;
-  @ViewChild('searchInput') searchInput? : ElementRef;
+  @ViewChild('searchInput', {static: true}) searchInput? : ElementRef;
   searchResults: any;
   isNotiVisible = false;
   isNavVisible = false;
@@ -24,7 +26,7 @@ export class NavbarComponent implements OnInit {
   ];
   totalNotifications = this.notifications.length;
 
-  constructor(private authService: AuthService, private router: Router){
+  constructor(private authService: AuthService, private router: Router, private userService: UserService){
   }
 
   ngOnInit(): void {
@@ -36,13 +38,21 @@ export class NavbarComponent implements OnInit {
 
     fromEvent(this.searchInput?.nativeElement, 'keyup').pipe(
       map((event: any) => {
+        if(event.target.value == ''){
+          this.searchResults = [];
+          return event.target.value;
+        }
         return event.target.value;
       })
       ,filter(res => res.length > 2)
       ,debounceTime(1000)
       ,distinctUntilChanged()
     ).subscribe((input: string) => {
-      //Perform HTTP request here...
+      this.userService.searchUser(input).subscribe((response) => {
+        this.searchResults = response;
+      }, (err) => {
+        console.log(err);
+      })
     })
   }
 
@@ -59,5 +69,9 @@ export class NavbarComponent implements OnInit {
   logOut(){
     this.authService.logout();
     this.router.navigate(['/']);
+  }
+
+  clearSearch(){
+    this.searchResults = [];
   }
 }

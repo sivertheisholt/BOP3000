@@ -3,4 +3,5 @@ export interface Game{
     name: string;
     headerImage: string;
     background: string;
+    activeLobbies: number;
 }

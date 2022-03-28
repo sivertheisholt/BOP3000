@@ -99,6 +99,36 @@ li a:hover{
     margin-top: 60px;
 }
 
+.search-results{
+    z-index: 10;
+    position: absolute;
+    width: 92%;
+    top: 39px;
+}
+
+.result-item{
+    padding: 10px;
+    border-left: 5px solid;
+}
+
+.result-item a{
+    color:rgb(219, 219, 219);
+}
+
+.result-item:nth-child(even){
+    background-color: rgb(37, 37, 37);
+    border-left-color: rgb(0, 19, 187);
+}
+.result-item:nth-child(odd){
+    background-color: rgb(48, 48, 48);
+    border-left-color: rgb(192, 77, 0);
+}
+
+.result-item a:hover{
+    color: rgb(52, 70, 146);
+}
+
+
 #navbar-burger-menu{
     height: 100vh;
     text-align: center;
