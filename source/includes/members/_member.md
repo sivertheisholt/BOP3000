@@ -365,6 +365,51 @@ This endpoint checks if member is followed
 
 True/False
 
+## GET Search for member
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/search?name=admin",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 1,
+    "userName": "adminTest"
+  }
+]
+```
+
+This endpoint searches for members.
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/members/search?name=admin`
+
+### Response Class (Status 200)
+
+| Key      | Type   |
+| -------- | ------ |
+| id       | int    |
+| userName | string |
+
 <!--- POST --->
 
 <!--- PUT --->
