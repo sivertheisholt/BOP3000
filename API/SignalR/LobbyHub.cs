@@ -127,7 +127,7 @@ namespace API.SignalR
             await _lobbyTracker.StartCheck(lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("HostStarted", adminUid);
 
-            await Task.Delay(5000);
+            await Task.Delay(10000);
 
             if (await _lobbyTracker.CheckReadyState(lobbyId))
             {

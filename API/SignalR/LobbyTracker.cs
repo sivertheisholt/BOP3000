@@ -269,12 +269,14 @@ namespace API.SignalR
         }
         public Task AcceptReady(int lobbyId, int uid)
         {
-            lock (LobbyUserCheck) LobbyUserCheck[lobbyId].Add(uid, true);
+            lock (LobbyUserCheck) LobbyUserCheck[lobbyId][uid] = true;
             return Task.CompletedTask;
         }
         public Task DeclineReady(int lobbyId, int uid)
         {
-            lock (LobbyUserCheck) LobbyUserCheck[lobbyId].Add(uid, false);
+            lock (LobbyReadyCheck) LobbyReadyCheck[lobbyId] = false;
+            lock (LobbyUserCheck) LobbyUserCheck[lobbyId][uid] = false;
+
             return Task.CompletedTask;
         }
     }
