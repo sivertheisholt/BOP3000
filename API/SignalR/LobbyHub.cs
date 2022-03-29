@@ -125,6 +125,7 @@ namespace API.SignalR
             if (adminUid != uid) return;
 
             await _lobbyTracker.StartCheck(lobbyId);
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("HostStarted");
 
             await Task.Delay(5000);
 
