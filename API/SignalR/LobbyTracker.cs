@@ -24,6 +24,13 @@ namespace API.SignalR
         // <uid, lobbyId>
         private static readonly Dictionary<int, int> MemberTracker = new Dictionary<int, int>();
 
+
+        // <lobbyId, true/false>
+        private static readonly Dictionary<int, bool> LobbyReadyCheck = new Dictionary<int, bool>();
+
+        // <lobbyId, >
+        private static readonly Dictionary<int, Dictionary<int, bool>> LobbyUserCheck = new Dictionary<int, Dictionary<int, bool>>();
+
         public LobbyTracker()
         {
         }
@@ -46,6 +53,15 @@ namespace API.SignalR
                             lock (BannedMembers)
                             {
                                 BannedMembers.Add(lobbyId, new List<int>());
+                                lock (LobbyReadyCheck)
+                                {
+                                    LobbyReadyCheck.Add(lobbyId, false);
+                                    lock (LobbyUserCheck)
+                                    {
+                                        LobbyUserCheck.Add(lobbyId, new Dictionary<int, bool>());
+                                        LobbyUserCheck[lobbyId].Add(adminUid, false);
+                                    }
+                                }
                             }
                         }
                     }
@@ -90,6 +106,10 @@ namespace API.SignalR
                     lock (LobbiesQueue)
                     {
                         LobbiesQueue[lobbyId].Remove(uid);
+                        lock (LobbyUserCheck)
+                        {
+                            LobbyUserCheck[lobbyId].Add(uid, false);
+                        }
                     }
                 }
             }
@@ -106,6 +126,10 @@ namespace API.SignalR
                 lock (MemberTracker)
                 {
                     MemberTracker.Remove(uid);
+                    lock (LobbyUserCheck)
+                    {
+                        LobbyUserCheck[lobbyId].Remove(uid);
+                    }
                 }
             }
             return Task.FromResult(true);
@@ -213,6 +237,45 @@ namespace API.SignalR
         public Task<bool> CheckIfLobbyExists(int lobbyId)
         {
             return Task.FromResult(Lobbies.ContainsKey(lobbyId));
+        }
+        public Task StartCheck(int lobbyId)
+        {
+            lock (LobbyReadyCheck)
+            {
+                LobbyReadyCheck[lobbyId] = true;
+            }
+            return Task.CompletedTask;
+        }
+        public Task<bool> CheckReadyState(int lobbyId)
+        {
+            return Task.FromResult(LobbyReadyCheck[lobbyId]);
+        }
+
+        public Task FinishLobby(int lobbyId)
+        {
+            Lobbies[lobbyId].ForEach(uid =>
+            {
+                lock (MemberTracker) MemberTracker.Remove(uid);
+                lock (BannedMembers) BannedMembers[lobbyId].Remove(uid);
+            });
+
+            lock (LobbiesQueue) LobbiesQueue.Remove(lobbyId);
+            lock (Lobbies) Lobbies.Remove(lobbyId);
+            lock (LobbiesAdminTracker) LobbiesAdminTracker.Remove(lobbyId);
+            lock (LobbyReadyCheck) LobbyReadyCheck.Remove(lobbyId);
+            lock (LobbyUserCheck) LobbyUserCheck.Remove(lobbyId);
+
+            return Task.CompletedTask;
+        }
+        public Task AcceptReady(int lobbyId, int uid)
+        {
+            lock (LobbyUserCheck) LobbyUserCheck[lobbyId].Add(uid, true);
+            return Task.CompletedTask;
+        }
+        public Task DeclineReady(int lobbyId, int uid)
+        {
+            lock (LobbyUserCheck) LobbyUserCheck[lobbyId].Add(uid, false);
+            return Task.CompletedTask;
         }
     }
 }

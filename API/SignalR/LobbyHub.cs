@@ -117,6 +117,37 @@ namespace API.SignalR
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftLobby", uid);
         }
 
+        public async Task StartCheck(int lobbyId)
+        {
+            var uid = Context.User.GetUserId();
+            var adminUid = await _lobbyTracker.GetLobbyAdmin(lobbyId);
+
+            if (adminUid != uid) return;
+
+            await _lobbyTracker.StartCheck(lobbyId);
+
+            await Task.Delay(5000);
+
+            if (await _lobbyTracker.CheckReadyState(lobbyId))
+            {
+                await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted");
+                await _lobbyTracker.FinishLobby(lobbyId);
+            }
+        }
+
+        public async Task Accept(int lobbyId)
+        {
+            var uid = Context.User.GetUserId();
+            await _lobbyTracker.AcceptReady(lobbyId, uid);
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAccepted");
+        }
+        public async Task Decline(int lobbyId)
+        {
+            var uid = Context.User.GetUserId();
+            await _lobbyTracker.DeclineReady(lobbyId, uid);
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclined");
+        }
+
         public async Task GetQueueMembers(int lobbyId)
         {
             var members = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
