@@ -18,8 +18,10 @@ namespace API.Controllers
         private readonly LobbyHub _lobbyHub;
         private readonly LobbyChatHub _lobbyChatHub;
         private readonly LobbyTracker _lobbyTracker;
-        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyHub lobbyHub, LobbyTracker lobbyTracker, LobbyChatHub lobbyChatHub) : base(mapper)
+        private readonly ISteamAppRepository _steamAppRepository;
+        public LobbiesController(ILobbiesRepository lobbiesRepository, IUserRepository userRepository, IMapper mapper, LobbyHub lobbyHub, LobbyTracker lobbyTracker, LobbyChatHub lobbyChatHub, ISteamAppRepository steamAppRepository) : base(mapper)
         {
+            _steamAppRepository = steamAppRepository;
             _lobbyTracker = lobbyTracker;
             _lobbyChatHub = lobbyChatHub;
             _lobbyHub = lobbyHub;
@@ -44,11 +46,13 @@ namespace API.Controllers
                 Title = newLobby.Title,
                 LobbyDescription = newLobby.LobbyDescription,
                 GameId = newLobby.GameId,
+                GameName = (await _steamAppRepository.GetAppInfoAsync(newLobby.GameId)).Data.Name,
                 GameType = newLobby.GameType,
                 LobbyRequirement = new Requirement
                 {
                     Gender = newLobby.LobbyRequirement.Gender
-                }
+                },
+                StartDate = DateTime.Now
             };
 
             // Add a new Game Room

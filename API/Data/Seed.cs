@@ -327,7 +327,7 @@ namespace API.Data
             Console.WriteLine($"Finished seeding custom steam apps Data");
         }
 
-        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository, IFinishedLobbyRepository finishedLobbyRepository, LobbyHub lobbyHub)
+        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository, IFinishedLobbyRepository finishedLobbyRepository, LobbyHub lobbyHub, ISteamAppRepository steamAppRepository)
         {
             if (await lobbiesRepository.GetLobbyAsync(1) != null) return;
 
@@ -337,46 +337,58 @@ namespace API.Data
                             Title = "Whats up gamers",
                             LobbyDescription = "Hello there",
                             GameId=51,
+                            GameName = (await steamAppRepository.GetAppInfoAsync(51)).Data.Name,
                             GameType="Competetive",
                             LobbyRequirement = new Requirement {
                                 Gender = "Male"
-                            }},
+                            },
+                            StartDate = DateTime.Now
+                            },
+
                 new Lobby {MaxUsers = 5,
                             AdminUid = 3,
                             Title = "Hey guys lets play",
                             LobbyDescription = "Sup",
                             GameId=51,
+                            GameName = (await steamAppRepository.GetAppInfoAsync(51)).Data.Name,
                             GameType="Casual",
                             LobbyRequirement = new Requirement {
                                 Gender = "Male"
-                            }},
+                            },
+                            StartDate = DateTime.Now},
                 new Lobby {MaxUsers = 5,
                             AdminUid = 4,
                             Title = "Whats up noobs",
                             LobbyDescription = "Hmmm",
                             GameId=52,
+                            GameName = (await steamAppRepository.GetAppInfoAsync(52)).Data.Name,
                             GameType="Competetive",
                             LobbyRequirement = new Requirement {
                                 Gender = "Female"
-                            }},
+                            },
+                            StartDate = DateTime.Now},
                 new Lobby {MaxUsers = 5,
                             AdminUid = 5,
                             Title = "Halla",
                             LobbyDescription = "I dont know",
                             GameId=53,
+                            GameName = (await steamAppRepository.GetAppInfoAsync(53)).Data.Name,
                             GameType="Casual",
                             LobbyRequirement = new Requirement {
                                 Gender = "Male"
-                            }},
+                            },
+                            StartDate = DateTime.Now},
                 new Lobby {MaxUsers = 5,
                             AdminUid = 6,
                             Title = "Play smth?",
                             LobbyDescription = "Sheeeeesh",
                             GameId=54,
+                            GameName = (await steamAppRepository.GetAppInfoAsync(54)).Data.Name,
                             GameType="Casual",
                             LobbyRequirement = new Requirement {
                                 Gender = "Female"
-                            }}
+                            },
+                            StartDate = DateTime.Now}
             };
 
             var finishedLobbies = new FinishedLobby[]
@@ -387,6 +399,7 @@ namespace API.Data
                     Title = "Play smth?",
                     LobbyDescription = "Hah",
                     GameId=54,
+                    GameName = (await steamAppRepository.GetAppInfoAsync(54)).Data.Name,
                     GameType="Casual",
                     LobbyRequirement = new Requirement {
                         Gender = "Female"
@@ -395,6 +408,7 @@ namespace API.Data
 
                     },
                     FinishedDate = DateTime.Now,
+                    StartDate = DateTime.Now,
                     Users = new List<int>(){1, 2, 3}
                 },
                 new FinishedLobby{
@@ -403,6 +417,7 @@ namespace API.Data
                     Title = "The fuck are you looking at",
                     LobbyDescription = "Sheeeeesh",
                     GameId=54,
+                    GameName = (await steamAppRepository.GetAppInfoAsync(54)).Data.Name,
                     GameType="Casual",
                     LobbyRequirement = new Requirement {
                         Gender = "Male"
@@ -411,6 +426,7 @@ namespace API.Data
 
                     },
                     FinishedDate = DateTime.Now,
+                    StartDate = DateTime.Now,
                     Users = new List<int>(){1, 3, 5}
                 },
                 new FinishedLobby{
@@ -418,7 +434,8 @@ namespace API.Data
                     AdminUid = 6,
                     Title = "Lol noob",
                     LobbyDescription = "Lmao",
-                    GameId=54,
+                    GameId=53,
+                    GameName = (await steamAppRepository.GetAppInfoAsync(53)).Data.Name,
                     GameType="Competetive",
                     LobbyRequirement = new Requirement {
                         Gender = "Female"
@@ -427,6 +444,7 @@ namespace API.Data
 
                     },
                     FinishedDate = DateTime.Now,
+                    StartDate = DateTime.Now,
                     Users = new List<int>(){2, 4, 6}
                 }
             };
