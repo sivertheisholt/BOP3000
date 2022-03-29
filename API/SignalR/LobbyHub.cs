@@ -140,13 +140,13 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
             await _lobbyTracker.AcceptReady(lobbyId, uid);
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAccepted");
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAccepted", uid);
         }
         public async Task Decline(int lobbyId)
         {
             var uid = Context.User.GetUserId();
             await _lobbyTracker.DeclineReady(lobbyId, uid);
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclined");
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclined", uid);
         }
 
         public async Task GetQueueMembers(int lobbyId)
