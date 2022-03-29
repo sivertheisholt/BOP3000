@@ -1,3 +1,36 @@
+<div class="dropdown" [ngClass]="dropdownStatus ? 'is-active' : ''">
+    <div class="dropdown-trigger">
+        <a class="button" aria-haspopup="true" aria-controls="dropdown-filter-lobby" (click)="toggleDropdown()">
+            <span>Filter</span>
+        </a>
+    </div>
+    <div class="dropdown-menu " id="dropdown-filter-lobby" role="menu">
+        <div class="dropdown-content">
+            <a class="dropdown-item" (click)="filterLobby(1)">
+            Competetive
+            </a>
+            <a class="dropdown-item" (click)="filterLobby(2)">
+            Ranked
+            </a>
+            <a class="dropdown-item" (click)="filterLobby(3)">
+            Fun
+            </a>
+            <a class="dropdown-item" (click)="filterLobby(4)">
+            Tryhard
+            </a>
+            <a class="dropdown-item" (click)="filterLobby(5)">
+            Chill
+            </a>
+            <a class="dropdown-item" (click)="filterLobby(6)">
+                Casual
+            </a>
+            <hr class="dropdown-divider">
+            <a class="dropdown-item" (click)="filterLobby(7)">
+              Reset
+            </a>
+        </div>
+    </div>
+</div>
 <div class="game-lobbies-container p-6">
     <div class="card" *ngFor="let lobby of lobbies">
         <div class="has-text-centered is-flex is-justify-content-center p-3">
@@ -24,7 +57,7 @@
             </div>
             <div class="lobby-card-creator mt-5">
                 <p>Created By:</p>
-                {{ lobby.adminUid }}
+                {{ lobby.adminUsername }}
             </div>
         </div>
         <div class="lobby-btn-wrapper">

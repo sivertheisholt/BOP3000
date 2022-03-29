@@ -8,6 +8,11 @@
     <div class="nav-items">
       <div class="navbar-item">
         <input class="input is-primary is-small" type="text" placeholder="Search..." #searchInput>
+        <div class="search-results has-text-centered">
+          <div class="result-item" *ngFor="let user of searchResults">
+            <a (click)="clearSearch()" [routerLink]="'account/' + user.id "> {{ user.userName }} </a>
+          </div>
+        </div>
       </div>
       <div class="navbar-item">
         <div class="dropdown" [ngClass]="isNotiVisible ? 'is-active' : ''">
@@ -45,10 +50,6 @@
     <ul class="menu-list">
         <li><a routerLink="create-lobby"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>Create Lobby</a></li>
         <li><a routerLink="find-lobby"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find Lobby</a></li>
-        <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
-        <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
-        <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
-        <li><a><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find</a></li>
     </ul>
     <p class="menu-label has-text-centered">Account</p>
     <ul class="menu-list">

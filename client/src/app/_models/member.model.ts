@@ -17,9 +17,10 @@ export interface Member{
         memberData?: {
             upvotes?: number;
             downvotes?: number;
-            followers?: [];
-            following?: [];
-            userFavoriteGames?: [];
+            followers?: number[];
+            following?: number[];
+            userFavoriteGames?: number[];
+            finishedLobbies?: number[];
         }
     }
 }

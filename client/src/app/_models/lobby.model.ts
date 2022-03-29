@@ -8,6 +8,7 @@ export interface Lobby{
     gameType: string;
     users: number[];
     adminUid: number;
+    adminUsername?: string;
     lobbyRequirement: {
         gender?: string;
     };

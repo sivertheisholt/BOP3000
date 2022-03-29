@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { Member } from "../_models/member.model";
 import { environment } from '../../environments/environment';
+import { UserSearch } from "../_models/user-search.model";
 
 @Injectable({providedIn: 'root'})
 export class UserService{
@@ -64,6 +65,10 @@ export class UserService{
                 return response;
             })
         );
+    }
+
+    searchUser(input: string){
+        return this.http.get<UserSearch>(this.baseUrl + 'members/search?name=' + input);
     }
     
 }
