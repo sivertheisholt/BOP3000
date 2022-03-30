@@ -24,8 +24,6 @@ namespace API.Data
 
         }
         public DbSet<Lobby> Lobby { get; set; }
-
-        public DbSet<FinishedLobby> FinishedLobby { get; set; }
         public DbSet<AppInfo> AppInfo { get; set; }
         public DbSet<AppList> AppList { get; set; }
         public DbSet<CountryIso> CountryIso { get; set; }
@@ -375,7 +373,7 @@ namespace API.Data
                 .HasKey(app => app.AppListInfoId);
 
             /*********** Finished Lobby **************/
-            builder.Entity<FinishedLobby>()
+            builder.Entity<Lobby>()
                 .Property(lobby => lobby.Users)
                 .HasConversion(
                     lobby => JsonSerializer.Serialize(lobby, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),

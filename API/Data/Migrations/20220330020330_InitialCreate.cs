@@ -93,6 +93,18 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Log",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Log", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Requirement",
                 columns: table => new
                 {
@@ -276,7 +288,6 @@ namespace API.Data.Migrations
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FinishedLobbies = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CountryIsoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -306,13 +317,23 @@ namespace API.Data.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LobbyDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GameId = table.Column<int>(type: "int", nullable: false),
+                    GameName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GameType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FinishedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LogId = table.Column<int>(type: "int", nullable: true),
+                    LobbyRequirementId = table.Column<int>(type: "int", nullable: true),
                     Users = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LobbyRequirementId = table.Column<int>(type: "int", nullable: true)
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Finished = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lobby", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lobby_Log_LogId",
+                        column: x => x.LogId,
+                        principalTable: "Log",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Lobby_Requirement_LobbyRequirementId",
                         column: x => x.LobbyRequirementId,
@@ -671,7 +692,8 @@ namespace API.Data.Migrations
                     Downvotes = table.Column<int>(type: "int", nullable: false),
                     Followers = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Following = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserFavoriteGames = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UserFavoriteGames = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FinishedLobbies = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -880,6 +902,11 @@ namespace API.Data.Migrations
                 column: "LobbyRequirementId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Lobby_LogId",
+                table: "Lobby",
+                column: "LogId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Movy_Id",
                 table: "Movy",
                 column: "Id");
@@ -991,6 +1018,9 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Achievements");
+
+            migrationBuilder.DropTable(
+                name: "Log");
 
             migrationBuilder.DropTable(
                 name: "Requirement");

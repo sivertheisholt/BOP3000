@@ -67,7 +67,7 @@ namespace API.Data.Migrations
                     b.ToTable("CountryIso");
                 });
 
-            modelBuilder.Entity("API.Entities.Lobbies.FinishedLobby", b =>
+            modelBuilder.Entity("API.Entities.Lobbies.Lobby", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,6 +77,9 @@ namespace API.Data.Migrations
 
                     b.Property<int>("AdminUid")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Finished")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("FinishedDate")
                         .HasColumnType("datetime2");
@@ -116,48 +119,6 @@ namespace API.Data.Migrations
                     b.HasIndex("LobbyRequirementId");
 
                     b.HasIndex("LogId");
-
-                    b.ToTable("FinishedLobby");
-                });
-
-            modelBuilder.Entity("API.Entities.Lobbies.Lobby", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AdminUid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("GameName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GameType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LobbyDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LobbyRequirementId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaxUsers")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LobbyRequirementId");
 
                     b.ToTable("Lobby");
                 });
@@ -1029,7 +990,7 @@ namespace API.Data.Migrations
                     b.Navigation("AppUserConnections");
                 });
 
-            modelBuilder.Entity("API.Entities.Lobbies.FinishedLobby", b =>
+            modelBuilder.Entity("API.Entities.Lobbies.Lobby", b =>
                 {
                     b.HasOne("API.Entities.Lobbies.Requirement", "LobbyRequirement")
                         .WithMany()
@@ -1042,15 +1003,6 @@ namespace API.Data.Migrations
                     b.Navigation("LobbyRequirement");
 
                     b.Navigation("Log");
-                });
-
-            modelBuilder.Entity("API.Entities.Lobbies.Lobby", b =>
-                {
-                    b.HasOne("API.Entities.Lobbies.Requirement", "LobbyRequirement")
-                        .WithMany()
-                        .HasForeignKey("LobbyRequirementId");
-
-                    b.Navigation("LobbyRequirement");
                 });
 
             modelBuilder.Entity("API.Entities.SteamApp.Information.Achievements", b =>

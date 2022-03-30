@@ -327,7 +327,7 @@ namespace API.Data
             Console.WriteLine($"Finished seeding custom steam apps Data");
         }
 
-        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository, IFinishedLobbyRepository finishedLobbyRepository, LobbyHub lobbyHub, ISteamAppRepository steamAppRepository)
+        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository, LobbyHub lobbyHub, ISteamAppRepository steamAppRepository)
         {
             if (await lobbiesRepository.GetLobbyAsync(1) != null) return;
 
@@ -378,22 +378,23 @@ namespace API.Data
                                 Gender = "Male"
                             },
                             StartDate = DateTime.Now},
-                new Lobby {MaxUsers = 5,
-                            AdminUid = 6,
-                            Title = "Play smth?",
-                            LobbyDescription = "Sheeeeesh",
-                            GameId=54,
-                            GameName = (await steamAppRepository.GetAppInfoAsync(54)).Data.Name,
-                            GameType="Casual",
-                            LobbyRequirement = new Requirement {
-                                Gender = "Female"
-                            },
-                            StartDate = DateTime.Now}
-            };
+                new Lobby
+                {
+                    MaxUsers = 5,
+                    AdminUid = 6,
+                    Title = "Play smth?",
+                    LobbyDescription = "Sheeeeesh",
+                    GameId=54,
+                    GameName = (await steamAppRepository.GetAppInfoAsync(54)).Data.Name,
+                    GameType="Casual",
+                    LobbyRequirement = new Requirement {
+                        Gender = "Female"
+                    },
+                    StartDate = DateTime.Now
+                    },
 
-            var finishedLobbies = new FinishedLobby[]
-            {
-                new FinishedLobby{
+                 new Lobby
+                 {
                     MaxUsers = 5,
                     AdminUid = 2,
                     Title = "Play smth?",
@@ -409,9 +410,11 @@ namespace API.Data
                     },
                     FinishedDate = DateTime.Now,
                     StartDate = DateTime.Now,
-                    Users = new List<int>(){1, 2, 3}
+                    Users = new List<int>(){1, 2, 3},
+                    Finished = true
                 },
-                new FinishedLobby{
+                new Lobby
+                {
                     MaxUsers = 5,
                     AdminUid = 1,
                     Title = "The fuck are you looking at",
@@ -427,9 +430,11 @@ namespace API.Data
                     },
                     FinishedDate = DateTime.Now,
                     StartDate = DateTime.Now,
-                    Users = new List<int>(){1, 3, 5}
+                    Users = new List<int>(){1, 3, 5},
+                    Finished = true
                 },
-                new FinishedLobby{
+                new Lobby
+                {
                     MaxUsers = 5,
                     AdminUid = 6,
                     Title = "Lol noob",
@@ -445,18 +450,14 @@ namespace API.Data
                     },
                     FinishedDate = DateTime.Now,
                     StartDate = DateTime.Now,
-                    Users = new List<int>(){2, 4, 6}
+                    Users = new List<int>(){2, 4, 6},
+                    Finished = true
                 }
             };
 
             foreach (var item in lobbies)
             {
                 lobbiesRepository.AddLobby(item);
-            }
-
-            foreach (var item in finishedLobbies)
-            {
-                finishedLobbyRepository.AddLobby(item);
             }
             await lobbiesRepository.SaveAllAsync();
             Console.WriteLine($"Finished seeding lobbies data");
