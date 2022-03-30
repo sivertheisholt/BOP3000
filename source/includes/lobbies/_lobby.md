@@ -23,14 +23,18 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/1", requestOptions)
   "id": 1,
   "maxUsers": 5,
   "title": "Whats up gamers",
-  "steamId": null,
-  "gameId": 1,
+  "gameId": 51,
+  "gameName": "Counter-Strike: Global Offensive",
   "gameType": "Competetive",
   "lobbyDescription": "Hello there",
   "adminUid": 1,
   "adminUsername": "adminTest",
-  "users": [1],
-  "lobbyRequirement": null
+  "users": [],
+  "log": null,
+  "lobbyRequirement": null,
+  "startDate": "2022-03-30T04:08:03.088913",
+  "finishedDate": "0001-01-01T00:00:00",
+  "finished": false
 }
 ```
 
@@ -48,19 +52,28 @@ This endpoint retrieves a specific lobby.
 | maxUsers         | int              |
 | title            | string           |
 | gameId           | int              |
-| steamId          | int              |
 | gameType         | string           |
+| gameName         | string           |
 | lobbyDescription | string, optional |
 | adminUid         | string           |
 | adminUsername    | string           |
 | users            | int[]            |
+| log              | Log, optional    |
 | lobbyRequirement | LobbyRequirement |
+| startDate        | Date             |
+| finishedDate     | Date, optional   |
+| finished         | bool             |
 
 #### LobbyRequirement
 
 | Key    | Type             |
 | ------ | ---------------- |
 | gender | string, optional |
+
+#### Log
+
+| Key | Type |
+| --- | ---- |
 
 ## GET All lobbies
 
@@ -81,17 +94,21 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies", requestOptions)
 ```json
 [
   {
-    "id": 1,
+    "id": 6,
     "maxUsers": 5,
-    "title": "Whats up gamers",
-    "steamId": null,
-    "gameId": 51,
-    "gameType": "Competetive",
-    "lobbyDescription": "Hello there",
-    "adminUid": 1,
-    "adminUsername": "adminTest",
-    "users": [1],
-    "lobbyRequirement": null
+    "title": "Play smth?",
+    "gameId": 54,
+    "gameName": "Dead by Daylight",
+    "gameType": "Casual",
+    "lobbyDescription": "Hah",
+    "adminUid": 2,
+    "adminUsername": "membertest",
+    "users": [1, 2, 3],
+    "log": null,
+    "lobbyRequirement": null,
+    "startDate": "2022-03-30T04:08:03.0981973",
+    "finishedDate": "2022-03-30T04:08:03.098157",
+    "finished": false
   }
 ]
 ```
@@ -110,19 +127,28 @@ This endpoint retrieves all lobbies.
 | maxUsers         | int              |
 | title            | string           |
 | gameId           | int              |
-| steamId          | int              |
 | gameType         | string           |
+| gameName         | string           |
 | lobbyDescription | string, optional |
 | adminUid         | string           |
 | adminUsername    | string           |
 | users            | int[]            |
+| log              | Log, optional    |
 | lobbyRequirement | LobbyRequirement |
+| startDate        | Date             |
+| finishedDate     | Date, optional   |
+| finished         | bool             |
 
 #### LobbyRequirement
 
 | Key    | Type             |
 | ------ | ---------------- |
 | gender | string, optional |
+
+#### Log
+
+| Key | Type |
+| --- | ---- |
 
 ## GET Lobbies with specific game ID
 
@@ -149,16 +175,18 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/game/51", requestOptions)
     "id": 1,
     "maxUsers": 5,
     "title": "Whats up gamers",
-    "steamId": null,
     "gameId": 51,
+    "gameName": "Counter-Strike: Global Offensive",
     "gameType": "Competetive",
     "lobbyDescription": "Hello there",
     "adminUid": 1,
-    "adminUsername": "AdminTest",
-    "users": [1],
-    "lobbyRequirement": {
-      "gender": "Male"
-    }
+    "adminUsername": "adminTest",
+    "users": [],
+    "log": null,
+    "lobbyRequirement": null,
+    "startDate": "2022-03-30T04:08:03.088913",
+    "finishedDate": "0001-01-01T00:00:00",
+    "finished": false
   }
 ]
 ```
@@ -177,19 +205,28 @@ This endpoint retrieves all lobbies with a specific game ID.
 | maxUsers         | int              |
 | title            | string           |
 | gameId           | int              |
-| steamId          | int              |
 | gameType         | string           |
+| gameName         | string           |
 | lobbyDescription | string, optional |
-| adminUid         | int              |
+| adminUid         | string           |
 | adminUsername    | string           |
 | users            | int[]            |
+| log              | Log, optional    |
 | lobbyRequirement | LobbyRequirement |
+| startDate        | Date             |
+| finishedDate     | Date, optional   |
+| finished         | bool             |
 
 #### LobbyRequirement
 
 | Key    | Type             |
 | ------ | ---------------- |
 | gender | string, optional |
+
+#### Log
+
+| Key | Type |
+| --- | ---- |
 
 <!--- POST --->
 
