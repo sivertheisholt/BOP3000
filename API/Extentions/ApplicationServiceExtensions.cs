@@ -31,7 +31,6 @@ namespace API.Extentions
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILobbiesRepository, LobbiesRepository>();
-            services.AddScoped<IFinishedLobbyRepository, FinishedLobbiesRepository>();
 
             services.AddScoped<ISteamAppRepository, SteamAppRepository>();
             services.AddScoped<ISteamAppsRepository, SteamAppsRepository>();
