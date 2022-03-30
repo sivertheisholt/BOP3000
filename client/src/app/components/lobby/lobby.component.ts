@@ -18,6 +18,7 @@ export class LobbyComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private gamesService: GamesService, private userService: UserService) { 
     this.lobby = this.route.snapshot.data['lobby'];
+    console.log(this.lobby);
     this.gamesService.fetchGame(this.lobby.gameId).subscribe(
       (response) => {
         this.game = response;

@@ -1,7 +1,7 @@
-<div class="game-lobby-background" [ngStyle]="{'background-image': 'url(' + gameInfo?.background + ')'}">
+<div class="game-lobby-background" *ngIf="gameInfo" [ngStyle]="{'background-image': 'url(' + gameInfo?.background + ')'}">
     <section class="game-lobby-header-section section is-small is-flex">
         <div class="header-game-image">
-            <img [src]="gameInfo?.headerImage">
+            <img *ngIf="gameInfo" [src]="gameInfo?.headerImage">
         </div>
         <div class="game-lobby-section-wrapper is-flex is-flex-direction-column">
             <h1 class="title p-5 text-is-light">{{ gameInfo?.name }}</h1>

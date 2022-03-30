@@ -29,9 +29,7 @@ export class ProfileSettingsComponent implements OnInit {
     for(let i = 1930; i <= d.getFullYear(); i++){
       this.years.push(i);
     }
-    console.log(this.user.memberProfile?.birthday!);
     let userBirthday = new Date(this.user.memberProfile?.birthday!);
-    console.log(userBirthday.getDate());
     this.profileSettingsForm = new FormGroup({
       username: new FormControl(this.user?.username),
       email: new FormControl(this.user?.email),

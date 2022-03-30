@@ -1,7 +1,7 @@
 <div class="host-panel-wrapper is-flex is-justify-content-center is-flex-direction-column is-align-items-center">
     <h1 class="subtitle text-is-light">Only the creator of this lobby can see this.</h1>
     <div class="p-2">
-        <button class="button is-success" data-target="modal-ready-check" (click)="readyCheck()">Ready Check</button>
+        <button class="button is-success" data-target="modal-ready-check" (click)="startReadyCheck()">Ready Check</button>
     </div>
     <div class="p-2">
         <button class="button is-danger" data-target="modal-end-lobby" (click)="confirmEndLobby()">End Lobby</button>
@@ -17,9 +17,14 @@
                     <p class="is-flex is-justify-content-center numberCircle">{{ start }}</p>
                     <p>The host has started a ready check...</p>
                 </div>
-                <div class="">
-                    <button class="button is-success" (click)="acceptReadyCheck()">Accept</button>
-                    <button class="button is-danger" (click)="declineReadyCheck()">Decline</button>
+                <div class="users-ready-status p-3 mb-3">
+                    <div class="users-count-item">
+                        {{ usersAccepted }} / {{ totalParty }}
+                        <div class="error danger mt-3" *ngIf="userDeclined != 0">Someone has declined... Going back to lobby...</div>
+                        <fa-icon *ngIf="!accepted && !declined" class="fa-lg mt-2" [icon]="faCheckCircle"></fa-icon>
+                        <fa-icon *ngIf="accepted" class="fa-lg mt-2" [ngStyle]="{ 'color': ( 'green' )  }" [icon]="faCheckCircle"></fa-icon>
+                        <fa-icon *ngIf="declined" class="fa-lg mt-2" [ngStyle]="{ 'color': ( 'red' ) }" [icon]="faCheckCircle"></fa-icon>
+                    </div>
                 </div>
             </div>
         </div>
