@@ -829,14 +829,18 @@
   </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"maxUsers"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
   </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Whats up gamers"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"steamId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"gameId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"gameId"</span><span class="p">:</span><span class="w"> </span><span class="mi">51</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"gameName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Counter-Strike: Global Offensive"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"gameType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Competetive"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"lobbyDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello there"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"adminUid"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"adminUsername"</span><span class="p">:</span><span class="w"> </span><span class="s2">"adminTest"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">
-  </span><span class="nl">"lobbyRequirement"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"log"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lobbyRequirement"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-03-30T04:08:03.088913"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"finishedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"finished"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint retrieves a specific lobby.</p>
@@ -866,11 +870,11 @@
 <td>int</td>
 </tr>
 <tr>
-<td>steamId</td>
-<td>int</td>
+<td>gameType</td>
+<td>string</td>
 </tr>
 <tr>
-<td>gameType</td>
+<td>gameName</td>
 <td>string</td>
 </tr>
 <tr>
@@ -890,8 +894,24 @@
 <td>int[]</td>
 </tr>
 <tr>
+<td>log</td>
+<td>Log, optional</td>
+</tr>
+<tr>
 <td>lobbyRequirement</td>
 <td>LobbyRequirement</td>
+</tr>
+<tr>
+<td>startDate</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>finishedDate</td>
+<td>Date, optional</td>
+</tr>
+<tr>
+<td>finished</td>
+<td>bool</td>
 </tr>
 </tbody></table>
 <h4 id='lobbyrequirement'>LobbyRequirement</h4>
@@ -905,6 +925,14 @@
 <td>gender</td>
 <td>string, optional</td>
 </tr>
+</tbody></table>
+<h4 id='log'>Log</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
 </tbody></table>
 <h2 id='get-all-lobbies'>GET All lobbies</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
@@ -921,17 +949,21 @@
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
     </span><span class="nl">"maxUsers"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Whats up gamers"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"steamId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"gameId"</span><span class="p">:</span><span class="w"> </span><span class="mi">51</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"gameType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Competetive"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"lobbyDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello there"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"adminUid"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"adminUsername"</span><span class="p">:</span><span class="w"> </span><span class="s2">"adminTest"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">
-    </span><span class="nl">"lobbyRequirement"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Play smth?"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameId"</span><span class="p">:</span><span class="w"> </span><span class="mi">54</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dead by Daylight"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Casual"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lobbyDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hah"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"adminUid"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"adminUsername"</span><span class="p">:</span><span class="w"> </span><span class="s2">"membertest"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"log"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lobbyRequirement"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-03-30T04:08:03.0981973"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finishedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-03-30T04:08:03.098157"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finished"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
@@ -962,11 +994,11 @@
 <td>int</td>
 </tr>
 <tr>
-<td>steamId</td>
-<td>int</td>
+<td>gameType</td>
+<td>string</td>
 </tr>
 <tr>
-<td>gameType</td>
+<td>gameName</td>
 <td>string</td>
 </tr>
 <tr>
@@ -986,8 +1018,24 @@
 <td>int[]</td>
 </tr>
 <tr>
+<td>log</td>
+<td>Log, optional</td>
+</tr>
+<tr>
 <td>lobbyRequirement</td>
 <td>LobbyRequirement</td>
+</tr>
+<tr>
+<td>startDate</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>finishedDate</td>
+<td>Date, optional</td>
+</tr>
+<tr>
+<td>finished</td>
+<td>bool</td>
 </tr>
 </tbody></table>
 <h4 id='lobbyrequirement-2'>LobbyRequirement</h4>
@@ -1001,6 +1049,14 @@
 <td>gender</td>
 <td>string, optional</td>
 </tr>
+</tbody></table>
+<h4 id='log-2'>Log</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
 </tbody></table>
 <h2 id='get-lobbies-with-specific-game-id'>GET Lobbies with specific game ID</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
@@ -1023,16 +1079,18 @@
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
     </span><span class="nl">"maxUsers"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
     </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Whats up gamers"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"steamId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="nl">"gameId"</span><span class="p">:</span><span class="w"> </span><span class="mi">51</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Counter-Strike: Global Offensive"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"gameType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Competetive"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"lobbyDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello there"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"adminUid"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"adminUsername"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AdminTest"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">
-    </span><span class="nl">"lobbyRequirement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Male"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="nl">"adminUsername"</span><span class="p">:</span><span class="w"> </span><span class="s2">"adminTest"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nl">"log"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lobbyRequirement"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-03-30T04:08:03.088913"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finishedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finished"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
@@ -1063,11 +1121,11 @@
 <td>int</td>
 </tr>
 <tr>
-<td>steamId</td>
-<td>int</td>
+<td>gameType</td>
+<td>string</td>
 </tr>
 <tr>
-<td>gameType</td>
+<td>gameName</td>
 <td>string</td>
 </tr>
 <tr>
@@ -1076,7 +1134,7 @@
 </tr>
 <tr>
 <td>adminUid</td>
-<td>int</td>
+<td>string</td>
 </tr>
 <tr>
 <td>adminUsername</td>
@@ -1087,8 +1145,24 @@
 <td>int[]</td>
 </tr>
 <tr>
+<td>log</td>
+<td>Log, optional</td>
+</tr>
+<tr>
 <td>lobbyRequirement</td>
 <td>LobbyRequirement</td>
+</tr>
+<tr>
+<td>startDate</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>finishedDate</td>
+<td>Date, optional</td>
+</tr>
+<tr>
+<td>finished</td>
+<td>bool</td>
 </tr>
 </tbody></table>
 <h4 id='lobbyrequirement-3'>LobbyRequirement</h4>
@@ -1102,6 +1176,14 @@
 <td>gender</td>
 <td>string, optional</td>
 </tr>
+</tbody></table>
+<h4 id='log-3'>Log</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
 </tbody></table>
 
 <!--- POST --->
