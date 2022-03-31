@@ -80,7 +80,7 @@ namespace API.Controllers
 
             var lobbyDto = Mapper.Map<LobbyDto>(lobby);
 
-            if (lobby.Finished)
+            if (!lobby.Finished)
             {
                 lobbyDto.Users = await _lobbyTracker.GetMembersInLobby(id);
             }
@@ -128,7 +128,7 @@ namespace API.Controllers
             {
                 var lobbyAdmin = await _userRepository.GetUserByIdAsync(lobby.AdminUid);
 
-                if (lobby.Finished)
+                if (!lobby.Finished)
                 {
                     lobby.Users = await _lobbyTracker.GetMembersInLobby(lobby.Id);
                 }
