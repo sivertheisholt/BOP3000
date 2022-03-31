@@ -228,6 +228,35 @@ This endpoint retrieves all lobbies with a specific game ID.
 | Key | Type |
 | --- | ---- |
 
+## GET Check if lobby is finished
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/lobbies/7/finished",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns true/false
+
+This endpoint checks if lobby is finished.
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/lobbies/<ID>/finished`
+
 <!--- POST --->
 
 ## POST A new lobby
