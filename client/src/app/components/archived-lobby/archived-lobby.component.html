@@ -1,4 +1,4 @@
-<div class="archived-lobby-background" [ngStyle]="{'background-image': 'url(' + game?.background + ')'}">
+<div class="archived-lobby-background" *ngIf="game" [ngStyle]="{'background-image': 'url(' + game?.background + ')'}">
     <div class="container">
         <div class="content">
             <div class="column is-full">

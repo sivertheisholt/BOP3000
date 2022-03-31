@@ -10,7 +10,6 @@ export class LobbyGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return new Promise((resolve) => {
-        console.log(route.params);
         this.lobbyService.getLobbyStatus(route.params.id).subscribe(
             (res) => {
                 if(!res){
