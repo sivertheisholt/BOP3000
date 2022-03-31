@@ -17,6 +17,10 @@ export class LobbyHubService {
   lobbyPartyMembers$ = new BehaviorSubject<number[]>([]);
   kickedPartyMembers$ = new BehaviorSubject<number>(0);
   kickedQueueMembers$ = new BehaviorSubject<number>(0);
+  lobbyReadyCheck$ = new BehaviorSubject<boolean>(false);
+  acceptedReadyCheckMembers$ = new BehaviorSubject<number[]>([]);
+  declinedReadyCheckMembers$ = new BehaviorSubject<number>(0);
+  lobbyStart$ = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 
@@ -38,6 +42,22 @@ export class LobbyHubService {
 
   getLobbyKickedQueueMembersObserver(): Observable<number>{
     return this.kickedQueueMembers$.asObservable();
+  }
+
+  getLobbyReadyCheckObserver(): Observable<boolean>{
+    return this.lobbyReadyCheck$.asObservable();
+  }
+
+  getAcceptedReadyCheckMembersObserver(): Observable<number[]>{
+    return this.acceptedReadyCheckMembers$.asObservable();
+  }
+
+  getDeclinedReadyCheckMembersObserver(): Observable<number>{
+    return this.declinedReadyCheckMembers$.asObservable();
+  }
+
+  getLobbyStartObserver(): Observable<boolean>{
+    return this.lobbyStart$.asObservable();
   }
 
 
@@ -113,6 +133,27 @@ export class LobbyHubService {
         console.log("User with id: " + id + " left lobby queue!");
       });
 
+      this.hubConnection.on("HostStarted", id => {
+        this.acceptedReadyCheckMembers$.next(id);
+        this.lobbyReadyCheck$.next(true);
+        console.log("User with id: " + id + " started ready check!");
+      });
+
+      this.hubConnection.on("MemberDeclinedReady", id => {
+        this.declinedReadyCheckMembers$.next(id);
+        console.log("User with id: " + id + " declined ready check!");
+      });
+
+      this.hubConnection.on("MemberAcceptedReady", id => {
+        this.acceptedReadyCheckMembers$.next(id);
+        console.log("User with id: " + id + " accepted ready check!");
+      });
+
+      this.hubConnection.on("LobbyStarted", () => {
+        this.lobbyStart$.next(true);
+        console.log("Lobby starting...");
+      });
+
       // Only caller will get this
       this.hubConnection.on("QueueMembers", ids => {
         ids.forEach((id: number[]) => {
@@ -166,7 +207,18 @@ export class LobbyHubService {
     await this.connectionStatus;
     this.hubConnection.invoke("LeaveLobby", lobbyId);
   }
-
+  async startReadyCheck(lobbyId: number){
+    await this.connectionStatus;
+    this.hubConnection.invoke("StartCheck", lobbyId);
+  }
+  async acceptReadyCheck(lobbyId: number){
+    await this.connectionStatus;
+    this.hubConnection.invoke("Accept", lobbyId);
+  }
+  async declineReadyCheck(lobbyId: number){
+    await this.connectionStatus;
+    this.hubConnection.invoke("Decline", lobbyId);
+  }
 
 
   stopHubConnection() {

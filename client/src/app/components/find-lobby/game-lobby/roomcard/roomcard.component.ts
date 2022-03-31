@@ -11,7 +11,6 @@ import { LobbyService } from 'src/app/_services/lobby.service';
 })
 export class RoomcardComponent implements OnInit {
   lobbies: Lobby[] = [];
-  filteredLobbies: Lobby[] = [];
   inQueue? : boolean;
   currentId?: number;
   dropdownStatus: boolean = false;
