@@ -138,5 +138,12 @@ namespace API.Controllers
 
             return lobbiesDto;
         }
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("{id}/finished")]
+        public async Task<ActionResult<IEnumerable<LobbyDto>>> IsLobbyFinished(int id)
+        {
+            var lobby = await _lobbiesRepository.GetLobbyAsync(id);
+            return Ok(lobby.Finished);
+        }
     }
 }
