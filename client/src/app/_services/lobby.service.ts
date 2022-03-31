@@ -32,7 +32,7 @@ export class LobbyService{
         return this.http.get<Lobby[]>(this.baseUrl + 'lobbies/game/' + id);
     }
 
-    getLobbyStatus(){
+    getQueueStatus(){
         return this.http.get<QueueStatus>(this.baseUrl + 'members/lobby-status').pipe(
             map((response) => {
                 return response;
@@ -42,6 +42,14 @@ export class LobbyService{
 
     fetchLobbyWithId(id: number){
         return this.http.get<Lobby>(this.baseUrl + 'lobbies/' + id).pipe(
+            map((response) => {
+                return response;
+            })
+        );
+    }
+
+    getLobbyStatus(id: number){
+        return this.http.get<boolean>(this.baseUrl + 'lobbies/' + id + '/finished').pipe(
             map((response) => {
                 return response;
             })

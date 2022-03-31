@@ -9,17 +9,25 @@ export class LobbyGuard implements CanActivate {
   constructor(private lobbyService: LobbyService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-      return new Promise((resolve) => {
-        this.lobbyService.getLobbyStatus().subscribe(
+    return new Promise((resolve) => {
+        console.log(route.params);
+        this.lobbyService.getLobbyStatus(route.params.id).subscribe(
             (res) => {
-                if(res.lobbyId == route.params.id && !res.inQueue){
-                    resolve(true);
+                if(!res){
+                    this.lobbyService.getQueueStatus().subscribe(
+                        (res) => {
+                            if(res.lobbyId == route.params.id && !res.inQueue){
+                                resolve(true);
+                            } else {
+                                this.router.navigate(['home']);
+                                resolve(false);
+                            }
+                        })
                 } else {
-                    this.router.navigate(['home']);
+                    this.router.navigate(['archived-lobby/', route.params.id]);
                     resolve(false);
                 }
-            }
-        )
-      })
+            })
+        })
     }
 }
