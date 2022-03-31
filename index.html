@@ -362,6 +362,9 @@
                     <a href="#get-lobbies-with-specific-game-id" class="toc-h2 toc-link" data-title="GET Lobbies with specific game ID">GET Lobbies with specific game ID</a>
                   </li>
                   <li>
+                    <a href="#get-check-if-lobby-is-finished" class="toc-h2 toc-link" data-title="GET Check if lobby is finished">GET Check if lobby is finished</a>
+                  </li>
+                  <li>
                     <a href="#post-a-new-lobby" class="toc-h2 toc-link" data-title="POST A new lobby">POST A new lobby</a>
                   </li>
               </ul>
@@ -1185,6 +1188,30 @@
 </tr>
 </thead><tbody>
 </tbody></table>
+<h2 id='get-check-if-lobby-is-finished'>GET Check if lobby is finished</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/lobbies/7/finished</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">requestOptions</span>
+<span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns true/false</p>
+</blockquote>
+
+<p>This endpoint checks if lobby is finished.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/lobbies/&lt;ID&gt;/finished</code></p>
 
 <!--- POST --->
 <h2 id='post-a-new-lobby'>POST A new lobby</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
@@ -1226,7 +1253,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint will create a new lobby.</p>
-<h3 id='http-request-4'>HTTP Request</h3>
+<h3 id='http-request-5'>HTTP Request</h3>
 <p><code>POST https://bop3000.azurewebsites.net/api/lobbies</code></p>
 <h3 id='body-schema'>Body Schema</h3>
 <table><thead>
