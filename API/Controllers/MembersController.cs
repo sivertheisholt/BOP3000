@@ -1,3 +1,4 @@
+using API.DTOs.Activities;
 using API.DTOs.Members;
 using API.Entities.Users;
 using API.Interfaces.IRepositories;
@@ -16,8 +17,10 @@ namespace API.Controllers
         private readonly ICountryRepository _countryRepository;
         private readonly LobbyTracker _lobbyTracker;
         private readonly IMeilisearchService _meilisearchService;
-        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository, LobbyTracker lobbyTracker, IMeilisearchService meilisearchService) : base(mapper)
+        private readonly IActivitiesRepository _activitiesRepository;
+        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository, LobbyTracker lobbyTracker, IMeilisearchService meilisearchService, IActivitiesRepository activitiesRepository) : base(mapper)
         {
+            _activitiesRepository = activitiesRepository;
             _meilisearchService = meilisearchService;
             _lobbyTracker = lobbyTracker;
             _countryRepository = countryRepository;
@@ -80,6 +83,33 @@ namespace API.Controllers
             if (user == null) return NotFound();
 
             return Ok(Mapper.Map<MemberDto>(user));
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("current/activity")]
+        public async Task<ActionResult<IEnumerable<MemberMeiliDto>>> GetCurrentUserActivityLog(string name, int limit = 10)
+        {
+            var uid = GetUserIdFromClaim();
+
+            var followers = await _userRepository.GetUserFollowers(uid);
+
+            var activities = new List<ActivityLogDto>();
+
+            foreach (var follower in followers)
+            {
+
+                var activites = await _activitiesRepository.GetActivitiesForUser(follower);
+                var activitiesDto = Mapper.Map<List<ActivityLogDto>>(activites);
+
+                foreach (var activityDto in activitiesDto)
+                {
+                    activityDto.Username = await _userRepository.GetUsernameFromId(activityDto.AppUserId);
+                    activities.Add(activityDto);
+                }
+            }
+
+            activities.Sort((y, x) => x.Date.CompareTo(y.Date));
+            return Ok(activities);
         }
 
         [Authorize(Policy = "RequireMemberRole")]

@@ -11,8 +11,12 @@ namespace API.Interfaces.IRepositories
 
         Task<AppUser> GetUserByEmailAsync(string email);
 
+        Task<ICollection<int>> GetUserFollowers(int id);
+
         void UpdateUsername(AppUser user, string username);
 
         Task<bool> CheckIfUserExists(int id);
+
+        Task<string> GetUsernameFromId(int id);
     }
 }

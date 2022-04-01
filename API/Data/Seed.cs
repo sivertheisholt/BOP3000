@@ -1,3 +1,4 @@
+using API.Entities.Activities;
 using API.Entities.Countries;
 using API.Entities.Lobbies;
 using API.Entities.Roles;
@@ -471,6 +472,99 @@ namespace API.Data
                 await lobbyHub.CreateLobbyTest(i, i);
             }
             Console.WriteLine($"Finished seeding lobby hub data");
+        }
+
+        public static async Task SeedActivities(IActivitiesRepository activitiesRepository, IActivityRepository activityRepository)
+        {
+            if (await activityRepository.GetActivity(1) != null) return;
+
+            var activityTypes = new Activity[] {
+                new Activity {
+                    Type = "Lobby",
+                    Identifier = "lobby-finished",
+                    Text = "finished lobby"
+                },
+                new Activity {
+                    Type = "Lobby",
+                    Identifier = "lobby-created",
+                    Text = "created lobby"
+                },
+                new Activity {
+                    Type = "Lobby",
+                    Identifier = "lobby-joined",
+                    Text = "joined lobby"
+                },
+                new Activity {
+                    Type = "Member",
+                    Identifier = "member-followed",
+                    Text = "followed"
+                }
+            };
+
+            foreach (var activity in activityTypes)
+            {
+                await activityRepository.AddActivity(activity);
+            }
+            await activityRepository.SaveAllAsync();
+
+            var activityLogs = new ActivityLog[] {
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 27),
+                    AppUserId = 3,
+                    ActivityId = 1
+                },
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 27),
+                    AppUserId = 2,
+                    ActivityId = 1
+                },
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 27),
+                    AppUserId = 2,
+                    ActivityId = 2
+                },
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 28),
+                    AppUserId = 6,
+                    ActivityId = 3
+                },
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 28),
+                    AppUserId = 2,
+                    ActivityId = 4
+                },
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 29),
+                    AppUserId = 2,
+                    ActivityId = 2
+                },
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 29),
+                    AppUserId = 2,
+                    ActivityId = 3
+                },
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 30),
+                    AppUserId = 2,
+                    ActivityId = 1
+                },
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 30),
+                    AppUserId = 3,
+                    ActivityId = 3
+                },
+                new ActivityLog {
+                    Date = new DateTime(2022, 3, 31),
+                    AppUserId = 3,
+                    ActivityId = 2
+                }
+            };
+
+            foreach (var log in activityLogs)
+            {
+                await activitiesRepository.AddActivityLog(log);
+            }
+            await activitiesRepository.SaveAllAsync();
         }
     }
 }

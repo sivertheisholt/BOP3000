@@ -10,6 +10,8 @@ using API.DTOs.Countries;
 using API.Entities.SteamApp;
 using API.DTOs.GameApps;
 using API.Entities.SteamApp.Information;
+using API.Entities.Activities;
+using API.DTOs.Activities;
 
 namespace API.Helpers
 {
@@ -48,6 +50,10 @@ namespace API.Helpers
             CreateMap<Message, MessageDto>();
 
             CreateMap<AppUser, AppUserMeili>();
+
+            CreateMap<ActivityLog, ActivityLogDto>()
+                .ForMember(dest => dest.Identifier,
+                opt => opt.MapFrom(src => src.Activity.Identifier));
         }
     }
 }

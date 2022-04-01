@@ -37,6 +37,19 @@ namespace API.Data.Repositories
             return await Context.Users.SingleOrDefaultAsync(x => x.UserName == username);
         }
 
+        public Task<ICollection<int>> GetUserFollowers(int id)
+        {
+            return Task.FromResult(Context.Users.Where(user => user.Id == id)
+                    .Include(user => user.AppUserProfile)
+                    .ThenInclude(user => user.AppUserData)
+                    .Select(x => x.AppUserProfile.AppUserData.Followers).FirstOrDefault());
+        }
+
+        public async Task<string> GetUsernameFromId(int id)
+        {
+            return await Context.Users.Where(x => x.Id == id).Select(x => x.UserName).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await Context.Users

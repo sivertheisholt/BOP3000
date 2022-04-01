@@ -1,4 +1,5 @@
 using System.Text.Json;
+using API.Entities.Activities;
 using API.Entities.Applications;
 using API.Entities.Countries;
 using API.Entities.Lobbies;
@@ -27,6 +28,8 @@ namespace API.Data
         public DbSet<AppInfo> AppInfo { get; set; }
         public DbSet<AppList> AppList { get; set; }
         public DbSet<CountryIso> CountryIso { get; set; }
+        public DbSet<ActivityLog> ActivityLog { get; set; }
+        public DbSet<Activity> Activity { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

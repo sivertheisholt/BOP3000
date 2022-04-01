@@ -35,6 +35,8 @@ namespace API.Extentions
             services.AddScoped<ISteamAppRepository, SteamAppRepository>();
             services.AddScoped<ISteamAppsRepository, SteamAppsRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
+            services.AddScoped<IActivityRepository, ActivityRepository>();
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
