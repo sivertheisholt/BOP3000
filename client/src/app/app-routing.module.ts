@@ -24,6 +24,7 @@ import { HelpComponent } from './components/help/help.component';
 import { ArchivedLobbyComponent } from './components/archived-lobby/archived-lobby.component';
 import { LobbyGuard } from './_guards/lobby.guard';
 import { UpgradeAccountComponent } from './components/upgrade-account/upgrade-account.component';
+import { ArchivedLobbyGuard } from './_guards/archived-lobby.guard';
 
 const routes: Routes = [
   { path: '', component: StartComponent, canActivate: [AuthGuard] },
@@ -34,7 +35,7 @@ const routes: Routes = [
   { path: 'upgrade', component: UpgradeAccountComponent, canActivate: [UnAuthGuard] },
   { path: 'account/:id', component: AccountComponent, canActivate: [UnAuthGuard] },
   { path: 'lobby/:id', component: LobbyComponent, canActivate:[UnAuthGuard, LobbyGuard], resolve: {lobby: LobbyResolver} },
-  { path: 'archived-lobby/:id', component: ArchivedLobbyComponent, canActivate:[UnAuthGuard], resolve: {lobby: LobbyResolver} },
+  { path: 'archived-lobby/:id', component: ArchivedLobbyComponent, canActivate:[UnAuthGuard, ArchivedLobbyGuard], resolve: {lobby: LobbyResolver} },
   { path: 'find-lobby', component: FindLobbyComponent, canActivate: [UnAuthGuard], resolve: {games: GamesResolver}},
   { path: 'game-lobby/:id', component: GameLobbyComponent, canActivate: [UnAuthGuard], resolve: {lobbies: LobbiesResolver}},
   { path: 'settings', component: SettingsComponent, canActivate: [UnAuthGuard], resolve: {countries: CountryResolver, user: UserResolver} },

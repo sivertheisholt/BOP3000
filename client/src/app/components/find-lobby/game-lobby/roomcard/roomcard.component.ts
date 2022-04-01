@@ -19,7 +19,7 @@ export class RoomcardComponent implements OnInit {
 
   ngOnInit(): void {
     this.lobbies = this.route.snapshot.data['lobbies'];
-    this.lobbyService.getLobbyStatus().subscribe(
+    this.lobbyService.getQueueStatus().subscribe(
       (response) => {
         this.inQueue = response.inQueue;
         this.currentId = response.lobbyId;
