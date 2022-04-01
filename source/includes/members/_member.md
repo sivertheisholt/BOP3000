@@ -410,6 +410,55 @@ This endpoint searches for members.
 | id       | int    |
 | userName | string |
 
+## GET Current member activity log
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/current/activity",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "date": "2022-03-31T00:00:00",
+    "username": "membertest",
+    "appUserId": 2,
+    "identifier": "lobby-created"
+  }
+]
+```
+
+This endpoint gets the current logged in member's activity list
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/members/current/activity`
+
+### Response Class (Status 200)
+
+| Key        | Type   |
+| ---------- | ------ |
+| date       | string |
+| username   | string |
+| appUserId  | int    |
+| identifier | string |
+
 <!--- POST --->
 
 <!--- PUT --->
