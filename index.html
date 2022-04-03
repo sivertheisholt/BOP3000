@@ -394,6 +394,9 @@
                     <a href="#get-current-member-activity-log" class="toc-h2 toc-link" data-title="GET Current member activity log">GET Current member activity log</a>
                   </li>
                   <li>
+                    <a href="#post-set-profile-picture" class="toc-h2 toc-link" data-title="POST Set profile picture">POST Set profile picture</a>
+                  </li>
+                  <li>
                     <a href="#patch-update-a-single-member" class="toc-h2 toc-link" data-title="PATCH Update a single member">PATCH Update a single member</a>
                   </li>
                   <li>
@@ -2011,6 +2014,36 @@
 </tbody></table>
 
 <!--- POST --->
+<h2 id='post-set-profile-picture'>POST Set profile picture</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">formdata</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormData</span><span class="p">();</span>
+<span class="nx">formdata</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">File</span><span class="dl">"</span><span class="p">,</span> <span class="nx">fileInput</span><span class="p">.</span><span class="nx">files</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="dl">"</span><span class="s2">Background.png</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">formdata</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/members/set-photo</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns a JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dzpzecnx5/image/upload/v1648988522/qyf8mc0optfwaebzj0cp.png"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint sets the profile picture for the current user</p>
+<h3 id='http-request-8'>HTTP Request</h3>
+<p><code>POST https://bop3000.azurewebsites.net/api/members/set-photo</code></p>
 
 <!--- PUT --->
 
@@ -2045,7 +2078,7 @@
 </blockquote>
 
 <p>This endpoint updates a single member</p>
-<h3 id='http-request-8'>HTTP Request</h3>
+<h3 id='http-request-9'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members</code></p>
 <h3 id='body-schema'>Body Schema</h3>
 <table><thead>
@@ -2101,7 +2134,7 @@
 </blockquote>
 
 <p>This endpoint will follow another member</p>
-<h3 id='http-request-9'>HTTP Request</h3>
+<h3 id='http-request-10'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/follow?memberId=1</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
@@ -2137,7 +2170,7 @@
 </blockquote>
 
 <p>This endpoint will unfollow another member</p>
-<h3 id='http-request-10'>HTTP Request</h3>
+<h3 id='http-request-11'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/unfollow?memberId=1</code></p>
 <h3 id='query-parameters-2'>Query Parameters</h3>
 <table><thead>
