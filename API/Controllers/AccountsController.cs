@@ -1,11 +1,14 @@
+using System;
 using API.DTOs;
 using API.DTOs.Accounts;
 using API.Entities.Users;
 using API.Enums;
-
+using API.Extentions;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -116,6 +119,46 @@ namespace API.Controllers
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user)
             };
+        }
+
+        [HttpPost("steam")]
+        public async Task<IActionResult> SignIn([FromForm] string Provider)
+        {
+            Provider = "Steam";
+            // Note: the "provider" parameter corresponds to the external
+            // authentication provider choosen by the user agent.
+            if (string.IsNullOrWhiteSpace(Provider))
+            {
+                return BadRequest();
+            }
+
+            if (!await HttpContext.IsProviderSupportedAsync(Provider))
+            {
+                return BadRequest();
+            }
+
+            return Challenge(new AuthenticationProperties { RedirectUri = "/settings?success=true" }, Provider);
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("steam-success")]
+        public async Task<IActionResult> test()
+        {
+            var steamId = HttpContext.Request.Cookies["steamId"];
+
+            if (steamId == null) return NotFound();
+
+            var uid = GetUserIdFromClaim();
+
+            var user = await _userRepository.GetUserByIdAsync(uid);
+
+            if (user == null) return NotFound();
+            if (user.AppUserProfile.UserConnections.SteamConnected) return BadRequest("Steam account already connected");
+
+            _userRepository.AddSteamId(user, Int64.Parse(steamId));
+            await _userRepository.SaveAllAsync();
+
+            return Ok();
         }
 
         /// <summary>

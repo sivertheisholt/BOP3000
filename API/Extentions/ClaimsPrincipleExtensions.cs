@@ -10,8 +10,16 @@ namespace API.Extentions
     {
         public static int GetUserId(this ClaimsPrincipal user)
         {
-            var userId = user.Claims.FirstOrDefault(c => c.Type == "uid").Value;
-            return Int32.Parse(userId);
+            try
+            {
+                var userId = user.Claims.FirstOrDefault(c => c.Type == "uid").Value;
+                return Int32.Parse(userId);
+            }
+            catch (System.Exception)
+            {
+                return -1;
+            }
+
         }
     }
 }

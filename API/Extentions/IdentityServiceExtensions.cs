@@ -1,11 +1,16 @@
+using System.Security.Claims;
 using System.Text;
 using API.Data;
 using API.Entities.Roles;
 using API.Entities.Users;
 using API.Enums;
 using API.Providers;
+using AspNet.Security.OpenId;
+using AspNet.Security.OpenId.Steam;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Extentions
@@ -35,8 +40,8 @@ namespace API.Extentions
             {
                 token = Environment.GetEnvironmentVariable("JWT_TOKEN_KEY");
             }
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddSteam()
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -62,6 +67,35 @@ namespace API.Extentions
                             return Task.CompletedTask;
                         }
                     };
+                })
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/login";
+                    options.LogoutPath = "/signout";
+                })
+                .AddSteam(options =>
+                {
+                    var appId = "";
+                    if (env == "Development")
+                    {
+                        appId = config["STEAM_APP_ID"];
+                    }
+                    else
+                    {
+                        appId = Environment.GetEnvironmentVariable("STEAM_APP_ID");
+                    }
+                    options.ApplicationKey = appId;
+                    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.Events.OnAuthenticated = ctx =>
+                    {
+                        // Get the last segment which is the steam steamid
+                        var steamId = new Uri(ctx.Identifier).Segments.Last();
+
+                        //Temp just to get it work, this is not safe!
+                        ctx.Response.Cookies.Append("steamId", steamId);
+
+                        return Task.CompletedTask;
+                    };
                 });
 
             services.AddAuthorization(opt =>
@@ -74,4 +108,5 @@ namespace API.Extentions
             return services;
         }
     }
+
 }

@@ -1,3 +1,4 @@
+using API.Entities.Applications;
 using API.Entities.Users;
 using API.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,12 @@ namespace API.Data.Repositories
     {
         public UserRepository(DataContext context) : base(context)
         {
+        }
+
+        public void AddSteamId(AppUser user, long steamId)
+        {
+            user.AppUserProfile.UserConnections.SteamConnected = true;
+            user.AppUserProfile.UserConnections.Steam.SteamId = steamId;
         }
 
         public async Task<bool> CheckIfUserExists(int id)
@@ -27,6 +34,9 @@ namespace API.Data.Repositories
                 .ThenInclude(p => p.AppUserData)
                 .Include(p => p.AppUserProfile)
                 .ThenInclude(p => p.CountryIso)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.UserConnections)
+                .ThenInclude(p => p.Steam)
                 .FirstOrDefaultAsync();
 
             return user;

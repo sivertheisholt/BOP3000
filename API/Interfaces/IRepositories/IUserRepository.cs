@@ -18,5 +18,7 @@ namespace API.Interfaces.IRepositories
         Task<bool> CheckIfUserExists(int id);
 
         Task<string> GetUsernameFromId(int id);
+
+        void AddSteamId(AppUser user, long steamId);
     }
 }

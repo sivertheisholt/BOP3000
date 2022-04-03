@@ -279,5 +279,12 @@ namespace API.SignalR
 
             return Task.CompletedTask;
         }
+        public Task GetMembersCount(int lobbyId, int uid)
+        {
+            lock (LobbyReadyCheck) LobbyReadyCheck[lobbyId] = false;
+            lock (LobbyUserCheck) LobbyUserCheck[lobbyId][uid] = false;
+
+            return Task.CompletedTask;
+        }
     }
 }

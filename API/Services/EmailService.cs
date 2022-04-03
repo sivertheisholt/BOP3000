@@ -8,7 +8,9 @@ namespace API.Services
     public class EmailService : IEmailService
     {
         private readonly SmtpClient _client;
+        
         private readonly string _email;
+        
         public EmailService()
         {
             var client = new SmtpClient();

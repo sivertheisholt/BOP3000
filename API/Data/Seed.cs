@@ -1,4 +1,5 @@
 using API.Entities.Activities;
+using API.Entities.Applications;
 using API.Entities.Countries;
 using API.Entities.Lobbies;
 using API.Entities.Roles;
@@ -58,6 +59,17 @@ namespace API.Data
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 },
                         FinishedLobbies = new[] { 1, 3 }
+                    },
+                    UserConnections = new AppUserConnections
+                    {
+                        SteamConnected = false,
+                        DiscordConnected = false,
+                        Steam = new Steam
+                        {
+                        },
+                        Discord = new Discord
+                        {
+                        }
                     }
                 }
             };
@@ -80,6 +92,17 @@ namespace API.Data
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 },
                         FinishedLobbies = new[] { 2 }
+                    },
+                    UserConnections = new AppUserConnections
+                    {
+                        SteamConnected = false,
+                        DiscordConnected = false,
+                        Steam = new Steam
+                        {
+                        },
+                        Discord = new Discord
+                        {
+                        }
                     }
                 }
             };
@@ -100,6 +123,17 @@ namespace API.Data
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    },
+                    UserConnections = new AppUserConnections
+                    {
+                        SteamConnected = false,
+                        DiscordConnected = false,
+                        Steam = new Steam
+                        {
+                        },
+                        Discord = new Discord
+                        {
+                        }
                     }
                 }
             };
@@ -121,6 +155,17 @@ namespace API.Data
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    },
+                    UserConnections = new AppUserConnections
+                    {
+                        SteamConnected = false,
+                        DiscordConnected = false,
+                        Steam = new Steam
+                        {
+                        },
+                        Discord = new Discord
+                        {
+                        }
                     }
                 }
             };
@@ -142,6 +187,17 @@ namespace API.Data
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    },
+                    UserConnections = new AppUserConnections
+                    {
+                        SteamConnected = false,
+                        DiscordConnected = false,
+                        Steam = new Steam
+                        {
+                        },
+                        Discord = new Discord
+                        {
+                        }
                     }
                 }
             };
@@ -162,6 +218,17 @@ namespace API.Data
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    },
+                    UserConnections = new AppUserConnections
+                    {
+                        SteamConnected = false,
+                        DiscordConnected = false,
+                        Steam = new Steam
+                        {
+                        },
+                        Discord = new Discord
+                        {
+                        }
                     }
                 }
             };
@@ -183,6 +250,17 @@ namespace API.Data
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    },
+                    UserConnections = new AppUserConnections
+                    {
+                        SteamConnected = false,
+                        DiscordConnected = false,
+                        Steam = new Steam
+                        {
+                        },
+                        Discord = new Discord
+                        {
+                        }
                     }
                 }
             };

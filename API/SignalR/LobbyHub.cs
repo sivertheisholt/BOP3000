@@ -12,6 +12,7 @@ namespace API.SignalR
     {
         private readonly LobbyTracker _lobbyTracker;
         private readonly ILobbiesRepository _lobbiesRepository;
+        private static readonly Dictionary<int, Task> LobbyStartingTask = new Dictionary<int, Task>();
         public LobbyHub(LobbyTracker lobbyTracker, ILobbiesRepository lobbiesRepository)
         {
             _lobbiesRepository = lobbiesRepository;
@@ -127,7 +128,9 @@ namespace API.SignalR
             await _lobbyTracker.StartCheck(lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("HostStarted", adminUid);
 
-            await Task.Delay(10000);
+            var task = Task.Delay(10000);
+            LobbyStartingTask.Add(lobbyId, task);
+            await task;
 
             if (await _lobbyTracker.CheckReadyState(lobbyId))
             {
@@ -163,6 +166,7 @@ namespace API.SignalR
         public override async Task OnConnectedAsync()
         {
             var uid = Context.User.GetUserId();
+            if (uid == -1) return;
 
             //Testing lobby 1 admin user 1
             if (Context.User.GetUserId() == 1)

@@ -17,6 +17,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices(_config);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -36,10 +37,9 @@ namespace API
 
             app.UseRouting();
 
-            app.UseCors(policy => policy.AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials()
-                .WithOrigins("https://localhost:4200"));
+            app.UseCors(builder => builder.WithOrigins("*")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseAuthorization();
