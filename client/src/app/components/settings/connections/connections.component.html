@@ -14,11 +14,8 @@
         </div>
     </section>
     <section class="section">
-        <form [formGroup]="connectToSteamForm" (ngSubmit)="onSubmit()">
+        <form (ngSubmit)="onSubmit()">
             <button type="submit" class="button steambtn">
-                <input type="hidden" name="Provider" value="" formGroupName="Provider"/>
-                <input type="hidden" name="ReturnUrl" value="" formGroupName="ReturnUrl" />
-
                 <span>Connect Your Steam</span>
                 <div class="icon">
                     <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">

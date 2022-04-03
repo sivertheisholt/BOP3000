@@ -61,6 +61,14 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "testing": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.testing.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -79,6 +87,9 @@
             },
             "development": {
               "browserTarget": "client:build:development"
+            },
+            "testing": {
+              "browserTarget": "projectName:build:testing"
             }
           },
           "defaultConfiguration": "development"

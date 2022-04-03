@@ -12,8 +12,10 @@ import { map } from 'rxjs/operators';
 })
 export class ConnectionsComponent implements OnInit {
   connectToSteamForm!: FormGroup;
+  private httpClient: HttpClient;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, @Inject(DOCUMENT) private document: Document) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, @Inject(DOCUMENT) private document: Document, private handler: HttpBackend) {
+    this.httpClient = new HttpClient(handler);
     if(this.route.snapshot.queryParams.success != null)
     {
       this.steamSuccess();
@@ -29,15 +31,15 @@ export class ConnectionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.connectToSteamForm = new FormGroup({
-      Provider: new FormControl("Steam"),
-      ReturnUrl: new FormControl("/")
-    });
   }
 
   onSubmit(){
-    this.http.post('https://localhost:5001/api/accounts/steam', this.connectToSteamForm.value, {responseType: "text", observe: 'response'}, ).subscribe(
-      response => {
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+      responseType: "text" as "json", observe: "response" as "body"
+  };
+    this.httpClient.post('https://localhost:5001/api/accounts/steam', "", options).subscribe(
+      (response: any) => {
         this.document.location.href = response.url!;
       }
     )

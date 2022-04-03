@@ -35,18 +35,20 @@ namespace API
 
             app.UseHttpsRedirection();
 
+
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
                 await next();
             });
 
+
             app.UseRouting();
 
             app.UseCors(policy => policy.AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
-                .WithOrigins("https://localhost:4200"));
+                .WithOrigins("https://localhost:4200", "https://localhost:5001"));
 
             app.UseAuthentication();
             app.UseAuthorization();
