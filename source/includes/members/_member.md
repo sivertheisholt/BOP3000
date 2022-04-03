@@ -46,6 +46,10 @@ fetch("https://bop3000.azurewebsites.net/api/members", requestOptions)
         "following": [2, 3, 4, 6, 7],
         "userFavoriteGames": [2, 3, 4, 6, 7],
         "finishedLobbies": [2, 3, 4, 6, 7]
+      },
+      "memberPhoto": {
+        "id": 2,
+        "url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1648988522/qyf8mc0optfwaebzj0cp.png"
       }
     }
   }
@@ -68,14 +72,15 @@ This endpoint retrieves all members.
 
 #### MemberProfile
 
-| Key         | Type       |
-| ----------- | ---------- |
-| birthday    | string     |
-| age         | int        |
-| gender      | string     |
-| description | string     |
-| countryIso  | CountryIso |
-| memberData  | MemberData |
+| Key         | Type        |
+| ----------- | ----------- |
+| birthday    | string      |
+| age         | int         |
+| gender      | string      |
+| description | string      |
+| countryIso  | CountryIso  |
+| memberPhoto | MemberPhoto |
+| memberData  | MemberData  |
 
 #### CountryIso
 
@@ -86,6 +91,13 @@ This endpoint retrieves all members.
 | twoLetterCode   | string |
 | ThreeLetterCode | string |
 | numericCode     | string |
+
+#### MemberPhoto
+
+| Key | Type   |
+| --- | ------ |
+| id  | int    |
+| url | string |
 
 #### MemberData
 
@@ -141,6 +153,10 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
       "following": [2, 3, 4, 6, 7],
       "userFavoriteGames": [2, 3, 4, 6, 7],
       "finishedLobbies": [2, 3, 4, 6, 7]
+    },
+    "memberPhoto": {
+      "id": 2,
+      "url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1648988522/qyf8mc0optfwaebzj0cp.png"
     }
   }
 }
@@ -168,14 +184,15 @@ This endpoint retrieves a specific member.
 
 #### MemberProfile
 
-| Key         | Type       |
-| ----------- | ---------- |
-| birthday    | string     |
-| age         | int        |
-| gender      | string     |
-| description | string     |
-| countryIso  | CountryIso |
-| memberData  | MemberData |
+| Key         | Type        |
+| ----------- | ----------- |
+| birthday    | string      |
+| age         | int         |
+| gender      | string      |
+| description | string      |
+| countryIso  | CountryIso  |
+| memberPhoto | MemberPhoto |
+| memberData  | MemberData  |
 
 #### CountryIso
 
@@ -186,6 +203,13 @@ This endpoint retrieves a specific member.
 | twoLetterCode   | string |
 | ThreeLetterCode | string |
 | numericCode     | string |
+
+#### MemberPhoto
+
+| Key | Type   |
+| --- | ------ |
+| id  | int    |
+| url | string |
 
 #### MemberData
 
@@ -240,6 +264,10 @@ fetch("https://bop3000.azurewebsites.net/api/members/current", requestOptions)
       "following": [2, 3, 4, 6, 7],
       "userFavoriteGames": [2, 3, 4, 6, 7],
       "finishedLobbies": [2, 3, 4, 6, 7]
+    },
+    "memberPhoto": {
+      "id": 2,
+      "url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1648988522/qyf8mc0optfwaebzj0cp.png"
     }
   }
 }
@@ -261,14 +289,15 @@ This endpoint retrieves the current member.
 
 #### MemberProfile
 
-| Key         | Type       |
-| ----------- | ---------- |
-| birthday    | string     |
-| age         | int        |
-| gender      | string     |
-| description | string     |
-| countryIso  | CountryIso |
-| memberData  | MemberData |
+| Key         | Type        |
+| ----------- | ----------- |
+| birthday    | string      |
+| age         | int         |
+| gender      | string      |
+| description | string      |
+| countryIso  | CountryIso  |
+| memberPhoto | MemberPhoto |
+| memberData  | MemberData  |
 
 #### CountryIso
 
@@ -279,6 +308,13 @@ This endpoint retrieves the current member.
 | twoLetterCode   | string |
 | ThreeLetterCode | string |
 | numericCode     | string |
+
+#### MemberPhoto
+
+| Key | Type   |
+| --- | ------ |
+| id  | int    |
+| url | string |
 
 #### MemberData
 
