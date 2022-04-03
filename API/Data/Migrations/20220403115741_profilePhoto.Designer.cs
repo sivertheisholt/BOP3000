@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220403115741_profilePhoto")]
+    partial class profilePhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -900,7 +902,7 @@ namespace API.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AppUserProfileId")
+                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("PublicId")
@@ -911,8 +913,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserProfileId")
-                        .IsUnique();
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("AppUserPhoto");
                 });
@@ -920,6 +921,9 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Users.AppUserProfile", b =>
                 {
                     b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AppUserPhotoId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Birthday")
@@ -935,6 +939,8 @@ namespace API.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AppUserId");
+
+                    b.HasIndex("AppUserPhotoId");
 
                     b.HasIndex("CountryIsoId");
 
@@ -1366,13 +1372,13 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Users.AppUserPhoto", b =>
                 {
-                    b.HasOne("API.Entities.Users.AppUserProfile", "AppUserProfile")
-                        .WithOne("AppUserPhoto")
-                        .HasForeignKey("API.Entities.Users.AppUserPhoto", "AppUserProfileId")
+                    b.HasOne("API.Entities.Users.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AppUserProfile");
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("API.Entities.Users.AppUserProfile", b =>
@@ -1383,11 +1389,17 @@ namespace API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("API.Entities.Users.AppUserPhoto", "AppUserPhoto")
+                        .WithMany()
+                        .HasForeignKey("AppUserPhotoId");
+
                     b.HasOne("API.Entities.Countries.CountryIso", "CountryIso")
                         .WithMany()
                         .HasForeignKey("CountryIsoId");
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("AppUserPhoto");
 
                     b.Navigation("CountryIso");
                 });
@@ -1531,8 +1543,6 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Users.AppUserProfile", b =>
                 {
                     b.Navigation("AppUserData");
-
-                    b.Navigation("AppUserPhoto");
 
                     b.Navigation("UserConnections");
                 });

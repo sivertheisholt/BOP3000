@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220403113040_userPhoto")]
+    partial class userPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -892,31 +894,6 @@ namespace API.Data.Migrations
                     b.ToTable("AppUserData");
                 });
 
-            modelBuilder.Entity("API.Entities.Users.AppUserPhoto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AppUserProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PublicId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserProfileId")
-                        .IsUnique();
-
-                    b.ToTable("AppUserPhoto");
-                });
-
             modelBuilder.Entity("API.Entities.Users.AppUserProfile", b =>
                 {
                     b.Property<int>("AppUserId")
@@ -1364,17 +1341,6 @@ namespace API.Data.Migrations
                     b.Navigation("AppUserProfile");
                 });
 
-            modelBuilder.Entity("API.Entities.Users.AppUserPhoto", b =>
-                {
-                    b.HasOne("API.Entities.Users.AppUserProfile", "AppUserProfile")
-                        .WithOne("AppUserPhoto")
-                        .HasForeignKey("API.Entities.Users.AppUserPhoto", "AppUserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUserProfile");
-                });
-
             modelBuilder.Entity("API.Entities.Users.AppUserProfile", b =>
                 {
                     b.HasOne("API.Entities.Users.AppUser", "AppUser")
@@ -1531,8 +1497,6 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Users.AppUserProfile", b =>
                 {
                     b.Navigation("AppUserData");
-
-                    b.Navigation("AppUserPhoto");
 
                     b.Navigation("UserConnections");
                 });

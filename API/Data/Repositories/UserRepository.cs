@@ -37,6 +37,8 @@ namespace API.Data.Repositories
                 .Include(p => p.AppUserProfile)
                 .ThenInclude(p => p.UserConnections)
                 .ThenInclude(p => p.Steam)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.AppUserPhoto)
                 .FirstOrDefaultAsync();
 
             return user;

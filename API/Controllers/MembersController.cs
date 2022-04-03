@@ -18,8 +18,10 @@ namespace API.Controllers
         private readonly LobbyTracker _lobbyTracker;
         private readonly IMeilisearchService _meilisearchService;
         private readonly IActivitiesRepository _activitiesRepository;
-        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository, LobbyTracker lobbyTracker, IMeilisearchService meilisearchService, IActivitiesRepository activitiesRepository) : base(mapper)
+        private readonly IPhotoService _photoService;
+        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository, LobbyTracker lobbyTracker, IMeilisearchService meilisearchService, IActivitiesRepository activitiesRepository, IPhotoService photoService) : base(mapper)
         {
+            _photoService = photoService;
             _activitiesRepository = activitiesRepository;
             _meilisearchService = meilisearchService;
             _lobbyTracker = lobbyTracker;
@@ -195,6 +197,29 @@ namespace API.Controllers
             var index = _meilisearchService.GetIndex("members");
             var hits = await _meilisearchService.SearchAsync<AppUserMeili>(index, name, new SearchQuery { Limit = limit });
             return Ok(Mapper.Map<IEnumerable<AppUserMeili>>(hits.Hits));
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPost("set-photo")]
+        public async Task<ActionResult<MemberPhotoDto>> AddPhoto(IFormFile file)
+        {
+            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+
+            var result = await _photoService.AddPhotoAsync(file);
+
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
+            var photo = new AppUserPhoto
+            {
+                Url = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId
+            };
+
+            user.AppUserProfile.AppUserPhoto = photo;
+
+            if (await _userRepository.SaveAllAsync()) return Mapper.Map<MemberPhotoDto>(photo);
+
+            return BadRequest("Problem adding photo");
         }
     }
 }

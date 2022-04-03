@@ -15,5 +15,6 @@ namespace API.DTOs.Members
         public string Description { get; set; }
         public CountryIsoDto CountryIso { get; set; }
         public MemberDataDto MemberData { get; set; }
+        public MemberPhotoDto MemberPhoto { get; set; }
     }
 }

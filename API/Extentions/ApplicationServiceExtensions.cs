@@ -15,6 +15,7 @@ namespace API.Extentions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
 
             services.AddScoped<LobbyHub>();
             services.AddScoped<LobbyChatHub>();
@@ -24,14 +25,13 @@ namespace API.Extentions
             services.AddHttpClient<ISteamAppsClient, SteamAppsClient>();
             services.AddHttpClient<ISteamStoreClient, SteamStoreClient>();
 
-            services.AddSingleton<IEmailService, EmailService>();
-
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddSingleton<IEmailService, EmailService>();
             services.AddSingleton<IMeilisearchService, MeilisearchService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILobbiesRepository, LobbiesRepository>();
-
             services.AddScoped<ISteamAppRepository, SteamAppRepository>();
             services.AddScoped<ISteamAppsRepository, SteamAppsRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();

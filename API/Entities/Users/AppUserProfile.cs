@@ -11,7 +11,7 @@ namespace API.Entities.Users
         public AppUserConnections UserConnections { get; set; }
         public CountryIso CountryIso { get; set; }
         public AppUserData AppUserData { get; set; }
-
+        public AppUserPhoto AppUserPhoto { get; set; }
         public AppUser AppUser { get; set; }
         public int AppUserId { get; set; }
     }

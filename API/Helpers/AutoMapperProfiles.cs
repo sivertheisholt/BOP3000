@@ -33,11 +33,18 @@ namespace API.Helpers
             CreateMap<AppUserProfile, MemberProfileDto>()
                 .ForMember(
                     dest => dest.MemberData,
-                    opt => opt.MapFrom(src => src.AppUserData));
+                    opt => opt.MapFrom(src => src.AppUserData))
+                .ForMember(
+                    dest => dest.MemberPhoto,
+                    opt => opt.MapFrom(src => src.AppUserPhoto));
+
             CreateMap<MemberProfileDto, AppUserProfile>().ReverseMap()
                 .ForMember(
                     dest => dest.MemberData,
-                    opt => opt.MapFrom(src => src.AppUserData));
+                    opt => opt.MapFrom(src => src.AppUserData))
+                .ForMember(
+                    dest => dest.MemberPhoto,
+                    opt => opt.MapFrom(src => src.AppUserPhoto));
 
             CreateMap<AppUserData, MemberDataDto>();
             CreateMap<MemberDataDto, AppUserData>().ReverseMap();
@@ -54,6 +61,8 @@ namespace API.Helpers
             CreateMap<ActivityLog, ActivityLogDto>()
                 .ForMember(dest => dest.Identifier,
                 opt => opt.MapFrom(src => src.Activity.Identifier));
+
+            CreateMap<AppUserPhoto, MemberPhotoDto>();
         }
     }
 }
