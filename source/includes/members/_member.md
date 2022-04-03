@@ -461,6 +461,44 @@ This endpoint gets the current logged in member's activity list
 
 <!--- POST --->
 
+## POST Set profile picture
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var formdata = new FormData();
+formdata.append("File", fileInput.files[0], "Background.png");
+
+var requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow",
+};
+
+fetch("https://bop3000.azurewebsites.net/api/members/set-photo", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a JSON structured like this:
+
+```json
+{
+  "id": 2,
+  "url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1648988522/qyf8mc0optfwaebzj0cp.png"
+}
+```
+
+This endpoint sets the profile picture for the current user
+
+### HTTP Request
+
+`POST https://bop3000.azurewebsites.net/api/members/set-photo`
+
 <!--- PUT --->
 
 <!--- PATCH --->
