@@ -433,6 +433,14 @@
               </ul>
           </li>
           <li>
+            <a href="#support" class="toc-h1 toc-link" data-title="Support">Support</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#post-create-new-ticket" class="toc-h2 toc-link" data-title="POST Create new ticket">POST Create new ticket</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -2595,6 +2603,48 @@
 <!--- POST --->
 
 <!--- PUT --->
+
+<!--- DELETE --->
+<h1 id='support'>Support</h1>
+<!--- GET --->
+
+<!--- POST --->
+<h2 id='post-create-new-ticket'>POST Create new ticket</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="na">subject</span><span class="p">:</span> <span class="dl">"</span><span class="s2">HELP</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">member@test.com</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Member</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">description</span><span class="p">:</span> <span class="dl">"</span><span class="s2">I cant log in to my user</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">raw</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/support/create-ticket</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">requestOptions</span>
+<span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns a 200 status code</p>
+</blockquote>
+
+<p>This endpoint will create a new ticket in the ticket system at freshdesk</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://bop3000.azurewebsites.net/api/support/create-ticket</code></p>
+
+<!--- PUT --->
+
+<!--- PATCH --->
 
 <!--- DELETE --->
 <h1 id='errors'>Errors</h1>
