@@ -42,7 +42,6 @@ namespace API
                 await next();
             });
 
-
             app.UseRouting();
 
             app.UseCors(policy => policy.AllowAnyHeader()

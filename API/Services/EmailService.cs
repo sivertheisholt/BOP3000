@@ -1,3 +1,4 @@
+using API.DTOs.Support;
 using API.Interfaces.IServices;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -8,20 +9,33 @@ namespace API.Services
     public class EmailService : IEmailService
     {
         private readonly SmtpClient _client;
-        
+
         private readonly string _email;
-        
-        public EmailService()
+
+        public EmailService(IConfiguration config)
         {
             var client = new SmtpClient();
-            var email = Environment.GetEnvironmentVariable("EMAIL_USERNAME");
-            var password = Environment.GetEnvironmentVariable("EMAIL_PASSWORD");
+
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var username = "";
+            var password = "";
+            if (env == "Development")
+            {
+
+                username = config.GetSection("EmailAccount")["Username"];
+                password = config.GetSection("EmailAccount")["Password"];
+            }
+            else
+            {
+                username = Environment.GetEnvironmentVariable("EMAIL_USERNAME");
+                password = Environment.GetEnvironmentVariable("EMAIL_PASSWORD");
+            }
 
             client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            client.Authenticate(email, password);
+            client.Authenticate(username, password);
 
             _client = client;
-            _email = email;
+            _email = username;
         }
 
         public bool SendForgottenPasswordMail(string token, string email)
@@ -39,6 +53,20 @@ namespace API.Services
             _client.Send(message);
 
             return true;
+        }
+
+        public Task SendNewTicketMail(NewTicketDto ticketDto)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Playfu", _email));
+            message.To.Add(new MailboxAddress("support", "support@playfu.freshdesk.com"));
+            message.Subject = ticketDto.Subject;
+            message.Body = new TextPart("plain")
+            {
+                Text = $"Email: {ticketDto.Email}, Name: {ticketDto.Name}, Description: {ticketDto.Description}"
+            };
+            _client.Send(message);
+            return Task.CompletedTask;
         }
     }
 }
