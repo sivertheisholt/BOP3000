@@ -18,7 +18,8 @@ export class ConnectionsComponent implements OnInit {
     this.httpClient = new HttpClient(handler);
     if(this.route.snapshot.queryParams.success != null)
     {
-      this.steamSuccess();
+      if(this.route.snapshot.queryParams.provider == "discord") this.discordSuccess()
+      if(this.route.snapshot.queryParams.provider == "steam") this.steamSuccess();
     }
   }
 
@@ -30,16 +31,36 @@ export class ConnectionsComponent implements OnInit {
     )
   }
 
+  discordSuccess(): void {
+    this.http.patch('https://localhost:5001/api/accounts/discord-success', {}).subscribe(
+      response => {
+        console.log(response);
+      }
+    )
+  }
+
   ngOnInit(): void {
   }
 
-  onSubmit(){
+  onSubmitSteam(){
     let options = {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
       responseType: "text" as "json", observe: "response" as "body"
   };
     this.httpClient.post('https://localhost:5001/api/accounts/steam', "", options).subscribe(
       (response: any) => {
+        this.document.location.href = response.url!;
+      }
+    )
+  }
+  onSubmitDiscord(){
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+      responseType: "text" as "json", observe: "response" as "body"
+  };
+    this.httpClient.post('https://localhost:5001/api/accounts/discord', "", options).subscribe(
+      (response: any) => {
+        console.log(response);
         this.document.location.href = response.url!;
       }
     )

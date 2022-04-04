@@ -1,6 +1,7 @@
 using System;
 using API.DTOs;
 using API.DTOs.Accounts;
+using API.Entities.Applications;
 using API.Entities.Users;
 using API.Enums;
 using API.Extentions;
@@ -122,27 +123,45 @@ namespace API.Controllers
         }
 
         [HttpPost("steam")]
-        public async Task<IActionResult> SignIn([FromForm] string Provider)
+        public async Task<IActionResult> SignInSteam()
         {
-            Provider = "Steam";
+            var provider = "Steam";
             // Note: the "provider" parameter corresponds to the external
             // authentication provider choosen by the user agent.
-            if (string.IsNullOrWhiteSpace(Provider))
+            if (string.IsNullOrWhiteSpace(provider))
             {
                 return BadRequest();
             }
 
-            if (!await HttpContext.IsProviderSupportedAsync(Provider))
+            if (!await HttpContext.IsProviderSupportedAsync(provider))
             {
                 return BadRequest();
             }
 
-            return Challenge(new AuthenticationProperties { RedirectUri = "/settings?success=true" }, Provider);
+            return Challenge(new AuthenticationProperties { RedirectUri = "/settings?success=true&provider=steam" }, provider);
+        }
+        [HttpPost("discord")]
+        public async Task<IActionResult> SignInDiscord()
+        {
+            var provider = "Discord";
+            // Note: the "provider" parameter corresponds to the external
+            // authentication provider choosen by the user agent.
+            if (string.IsNullOrWhiteSpace(provider))
+            {
+                return BadRequest();
+            }
+
+            if (!await HttpContext.IsProviderSupportedAsync(provider))
+            {
+                return BadRequest();
+            }
+
+            return Challenge(new AuthenticationProperties { RedirectUri = "/settings?success=true&provider=discord" }, provider);
         }
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("steam-success")]
-        public async Task<IActionResult> test()
+        public async Task<IActionResult> SaveSteamId()
         {
             var steamId = HttpContext.Request.Cookies["steamId"];
 
@@ -156,6 +175,37 @@ namespace API.Controllers
             if (user.AppUserProfile.UserConnections.SteamConnected) return BadRequest("Steam account already connected");
 
             _userRepository.AddSteamId(user, Int64.Parse(steamId));
+            await _userRepository.SaveAllAsync();
+
+            return Ok();
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("discord-success")]
+        public async Task<IActionResult> SaveDiscordToken()
+        {
+            var access_token = HttpContext.Request.Cookies["access_token"];
+            var refresh_token = HttpContext.Request.Cookies["refresh_token"];
+            var token_expires = HttpContext.Request.Cookies["token_expires"];
+
+            if (access_token == null) return NotFound();
+
+            var uid = GetUserIdFromClaim();
+
+            var user = await _userRepository.GetUserByIdAsync(uid);
+
+            if (user == null) return NotFound();
+
+            if (user.AppUserProfile.UserConnections.DiscordConnected) return BadRequest("Discord account already connected");
+
+            var discord = new Discord
+            {
+                RefreshToken = refresh_token,
+                AccessToken = access_token,
+                Expires = DateTime.Parse(token_expires)
+            };
+
+            _userRepository.AddDiscord(user, discord);
             await _userRepository.SaveAllAsync();
 
             return Ok();

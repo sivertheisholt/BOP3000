@@ -91,11 +91,43 @@ namespace API.Extentions
                         // Get the last segment which is the steam steamid
                         var steamId = new Uri(ctx.Identifier).Segments.Last();
 
-                        //Temp just to get it work, this is not safe!
+                        //Temp just to get it work, this is not safe!!
                         ctx.Response.Cookies.Append("steamId", steamId);
 
                         return Task.CompletedTask;
                     };
+                })
+                .AddDiscord(options =>
+                {
+                    var clientId = "";
+                    var clientSecret = "";
+                    if (env == "Development")
+                    {
+                        clientId = config.GetSection("DiscordApp")["ClientId"];
+                        clientSecret = config.GetSection("DiscordApp")["ClientSecret"];
+                    }
+                    else
+                    {
+                        clientId = Environment.GetEnvironmentVariable("DISCORD_APP_CLIENT_ID");
+                        clientSecret = Environment.GetEnvironmentVariable("DISCORD_APP_CLIENT_SECRET");
+                    }
+                    options.ClientId = clientId;
+                    options.ClientSecret = clientSecret;
+                    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.Events.OnTicketReceived = ctx =>
+                    {
+                        var access_token = ctx.Properties.Items[".Token.access_token"];
+                        var refresh_token = ctx.Properties.Items[".Token.refresh_token"];
+                        var expires = ctx.Properties.Items[".Token.expires_at"];
+
+                        //Temp just to get it work, this is not safe!!
+                        ctx.Response.Cookies.Append("access_token", access_token);
+                        ctx.Response.Cookies.Append("refresh_token", refresh_token);
+                        ctx.Response.Cookies.Append("token_expires", expires);
+
+                        return Task.CompletedTask;
+                    };
+                    options.SaveTokens = true;
                 });
 
             services.AddAuthorization(opt =>

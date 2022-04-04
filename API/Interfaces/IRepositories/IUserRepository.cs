@@ -1,3 +1,4 @@
+using API.Entities.Applications;
 using API.Entities.Users;
 
 namespace API.Interfaces.IRepositories
@@ -20,5 +21,7 @@ namespace API.Interfaces.IRepositories
         Task<string> GetUsernameFromId(int id);
 
         void AddSteamId(AppUser user, long steamId);
+
+        void AddDiscord(AppUser user, Discord discord);
     }
 }

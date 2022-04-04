@@ -11,6 +11,12 @@ namespace API.Data.Repositories
         {
         }
 
+        public void AddDiscord(AppUser user, Discord discord)
+        {
+            user.AppUserProfile.UserConnections.DiscordConnected = true;
+            user.AppUserProfile.UserConnections.Discord = discord;
+        }
+
         public void AddSteamId(AppUser user, long steamId)
         {
             user.AppUserProfile.UserConnections.SteamConnected = true;
@@ -39,6 +45,9 @@ namespace API.Data.Repositories
                 .ThenInclude(p => p.Steam)
                 .Include(p => p.AppUserProfile)
                 .ThenInclude(p => p.AppUserPhoto)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.UserConnections)
+                .ThenInclude(p => p.Discord)
                 .FirstOrDefaultAsync();
 
             return user;

@@ -1,12 +1,14 @@
 <h1 class="title p-3 text-is-light">Connections</h1>
 <div class="connections-settings-wrapper is-flex is-flex-direction-column">
     <section class="section">
-        <a href="#" class="button discordbtn">
-            <span>Connect Your Discord</span>
-            <div class="icon">
-                <img class="image is-64by64" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="">
-            </div>
-        </a>
+        <form (ngSubmit)="onSubmitDiscord()">
+            <button type="submit" class="button discordbtn">
+                <span>Connect Your Discord</span>
+                <div class="icon">
+                    <img class="image is-64by64" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="">
+                </div>
+            </button>
+        </form>
         <div class="connections-text mt-4 text-is-light">
             <p>
                 By connecting your Discord... Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo placeat vitae quidem amet reprehenderit distinctio libero nulla delectus, enim voluptates dolorum? Tempora earum provident perspiciatis quos hic temporibus consectetur aperiam!
@@ -14,7 +16,7 @@
         </div>
     </section>
     <section class="section">
-        <form (ngSubmit)="onSubmit()">
+        <form (ngSubmit)="onSubmitSteam()">
             <button type="submit" class="button steambtn">
                 <span>Connect Your Steam</span>
                 <div class="icon">
