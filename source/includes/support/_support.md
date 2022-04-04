@@ -41,6 +41,15 @@ This endpoint will create a new ticket in the ticket system at freshdesk
 
 `POST https://bop3000.azurewebsites.net/api/support/create-ticket`
 
+### Body Schema
+
+| Key         | Type   |
+| ----------- | ------ |
+| subject     | string |
+| email       | string |
+| name        | string |
+| description | string |
+
 <!--- PUT --->
 
 <!--- PATCH --->
