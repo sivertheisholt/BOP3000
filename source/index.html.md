@@ -14,6 +14,7 @@ includes:
   - members/member
   - apps/app
   - countries/country
+  - support/support
   - errors
 
 search: true
