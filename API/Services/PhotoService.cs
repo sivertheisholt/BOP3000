@@ -13,14 +13,28 @@ namespace API.Services
     public class PhotoService : IPhotoService
     {
         private readonly Cloudinary _cloudinary;
-        public PhotoService(IOptions<CloudinarySettings> config)
+        public PhotoService(IOptions<CloudinarySettings> config, IConfiguration envConfig)
         {
-            var acc = new Account
-            (
-                config.Value.CloudName,
-                config.Value.ApiKey,
-                config.Value.ApiSecret
-            );
+            var acc = new Account { };
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (env == "Development")
+            {
+                acc = new Account
+                (
+                    config.Value.CLOUDINARY_SETTINGS_CLOUDNAME,
+                    config.Value.CLOUDINARY_SETTINGS_API_KEY,
+                    config.Value.CLOUDINARY_SETTINGS_API_SECRET
+                );
+            }
+            else
+            {
+                acc = new Account
+                (
+                    envConfig.GetSection("CLOUDINARY_SETTINGS")["CLOUDINARY_SETTINGS_CLOUDNAME"],
+                    envConfig.GetSection("CLOUDINARY_SETTINGS")["CLOUDINARY_SETTINGS_API_KEY"],
+                    envConfig.GetSection("CLOUDINARY_SETTINGS")["CLOUDINARY_SETTINGS_API_SECRET"]
+                );
+            }
 
             _cloudinary = new Cloudinary(acc);
         }

@@ -3,7 +3,7 @@ using API.Entities.Users;
 
 namespace API.Entities.Applications
 {
-    public class Steam
+    public class SteamProfile
     {
         public long SteamId { get; set; }
         public AppUserConnections AppUserConnections { get; set; }

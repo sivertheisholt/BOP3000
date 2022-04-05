@@ -6,6 +6,7 @@ using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using API.SignalR;
 using AutoMapper;
+using Discord.WebSocket;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,18 @@ namespace API
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        private DiscordSocketClient _client;
+
+
+        public static Task Main(string[] args) => new Program().MainAsync(args);
+
+        public async Task MainAsync(string[] args)
+        {
+            await InitHost(args);
+            _client = new DiscordSocketClient();
+        }
+
+        private async Task InitHost(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -40,8 +52,6 @@ namespace API
 
                 var activitiesRepository = services.GetRequiredService<IActivitiesRepository>();
                 var activityRepository = services.GetRequiredService<IActivityRepository>();
-
-
 
                 var lobbyHub = services.GetRequiredService<LobbyHub>();
 

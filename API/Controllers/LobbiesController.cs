@@ -87,8 +87,8 @@ namespace API.Controllers
 
             var lobbyAdmin = await _userRepository.GetUserByIdAsync(lobby.AdminUid);
             lobbyDto.AdminUsername = lobbyAdmin.UserName;
-
-
+            lobbyDto.AdminProfilePic = lobbyAdmin.AppUserProfile.AppUserPhoto.Url;
+            
             return lobbyDto;
         }
 
@@ -112,6 +112,7 @@ namespace API.Controllers
                 }
 
                 lobby.AdminUsername = lobbyAdmin.UserName;
+                lobby.AdminProfilePic = lobbyAdmin.AppUserProfile.AppUserPhoto.Url;
             }
             return lobbiesDto;
         }
@@ -134,6 +135,7 @@ namespace API.Controllers
                 }
 
                 lobby.AdminUsername = lobbyAdmin.UserName;
+                lobby.AdminProfilePic = lobbyAdmin.AppUserProfile.AppUserPhoto.Url;
             }
 
             return lobbiesDto;

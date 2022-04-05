@@ -10,6 +10,21 @@ namespace API.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Activity",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Identifier = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Activity", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AppInfo",
                 columns: table => new
                 {
@@ -191,6 +206,33 @@ namespace API.Data.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ActivityLog",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AppUserId = table.Column<int>(type: "int", nullable: false),
+                    ActivityId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActivityLog", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ActivityLog_Activity_ActivityId",
+                        column: x => x.ActivityId,
+                        principalTable: "Activity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ActivityLog_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -707,6 +749,27 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppUserPhoto",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppUserProfileId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUserPhoto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppUserPhoto_AppUserProfile_AppUserProfileId",
+                        column: x => x.AppUserProfileId,
+                        principalTable: "AppUserProfile",
+                        principalColumn: "AppUserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Highlighted",
                 columns: table => new
                 {
@@ -793,16 +856,19 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Discord",
+                name: "DiscordProfile",
                 columns: table => new
                 {
-                    AppUserConnectionsId = table.Column<int>(type: "int", nullable: false)
+                    AppUserConnectionsId = table.Column<int>(type: "int", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccessToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Expires = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Discord", x => x.AppUserConnectionsId);
+                    table.PrimaryKey("PK_DiscordProfile", x => x.AppUserConnectionsId);
                     table.ForeignKey(
-                        name: "FK_Discord_AppUserConnections_AppUserConnectionsId",
+                        name: "FK_DiscordProfile_AppUserConnections_AppUserConnectionsId",
                         column: x => x.AppUserConnectionsId,
                         principalTable: "AppUserConnections",
                         principalColumn: "AppUserProfileId",
@@ -810,21 +876,32 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Steam",
+                name: "SteamProfile",
                 columns: table => new
                 {
-                    AppUserConnectionsId = table.Column<int>(type: "int", nullable: false)
+                    AppUserConnectionsId = table.Column<int>(type: "int", nullable: false),
+                    SteamId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Steam", x => x.AppUserConnectionsId);
+                    table.PrimaryKey("PK_SteamProfile", x => x.AppUserConnectionsId);
                     table.ForeignKey(
-                        name: "FK_Steam_AppUserConnections_AppUserConnectionsId",
+                        name: "FK_SteamProfile_AppUserConnections_AppUserConnectionsId",
                         column: x => x.AppUserConnectionsId,
                         principalTable: "AppUserConnections",
                         principalColumn: "AppUserProfileId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ActivityLog_ActivityId",
+                table: "ActivityLog",
+                column: "ActivityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ActivityLog_AppUserId",
+                table: "ActivityLog",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AppData_AppInfoId",
@@ -836,6 +913,12 @@ namespace API.Data.Migrations
                 name: "IX_AppListInfo_AppListId",
                 table: "AppListInfo",
                 column: "AppListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUserPhoto_AppUserProfileId",
+                table: "AppUserPhoto",
+                column: "AppUserProfileId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AppUserProfile_CountryIsoId",
@@ -930,10 +1013,16 @@ namespace API.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ActivityLog");
+
+            migrationBuilder.DropTable(
                 name: "AppListInfo");
 
             migrationBuilder.DropTable(
                 name: "AppUserData");
+
+            migrationBuilder.DropTable(
+                name: "AppUserPhoto");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -957,7 +1046,7 @@ namespace API.Data.Migrations
                 name: "ContentDescriptors");
 
             migrationBuilder.DropTable(
-                name: "Discord");
+                name: "DiscordProfile");
 
             migrationBuilder.DropTable(
                 name: "Genre");
@@ -999,7 +1088,7 @@ namespace API.Data.Migrations
                 name: "Screenshot");
 
             migrationBuilder.DropTable(
-                name: "Steam");
+                name: "SteamProfile");
 
             migrationBuilder.DropTable(
                 name: "Sub");
@@ -1009,6 +1098,9 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Webm");
+
+            migrationBuilder.DropTable(
+                name: "Activity");
 
             migrationBuilder.DropTable(
                 name: "AppList");

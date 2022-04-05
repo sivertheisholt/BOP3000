@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220402234434_steamIdLong")]
-    partial class steamIdLong
+    [Migration("20220405110314_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,17 +72,26 @@ namespace API.Data.Migrations
                     b.ToTable("ActivityLog");
                 });
 
-            modelBuilder.Entity("API.Entities.Applications.Discord", b =>
+            modelBuilder.Entity("API.Entities.Applications.DiscordProfile", b =>
                 {
                     b.Property<int>("AppUserConnectionsId")
                         .HasColumnType("int");
 
+                    b.Property<string>("AccessToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("AppUserConnectionsId");
 
-                    b.ToTable("Discord");
+                    b.ToTable("DiscordProfile");
                 });
 
-            modelBuilder.Entity("API.Entities.Applications.Steam", b =>
+            modelBuilder.Entity("API.Entities.Applications.SteamProfile", b =>
                 {
                     b.Property<int>("AppUserConnectionsId")
                         .HasColumnType("int");
@@ -92,7 +101,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("AppUserConnectionsId");
 
-                    b.ToTable("Steam");
+                    b.ToTable("SteamProfile");
                 });
 
             modelBuilder.Entity("API.Entities.Countries.CountryIso", b =>
@@ -894,6 +903,31 @@ namespace API.Data.Migrations
                     b.ToTable("AppUserData");
                 });
 
+            modelBuilder.Entity("API.Entities.Users.AppUserPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AppUserProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserProfileId")
+                        .IsUnique();
+
+                    b.ToTable("AppUserPhoto");
+                });
+
             modelBuilder.Entity("API.Entities.Users.AppUserProfile", b =>
                 {
                     b.Property<int>("AppUserId")
@@ -1040,22 +1074,22 @@ namespace API.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("API.Entities.Applications.Discord", b =>
+            modelBuilder.Entity("API.Entities.Applications.DiscordProfile", b =>
                 {
                     b.HasOne("API.Entities.Users.AppUserConnections", "AppUserConnections")
                         .WithOne("Discord")
-                        .HasForeignKey("API.Entities.Applications.Discord", "AppUserConnectionsId")
+                        .HasForeignKey("API.Entities.Applications.DiscordProfile", "AppUserConnectionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUserConnections");
                 });
 
-            modelBuilder.Entity("API.Entities.Applications.Steam", b =>
+            modelBuilder.Entity("API.Entities.Applications.SteamProfile", b =>
                 {
                     b.HasOne("API.Entities.Users.AppUserConnections", "AppUserConnections")
                         .WithOne("Steam")
-                        .HasForeignKey("API.Entities.Applications.Steam", "AppUserConnectionsId")
+                        .HasForeignKey("API.Entities.Applications.SteamProfile", "AppUserConnectionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1341,6 +1375,17 @@ namespace API.Data.Migrations
                     b.Navigation("AppUserProfile");
                 });
 
+            modelBuilder.Entity("API.Entities.Users.AppUserPhoto", b =>
+                {
+                    b.HasOne("API.Entities.Users.AppUserProfile", "AppUserProfile")
+                        .WithOne("AppUserPhoto")
+                        .HasForeignKey("API.Entities.Users.AppUserPhoto", "AppUserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUserProfile");
+                });
+
             modelBuilder.Entity("API.Entities.Users.AppUserProfile", b =>
                 {
                     b.HasOne("API.Entities.Users.AppUser", "AppUser")
@@ -1497,6 +1542,8 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Users.AppUserProfile", b =>
                 {
                     b.Navigation("AppUserData");
+
+                    b.Navigation("AppUserPhoto");
 
                     b.Navigation("UserConnections");
                 });

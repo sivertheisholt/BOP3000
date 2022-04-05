@@ -67,22 +67,22 @@ namespace API.Data
             builder.Entity<AppUserConnections>()
                 .HasKey(conn => conn.AppUserProfileId);
 
-            builder.Entity<Discord>()
+            builder.Entity<DiscordProfile>()
                 .HasOne(discord => discord.AppUserConnections)
                 .WithOne(conn => conn.Discord)
-                .HasForeignKey<Discord>(discord => discord.AppUserConnectionsId)
+                .HasForeignKey<DiscordProfile>(discord => discord.AppUserConnectionsId)
                 .IsRequired();
 
-            builder.Entity<Discord>()
+            builder.Entity<DiscordProfile>()
                 .HasKey(discord => discord.AppUserConnectionsId);
 
-            builder.Entity<Steam>()
+            builder.Entity<SteamProfile>()
                 .HasOne(steam => steam.AppUserConnections)
                 .WithOne(conn => conn.Steam)
-                .HasForeignKey<Steam>(steam => steam.AppUserConnectionsId)
+                .HasForeignKey<SteamProfile>(steam => steam.AppUserConnectionsId)
                 .IsRequired();
 
-            builder.Entity<Steam>()
+            builder.Entity<SteamProfile>()
                 .HasKey(steam => steam.AppUserConnectionsId);
 
             builder.Entity<AppUserData>()

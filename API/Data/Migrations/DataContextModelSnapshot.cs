@@ -70,7 +70,7 @@ namespace API.Data.Migrations
                     b.ToTable("ActivityLog");
                 });
 
-            modelBuilder.Entity("API.Entities.Applications.Discord", b =>
+            modelBuilder.Entity("API.Entities.Applications.DiscordProfile", b =>
                 {
                     b.Property<int>("AppUserConnectionsId")
                         .HasColumnType("int");
@@ -86,10 +86,10 @@ namespace API.Data.Migrations
 
                     b.HasKey("AppUserConnectionsId");
 
-                    b.ToTable("Discord");
+                    b.ToTable("DiscordProfile");
                 });
 
-            modelBuilder.Entity("API.Entities.Applications.Steam", b =>
+            modelBuilder.Entity("API.Entities.Applications.SteamProfile", b =>
                 {
                     b.Property<int>("AppUserConnectionsId")
                         .HasColumnType("int");
@@ -99,7 +99,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("AppUserConnectionsId");
 
-                    b.ToTable("Steam");
+                    b.ToTable("SteamProfile");
                 });
 
             modelBuilder.Entity("API.Entities.Countries.CountryIso", b =>
@@ -1072,22 +1072,22 @@ namespace API.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("API.Entities.Applications.Discord", b =>
+            modelBuilder.Entity("API.Entities.Applications.DiscordProfile", b =>
                 {
                     b.HasOne("API.Entities.Users.AppUserConnections", "AppUserConnections")
                         .WithOne("Discord")
-                        .HasForeignKey("API.Entities.Applications.Discord", "AppUserConnectionsId")
+                        .HasForeignKey("API.Entities.Applications.DiscordProfile", "AppUserConnectionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUserConnections");
                 });
 
-            modelBuilder.Entity("API.Entities.Applications.Steam", b =>
+            modelBuilder.Entity("API.Entities.Applications.SteamProfile", b =>
                 {
                     b.HasOne("API.Entities.Users.AppUserConnections", "AppUserConnections")
                         .WithOne("Steam")
-                        .HasForeignKey("API.Entities.Applications.Steam", "AppUserConnectionsId")
+                        .HasForeignKey("API.Entities.Applications.SteamProfile", "AppUserConnectionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

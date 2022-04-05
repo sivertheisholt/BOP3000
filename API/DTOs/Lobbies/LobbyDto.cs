@@ -11,6 +11,7 @@ namespace API.DTOs.Lobbies
         public string lobbyDescription { get; set; }
         public int AdminUid { get; set; }
         public string AdminUsername { get; set; }
+        public string AdminProfilePic { get; set; }
         public ICollection<int> Users { get; set; }
         public LogDto Log { get; set; }
         public RequirementDto LobbyRequirement { get; set; }

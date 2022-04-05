@@ -3,7 +3,7 @@ using API.Entities.Users;
 
 namespace API.Entities.Applications
 {
-    public class Discord
+    public class DiscordProfile
     {
         public string RefreshToken { get; set; }
         public string AccessToken { get; set; }

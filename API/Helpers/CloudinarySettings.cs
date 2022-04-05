@@ -7,8 +7,8 @@ namespace API.Helpers
 {
     public class CloudinarySettings
     {
-        public string CloudName { get; set; }
-        public string ApiKey { get; set; }
-        public string ApiSecret { get; set; }
+        public string CLOUDINARY_SETTINGS_CLOUDNAME { get; set; }
+        public string CLOUDINARY_SETTINGS_API_KEY { get; set; }
+        public string CLOUDINARY_SETTINGS_API_SECRET { get; set; }
     }
 }

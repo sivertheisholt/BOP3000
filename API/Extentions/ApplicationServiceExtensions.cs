@@ -15,7 +15,7 @@ namespace API.Extentions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            services.Configure<CloudinarySettings>(config.GetSection("CLOUDINARY_SETTINGS"));
 
             services.AddScoped<LobbyHub>();
             services.AddScoped<LobbyChatHub>();

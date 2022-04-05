@@ -103,13 +103,13 @@ namespace API.Extentions
                     var clientSecret = "";
                     if (env == "Development")
                     {
-                        clientId = config.GetSection("DiscordApp")["ClientId"];
-                        clientSecret = config.GetSection("DiscordApp")["ClientSecret"];
+                        clientId = config.GetSection("DISCORD_APP")["DISCORD_CLIENT_ID"];
+                        clientSecret = config.GetSection("DISCORD_APP")["DISCORD_CLIENT_SECRET"];
                     }
                     else
                     {
-                        clientId = Environment.GetEnvironmentVariable("DISCORD_APP_CLIENT_ID");
-                        clientSecret = Environment.GetEnvironmentVariable("DISCORD_APP_CLIENT_SECRET");
+                        clientId = Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID");
+                        clientSecret = Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET");
                     }
                     options.ClientId = clientId;
                     options.ClientSecret = clientSecret;

@@ -6,8 +6,8 @@ namespace API.Entities.Users
     {
         public bool SteamConnected { get; set; }
         public bool DiscordConnected { get; set; }
-        public Steam Steam { get; set; }
-        public Discord Discord { get; set; }
+        public SteamProfile Steam { get; set; }
+        public DiscordProfile Discord { get; set; }
 
         public AppUserProfile AppUserProfile { get; set; }
         public int AppUserProfileId { get; set; }
