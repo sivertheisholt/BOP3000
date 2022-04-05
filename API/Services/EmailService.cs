@@ -22,13 +22,13 @@ namespace API.Services
             if (env == "Development")
             {
 
-                username = config.GetSection("EmailAccount")["Username"];
-                password = config.GetSection("EmailAccount")["Password"];
+                username = config.GetSection("PLAYFU_EMAIL_ACCOUNT")["PLAYFU_EMAIL_ACCOUNT_USERNAME"];
+                password = config.GetSection("PLAYFU_EMAIL_ACCOUNT")["PLAYFU_EMAIL_ACCOUNT_PASSWORD"];
             }
             else
             {
-                username = Environment.GetEnvironmentVariable("EMAIL_USERNAME");
-                password = Environment.GetEnvironmentVariable("EMAIL_PASSWORD");
+                username = Environment.GetEnvironmentVariable("PLAYFU_EMAIL_ACCOUNT_USERNAME");
+                password = Environment.GetEnvironmentVariable("PLAYFU_EMAIL_ACCOUNT_PASSWORD");
             }
 
             client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);

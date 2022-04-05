@@ -198,7 +198,7 @@ namespace API.Controllers
 
             if (user.AppUserProfile.UserConnections.DiscordConnected) return BadRequest("Discord account already connected");
 
-            var discord = new Discord
+            var discord = new DiscordProfile
             {
                 RefreshToken = refresh_token,
                 AccessToken = access_token,

@@ -22,6 +22,6 @@ namespace API.Interfaces.IRepositories
 
         void AddSteamId(AppUser user, long steamId);
 
-        void AddDiscord(AppUser user, Discord discord);
+        void AddDiscord(AppUser user, DiscordProfile discord);
     }
 }

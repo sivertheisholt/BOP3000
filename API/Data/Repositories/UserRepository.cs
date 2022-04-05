@@ -11,7 +11,7 @@ namespace API.Data.Repositories
         {
         }
 
-        public void AddDiscord(AppUser user, Discord discord)
+        public void AddDiscord(AppUser user, DiscordProfile discord)
         {
             user.AppUserProfile.UserConnections.DiscordConnected = true;
             user.AppUserProfile.UserConnections.Discord = discord;

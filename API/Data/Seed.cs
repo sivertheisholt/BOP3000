@@ -64,10 +64,10 @@ namespace API.Data
                     {
                         SteamConnected = false,
                         DiscordConnected = false,
-                        Steam = new Steam
+                        Steam = new SteamProfile
                         {
                         },
-                        Discord = new Discord
+                        Discord = new DiscordProfile
                         {
                         }
                     }
@@ -97,10 +97,10 @@ namespace API.Data
                     {
                         SteamConnected = false,
                         DiscordConnected = false,
-                        Steam = new Steam
+                        Steam = new SteamProfile
                         {
                         },
-                        Discord = new Discord
+                        Discord = new DiscordProfile
                         {
                         }
                     }
@@ -128,10 +128,10 @@ namespace API.Data
                     {
                         SteamConnected = false,
                         DiscordConnected = false,
-                        Steam = new Steam
+                        Steam = new SteamProfile
                         {
                         },
-                        Discord = new Discord
+                        Discord = new DiscordProfile
                         {
                         }
                     }
@@ -160,10 +160,10 @@ namespace API.Data
                     {
                         SteamConnected = false,
                         DiscordConnected = false,
-                        Steam = new Steam
+                        Steam = new SteamProfile
                         {
                         },
-                        Discord = new Discord
+                        Discord = new DiscordProfile
                         {
                         }
                     }
@@ -192,10 +192,10 @@ namespace API.Data
                     {
                         SteamConnected = false,
                         DiscordConnected = false,
-                        Steam = new Steam
+                        Steam = new SteamProfile
                         {
                         },
-                        Discord = new Discord
+                        Discord = new DiscordProfile
                         {
                         }
                     }
@@ -223,10 +223,10 @@ namespace API.Data
                     {
                         SteamConnected = false,
                         DiscordConnected = false,
-                        Steam = new Steam
+                        Steam = new SteamProfile
                         {
                         },
-                        Discord = new Discord
+                        Discord = new DiscordProfile
                         {
                         }
                     }
@@ -255,10 +255,10 @@ namespace API.Data
                     {
                         SteamConnected = false,
                         DiscordConnected = false,
-                        Steam = new Steam
+                        Steam = new SteamProfile
                         {
                         },
-                        Discord = new Discord
+                        Discord = new DiscordProfile
                         {
                         }
                     }
