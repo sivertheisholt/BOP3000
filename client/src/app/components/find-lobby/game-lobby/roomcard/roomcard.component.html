@@ -35,7 +35,7 @@
     <div class="card" *ngFor="let lobby of lobbies">
         <div class="has-text-centered is-flex is-justify-content-center p-3">
             <div class="image is-128x128">
-                <img class="is-rounded" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/75/7514b0304efd66200bc6aeb671642d925b95ca15_full.jpg">
+                <img class="is-rounded" [src]="lobby.adminProfilePic">
             </div>
         </div>
         <div class="lobby-card-content mt-5">

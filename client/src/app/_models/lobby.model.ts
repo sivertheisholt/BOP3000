@@ -12,6 +12,7 @@ export interface Lobby{
     users: number[];
     adminUid: number;
     adminUsername?: string;
+    adminProfilePic?: string;
     finished?: boolean;
     lobbyRequirement: {
         gender?: string;
