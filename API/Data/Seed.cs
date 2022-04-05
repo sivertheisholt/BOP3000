@@ -60,6 +60,10 @@ namespace API.Data
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 },
                         FinishedLobbies = new[] { 1, 3 }
                     },
+                    AppUserPhoto = new AppUserPhoto
+                    {
+                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+                    },
                     UserConnections = new AppUserConnections
                     {
                         SteamConnected = false,
@@ -93,6 +97,10 @@ namespace API.Data
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 },
                         FinishedLobbies = new[] { 2 }
                     },
+                    AppUserPhoto = new AppUserPhoto
+                    {
+                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+                    },
                     UserConnections = new AppUserConnections
                     {
                         SteamConnected = false,
@@ -123,6 +131,10 @@ namespace API.Data
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    },
+                    AppUserPhoto = new AppUserPhoto
+                    {
+                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
                     },
                     UserConnections = new AppUserConnections
                     {
@@ -156,6 +168,10 @@ namespace API.Data
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
                     },
+                    AppUserPhoto = new AppUserPhoto
+                    {
+                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+                    },
                     UserConnections = new AppUserConnections
                     {
                         SteamConnected = false,
@@ -188,6 +204,10 @@ namespace API.Data
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
                     },
+                    AppUserPhoto = new AppUserPhoto
+                    {
+                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+                    },
                     UserConnections = new AppUserConnections
                     {
                         SteamConnected = false,
@@ -218,6 +238,10 @@ namespace API.Data
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    },
+                    AppUserPhoto = new AppUserPhoto
+                    {
+                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
                     },
                     UserConnections = new AppUserConnections
                     {
@@ -250,6 +274,10 @@ namespace API.Data
                         Followers = new[] { 2, 3, 4, 6, 7 },
                         Following = new[] { 2, 3, 4, 6, 7 },
                         UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
+                    },
+                    AppUserPhoto = new AppUserPhoto
+                    {
+                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
                     },
                     UserConnections = new AppUserConnections
                     {
