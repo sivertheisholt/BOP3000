@@ -10,11 +10,11 @@
                 </div>
                 <div class="text-is-light"> {{ user.username }}</div>
             </div>
-            <div class="half-width is-flex is-align-items-center is-justify-content-center">
-                <a (click)="upvoteUser()">
+            <div *ngIf="canVote" class="half-width is-flex is-align-items-center is-justify-content-center">
+                <a (click)="upvoteUser(user.id!)">
                     <fa-icon class="fa-lg mr-4 test" [icon]="faThumbsUp"></fa-icon>
                 </a>
-                <a (click)="downvoteUser()">
+                <a (click)="downvoteUser(user.id!)">
                     <fa-icon class="fa-lg" [icon]="faThumbsDown"></fa-icon>
                 </a>
             </div>

@@ -1,0 +1,16 @@
+<div class="account-background">
+    <div class="container">
+        <div class="content">
+            <div class="activity-container">
+                <div class="activity-card" *ngFor="let activity of activities">
+                    <div class="activity-text">
+                        <a [routerLink]="['../account', activity.appUserId]"> {{ activity.username }} </a> {{ activity.outputText }}
+                    </div>
+                    <div class="activity-date">
+                        {{ fixDate(activity.date) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -34,6 +34,7 @@ export class JoinedUsersComponent implements OnInit{
       response => {
         this.usersInParty.forEach(element => {
           if(response == element.id){
+            this.count--;
             let index = this.usersInParty.indexOf(element);
             this.usersInParty.splice(index, 1);
           }

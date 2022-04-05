@@ -9,7 +9,6 @@ export class UserResolver implements Resolve<any>{
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this.userService.getUserData().pipe(
             map(response => {
-                console.log(response);
                 return response;
             })
         )

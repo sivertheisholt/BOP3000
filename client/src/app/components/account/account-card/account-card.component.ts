@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faArrowAltCircleUp, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Member } from 'src/app/_models/member.model';
@@ -14,9 +14,14 @@ export class AccountCardComponent implements OnInit {
   @Input('user') user? : Member;
   @Input('currentUser') currentUser?: Member;
   isFollowing?: boolean;
+  imageHeightWidth: boolean = false;
+  imageSize: boolean = false;
+  errorStatus: boolean = false;
 
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
-
+  constructor(private userService: UserService, private route: ActivatedRoute) { 
+    
+  }
+  
   ngOnInit(): void {
     this.userService.checkFollowing(this.route.snapshot.params.id).subscribe(
       (res) => {
@@ -41,8 +46,29 @@ export class AccountCardComponent implements OnInit {
     )
   }
 
-  changeProfilePicture(){
-
+  onUploadProfilePicture(event: any){
+    const formData: FormData = new FormData();
+    if(event.target.files[0].size > 500 * 500){
+      console.log('Image height/weight');
+      this.imageHeightWidth = true;
+      return;
+    }
+    if(event.target.files[0].size > 3000000){
+      console.log('Size bigger than 3mb');
+      this.imageSize = true;
+      return;
+    }
+    this.imageHeightWidth = false;
+    this.imageSize = false;
+    this.errorStatus = false;
+    formData.append('File', event.target.files[0], event.target.files[0].name);
+    this.userService.postProfileImage(formData).subscribe(
+      (res) => {
+        this.user!.memberProfile!.memberPhoto = res;
+      },(error) => {
+        this.errorStatus = true;
+      }
+    );
   }
 
 }

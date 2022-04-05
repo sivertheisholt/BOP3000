@@ -1,0 +1,60 @@
+.account-background{
+    width: 100%;
+    height:100%;
+    background-color: rgb(37, 37, 37);
+}
+
+.content{
+  margin-top: 64px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-container{
+  width: 500px;
+  height: 100%;
+  margin-top: 50px;
+}
+
+.activity-card{
+  width: 100%;
+  height: 100px;
+  background-color: rgb(43, 43, 43);
+  margin-bottom: 10px;
+}
+
+.activity-text{
+  display: flex;
+  align-items: center;
+  color: rgb(196, 196, 196);
+  height: 70px;
+  padding: 8px;
+}
+
+.activity-date{
+  display: flex;
+  height: 30px;
+  padding: 5px;
+  color: rgb(197, 197, 197);
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+a{
+  color: rgb(44, 112, 175);
+}
+
+a:hover{
+  color: rgb(42, 77, 190);
+}
+
+.activity-card:nth-child(even){
+  border-left: 7px solid rgb(150, 28, 28);
+}
+
+.activity-card:nth-child(odd){
+  border-left: 7px solid rgb(93, 91, 165);
+}

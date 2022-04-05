@@ -106,6 +106,21 @@ li a:hover{
     top: 39px;
 }
 
+.upgrade-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(6, 138, 179);
+    border-radius: 5px;
+    color:rgb(214, 214, 214);
+    padding: 10px;
+}
+
+.upgrade-btn:hover{
+    background-color: rgb(194, 194, 194);
+    color:rgb(6, 138, 179);
+}
+
 .result-item{
     padding: 10px;
     border-left: 5px solid;

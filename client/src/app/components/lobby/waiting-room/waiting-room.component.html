@@ -6,7 +6,7 @@
         <div class="is-flex is-justify-content-center is-align-items-center mt-3">
             <div class="quarter-width is-flex is-align-items-center is-justify-content-start pl-2">
                 <div class="image is-32x32">
-                    <img class="is-rounded" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/75/7514b0304efd66200bc6aeb671642d925b95ca15_full.jpg">
+                    <img class="is-rounded" [src]="user.memberProfile?.memberPhoto?.url">
                 </div>
             </div>
             <div class="waiting-room-user-wrapper is-flex is-align-items-center is-justify-content-center half-width">

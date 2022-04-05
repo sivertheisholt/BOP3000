@@ -47,10 +47,10 @@ import { ArchivedLobbyPartyComponent } from './components/archived-lobby/archive
 import { ArchivedLobbyInfoComponent } from './components/archived-lobby/archived-lobby-info/archived-lobby-info.component';
 import { AccountInfoComponent } from './components/account/account-info/account-info.component';
 import { AccountCardComponent } from './components/account/account-card/account-card.component';
-import { AccountActivityListComponent } from './components/account/account-activity-list/account-activity-list.component';
 import { AccountLobbyHistoryComponent } from './components/account/account-lobby-history/account-lobby-history.component';
 import { UserPanelComponent } from './components/lobby/user-panel/user-panel.component';
 import { UpgradeAccountComponent } from './components/upgrade-account/upgrade-account.component';
+import { ActivityLogComponent } from './components/activity-log/activity-log.component';
 
 
 @NgModule({
@@ -95,10 +95,10 @@ import { UpgradeAccountComponent } from './components/upgrade-account/upgrade-ac
     ArchivedLobbyInfoComponent,
     AccountInfoComponent,
     AccountCardComponent,
-    AccountActivityListComponent,
     AccountLobbyHistoryComponent,
     UserPanelComponent,
-    UpgradeAccountComponent
+    UpgradeAccountComponent,
+    ActivityLogComponent
   ],
   imports: [
     BrowserModule,

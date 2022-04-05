@@ -7,6 +7,10 @@ export interface Member{
         age?: number,
         gender?: string;
         description?: string;
+        memberPhoto: {
+            id: number;
+            url: string;
+        }
         countryIso?:{
             id?: number;
             name?: string;

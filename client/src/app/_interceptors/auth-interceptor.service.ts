@@ -11,10 +11,17 @@ export class AuthInterceptorService implements HttpInterceptor{
         if (token) {
             req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });
         }
-        if (!req.headers.has('Content-Type')) {
-            req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
-        }
-        req = req.clone({ headers: req.headers.set('Accept', 'application/json') });
+        //req = req.clone({ headers: req.headers.set('Accept', '*/*') });
+        req = req.clone({
+            setHeaders: {
+              "Permissions-Policy": "camera=*,geolocation=*,microphone=*,autoplay=*,fullscreen=*,picture-in-picture=*,sync-xhr=*,encrypted-media=*,oversized-images=*",
+              "Strict-Transport-Security": "max-age=31536000; includeSubdomains",
+              "X-Frame-Options": "SAMEORIGIN",
+              "X-Content-Type-Options": "nosniff",
+              "X-Xss-Protection": "1; mode=block",
+              "Content-Security-Policy": "script-src https: 'unsafe-inline' 'unsafe-eval';style-src https: 'unsafe-inline' 'unsafe-eval';img-src https: data:;font-src https: data:;"
+            }
+          });
         console.log('Intercepted HTTP call: ' + req);
         return next.handle(req);
     }

@@ -21,6 +21,7 @@ export class AccountComponent implements OnInit {
     this.userService.getSpecificUser(this.route.snapshot.params.id).subscribe(
       (response) => {
         this.user = response;
+        console.log(this.user);
         response.memberProfile?.memberData?.finishedLobbies?.forEach(lobbyId => {
           this.lobbyService.fetchLobbyWithId(lobbyId).subscribe(
             (response) => {

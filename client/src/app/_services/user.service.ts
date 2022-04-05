@@ -1,9 +1,11 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { Member } from "../_models/member.model";
 import { environment } from '../../environments/environment';
 import { UserSearch } from "../_models/user-search.model";
+import { ActivityLog } from "../_models/activity-log.model";
+import { ProfileImage } from "../_models/profile-image.model";
 
 @Injectable({providedIn: 'root'})
 export class UserService{
@@ -70,5 +72,19 @@ export class UserService{
     searchUser(input: string){
         return this.http.get<UserSearch>(this.baseUrl + 'members/search?name=' + input);
     }
-    
+
+    getUserActivities(){
+        return this.http.get<ActivityLog[]>(this.baseUrl + 'members/current/activity');
+    }
+
+    postProfileImage(formData: FormData){
+        let headers = new HttpHeaders();
+        headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+        let options = {
+            headers: headers
+        }
+        return this.http.post<ProfileImage>(this.baseUrl + 'members/set-photo', formData, options);
+    }
+
 }

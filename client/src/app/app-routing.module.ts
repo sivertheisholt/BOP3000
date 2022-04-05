@@ -25,19 +25,23 @@ import { ArchivedLobbyComponent } from './components/archived-lobby/archived-lob
 import { LobbyGuard } from './_guards/lobby.guard';
 import { UpgradeAccountComponent } from './components/upgrade-account/upgrade-account.component';
 import { ArchivedLobbyGuard } from './_guards/archived-lobby.guard';
+import { ActivityLogComponent } from './components/activity-log/activity-log.component';
+import { ActivityLogResolver } from './_resolvers/activity-log-resolver.service';
+import { CreateLobbyGuard } from './_guards/create-lobby.guard';
 
 const routes: Routes = [
   { path: '', component: StartComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], resolve: {countries: CountryResolver} },
   { path: 'home', component: HomeComponent, canActivate: [UnAuthGuard] },
   { path: 'forgotten-password', component: ForgottenPasswordComponent, canActivate: [AuthGuard] },
-  { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard] },
+  { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard, CreateLobbyGuard] },
   { path: 'upgrade', component: UpgradeAccountComponent, canActivate: [UnAuthGuard] },
   { path: 'account/:id', component: AccountComponent, canActivate: [UnAuthGuard] },
   { path: 'lobby/:id', component: LobbyComponent, canActivate:[UnAuthGuard, LobbyGuard], resolve: {lobby: LobbyResolver} },
-  { path: 'archived-lobby/:id', component: ArchivedLobbyComponent, canActivate:[UnAuthGuard, ArchivedLobbyGuard], resolve: {lobby: LobbyResolver} },
+  { path: 'archived-lobby/:id', component: ArchivedLobbyComponent, canActivate:[UnAuthGuard, ArchivedLobbyGuard], resolve: {lobby: LobbyResolver, user: UserResolver} },
   { path: 'find-lobby', component: FindLobbyComponent, canActivate: [UnAuthGuard], resolve: {games: GamesResolver}},
   { path: 'game-lobby/:id', component: GameLobbyComponent, canActivate: [UnAuthGuard], resolve: {lobbies: LobbiesResolver}},
+  { path: 'activity', component: ActivityLogComponent, canActivate: [UnAuthGuard], resolve: {activities: ActivityLogResolver }},
   { path: 'settings', component: SettingsComponent, canActivate: [UnAuthGuard], resolve: {countries: CountryResolver, user: UserResolver} },
   { path: 'help', component: HelpComponent, canActivate: [UnAuthGuard], resolve: {user: UserResolver} },
   { path: 'errors', component: TestErrorsComponent },

@@ -1,9 +1,8 @@
-import { Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle, faUsers, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { UserSearch } from 'src/app/_models/user-search.model';
 import { AuthService } from 'src/app/_services/auth.service';
 import { UserService } from 'src/app/_services/user.service';
 
@@ -13,7 +12,7 @@ import { UserService } from 'src/app/_services/user.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  faUser = faUser; faSignOutAlt = faSignOutAlt; faUserCircle = faUserCircle; faBell = faBell; faHome = faHome; faCogs = faCogs; faQuestionCircle = faQuestionCircle; faBullseye = faBullseye;
+  faUser = faUser; faSignOutAlt = faSignOutAlt; faUserCircle = faUserCircle; faBell = faBell; faHome = faHome; faCogs = faCogs; faQuestionCircle = faQuestionCircle; faBullseye = faBullseye; faUsers = faUsers; faGlobe = faGlobe;
   @ViewChild('navBurger') navBurger!: ElementRef;
   @ViewChild('navMenu') navMenu!: ElementRef;
   @ViewChild('searchInput', {static: true}) searchInput? : ElementRef;

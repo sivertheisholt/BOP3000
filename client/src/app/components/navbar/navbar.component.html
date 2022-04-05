@@ -4,6 +4,9 @@
       <a class="navbar-item navbar-logo">
         <img src="../../../assets/images/playfu.png">
       </a>
+      <a [routerLink]="['upgrade']" class="upgrade-btn">
+        UPGRADE
+      </a>
     </div>
     <div class="nav-items">
       <div class="navbar-item">
@@ -44,18 +47,19 @@
   <div id="navbar-burger-menu" class="ml-3" #navMenu *ngIf="isNavVisible">
     <p class="menu-label has-text-centered mt-5">Navigation</p>
     <ul class="menu-list">
-        <li><a routerLink="home"><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>Home</a></li>
+      <li><a [routerLink]="['home']"><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>Home</a></li>
     </ul>
     <p class="menu-label has-text-centered">Matchmaking</p>
     <ul class="menu-list">
-        <li><a routerLink="create-lobby"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>Create Lobby</a></li>
-        <li><a routerLink="find-lobby"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Find Lobby</a></li>
+      <li><a [routerLink]="['create-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>Create Lobby</a></li>
+      <li><a [routerLink]="['find-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faUsers"></fa-icon>Find Lobby</a></li>
     </ul>
     <p class="menu-label has-text-centered">Account</p>
     <ul class="menu-list">
-        <li><a routerLink="account"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Account</a></li>
-        <li><a><fa-icon class="fa-lg mr-2" [icon]="faCogs"></fa-icon>Settings</a></li>
-        <li><a><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>Help</a></li>
+      <li><a [routerLink]="['account']"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Account</a></li>
+      <li><a [routerLink]="['activity']"><fa-icon class="fa-lg mr-2" [icon]="faGlobe"></fa-icon>Activity</a></li>
+      <li><a [routerLink]="['settings']"><fa-icon class="fa-lg mr-2" [icon]="faCogs"></fa-icon>Settings</a></li>
+      <li><a [routerLink]="['help']"><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>Help</a></li>
         <li><a (click)="logOut()"><fa-icon class="fa-lg mr-2" [icon]="faSignOutAlt"></fa-icon>Log Out</a></li>
     </ul>
   </div>
