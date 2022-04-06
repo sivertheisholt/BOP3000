@@ -539,6 +539,46 @@ This endpoint gets the discord connected status for a user
 | discriminator | int, optional    |
 | hidden        | bool             |
 
+## GET Steam connected status
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch("https://bop3000.azurewebsites.net/api/members/1/steam", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "connected": false,
+  "steamId": 0
+}
+```
+
+This endpoint gets the steam connected status for a user
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/members/<ID>/steam`
+
+### Response Class (Status 200)
+
+| Key       | Type          |
+| --------- | ------------- |
+| connected | bool          |
+| steamid   | int, optional |
+
 <!--- POST --->
 
 ## POST Set profile picture
