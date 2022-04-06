@@ -9,6 +9,9 @@ namespace API.Entities.Applications
         public string RefreshToken { get; set; }
         public string AccessToken { get; set; }
         public DateTime Expires { get; set; }
+        public string Username { get; set; }
+        public string Distriminator { get; set; }
+        public bool Hidden { get; set; }
         public AppUserConnections AppUserConnections { get; set; }
         public int AppUserConnectionsId { get; set; }
     }

@@ -205,6 +205,8 @@ namespace API.Controllers
             var discord = new DiscordProfile
             {
                 DiscordId = ulong.Parse(userObject.Id),
+                Username = userObject.Username,
+                Distriminator = userObject.Discriminator,
                 RefreshToken = refresh_token,
                 AccessToken = access_token,
                 Expires = DateTime.Parse(token_expires)

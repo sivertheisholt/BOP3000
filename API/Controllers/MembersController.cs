@@ -1,4 +1,5 @@
 using API.DTOs.Activities;
+using API.DTOs.Applications;
 using API.DTOs.Members;
 using API.Entities.Users;
 using API.Interfaces.IRepositories;
@@ -220,6 +221,24 @@ namespace API.Controllers
             if (await _userRepository.SaveAllAsync()) return Mapper.Map<MemberPhotoDto>(photo);
 
             return BadRequest("Problem adding photo");
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("{id}/discord")]
+        public async Task<ActionResult<DiscordStatusDto>> DiscordConnection(int id)
+        {
+            var user = await _userRepository.GetUserConnectionsFromUid(id);
+
+            if (user == null) return NotFound();
+
+            var dto = new DiscordStatusDto
+            {
+                Connected = user.DiscordConnected,
+                Username = user.Discord.Username,
+                Discriminator = user.Discord.Distriminator,
+                Hidden = user.Discord.Hidden
+            };
+            return dto;
         }
     }
 }

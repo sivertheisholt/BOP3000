@@ -58,6 +58,16 @@ namespace API.Data.Repositories
             return await Context.Users.SingleOrDefaultAsync(x => x.UserName == username);
         }
 
+        public async Task<AppUserConnections> GetUserConnectionsFromUid(int id)
+        {
+            return await Context.Users.Where(p => p.Id == id)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.UserConnections)
+                .ThenInclude(p => p.Discord)
+                .Select(p => p.AppUserProfile.UserConnections)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<string> GetUserDiscordAccessToken(int id)
         {
             var token = await Context.Users.Where(p => p.Id == id)
