@@ -394,6 +394,9 @@
                     <a href="#get-current-member-activity-log" class="toc-h2 toc-link" data-title="GET Current member activity log">GET Current member activity log</a>
                   </li>
                   <li>
+                    <a href="#get-discord-connected-status" class="toc-h2 toc-link" data-title="GET Discord connected status">GET Discord connected status</a>
+                  </li>
+                  <li>
                     <a href="#post-set-profile-picture" class="toc-h2 toc-link" data-title="POST Set profile picture">POST Set profile picture</a>
                   </li>
                   <li>
@@ -2092,6 +2095,57 @@
 <td>string</td>
 </tr>
 </tbody></table>
+<h2 id='get-discord-connected-status'>GET Discord connected status</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/members/1/discord</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"connected"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"playfu"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"discriminator"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2869"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint gets the discord connected status for a user</p>
+<h3 id='http-request-8'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/members/&lt;ID&gt;/discord</code></p>
+<h3 id='response-class-status-200-8'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>connected</td>
+<td>bool</td>
+</tr>
+<tr>
+<td>username</td>
+<td>string, optional</td>
+</tr>
+<tr>
+<td>discriminator</td>
+<td>int, optional</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>bool</td>
+</tr>
+</tbody></table>
 
 <!--- POST --->
 <h2 id='post-set-profile-picture'>POST Set profile picture</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
@@ -2122,7 +2176,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint sets the profile picture for the current user</p>
-<h3 id='http-request-8'>HTTP Request</h3>
+<h3 id='http-request-9'>HTTP Request</h3>
 <p><code>POST https://bop3000.azurewebsites.net/api/members/set-photo</code></p>
 
 <!--- PUT --->
@@ -2158,7 +2212,7 @@
 </blockquote>
 
 <p>This endpoint updates a single member</p>
-<h3 id='http-request-9'>HTTP Request</h3>
+<h3 id='http-request-10'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members</code></p>
 <h3 id='body-schema'>Body Schema</h3>
 <table><thead>
@@ -2214,7 +2268,7 @@
 </blockquote>
 
 <p>This endpoint will follow another member</p>
-<h3 id='http-request-10'>HTTP Request</h3>
+<h3 id='http-request-11'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/follow?memberId=1</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
@@ -2250,7 +2304,7 @@
 </blockquote>
 
 <p>This endpoint will unfollow another member</p>
-<h3 id='http-request-11'>HTTP Request</h3>
+<h3 id='http-request-12'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/unfollow?memberId=1</code></p>
 <h3 id='query-parameters-2'>Query Parameters</h3>
 <table><thead>
