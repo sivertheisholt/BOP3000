@@ -27,7 +27,7 @@ namespace API.SignalR
         // <lobbyId, true/false>
         private static readonly Dictionary<int, bool> LobbyReadyCheck = new Dictionary<int, bool>();
 
-        // <lobbyId, userId>
+        // <lobbyId, userIds>
         private static readonly Dictionary<int, Dictionary<int, bool>> LobbyUserCheck = new Dictionary<int, Dictionary<int, bool>>();
 
         public LobbyTracker()
@@ -49,7 +49,7 @@ namespace API.SignalR
             lock (LobbyUserCheck)
             {
                 LobbyUserCheck.Add(lobbyId, new Dictionary<int, bool>());
-                LobbyUserCheck[lobbyId].Add(adminUid, false);
+                LobbyUserCheck[lobbyId].Add(adminUid, true);
             }
 
             return Task.CompletedTask;
@@ -215,9 +215,9 @@ namespace API.SignalR
         {
             if (!LobbyUserCheck.ContainsKey(lobbyId)) return Task.FromResult(false);
 
-            foreach (var user in LobbyUserCheck[lobbyId])
+            foreach (KeyValuePair<int, bool> entry in LobbyUserCheck[lobbyId])
             {
-                if (!user.Value) return Task.FromResult(false);
+                if (!entry.Value) return Task.FromResult(false);
             }
 
             return Task.FromResult(true);

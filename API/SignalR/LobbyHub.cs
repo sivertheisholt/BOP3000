@@ -14,7 +14,7 @@ namespace API.SignalR
         private readonly LobbyTracker _lobbyTracker;
         private readonly ILobbiesRepository _lobbiesRepository;
         private readonly IDiscordBotService _discordBotService;
-        private static readonly Dictionary<int, Task> LobbyStartingTask = new Dictionary<int, Task>();
+        private static readonly Dictionary<int, CancellationTokenSource> LobbyStartingTask = new Dictionary<int, CancellationTokenSource>();
         private readonly IUserRepository _userRepository;
         public LobbyHub(LobbyTracker lobbyTracker, ILobbiesRepository lobbiesRepository, IDiscordBotService discordService, IUserRepository userRepository)
         {
@@ -133,9 +133,19 @@ namespace API.SignalR
             await _lobbyTracker.StartCheck(lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("HostStarted", adminUid);
 
-            var task = Task.Delay(30000);
-            LobbyStartingTask.Add(lobbyId, task);
-            await task;
+            CancellationTokenSource source = new CancellationTokenSource();
+            var task = Task.Delay(30000, source.Token);
+            LobbyStartingTask.Add(lobbyId, source);
+
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException ae)
+            {
+                Console.Write("Lobby started before timer");
+            }
+
 
             if (await _lobbyTracker.CheckReadyState(lobbyId))
             {
@@ -155,7 +165,11 @@ namespace API.SignalR
             var uid = Context.User.GetUserId();
             await _lobbyTracker.AcceptReady(lobbyId, uid);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAcceptedReady", uid);
-            if (await _lobbyTracker.CheckIfAllReady(lobbyId)) LobbyStartingTask[lobbyId].Start();
+            if (await _lobbyTracker.CheckIfAllReady(lobbyId))
+            {
+                Console.WriteLine("CANCELLING THE TIMER");
+                LobbyStartingTask[lobbyId].Cancel();
+            }
         }
         public async Task Decline(int lobbyId)
         {
