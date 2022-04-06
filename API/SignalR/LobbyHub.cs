@@ -168,12 +168,6 @@ namespace API.SignalR
             var uid = Context.User.GetUserId();
             if (uid == -1) return;
 
-            //Testing lobby 1 admin user 1
-            if (Context.User.GetUserId() == 1)
-            {
-                await AddToGroup($"lobby_{1}");
-            }
-
             await AddToGroup($"user_{uid}");
             if (await _lobbyTracker.CheckIfMemberInAnyLobby(uid))
             {
