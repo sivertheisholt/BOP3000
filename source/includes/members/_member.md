@@ -562,7 +562,8 @@ fetch("https://bop3000.azurewebsites.net/api/members/1/steam", requestOptions)
 ```json
 {
   "connected": false,
-  "steamId": 0
+  "steamId": 0,
+  "hidden": false
 }
 ```
 
@@ -578,6 +579,7 @@ This endpoint gets the steam connected status for a user
 | --------- | ------------- |
 | connected | bool          |
 | steamid   | int, optional |
+| hidden    | bool          |
 
 <!--- POST --->
 
