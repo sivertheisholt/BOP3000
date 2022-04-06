@@ -155,6 +155,7 @@ namespace API.SignalR
             var uid = Context.User.GetUserId();
             await _lobbyTracker.AcceptReady(lobbyId, uid);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAcceptedReady", uid);
+            if (await _lobbyTracker.CheckIfAllReady(lobbyId)) LobbyStartingTask[lobbyId].Start();
         }
         public async Task Decline(int lobbyId)
         {
