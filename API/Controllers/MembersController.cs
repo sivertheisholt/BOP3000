@@ -233,6 +233,7 @@ namespace API.Controllers
 
             var dto = new DiscordStatusDto
             {
+                DiscordId = user.Discord.DiscordId,
                 Connected = user.DiscordConnected,
                 Username = user.Discord.Username,
                 Discriminator = user.Discord.Distriminator,

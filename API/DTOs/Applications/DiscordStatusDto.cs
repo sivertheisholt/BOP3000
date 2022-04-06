@@ -7,6 +7,7 @@ namespace API.DTOs.Applications
 {
     public class DiscordStatusDto
     {
+        public ulong DiscordId { get; set; }
         public bool Connected { get; set; }
         public string Username { get; set; }
         public string Discriminator { get; set; }
