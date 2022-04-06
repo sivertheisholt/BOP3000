@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { Member } from 'src/app/_models/member.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
@@ -10,19 +11,27 @@ import { UserService } from 'src/app/_services/user.service';
   templateUrl: './joined-users.component.html',
   styleUrls: ['./joined-users.component.css']
 })
-export class JoinedUsersComponent implements OnInit{
+export class JoinedUsersComponent implements OnInit, OnDestroy{
   faCrown = faCrown;
   usersInParty : Member[] = [];
-  count: number = 0;
+  totalParty: number = 0;
   @Input('lobby') lobby! : Lobby;
   @Input('currentUser') currentUser?: Member;
+  lobbyPartyMembersSubscription?: Subscription;
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) {
-    this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(
+  }
+
+  ngOnInit(): void {
+    this.lobbyHubService.getLobbyMembers(this.lobby.id);
+
+    this.lobbyPartyMembersSubscription = this.lobbyHubService.lobbyPartyMembers$.subscribe(
       member => {
-        if(member.length == 0) return;
+        console.log(member);
+        if(+member == 0) return;
         this.userService.getSpecificUser(+member).subscribe(
           (response) => {
+            this.totalParty++;
             this.usersInParty.push(response);
           }
         )
@@ -30,28 +39,21 @@ export class JoinedUsersComponent implements OnInit{
       error => console.log(error)
     )
 
-    this.lobbyHubService.getLobbyKickedPartyMembersObserver().subscribe(
+    this.lobbyHubService.kickedPartyMembers$.subscribe(
       response => {
         this.usersInParty.forEach(element => {
           if(response == element.id){
-            this.count--;
+            this.totalParty--;
             let index = this.usersInParty.indexOf(element);
             this.usersInParty.splice(index, 1);
           }
         });
       }
     )
-
-    this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(
-      member => {
-        if(member.length == 0) return;
-        this.count++;
-      }
-    )
   }
 
-  ngOnInit(): void {
-    this.lobbyHubService.getLobbyMembers(this.lobby.id);
+  ngOnDestroy(): void {
+    this.lobbyPartyMembersSubscription?.unsubscribe();
   }
 
   kickFromParty(uid: number){

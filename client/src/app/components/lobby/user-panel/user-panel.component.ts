@@ -28,7 +28,7 @@ export class UserPanelComponent implements OnInit {
   constructor(private lobbyHubService: LobbyHubService, private router: Router) { }
 
   ngOnInit(): void {
-    this.lobbyHubService.getLobbyReadyCheckObserver().subscribe(
+    this.lobbyHubService.lobbyReadyCheck$.subscribe(
       (res) => {
         if(res){
           this.readyCheckModal = res;
@@ -37,22 +37,22 @@ export class UserPanelComponent implements OnInit {
       }
     )
 
-    this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(
+    this.lobbyHubService.lobbyPartyMembers$.subscribe(
       member => {
-        if(member.length == 0) return;
+        if(+member == 0) return;
         this.totalParty++;
       },
       error => console.log(error)
     )
 
-    this.lobbyHubService.getAcceptedReadyCheckMembersObserver().subscribe(
+    this.lobbyHubService.acceptedReadyCheckMembers$.subscribe(
       (res) => {
         if(res.length == 0) return;
         this.usersAccepted++;
       }
     )
 
-    this.lobbyHubService.getDeclinedReadyCheckMembersObserver().subscribe(
+    this.lobbyHubService.declinedReadyCheckMembers$.subscribe(
       (res) => {
         this.userDeclined = res;
         this.subscription?.unsubscribe();
@@ -60,7 +60,7 @@ export class UserPanelComponent implements OnInit {
       }
     )
 
-    this.lobbyHubService.getLobbyStartObserver().subscribe(
+    this.lobbyHubService.lobbyStart$.subscribe(
       (res) => {
         if(res){
           this.subscription?.unsubscribe();

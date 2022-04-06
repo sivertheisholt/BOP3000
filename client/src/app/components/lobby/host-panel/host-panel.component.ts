@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, timer } from 'rxjs';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { Member } from 'src/app/_models/member.model';
@@ -27,7 +27,7 @@ export class HostPanelComponent implements OnInit {
   constructor(private lobbyHubService: LobbyHubService) { }
 
   ngOnInit(): void {
-    this.lobbyHubService.getLobbyReadyCheckObserver().subscribe(
+    this.lobbyHubService.lobbyReadyCheck$.subscribe(
       (res) => {
         if(res){
           this.readyCheckModal = res;
@@ -36,22 +36,22 @@ export class HostPanelComponent implements OnInit {
       }
     )
 
-    this.lobbyHubService.getLobbyPartyMembersObserver().subscribe(
+    this.lobbyHubService.lobbyPartyMembers$.subscribe(
       member => {
-        if(member.length == 0) return;
+        if(+member == 0) return;
         this.totalParty++;
       },
       error => console.log(error)
     )
 
-    this.lobbyHubService.getAcceptedReadyCheckMembersObserver().subscribe(
+    this.lobbyHubService.acceptedReadyCheckMembers$.subscribe(
       (res) => {
         if(res.length == 0) return;
         this.usersAccepted++;
       }
     )
 
-    this.lobbyHubService.getDeclinedReadyCheckMembersObserver().subscribe(
+    this.lobbyHubService.declinedReadyCheckMembers$.subscribe(
       (res) => {
         this.userDeclined = res;
         this.subscription?.unsubscribe();
@@ -59,7 +59,7 @@ export class HostPanelComponent implements OnInit {
       }
     )
 
-    this.lobbyHubService.getLobbyStartObserver().subscribe(
+    this.lobbyHubService.lobbyStart$.subscribe(
       (res) => {
         if(res){
           this.subscription?.unsubscribe();

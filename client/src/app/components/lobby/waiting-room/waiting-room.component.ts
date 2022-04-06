@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { Member } from 'src/app/_models/member.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
@@ -10,17 +11,24 @@ import { UserService } from 'src/app/_services/user.service';
   templateUrl: './waiting-room.component.html',
   styleUrls: ['./waiting-room.component.css']
 })
-export class WaitingRoomComponent implements OnInit {
+export class WaitingRoomComponent implements OnInit, OnDestroy {
   message!: string;
   faMinus = faMinus; faPlus = faPlus;
   usersInQueue : Member[] = [];
   @Input('lobby') lobby! : Lobby;
   @Input('currentUser') currentUser?: Member;
+  lobbyQueueMembersSubscription?: Subscription;
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) { 
-    this.lobbyHubService.getLobbyQueueMembersObserver().subscribe(
+
+  }
+
+  ngOnInit(): void {
+    this.lobbyHubService.getQueueMembers(this.lobby.id);
+
+    this.lobbyQueueMembersSubscription = this.lobbyHubService.lobbyQueueMembers$.subscribe(
       member => {
-        if(member.length == 0) return;
+        if(+member == 0) return;
         this.userService.getSpecificUser(+member).subscribe(
           (response) => {
             this.usersInQueue?.push(response);
@@ -30,7 +38,7 @@ export class WaitingRoomComponent implements OnInit {
       error => console.log(error)
     )
 
-    this.lobbyHubService.getLobbyKickedQueueMembersObserver().subscribe(
+    this.lobbyHubService.kickedQueueMembers$.subscribe(
       response => {
         this.usersInQueue?.forEach(user => {
           if(user.id == response){
@@ -41,7 +49,7 @@ export class WaitingRoomComponent implements OnInit {
       }
     )
 
-    this.lobbyHubService.getAcceptedMemberObserver().subscribe(
+    this.lobbyHubService.acceptedMembers$.subscribe(
       response => {
         this.usersInQueue?.forEach(user => {
           if(user.id == response){
@@ -53,8 +61,8 @@ export class WaitingRoomComponent implements OnInit {
     )
   }
 
-  ngOnInit(): void {
-    this.lobbyHubService.getQueueMembers(this.lobby.id);
+  ngOnDestroy(): void {
+    this.lobbyQueueMembersSubscription?.unsubscribe();
   }
 
   denyUserToJoin(uid: number){
