@@ -64,6 +64,9 @@ namespace API.Data.Repositories
                 .Include(p => p.AppUserProfile)
                 .ThenInclude(p => p.UserConnections)
                 .ThenInclude(p => p.Discord)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.UserConnections)
+                .ThenInclude(p => p.Steam)
                 .Select(p => p.AppUserProfile.UserConnections)
                 .FirstOrDefaultAsync();
         }

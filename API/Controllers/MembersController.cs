@@ -240,5 +240,20 @@ namespace API.Controllers
             };
             return dto;
         }
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("{id}/steam")]
+        public async Task<ActionResult<SteamStatusDto>> SteamConnection(int id)
+        {
+            var user = await _userRepository.GetUserConnectionsFromUid(id);
+
+            if (user == null) return NotFound();
+
+            var dto = new SteamStatusDto
+            {
+                Connected = user.SteamConnected,
+                SteamId = user.Steam.SteamId
+            };
+            return dto;
+        }
     }
 }
