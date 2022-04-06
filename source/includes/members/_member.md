@@ -495,6 +495,50 @@ This endpoint gets the current logged in member's activity list
 | appUserId  | int    |
 | identifier | string |
 
+## GET Discord connected status
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch("https://bop3000.azurewebsites.net/api/members/1/discord", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "connected": true,
+  "username": "playfu",
+  "discriminator": "2869",
+  "hidden": false
+}
+```
+
+This endpoint gets the discord connected status for a user
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/members/<ID>/discord`
+
+### Response Class (Status 200)
+
+| Key           | Type             |
+| ------------- | ---------------- |
+| connected     | bool             |
+| username      | string, optional |
+| discriminator | int, optional    |
+| hidden        | bool             |
+
 <!--- POST --->
 
 ## POST Set profile picture
