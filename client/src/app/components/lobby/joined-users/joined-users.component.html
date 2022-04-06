@@ -1,7 +1,7 @@
 <div class="joined-users-list">
     <div class="joined-users-header">
         <div class="header-text">Party</div>
-        <div class="party-size">{{ count }} / {{ lobby.maxUsers }}</div>
+        <div class="party-size">{{ totalParty }} / {{ lobby.maxUsers }}</div>
     </div>
     <div class="joined-users-item" *ngFor="let user of usersInParty; let i = index;">
         <div class="is-flex is-align-items-center mt-3">

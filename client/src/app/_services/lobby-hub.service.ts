@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,56 +12,27 @@ export class LobbyHubService {
   private hubConnection!: HubConnection;
   connectionStatus!: Promise<boolean>;
 
-  acceptedMembers$ = new BehaviorSubject<number>(0);
-  lobbyQueueMembers$ = new BehaviorSubject<number[]>([]);
-  lobbyPartyMembers$ = new BehaviorSubject<number[]>([]);
-  kickedPartyMembers$ = new BehaviorSubject<number>(0);
-  kickedQueueMembers$ = new BehaviorSubject<number>(0);
-  lobbyReadyCheck$ = new BehaviorSubject<boolean>(false);
-  acceptedReadyCheckMembers$ = new BehaviorSubject<number[]>([]);
-  declinedReadyCheckMembers$ = new BehaviorSubject<number>(0);
-  lobbyStart$ = new BehaviorSubject<boolean>(false);
+  acceptedMembers = new Subject<number>();
+  lobbyQueueMembers = new Subject<number[]>();
+  lobbyPartyMembers = new Subject<number[]>();
+  kickedPartyMembers = new Subject<number>();
+  kickedQueueMembers = new Subject<number>();
+  lobbyReadyCheck = new BehaviorSubject<boolean>(false);
+  acceptedReadyCheckMembers = new Subject<number[]>();
+  declinedReadyCheckMembers = new Subject<number>();
+  lobbyStart = new BehaviorSubject<boolean>(false);
+
+  acceptedMembers$ = this.acceptedMembers.asObservable();
+  lobbyQueueMembers$ = this.lobbyQueueMembers.asObservable();
+  lobbyPartyMembers$ = this.lobbyPartyMembers.asObservable();
+  kickedPartyMembers$ = this.kickedPartyMembers.asObservable();
+  kickedQueueMembers$ = this.kickedQueueMembers.asObservable();
+  lobbyReadyCheck$ = this.lobbyReadyCheck.asObservable();
+  acceptedReadyCheckMembers$ = this.acceptedReadyCheckMembers.asObservable();
+  declinedReadyCheckMembers$ = this.declinedReadyCheckMembers.asObservable();
+  lobbyStart$ = this.lobbyStart.asObservable();
 
   constructor() {}
-
-  getAcceptedMemberObserver(): Observable<number>{
-    return this.acceptedMembers$.asObservable();
-  }
-
-  getLobbyQueueMembersObserver(): Observable<number[]>{
-    return this.lobbyQueueMembers$.asObservable();
-  }
-
-  getLobbyPartyMembersObserver(): Observable<number[]>{
-    return this.lobbyPartyMembers$.asObservable();
-  }
-
-  getLobbyKickedPartyMembersObserver(): Observable<number>{
-    return this.kickedPartyMembers$.asObservable();
-  }
-
-  getLobbyKickedQueueMembersObserver(): Observable<number>{
-    return this.kickedQueueMembers$.asObservable();
-  }
-
-  getLobbyReadyCheckObserver(): Observable<boolean>{
-    return this.lobbyReadyCheck$.asObservable();
-  }
-
-  getAcceptedReadyCheckMembersObserver(): Observable<number[]>{
-    return this.acceptedReadyCheckMembers$.asObservable();
-  }
-
-  getDeclinedReadyCheckMembersObserver(): Observable<number>{
-    return this.declinedReadyCheckMembers$.asObservable();
-  }
-
-  getLobbyStartObserver(): Observable<boolean>{
-    return this.lobbyStart$.asObservable();
-  }
-
-
-
 
   createHubConnection(token: string) {
     this.connectionStatus = new Promise(resolve => {
@@ -99,13 +70,13 @@ export class LobbyHubService {
 
       // Everyone in lobby will get this
       this.hubConnection.on("MemberAccepted", ids => {
-        this.lobbyPartyMembers$.next(ids[1]);
-        this.acceptedMembers$.next(ids[1]);
+        this.lobbyPartyMembers.next(ids[1]);
+        this.acceptedMembers.next(ids[1]);
         console.log("User with id: " + ids[1] + " was accepted!");
       });
 
       this.hubConnection.on("MemberDeclined", ids => {
-        this.kickedQueueMembers$.next(ids[1]);
+        this.kickedQueueMembers.next(ids[1]);
         console.log("User with id: " + ids[1] + " was declined!");
       });
 
@@ -114,59 +85,59 @@ export class LobbyHubService {
       });
 
       this.hubConnection.on("MemberKicked", ids => {
-        this.kickedPartyMembers$.next(ids[1])
+        this.kickedPartyMembers.next(ids[1])
         console.log("User with id: " + ids[1] + " was kicked!");
       });
 
       this.hubConnection.on("JoinedLobbyQueue", id => {
-        this.lobbyQueueMembers$.next(id);
+        this.lobbyQueueMembers.next(id);
         console.log("User with id: " + id + " joined lobby queue!");
       });
 
       this.hubConnection.on("LeftLobby", id => {
-        this.kickedPartyMembers$.next(id);
+        this.kickedPartyMembers.next(id);
         console.log("User with id: " + id + " left lobby party!");
       });
 
       this.hubConnection.on("LeftQueue", id => {
-        this.kickedQueueMembers$.next(id);
+        this.kickedQueueMembers.next(id);
         console.log("User with id: " + id + " left lobby queue!");
       });
 
       this.hubConnection.on("HostStarted", id => {
-        this.acceptedReadyCheckMembers$.next(id);
-        this.lobbyReadyCheck$.next(true);
+        this.acceptedReadyCheckMembers.next(id);
+        this.lobbyReadyCheck.next(true);
         console.log("User with id: " + id + " started ready check!");
       });
 
       this.hubConnection.on("MemberDeclinedReady", id => {
-        this.declinedReadyCheckMembers$.next(id);
+        this.declinedReadyCheckMembers.next(id);
         console.log("User with id: " + id + " declined ready check!");
       });
 
       this.hubConnection.on("MemberAcceptedReady", id => {
-        this.acceptedReadyCheckMembers$.next(id);
+        this.acceptedReadyCheckMembers.next(id);
         console.log("User with id: " + id + " accepted ready check!");
       });
 
       this.hubConnection.on("LobbyStarted", () => {
-        this.lobbyStart$.next(true);
         console.log("Lobby starting...");
+        this.lobbyStart.next(true);
       });
 
       // Only caller will get this
       this.hubConnection.on("QueueMembers", ids => {
-        ids.forEach((id: number[]) => {
-          this.lobbyQueueMembers$.next(id);
-        })
         console.log("Getting users in queue");
+        ids.forEach((id: number[]) => {
+          this.lobbyQueueMembers.next(id);
+        });
       });
 
       // Only caller will get this
       this.hubConnection.on("LobbyMembers", ids => {
+        console.log("Getting users in lobby");
         ids.forEach((id: number[]) => {
-          this.lobbyPartyMembers$.next(id);
-          console.log("Getting users in lobby");
+          this.lobbyPartyMembers.next(id);
         });
       });
   }
@@ -226,6 +197,6 @@ export class LobbyHubService {
   }
 
   addUserToObservable(id: any) {
-    this.lobbyQueueMembers$.next(id);
+    this.lobbyQueueMembers.next(id);
   }
 }
