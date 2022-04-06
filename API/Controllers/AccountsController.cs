@@ -5,11 +5,11 @@ using API.Entities.Applications;
 using API.Entities.Users;
 using API.Enums;
 using API.Extentions;
+using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -34,8 +34,10 @@ namespace API.Controllers
         /// <param name="signInManager"></param>
         /// <param name="tokenService"></param>
         private readonly ICountryRepository _countryRepository;
-        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository, ICountryRepository countryRepository) : base(mapper)
+        private readonly IDiscordApiClient _discordApiClient;
+        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository, ICountryRepository countryRepository, IDiscordApiClient discordApiClient) : base(mapper)
         {
+            _discordApiClient = discordApiClient;
             _countryRepository = countryRepository;
             _signInManager = signInManager;
             _userManager = userManager;
@@ -198,8 +200,11 @@ namespace API.Controllers
 
             if (user.AppUserProfile.UserConnections.DiscordConnected) return BadRequest("Discord account already connected");
 
+            var userObject = await _discordApiClient.GetUserObjectFromToken(access_token);
+
             var discord = new DiscordProfile
             {
+                DiscordId = ulong.Parse(userObject.Id),
                 RefreshToken = refresh_token,
                 AccessToken = access_token,
                 Expires = DateTime.Parse(token_expires)

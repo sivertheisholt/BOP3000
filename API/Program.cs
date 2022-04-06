@@ -1,11 +1,13 @@
 using API.Data;
 using API.Entities.Roles;
 using API.Entities.Users;
+using API.Helpers;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using API.SignalR;
 using AutoMapper;
+using Discord;
 using Discord.WebSocket;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +16,7 @@ namespace API
 {
     public class Program
     {
-        private DiscordSocketClient _client;
+
 
 
         public static Task Main(string[] args) => new Program().MainAsync(args);
@@ -22,7 +24,6 @@ namespace API
         public async Task MainAsync(string[] args)
         {
             await InitHost(args);
-            _client = new DiscordSocketClient();
         }
 
         private async Task InitHost(string[] args)

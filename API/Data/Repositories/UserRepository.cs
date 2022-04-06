@@ -58,6 +58,28 @@ namespace API.Data.Repositories
             return await Context.Users.SingleOrDefaultAsync(x => x.UserName == username);
         }
 
+        public async Task<string> GetUserDiscordAccessToken(int id)
+        {
+            var token = await Context.Users.Where(p => p.Id == id)
+            .Include(p => p.AppUserProfile)
+            .ThenInclude(p => p.UserConnections)
+            .ThenInclude(p => p.Discord)
+            .Select(p => p.AppUserProfile.UserConnections.Discord.AccessToken)
+            .FirstOrDefaultAsync();
+            return token;
+        }
+
+        public async Task<ulong> GetUserDiscordIdFromUid(int id)
+        {
+            var discordId = await Context.Users.Where(p => p.Id == id)
+            .Include(p => p.AppUserProfile)
+            .ThenInclude(p => p.UserConnections)
+            .ThenInclude(p => p.Discord)
+            .Select(p => p.AppUserProfile.UserConnections.Discord.DiscordId)
+            .FirstOrDefaultAsync();
+            return discordId;
+        }
+
         public Task<ICollection<int>> GetUserFollowers(int id)
         {
             return Task.FromResult(Context.Users.Where(user => user.Id == id)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Extentions;
 using API.Interfaces.IRepositories;
+using API.Interfaces.IServices;
 using Microsoft.AspNetCore.SignalR;
 
 namespace API.SignalR
@@ -12,10 +13,14 @@ namespace API.SignalR
     {
         private readonly LobbyTracker _lobbyTracker;
         private readonly ILobbiesRepository _lobbiesRepository;
+        private readonly IDiscordBotService _discordBotService;
         private static readonly Dictionary<int, Task> LobbyStartingTask = new Dictionary<int, Task>();
-        public LobbyHub(LobbyTracker lobbyTracker, ILobbiesRepository lobbiesRepository)
+        private readonly IUserRepository _userRepository;
+        public LobbyHub(LobbyTracker lobbyTracker, ILobbiesRepository lobbiesRepository, IDiscordBotService discordService, IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             _lobbiesRepository = lobbiesRepository;
+            _discordBotService = discordService;
             _lobbyTracker = lobbyTracker;
         }
 
@@ -134,7 +139,13 @@ namespace API.SignalR
 
             if (await _lobbyTracker.CheckReadyState(lobbyId))
             {
-                await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted");
+                var discordIds = new List<ulong>();
+                foreach (var userId in await _lobbyTracker.GetMembersInLobby(lobbyId))
+                {
+                    discordIds.Add(await _userRepository.GetUserDiscordIdFromUid(userId));
+                }
+                var invitelink = await _discordBotService.CreateVoiceChannelForLobby(discordIds.ToArray());
+                await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted", invitelink);
                 await _lobbyTracker.FinishLobby(lobbyId);
             }
         }

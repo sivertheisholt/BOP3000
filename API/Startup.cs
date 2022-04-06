@@ -57,7 +57,7 @@ namespace API
             {
                 context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
                 context.Response.Headers.Add("Content-Security-Policy",
-                             "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline'");
+                             "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src https://discord.com 'self'; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline'");
                 context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
                 context.Response.Headers.Add("Referrer-Policy", "no-referrer");
                 context.Response.Headers.Add("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");

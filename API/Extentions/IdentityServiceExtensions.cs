@@ -114,6 +114,8 @@ namespace API.Extentions
                     options.ClientId = clientId;
                     options.ClientSecret = clientSecret;
                     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.Scope.Add("identify");
+                    options.Scope.Add("guilds.join");
                     options.Events.OnTicketReceived = ctx =>
                     {
                         var access_token = ctx.Properties.Items[".Token.access_token"];

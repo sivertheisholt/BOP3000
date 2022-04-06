@@ -5,6 +5,7 @@ using API.Helpers;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
+using API.Network.Clients;
 using API.Services;
 using API.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace API.Extentions
 
             services.AddHttpClient<ISteamAppsClient, SteamAppsClient>();
             services.AddHttpClient<ISteamStoreClient, SteamStoreClient>();
+            services.AddHttpClient<IDiscordApiClient, DiscordApiClient>();
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPhotoService, PhotoService>();
@@ -37,6 +39,8 @@ namespace API.Extentions
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
             services.AddScoped<IActivityRepository, ActivityRepository>();
+
+            services.AddSingleton<IDiscordBotService, DiscordBotService>();
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 

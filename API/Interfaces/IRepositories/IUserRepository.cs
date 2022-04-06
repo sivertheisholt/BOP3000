@@ -23,5 +23,8 @@ namespace API.Interfaces.IRepositories
         void AddSteamId(AppUser user, long steamId);
 
         void AddDiscord(AppUser user, DiscordProfile discord);
+
+        Task<string> GetUserDiscordAccessToken(int id);
+        Task<ulong> GetUserDiscordIdFromUid(int id);
     }
 }
