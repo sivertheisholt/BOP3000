@@ -251,7 +251,8 @@ namespace API.Controllers
             var dto = new SteamStatusDto
             {
                 Connected = user.SteamConnected,
-                SteamId = user.Steam.SteamId
+                SteamId = user.Steam.SteamId,
+                Hidden = user.Steam.Hidden
             };
             return dto;
         }

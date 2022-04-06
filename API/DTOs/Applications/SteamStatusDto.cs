@@ -9,5 +9,6 @@ namespace API.DTOs.Applications
     {
         public bool Connected { get; set; }
         public long SteamId { get; set; }
+        public bool Hidden { get; set; }
     }
 }
