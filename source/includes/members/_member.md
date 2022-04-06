@@ -517,6 +517,7 @@ fetch("https://bop3000.azurewebsites.net/api/members/1/discord", requestOptions)
 
 ```json
 {
+  "discordId": 960533457853874287,
   "connected": true,
   "username": "playfu",
   "discriminator": "2869",
@@ -534,6 +535,7 @@ This endpoint gets the discord connected status for a user
 
 | Key           | Type             |
 | ------------- | ---------------- |
+| discordId     | int              |
 | connected     | bool             |
 | username      | string, optional |
 | discriminator | int, optional    |
