@@ -16,3 +16,26 @@ section{
     background-color: rgb(37,36,32);
     border: 1px solid rgb(207, 207, 205);
 }
+
+.icon{
+    color: rgb(16, 148, 4);
+    margin-right: 4px;
+}
+
+.connected{
+    display: flex;
+    padding: 6px;
+}
+
+a{
+    color:rgb(3, 111, 199);
+}
+
+a:hover{
+    color:rgb(31, 92, 150);
+}
+
+.check{
+    font-size: 12px;
+    padding: 10px;
+}

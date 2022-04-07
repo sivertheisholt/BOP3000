@@ -2,21 +2,17 @@
     <div class="container">
         <div class="content">
             <div class="columns">
-                <div class="column is-one-quarter profile-left">
+                <div class="column is-one-third profile-left">
                     <div class="profile-left-content">
                         <app-account-card [user]="user" [currentUser]="currentUser"></app-account-card>
                     </div>
                 </div>
-                <div class="column account-right-content">
-                    <div class="is-full">
-                        <div class="profile-info-container">
-                            <app-account-info [user]="user"></app-account-info>
-                        </div>
-                    </div>
-                    <div class="is-full">
-                        <app-account-lobby-history [finishedLobbies]="finishedLobbies"></app-account-lobby-history>
-                    </div>
+                <div class="column">
+                    <app-account-info [user]="user"></app-account-info>
                 </div>
+            </div>
+            <div class="column is-full">
+                <app-account-lobby-history [finishedLobbies]="finishedLobbies"></app-account-lobby-history>
             </div>
         </div>
     </div>

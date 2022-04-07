@@ -17,6 +17,7 @@ export class AccountCardComponent implements OnInit {
   imageHeightWidth: boolean = false;
   imageSize: boolean = false;
   errorStatus: boolean = false;
+  blocked: boolean = false;
 
   constructor(private userService: UserService, private route: ActivatedRoute) { 
     
@@ -44,6 +45,16 @@ export class AccountCardComponent implements OnInit {
         this.isFollowing = !this.isFollowing;
       }
     )
+  }
+
+  blockUser(){
+    console.log(`User with id ${this.currentUser?.id} has blocked user with id ${this.user?.id}`);
+    this.blocked = true;
+  }
+
+  unblockUser(){
+    console.log(`User with id ${this.currentUser?.id} has unblocked user with id ${this.user?.id}`);
+    this.blocked = false;
   }
 
   onUploadProfilePicture(event: any){

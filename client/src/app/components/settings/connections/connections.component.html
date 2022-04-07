@@ -1,34 +1,66 @@
 <h1 class="title p-3 text-is-light">Connections</h1>
 <div class="connections-settings-wrapper is-flex is-flex-direction-column">
     <section class="section">
-        <form (ngSubmit)="onSubmitDiscord()">
-            <button type="submit" class="button discordbtn">
-                <span>Connect Your Discord</span>
-                <div class="icon">
-                    <img class="image is-64by64" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="">
-                </div>
-            </button>
-        </form>
+        <button *ngIf="!discordData?.connected" (click)="onDiscordLink()" type="button" class="button discordbtn">
+            <span>Link Your Discord</span>
+            <div class="icon">
+                <img class="image is-64by64" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="">
+            </div>
+        </button>
+        <button *ngIf="discordData?.connected" (click)="onDiscordUnlink()" type="button" class="button discordbtn">
+            <span>Unlink Your Discord</span>
+            <div class="icon">
+                <img class="image is-64by64" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="">
+            </div>
+        </button>
         <div class="connections-text mt-4 text-is-light">
+            <div class="connected" *ngIf="discordData?.connected">
+                <fa-icon class="icon" [icon]="faCheckCircle"></fa-icon>
+                ID: 
+                <a class="ml-1" href="{{'https://discord.com/users/' + discordData?.discordId}}" target="_blank">
+                    {{ discordData?.discordId }}
+                </a>
+            </div>
+            <div *ngIf="discordData?.connected" class="check">
+                <input (click)="onDiscordHide($event)" type="checkbox" [checked]="discordData?.hidden"> Hide Discord from profile.
+            </div>
             <p>
-                By connecting your Discord... Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo placeat vitae quidem amet reprehenderit distinctio libero nulla delectus, enim voluptates dolorum? Tempora earum provident perspiciatis quos hic temporibus consectetur aperiam!
+                By linking your Discord account, you acknowledge and agree that your Discord ID will be publicly visible in the Playfu API.
+                You may choose to hide this information from other users after connecting. If you do not want this information shared, please disconnect your account.
             </p>
         </div>
     </section>
     <section class="section">
-        <form (ngSubmit)="onSubmitSteam()">
-            <button type="submit" class="button steambtn">
-                <span>Connect Your Steam</span>
-                <div class="icon">
-                    <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">
-                </div>
-            </button>
-        </form>
+        <button *ngIf="!steamData?.connected" (click)="onSteamLink()" type="button" class="button steambtn">
+            <span>Link Your Steam</span>
+            <div class="icon">
+                <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">
+            </div>
+        </button>
+        <button *ngIf="steamData?.connected" (click)="onSteamUnlink()" type="button" class="button steambtn">
+            <span>Unlink Your Steam</span>
+            <div class="icon">
+                <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">
+            </div>
+        </button>
         <div class="connections-text mt-4 text-is-light">
+            <div class="connected" *ngIf="steamData?.connected">
+                <fa-icon class="icon" [icon]="faCheckCircle"></fa-icon>
+                ID: 
+                <a class="ml-1" href="{{'https://steamcommunity.com/profiles/' + steamData?.steamid}}" target="_blank">
+                    {{ steamData?.steamid }}
+                </a>
+            </div>
+            <div *ngIf="steamData?.connected" class="check">
+                <input (click)="onSteamHide($event)" type="checkbox" [checked]="steamData?.hidden"> Hide Steam from profile.
+            </div>
             <p>
-                By connecting your Discord... Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo placeat vitae quidem amet reprehenderit distinctio libero nulla delectus, enim voluptates dolorum? Tempora earum provident perspiciatis quos hic temporibus consectetur aperiam!
+                By linking your Steam account, you acknowledge and agree that your Steam ID will be publicly visible in the Playfu API.
+                You may choose to hide this information from other users after connecting. If you do not want this information shared, please disconnect your account.
             </p>
         </div>
     </section>
 </div>
+
+
 

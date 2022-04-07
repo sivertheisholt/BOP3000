@@ -9,6 +9,7 @@
     <div *ngIf="errorStatus">Something went wrong, try again later.</div>
 </div>
 
+
 <div class="file mt-5 is-centered" *ngIf="user?.id == currentUser?.id">
     <label class="file-label">
         <input #imageInput class="file-input" type="file" accept="image/png, image/jpg, image/jpeg" (change)="onUploadProfilePicture($event)">
@@ -22,9 +23,11 @@
         </span>
     </label>
 </div>
-<div class="has-text-centered mt-5" *ngIf="user?.id != currentUser?.id">
-    <button class="button is-dark" *ngIf="!isFollowing" (click)="onFollowUser()">Follow</button>
-    <button class="button is-dark" *ngIf="isFollowing" (click)="onUnFollowUser()">Unfollow</button>
+<div class="is-flex is-flex-direction-column has-text-centered mt-5" *ngIf="user?.id != currentUser?.id">
+    <button class="sm-button is-dark" *ngIf="!isFollowing" (click)="onFollowUser()">Follow</button>
+    <button class="sm-button is-dark" *ngIf="isFollowing" (click)="onUnFollowUser()">Unfollow</button>
+    <button class="sm-button is-dark mt-2" *ngIf="!blocked" (click)="blockUser()">Block</button>
+    <button class="sm-button is-dark mt-2" *ngIf="blocked" (click)="unblockUser()">Unblock</button>
 </div>
 <div class="image-content mt-5 text-is-light">
     <div class="following mb-3">
