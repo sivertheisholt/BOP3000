@@ -17,6 +17,10 @@
  background-color: rgba(48, 48, 48, 0.9);
 }
 
+button{
+  width: 150px;
+}
+
 .users-ready-status{
   display: flex;
   width: 100%;

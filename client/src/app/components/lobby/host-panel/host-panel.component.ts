@@ -44,6 +44,12 @@ export class HostPanelComponent implements OnInit {
       error => console.log(error)
     )
 
+    this.lobbyHubService.kickedPartyMembers$.subscribe(
+      response => {
+        this.totalParty--;
+      }
+    )
+
     this.lobbyHubService.acceptedReadyCheckMembers$.subscribe(
       (res) => {
         if(res.length == 0) return;

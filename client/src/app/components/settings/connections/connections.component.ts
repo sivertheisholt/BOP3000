@@ -17,15 +17,9 @@ export class ConnectionsComponent implements OnInit {
   connectToSteamForm!: FormGroup;
   discordData?: DiscordConnection;
   steamData?: SteamConnection;
-  @ViewChild('steamHidden') steamHidden?: ElementRef;
-  @ViewChild('discordHidden') discordHidden?: ElementRef;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private connectionService: ConnectionService, private userService: UserService ) {
-    
-  }
-
-
-
+  constructor(@Inject(DOCUMENT) private document: Document, private connectionService: ConnectionService, private userService: UserService ) {}
+  
   ngOnInit(): void {
     this.userService.getUserData().subscribe(
       (user) => {

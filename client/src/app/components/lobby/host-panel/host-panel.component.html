@@ -1,7 +1,7 @@
 <div class="host-panel-wrapper is-flex is-justify-content-center is-flex-direction-column is-align-items-center">
     <h1 class="subtitle text-is-light">Only the creator of this lobby can see this.</h1>
     <div class="p-2">
-        <button class="button is-success" data-target="modal-ready-check"  (click)="startReadyCheck()">Ready Check</button>
+        <button class="button is-success" data-target="modal-ready-check" [disabled]="lobby?.maxUsers != totalParty" (click)="startReadyCheck()">Ready Check</button>
     </div>
     <div class="p-2">
         <button class="button is-danger" data-target="modal-end-lobby" (click)="confirmEndLobby()">End Lobby</button>
