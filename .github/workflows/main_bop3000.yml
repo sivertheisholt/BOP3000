@@ -52,26 +52,6 @@ jobs:
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-      - name: Generate scripts
-        run: dotnet ef -p ./API migrations script --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --idempotent
-
-      - name: Azure SQL Deploy
-        uses: Azure/sql-action@v1
-        with:
-          # Name of the Azure SQL Server name, like Fabrikam.database.windows.net.
-          server-name: tcp:bop3000.database.windows.net
-          # The connection string, including authentication information, for the Azure SQL Server database.
-          connection-string: ${{ secrets.CONNECTION_STRING }}
-          #dacpac-package: './Database.dacpac'
-          # Path to SQL script file to deploy
-          sql-file: ${{env.DOTNET_ROOT}}/sql/sql-script.sql
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
