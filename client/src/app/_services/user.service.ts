@@ -6,6 +6,8 @@ import { environment } from '../../environments/environment';
 import { UserSearch } from "../_models/user-search.model";
 import { ActivityLog } from "../_models/activity-log.model";
 import { ProfileImage } from "../_models/profile-image.model";
+import { DiscordConnection } from "../_models/discord-connection.model";
+import { SteamConnection } from "../_models/steam-connection.model";
 
 @Injectable({providedIn: 'root'})
 export class UserService{
@@ -75,6 +77,22 @@ export class UserService{
 
     getUserActivities(){
         return this.http.get<ActivityLog[]>(this.baseUrl + 'members/current/activity');
+    }
+
+    getDiscordConnectionStatus(id: number){
+        return this.http.get<DiscordConnection>(this.baseUrl + 'members/' + id + '/discord').pipe(
+            map((res) => {
+                return res;
+            })
+        );
+    }
+
+    getSteamConnectionStatus(id: number){
+        return this.http.get<SteamConnection>(this.baseUrl + 'members/' + id + '/steam').pipe(
+            map((res) => {
+                return res;
+            })
+        );
     }
 
     postProfileImage(formData: FormData){

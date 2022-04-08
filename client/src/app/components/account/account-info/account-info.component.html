@@ -1,5 +1,19 @@
 <div class="profile-content text-is-light">
-    <h1 class="has-text-light"> {{ user?.username }} </h1>
+    <div class="username-text is-flex">
+        <h1 class="has-text-light"> {{ user?.username }} </h1>
+        <div class="user-connections">
+            <a class="ml-2" *ngIf="discordStatus?.connected && !discordStatus?.hidden" href="{{'https://discord.com/users/' + discordStatus?.discordId}}" target="_blank">
+                <div class="icon">
+                    <img class="image is-64by64" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="">
+                </div>
+            </a>
+            <a class="ml-2" *ngIf="steamStatus?.connected && !steamStatus?.hidden" href="{{'https://steamcommunity.com/profiles/' + steamStatus?.steamid}}" target="_blank">
+                <div class="icon">
+                    <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">
+                </div>
+            </a>
+        </div>
+    </div>
     <p> {{ user?.memberProfile?.description }} </p>
     <p><strong class="text-is-light">Favorite Game:</strong> League of Legends</p>
 </div>

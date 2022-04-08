@@ -1,9 +1,11 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { DiscordConnection } from 'src/app/_models/discord-connection.model';
+import { SteamConnection } from 'src/app/_models/steam-connection.model';
+import { ConnectionService } from 'src/app/_services/connection.service';
+import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-connections',
@@ -11,58 +13,72 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./connections.component.css']
 })
 export class ConnectionsComponent implements OnInit {
+  faCheckCircle = faCheckCircle;
   connectToSteamForm!: FormGroup;
-  private httpClient: HttpClient;
+  discordData?: DiscordConnection;
+  steamData?: SteamConnection;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, @Inject(DOCUMENT) private document: Document, private handler: HttpBackend) {
-    this.httpClient = new HttpClient(handler);
-    if(this.route.snapshot.queryParams.success != null)
-    {
-      if(this.route.snapshot.queryParams.provider == "discord") this.discordSuccess()
-      if(this.route.snapshot.queryParams.provider == "steam") this.steamSuccess();
+  constructor(@Inject(DOCUMENT) private document: Document, private connectionService: ConnectionService, private userService: UserService ) {}
+  
+  ngOnInit(): void {
+    this.userService.getUserData().subscribe(
+      (user) => {
+        this.userService.getDiscordConnectionStatus(user.id!).subscribe(
+          (discordResponse) => {
+            this.discordData = discordResponse;
+            
+          }
+        )
+        this.userService.getSteamConnectionStatus(user.id!).subscribe(
+          (steamResponse) => {
+            this.steamData = steamResponse;
+          }
+        )
+      }
+    )
+  }
+
+  onSteamLink(){
+    this.connectionService.connectToSteam().subscribe(
+      (res: any) => {
+        this.document.location.href = res.url!;
+      }
+    )
+  }
+
+  onSteamUnlink(){
+
+  }
+
+  onDiscordLink(){
+    this.connectionService.connectToDiscord().subscribe(
+      (res: any) => {
+        this.document.location.href = res.url!;
+      }
+    )
+  }
+
+  onDiscordUnlink(){
+
+  }
+
+  onDiscordHide(e: any){
+    if(e.target.checked){
+      console.log('Hiding discord from profile');
+      return;
+    } else {
+      console.log('Making discord visible');
+      return;
     }
   }
 
-  steamSuccess(): void {
-    this.http.patch('https://localhost:5001/api/accounts/steam-success', {}).subscribe(
-      response => {
-        console.log(response);
-      }
-    )
-  }
-
-  discordSuccess(): void {
-    this.http.patch('https://localhost:5001/api/accounts/discord-success', {}).subscribe(
-      response => {
-        console.log(response);
-      }
-    )
-  }
-
-  ngOnInit(): void {
-  }
-
-  onSubmitSteam(){
-    let options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-      responseType: "text" as "json", observe: "response" as "body"
-  };
-    this.httpClient.post('https://localhost:5001/api/accounts/steam', "", options).subscribe(
-      (response: any) => {
-        this.document.location.href = response.url!;
-      }
-    )
-  }
-  onSubmitDiscord(){
-    let options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Access-Control-Allow-Origin', '*'),
-      responseType: "text" as "json", observe: "response" as "body"
-  };
-    this.httpClient.post('https://localhost:5001/api/accounts/discord', "", options).subscribe(
-      (response: any) => {
-        console.log(response);
-        this.document.location.href = response.url!;
-      }
-    )
+  onSteamHide(e: any){
+    if(e.target.checked){
+      console.log('Hiding steam from profile');
+      return;
+    } else {
+      console.log('Making steam visible');
+      return;
+    }
   }
 }

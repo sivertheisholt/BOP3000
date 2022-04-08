@@ -1,18 +1,24 @@
 <h1 class="title p-3 text-is-light">Manage</h1>
 <div class="manage-account-wrapper is-flex is-flex-direction-column">
     <section class="section text-is-light">
-        <h1 class="subtitle text-is-light">Request</h1>
-        <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae officiis repellat, impedit ab nihil quas laboriosam tenetur dolor ratione sed libero ipsum
-             fugit dolorem veritatis praesentium, esse illum ullam quam sapiente pariatur in nulla distinctio. Culpa itaque similique repudiandae quae? Repudiandae quidem sapiente vero explicabo dolore corrupti in est illum!
+        <h1 class="subtitle text-is-light">Request Data</h1>
+        <div class="mb-3">
+            If you would like to request a copy of the personal data you've given us over the lifetime of your account,
+            you can do so by clicking the "Request" button.
+            <ul class="request-list m-5">
+                <li>It may take up to 14 days.</li>
+                <li>You can't make a request while a request is pending.</li>
+                <li>When your data is ready, you will recieve an email containing the data.</li>
+                <li>Do not change your email while the request is pending. The data will be sent to the email address you had when you first requested the data.</li>
+                <li>If you delete your account, the request will be cancelled.</li>
+            </ul>
         </div>
         <button class="button is-warning">Request</button>
     </section>
     <section class="section text-is-light">
-        <h1 class="subtitle text-is-light">Delete</h1>
-        <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae officiis repellat, impedit ab nihil quas laboriosam tenetur dolor ratione sed libero ipsum
-             fugit dolorem veritatis praesentium, esse illum ullam quam sapiente pariatur in nulla distinctio. Culpa itaque similique repudiandae quae? Repudiandae quidem sapiente vero explicabo dolore corrupti in est illum!
+        <h1 class="subtitle text-is-light">Delete Account</h1>
+        <div class="mb-3">
+            When you delete your account, your profile, history, connections, followers and likes will be permanently removed. This can not be undone. 
         </div>
         <button class="button is-danger" (click)="toggleModal()" data-target="modal-delete-account">Delete Account</button>
     </section>
@@ -20,9 +26,13 @@
         <div class="modal-background"></div>
         <div class="modal-content">
           <div class="box">
-            <p>By deleting your account...</p>
-            <button class="button is-danger" (click)="onDeleteAccount()">Delete Account</button>
-            <button class="button is-warning" (click)="toggleModal()">Cancel</button>
+            <div class="box-text">
+                Are you sure you want to delete your account?
+            </div>
+            <div class="button-wrapper p-3">
+                <button class="button is-danger mr-2" (click)="onDeleteAccount()">Delete Account</button>
+                <button class="button is-warning ml-2" (click)="toggleModal()">Cancel</button>
+            </div>
           </div>
         </div>
     </div>

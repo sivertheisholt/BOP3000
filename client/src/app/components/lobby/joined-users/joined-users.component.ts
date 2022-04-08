@@ -27,7 +27,6 @@ export class JoinedUsersComponent implements OnInit, OnDestroy{
 
     this.lobbyPartyMembersSubscription = this.lobbyHubService.lobbyPartyMembers$.subscribe(
       member => {
-        console.log(member);
         if(+member == 0) return;
         this.userService.getSpecificUser(+member).subscribe(
           (response) => {
