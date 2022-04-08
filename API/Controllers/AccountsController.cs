@@ -35,8 +35,10 @@ namespace API.Controllers
         /// <param name="tokenService"></param>
         private readonly ICountryRepository _countryRepository;
         private readonly IDiscordApiClient _discordApiClient;
-        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository, ICountryRepository countryRepository, IDiscordApiClient discordApiClient) : base(mapper)
+        private readonly IEmailService _emailService;
+        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository, ICountryRepository countryRepository, IDiscordApiClient discordApiClient, IEmailService emailService) : base(mapper)
         {
+            _emailService = emailService;
             _discordApiClient = discordApiClient;
             _countryRepository = countryRepository;
             _signInManager = signInManager;
@@ -250,6 +252,8 @@ namespace API.Controllers
             if (user == null) return NotFound();
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            _emailService.SendForgottenPasswordMail(token, forgottenPasswordDto.Email);
 
             return Accepted();
         }
