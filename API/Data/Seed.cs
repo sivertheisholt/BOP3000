@@ -338,7 +338,7 @@ namespace API.Data
         }
 
         /// <summary>
-        /// Will seed 50 games to the database for development and add all the apps to the database. 
+        /// Will seed 10 games to the database for development and add all the apps to the database. 
         /// </summary>
         /// <param name="steamAppRepository"></param>
         /// <param name="steamStoreClient"></param>

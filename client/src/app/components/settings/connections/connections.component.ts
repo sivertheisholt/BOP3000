@@ -55,7 +55,7 @@ export class ConnectionsComponent implements OnInit {
   }
   onSubmitDiscord(){
     let options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Access-Control-Allow-Origin', '*'),
       responseType: "text" as "json", observe: "response" as "body"
   };
     this.httpClient.post('https://localhost:5001/api/accounts/discord', "", options).subscribe(

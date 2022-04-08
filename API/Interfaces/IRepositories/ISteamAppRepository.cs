@@ -3,9 +3,6 @@ using API.Entities.SteamApp.Information;
 
 namespace API.Interfaces.IRepositories
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public interface ISteamAppRepository : IBaseRepository<AppInfo>
     {
         Task<AppInfo> GetAppInfoAsync(int id);
