@@ -57,14 +57,18 @@ export class UserPanelComponent implements OnInit {
         this.userDeclined = res;
         this.subscription?.unsubscribe();
         this.start = 30;
+        setTimeout(() => {
+          this.readyCheckModal = false;
+        }, 3000)
       }
     )
 
     this.lobbyHubService.lobbyStart$.subscribe(
       (res) => {
-        if(res){
+        if(res != ''){
           this.subscription?.unsubscribe();
           this.start = 30;
+          this.readyCheckModal = false;
         }
       }
     )
@@ -92,6 +96,8 @@ export class UserPanelComponent implements OnInit {
         this.start = this.start - 1;
         if(this.start === 0){
           this.subscription?.unsubscribe();
+          this.start = 30;
+          this.readyCheckModal = false;
         }
       }
     )

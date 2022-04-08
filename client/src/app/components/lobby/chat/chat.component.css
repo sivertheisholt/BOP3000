@@ -7,7 +7,7 @@
   overflow: auto;
   display: flex;
   flex-direction: column-reverse;
-  height: 480px;
+  height: 440px;
 }
 
 .lobby-chat-item{

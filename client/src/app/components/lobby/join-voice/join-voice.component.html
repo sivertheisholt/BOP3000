@@ -1,0 +1,9 @@
+<div class="join-voice-wrapper is-flex is-align-items-center is-justify-content-center is-flex-direction-column">
+    <p class="text-is-light">We have created a room for you at our Discord. Click the button below to join!</p>
+    <button class="button is-info" (click)="joinVoiceChat()">Join Voice Chat</button>
+    <p class="text-is-light mt-3">Or paste the link below into your browser</p>
+    <div class="link-copy-wrapper">
+        <input type="text" [value]="voiceUrl" class="link-input" readonly #voiceLinkInput>
+        <button (click)="copyLink(voiceLinkInput)" class="copy-link-button"><fa-icon [icon]="faCopy"></fa-icon></button>
+    </div>
+</div>

@@ -20,7 +20,7 @@ export class LobbyHubService {
   lobbyReadyCheck = new BehaviorSubject<boolean>(false);
   acceptedReadyCheckMembers = new Subject<number[]>();
   declinedReadyCheckMembers = new Subject<number>();
-  lobbyStart = new BehaviorSubject<boolean>(false);
+  lobbyStart = new BehaviorSubject<string>('');
 
   acceptedMembers$ = this.acceptedMembers.asObservable();
   lobbyQueueMembers$ = this.lobbyQueueMembers.asObservable();
@@ -120,9 +120,10 @@ export class LobbyHubService {
         console.log("User with id: " + id + " accepted ready check!");
       });
 
-      this.hubConnection.on("LobbyStarted", () => {
+      this.hubConnection.on("LobbyStarted", url => {
+        console.log(url);
         console.log("Lobby starting...");
-        this.lobbyStart.next(true);
+        this.lobbyStart.next(url);
       });
 
       // Only caller will get this

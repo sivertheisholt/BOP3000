@@ -24,20 +24,24 @@ export class JoinedUsersComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.lobbyHubService.getLobbyMembers(this.lobby.id);
-
+    let count = 0;
+    let map = new Map<string, number>();
     this.lobbyPartyMembersSubscription = this.lobbyHubService.lobbyPartyMembers$.subscribe(
       member => {
         if(+member == 0) return;
+        map.set(member.toString(), count);
+        count++;
         this.userService.getSpecificUser(+member).subscribe(
           (response) => {
             this.totalParty++;
-            this.usersInParty.push(response);
+            let id = response.id?.toString()!;
+            this.usersInParty.splice(map.get(id)!, 0, response);
           }
         )
       },
       error => console.log(error)
     )
-
+    
     this.lobbyHubService.kickedPartyMembers$.subscribe(
       response => {
         this.usersInParty.forEach(element => {

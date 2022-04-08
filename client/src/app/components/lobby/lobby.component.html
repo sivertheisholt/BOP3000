@@ -9,7 +9,8 @@
             <div class="columns">
                 <div class="column is-half">
                     <div class="left-section">
-                        <app-waiting-room [lobby]="lobby" [currentUser]="currentUser"></app-waiting-room>
+                        <app-waiting-room *ngIf="voiceUrl == ''" [lobby]="lobby" [currentUser]="currentUser"></app-waiting-room>
+                        <app-join-voice *ngIf="voiceUrl != ''" [voiceUrl]="voiceUrl"></app-join-voice>
                     </div>
                 </div>
                 <div class="column is-half">

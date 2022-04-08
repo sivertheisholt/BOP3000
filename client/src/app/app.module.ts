@@ -51,6 +51,7 @@ import { AccountLobbyHistoryComponent } from './components/account/account-lobby
 import { UserPanelComponent } from './components/lobby/user-panel/user-panel.component';
 import { UpgradeAccountComponent } from './components/upgrade-account/upgrade-account.component';
 import { ActivityLogComponent } from './components/activity-log/activity-log.component';
+import { JoinVoiceComponent } from './components/lobby/join-voice/join-voice.component';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import { ActivityLogComponent } from './components/activity-log/activity-log.com
     AccountLobbyHistoryComponent,
     UserPanelComponent,
     UpgradeAccountComponent,
-    ActivityLogComponent
+    ActivityLogComponent,
+    JoinVoiceComponent
   ],
   imports: [
     BrowserModule,

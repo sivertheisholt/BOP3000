@@ -1,0 +1,34 @@
+.join-voice-wrapper{
+    width: 100%;
+    height: 480px;
+    background-color: rgba(37, 37, 37, 0.7);
+}
+
+.link-copy-wrapper {
+    position: relative;
+    width: 300px;
+}
+
+.link-input {
+    width: 100%;
+    border: 1px solid rgb(131, 131, 131);
+    border-radius: 100px;
+    padding: 12px 70px 12px 12px;
+    line-height: 1;
+    box-sizing: border-box;
+    border: 0;
+}
+
+.copy-link-button {
+    position: absolute;
+    right: 3px; 
+    top: 3px;
+    bottom: 3px;
+    border: 0;
+    background: #0a85cc;
+    color: rgb(255, 255, 255);
+    padding: 0 10px;
+    border-radius: 100px;
+    z-index: 2;
+    cursor: pointer;
+}
