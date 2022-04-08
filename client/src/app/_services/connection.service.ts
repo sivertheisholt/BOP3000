@@ -14,7 +14,7 @@ export class ConnectionService{
     }
 
     connectToSteam(){
-          return this.httpClient.post<any>('https://localhost:5001/api/accounts/steam',{
+          return this.httpClient.post<any>('https://localhost:5001/api/accounts/steam', "", {
               headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
               responseType: 'text' as 'json',
               observe: 'response' as 'body'
