@@ -146,7 +146,6 @@ namespace API.SignalR
                 Console.Write("Lobby started before timer");
             }
 
-
             if (await _lobbyTracker.CheckReadyState(lobbyId))
             {
                 var discordIds = new List<ulong>();

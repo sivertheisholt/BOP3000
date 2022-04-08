@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Entities.SteamApps;
-using API.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using SteamApps.Entities.SteamApps;
+using SteamApps.Interfaces.IRepositories;
 
-namespace API.Data.Repositories
+namespace SteamApps.Data.Repositories
 {
     public class SteamAppsRepository : BaseRepository<AppList>, ISteamAppsRepository
     {
