@@ -28,6 +28,11 @@ namespace API.Data.Repositories
             return await Context.Users.AnyAsync(x => x.Id == id);
         }
 
+        public async Task<List<AppUser>> GetAllUsers()
+        {
+            return await Context.Users.ToListAsync();
+        }
+
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
             return await Context.Users.SingleOrDefaultAsync(x => x.Email == email);

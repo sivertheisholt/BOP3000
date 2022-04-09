@@ -10,7 +10,9 @@ namespace API.Interfaces.IRepositories
     {
         Task<List<ActivityLog>> GetActivitiesForUser(int uid);
 
-        Task AddActivityLog(ActivityLog activityLog);
+        void AddActivityLog(ActivityLog activityLog);
+
+        Task<List<ActivityLog>> GetActivities();
 
     }
 }

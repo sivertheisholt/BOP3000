@@ -14,10 +14,14 @@ namespace API.Data.Repositories
         {
 
         }
-        public Task AddActivityLog(ActivityLog activityLog)
+        public void AddActivityLog(ActivityLog activityLog)
         {
             Context.Add(activityLog);
-            return Task.CompletedTask;
+        }
+
+        public async Task<List<ActivityLog>> GetActivities()
+        {
+            return await Context.ActivityLog.ToListAsync();
         }
 
         public Task<List<ActivityLog>> GetActivitiesForUser(int uid)

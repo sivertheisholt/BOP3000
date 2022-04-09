@@ -1,0 +1,22 @@
+[
+    {
+        "Type": "Lobby",
+        "Identifier": "lobby-finished",
+        "Text": "finished lobby"
+    },
+    {
+        "Type": "Lobby",
+        "Identifier": "lobby-created",
+        "Text": "created lobby"
+    },
+    {
+        "Type": "Lobby",
+        "Identifier": "lobby-joined",
+        "Text": "joined lobby"
+    },
+    {
+        "Type": "Member",
+        "Identifier": "member-followed",
+        "Text": "followed"
+    }
+]

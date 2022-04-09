@@ -14,6 +14,7 @@ using AutoMapper;
 using ISO3166;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace API.Data
 {
@@ -41,289 +42,38 @@ namespace API.Data
                 await roleManager.CreateAsync(role);
             }
 
-            var admin = new AppUser
+            using (StreamReader r = new StreamReader("Data/SeedData/Users.json"))
             {
-                UserName = "adminTest",
-                Email = "admin@test.com",
-                AppUserProfile = new AppUserProfile
+                string json = r.ReadToEnd();
+                List<AppUser> users = JsonConvert.DeserializeObject<List<AppUser>>(json);
+                Random rnd = new Random();
+                foreach (var user in users)
                 {
-                    Birthday = new DateTime(1998, 7, 30),
-                    Gender = "Male",
-                    Description = "Jeg er en veldig flink spiller!",
-                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
-                    AppUserData = new AppUserData
+                    user.AppUserProfile.CountryIso = await countryRepository.GetCountryIsoByIdAsync(rnd.Next(1, 50));
+
+                    if (user.UserName == "Playfu1")
                     {
-                        Upvotes = 10,
-                        Downvotes = 5,
-                        Followers = new[] { 2, 3, 4, 6, 7 },
-                        Following = new[] { 2, 3, 4, 6, 7 },
-                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 },
-                        FinishedLobbies = new[] { 1, 3 }
-                    },
-                    AppUserPhoto = new AppUserPhoto
+                        await userManager.CreateAsync(user, "Pa$$w0rd");
+                        await userManager.AddToRolesAsync(user, new[] { Role.Member.MakeString(), Role.Admin.MakeString(), Role.Premium.MakeString() });
+                    }
+                    else
                     {
-                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
-                    },
-                    UserConnections = new AppUserConnections
-                    {
-                        SteamConnected = false,
-                        DiscordConnected = false,
-                        Steam = new SteamProfile
-                        {
-                        },
-                        Discord = new DiscordProfile
-                        {
-                        }
+                        await userManager.CreateAsync(user, "Playfu123!");
+                        await userManager.AddToRolesAsync(user, new[] { Role.Member.MakeString() });
                     }
                 }
-            };
-
-            var testUser = new AppUser
-            {
-                UserName = "membertest",
-                Email = "member@test.com",
-                AppUserProfile = new AppUserProfile
-                {
-                    Birthday = new DateTime(1998, 7, 30),
-                    Gender = "Male",
-                    Description = "Jeg er en veldig flink spiller!",
-                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
-                    AppUserData = new AppUserData
-                    {
-                        Upvotes = 10,
-                        Downvotes = 5,
-                        Followers = new[] { 2, 3, 4, 6, 7 },
-                        Following = new[] { 2, 3, 4, 6, 7 },
-                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 },
-                        FinishedLobbies = new[] { 2 }
-                    },
-                    AppUserPhoto = new AppUserPhoto
-                    {
-                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
-                    },
-                    UserConnections = new AppUserConnections
-                    {
-                        SteamConnected = false,
-                        DiscordConnected = false,
-                        Steam = new SteamProfile
-                        {
-                        },
-                        Discord = new DiscordProfile
-                        {
-                        }
-                    }
-                }
-            };
-            var testUser2 = new AppUser
-            {
-                UserName = "membertest2",
-                Email = "member2@test.com",
-                AppUserProfile = new AppUserProfile
-                {
-                    Birthday = new DateTime(1998, 7, 30),
-                    Gender = "Male",
-                    Description = "Jeg er en veldig flink spiller 2!",
-                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
-                    AppUserData = new AppUserData
-                    {
-                        Upvotes = 10,
-                        Downvotes = 5,
-                        Followers = new[] { 2, 3, 4, 6, 7 },
-                        Following = new[] { 2, 3, 4, 6, 7 },
-                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
-                    },
-                    AppUserPhoto = new AppUserPhoto
-                    {
-                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
-                    },
-                    UserConnections = new AppUserConnections
-                    {
-                        SteamConnected = false,
-                        DiscordConnected = false,
-                        Steam = new SteamProfile
-                        {
-                        },
-                        Discord = new DiscordProfile
-                        {
-                        }
-                    }
-                }
-            };
-
-            var testUser3 = new AppUser
-            {
-                UserName = "membertest3",
-                Email = "member3@test.com",
-                AppUserProfile = new AppUserProfile
-                {
-                    Birthday = new DateTime(1998, 7, 30),
-                    Gender = "Male",
-                    Description = "Jeg er en veldig flink spiller 3!",
-                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
-                    AppUserData = new AppUserData
-                    {
-                        Upvotes = 10,
-                        Downvotes = 5,
-                        Followers = new[] { 2, 3, 4, 6, 7 },
-                        Following = new[] { 2, 3, 4, 6, 7 },
-                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
-                    },
-                    AppUserPhoto = new AppUserPhoto
-                    {
-                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
-                    },
-                    UserConnections = new AppUserConnections
-                    {
-                        SteamConnected = false,
-                        DiscordConnected = false,
-                        Steam = new SteamProfile
-                        {
-                        },
-                        Discord = new DiscordProfile
-                        {
-                        }
-                    }
-                }
-            };
-
-            var testUser4 = new AppUser
-            {
-                UserName = "membertest4",
-                Email = "member4@test.com",
-                AppUserProfile = new AppUserProfile
-                {
-                    Birthday = new DateTime(1998, 7, 30),
-                    Gender = "Male",
-                    Description = "Jeg er en veldig flink spiller 4!",
-                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
-                    AppUserData = new AppUserData
-                    {
-                        Upvotes = 10,
-                        Downvotes = 5,
-                        Followers = new[] { 2, 3, 4, 6, 7 },
-                        Following = new[] { 2, 3, 4, 6, 7 },
-                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
-                    },
-                    AppUserPhoto = new AppUserPhoto
-                    {
-                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
-                    },
-                    UserConnections = new AppUserConnections
-                    {
-                        SteamConnected = false,
-                        DiscordConnected = false,
-                        Steam = new SteamProfile
-                        {
-                        },
-                        Discord = new DiscordProfile
-                        {
-                        }
-                    }
-                }
-            };
-            var testUser5 = new AppUser
-            {
-                UserName = "membertest5",
-                Email = "member5@test.com",
-                AppUserProfile = new AppUserProfile
-                {
-                    Birthday = new DateTime(1998, 7, 30),
-                    Gender = "Male",
-                    Description = "Jeg er en veldig flink spiller 5!",
-                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
-                    AppUserData = new AppUserData
-                    {
-                        Upvotes = 10,
-                        Downvotes = 5,
-                        Followers = new[] { 2, 3, 4, 6, 7 },
-                        Following = new[] { 2, 3, 4, 6, 7 },
-                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
-                    },
-                    AppUserPhoto = new AppUserPhoto
-                    {
-                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
-                    },
-                    UserConnections = new AppUserConnections
-                    {
-                        SteamConnected = false,
-                        DiscordConnected = false,
-                        Steam = new SteamProfile
-                        {
-                        },
-                        Discord = new DiscordProfile
-                        {
-                        }
-                    }
-                }
-            };
-
-            var testUser6 = new AppUser
-            {
-                UserName = "membertest6",
-                Email = "member6@test.com",
-                AppUserProfile = new AppUserProfile
-                {
-                    Birthday = new DateTime(1998, 7, 30),
-                    Gender = "Male",
-                    Description = "Jeg er en veldig flink spiller 6!",
-                    CountryIso = await countryRepository.GetCountryIsoByIdAsync(1),
-                    AppUserData = new AppUserData
-                    {
-                        Upvotes = 10,
-                        Downvotes = 5,
-                        Followers = new[] { 2, 3, 4, 6, 7 },
-                        Following = new[] { 2, 3, 4, 6, 7 },
-                        UserFavoriteGames = new[] { 2, 3, 4, 6, 7 }
-                    },
-                    AppUserPhoto = new AppUserPhoto
-                    {
-                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
-                    },
-                    UserConnections = new AppUserConnections
-                    {
-                        SteamConnected = false,
-                        DiscordConnected = false,
-                        Steam = new SteamProfile
-                        {
-                        },
-                        Discord = new DiscordProfile
-                        {
-                        }
-                    }
-                }
-            };
-
-            await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(admin, new[] { "Member", "Admin", "Premium" });
-
-            await userManager.CreateAsync(testUser, "Playfu123!");
-            await userManager.AddToRolesAsync(testUser, new[] { Role.Member.MakeString() });
-
-            await userManager.CreateAsync(testUser2, "Playfu123!");
-            await userManager.AddToRolesAsync(testUser2, new[] { Role.Member.MakeString() });
-
-            await userManager.CreateAsync(testUser3, "Playfu123!");
-            await userManager.AddToRolesAsync(testUser3, new[] { Role.Member.MakeString() });
-
-            await userManager.CreateAsync(testUser4, "Playfu123!");
-            await userManager.AddToRolesAsync(testUser4, new[] { Role.Member.MakeString() });
-
-            await userManager.CreateAsync(testUser5, "Playfu123!");
-            await userManager.AddToRolesAsync(testUser5, new[] { Role.Member.MakeString() });
-
-            await userManager.CreateAsync(testUser6, "Playfu123!");
-            await userManager.AddToRolesAsync(testUser6, new[] { Role.Member.MakeString() });
+            }
 
             //Seed to search
             var createTask = meilisearchService.CreateIndexAsync("members");
 
-            var users = mapper.Map<List<AppUserMeili>>(await userRepository.GetUsersMeiliAsync());
+            var usersMeili = mapper.Map<List<AppUserMeili>>(await userRepository.GetUsersMeiliAsync());
 
             var cont = createTask.ContinueWith(task =>
             {
                 var index = meilisearchService.GetIndex("members");
 
-                var docsTask = meilisearchService.AddDocumentsAsync(users.ToArray(), index);
+                var docsTask = meilisearchService.AddDocumentsAsync(usersMeili.ToArray(), index);
 
                 var docs = docsTask.ContinueWith(docsTask =>
                 {
@@ -333,8 +83,6 @@ namespace API.Data
             });
 
             cont.Wait();
-
-            Console.WriteLine($"Finished seeding user Data");
         }
 
         /// <summary>
@@ -348,7 +96,7 @@ namespace API.Data
                                                     ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient,
                                                         IMeilisearchService meilisearchService)
         {
-            var max = 50;
+            var max = 10;
             var counter = 0;
 
             var apps = await steamAppsClient.GetAppsList();
@@ -356,7 +104,6 @@ namespace API.Data
 
             if (await steamAppRepository.GetAppInfoAsync(1) != null) return;
 
-            //var apps = await steamAppsClient.GetAppsList();
             steamAppsRepository.AddAppsList(apps);
 
             foreach (AppListInfo app in apps.Apps)
@@ -438,145 +185,42 @@ namespace API.Data
         {
             if (await lobbiesRepository.GetLobbyAsync(1) != null) return;
 
-            var lobbies = new Lobby[] {
-                new Lobby {MaxUsers = 5,
-                            AdminUid = 1,
-                            Title = "Whats up gamers",
-                            LobbyDescription = "Hello there",
-                            GameId=51,
-                            GameName = (await steamAppRepository.GetAppInfoAsync(51)).Data.Name,
-                            GameType="Competetive",
-                            LobbyRequirement = new Requirement {
-                                Gender = "Male"
-                            },
-                            StartDate = DateTime.Now
-                            },
-
-                new Lobby {MaxUsers = 5,
-                            AdminUid = 3,
-                            Title = "Hey guys lets play",
-                            LobbyDescription = "Sup",
-                            GameId=51,
-                            GameName = (await steamAppRepository.GetAppInfoAsync(51)).Data.Name,
-                            GameType="Casual",
-                            LobbyRequirement = new Requirement {
-                                Gender = "Male"
-                            },
-                            StartDate = DateTime.Now},
-                new Lobby {MaxUsers = 5,
-                            AdminUid = 4,
-                            Title = "Whats up noobs",
-                            LobbyDescription = "Hmmm",
-                            GameId=52,
-                            GameName = (await steamAppRepository.GetAppInfoAsync(52)).Data.Name,
-                            GameType="Competetive",
-                            LobbyRequirement = new Requirement {
-                                Gender = "Female"
-                            },
-                            StartDate = DateTime.Now},
-                new Lobby {MaxUsers = 5,
-                            AdminUid = 5,
-                            Title = "Halla",
-                            LobbyDescription = "I dont know",
-                            GameId=53,
-                            GameName = (await steamAppRepository.GetAppInfoAsync(53)).Data.Name,
-                            GameType="Casual",
-                            LobbyRequirement = new Requirement {
-                                Gender = "Male"
-                            },
-                            StartDate = DateTime.Now},
-                new Lobby
-                {
-                    MaxUsers = 5,
-                    AdminUid = 6,
-                    Title = "Play smth?",
-                    LobbyDescription = "Sheeeeesh",
-                    GameId=54,
-                    GameName = (await steamAppRepository.GetAppInfoAsync(54)).Data.Name,
-                    GameType="Casual",
-                    LobbyRequirement = new Requirement {
-                        Gender = "Female"
-                    },
-                    StartDate = DateTime.Now
-                    },
-
-                 new Lobby
-                 {
-                    MaxUsers = 5,
-                    AdminUid = 2,
-                    Title = "Play smth?",
-                    LobbyDescription = "Hah",
-                    GameId=54,
-                    GameName = (await steamAppRepository.GetAppInfoAsync(54)).Data.Name,
-                    GameType="Casual",
-                    LobbyRequirement = new Requirement {
-                        Gender = "Female"
-                    },
-                    Log = new Log{
-
-                    },
-                    FinishedDate = DateTime.Now,
-                    StartDate = DateTime.Now,
-                    Users = new List<int>(){1, 2, 3},
-                    Finished = true
-                },
-                new Lobby
-                {
-                    MaxUsers = 5,
-                    AdminUid = 1,
-                    Title = "The fuck are you looking at",
-                    LobbyDescription = "Sheeeeesh",
-                    GameId=54,
-                    GameName = (await steamAppRepository.GetAppInfoAsync(54)).Data.Name,
-                    GameType="Casual",
-                    LobbyRequirement = new Requirement {
-                        Gender = "Male"
-                    },
-                    Log = new Log{
-
-                    },
-                    FinishedDate = DateTime.Now,
-                    StartDate = DateTime.Now,
-                    Users = new List<int>(){1, 3, 5},
-                    Finished = true
-                },
-                new Lobby
-                {
-                    MaxUsers = 5,
-                    AdminUid = 6,
-                    Title = "Lol noob",
-                    LobbyDescription = "Lmao",
-                    GameId=53,
-                    GameName = (await steamAppRepository.GetAppInfoAsync(53)).Data.Name,
-                    GameType="Competetive",
-                    LobbyRequirement = new Requirement {
-                        Gender = "Female"
-                    },
-                    Log = new Log{
-
-                    },
-                    FinishedDate = DateTime.Now,
-                    StartDate = DateTime.Now,
-                    Users = new List<int>(){2, 4, 6},
-                    Finished = true
-                }
-            };
-
-            foreach (var item in lobbies)
+            using (StreamReader r = new StreamReader("Data/SeedData/Lobbies.json"))
             {
-                lobbiesRepository.AddLobby(item);
+                string json = r.ReadToEnd();
+                List<Lobby> lobbies = JsonConvert.DeserializeObject<List<Lobby>>(json);
+                foreach (var lobby in lobbies)
+                {
+                    lobby.GameName = (await steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
+                    lobbiesRepository.AddLobby(lobby);
+                }
             }
+
+            using (StreamReader r = new StreamReader("Data/SeedData/FinishedLobbies.json"))
+            {
+                string json = r.ReadToEnd();
+                List<Lobby> lobbies = JsonConvert.DeserializeObject<List<Lobby>>(json);
+                foreach (var lobby in lobbies)
+                {
+                    lobby.GameName = (await steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
+                    lobbiesRepository.AddLobby(lobby);
+                }
+            }
+
             await lobbiesRepository.SaveAllAsync();
+
             Console.WriteLine($"Finished seeding lobbies data");
         }
+
         public static async Task SeedLobbyHub(ILobbiesRepository lobbiesRepository, LobbyHub lobbyHub)
         {
             await lobbyHub.CreateLobbyTest(1, 1);
-            await lobbyHub.CreateLobbyTest(2, 7);
-            for (int i = 3; i < 6; i++)
-            {
-                await lobbyHub.CreateLobbyTest(i, i);
-            }
+            await lobbyHub.CreateLobbyTest(5, 2);
+            await lobbyHub.CreateLobbyTest(6, 3);
+            await lobbyHub.CreateLobbyTest(7, 4);
+            await lobbyHub.CreateLobbyTest(8, 5);
+            await lobbyHub.CreateLobbyTest(9, 6);
+            await lobbyHub.CreateLobbyTest(10, 7);
             Console.WriteLine($"Finished seeding lobby hub data");
         }
 
@@ -584,92 +228,26 @@ namespace API.Data
         {
             if (await activityRepository.GetActivity(1) != null) return;
 
-            var activityTypes = new Activity[] {
-                new Activity {
-                    Type = "Lobby",
-                    Identifier = "lobby-finished",
-                    Text = "finished lobby"
-                },
-                new Activity {
-                    Type = "Lobby",
-                    Identifier = "lobby-created",
-                    Text = "created lobby"
-                },
-                new Activity {
-                    Type = "Lobby",
-                    Identifier = "lobby-joined",
-                    Text = "joined lobby"
-                },
-                new Activity {
-                    Type = "Member",
-                    Identifier = "member-followed",
-                    Text = "followed"
-                }
-            };
-
-            foreach (var activity in activityTypes)
+            using (StreamReader r = new StreamReader("Data/SeedData/Activities.json"))
             {
-                await activityRepository.AddActivity(activity);
+                string json = r.ReadToEnd();
+                List<Activity> activities = JsonConvert.DeserializeObject<List<Activity>>(json);
+                foreach (var activity in activities)
+                {
+                    activityRepository.AddActivity(activity);
+                }
             }
+            using (StreamReader r = new StreamReader("Data/SeedData/ActivityLogs.json"))
+            {
+                string json = r.ReadToEnd();
+                List<ActivityLog> activityLogs = JsonConvert.DeserializeObject<List<ActivityLog>>(json);
+                foreach (var activityLog in activityLogs)
+                {
+                    activitiesRepository.AddActivityLog(activityLog);
+                }
+            }
+
             await activityRepository.SaveAllAsync();
-
-            var activityLogs = new ActivityLog[] {
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 27),
-                    AppUserId = 3,
-                    ActivityId = 1
-                },
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 27),
-                    AppUserId = 2,
-                    ActivityId = 1
-                },
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 27),
-                    AppUserId = 2,
-                    ActivityId = 2
-                },
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 28),
-                    AppUserId = 6,
-                    ActivityId = 3
-                },
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 28),
-                    AppUserId = 2,
-                    ActivityId = 4
-                },
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 29),
-                    AppUserId = 2,
-                    ActivityId = 2
-                },
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 29),
-                    AppUserId = 2,
-                    ActivityId = 3
-                },
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 30),
-                    AppUserId = 2,
-                    ActivityId = 1
-                },
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 30),
-                    AppUserId = 3,
-                    ActivityId = 3
-                },
-                new ActivityLog {
-                    Date = new DateTime(2022, 3, 31),
-                    AppUserId = 3,
-                    ActivityId = 2
-                }
-            };
-
-            foreach (var log in activityLogs)
-            {
-                await activitiesRepository.AddActivityLog(log);
-            }
             await activitiesRepository.SaveAllAsync();
         }
     }

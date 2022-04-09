@@ -1,0 +1,242 @@
+[
+    {
+        "Date": "2022-04-08T12:00:00",
+        "AppUserId": 1,
+        "ActivityId": 1,
+        "LobbyId": 8
+    },
+    {
+        "Date": "2022-04-08T12:00:00",
+        "AppUserId": 2,
+        "ActivityId": 1,
+        "LobbyId": 8
+    },
+    {
+        "Date": "2022-04-08T12:00:00",
+        "AppUserId": 3,
+        "ActivityId": 1,
+        "LobbyId": 8
+    },
+    {
+        "Date": "2022-04-07T12:00:00",
+        "AppUserId": 1,
+        "ActivityId": 1,
+        "LobbyId": 9
+    },
+    {
+        "Date": "2022-04-07T12:00:00",
+        "AppUserId": 4,
+        "ActivityId": 1,
+        "LobbyId": 9
+    },
+    {
+        "Date": "2022-04-07T12:00:00",
+        "AppUserId": 5,
+        "ActivityId": 1,
+        "LobbyId": 9
+    },
+    {
+        "Date": "2022-04-07T13:00:00",
+        "AppUserId": 2,
+        "ActivityId": 1,
+        "LobbyId": 10
+    },
+    {
+        "Date": "2022-04-07T13:00:00",
+        "AppUserId": 4,
+        "ActivityId": 1,
+        "LobbyId": 10
+    },
+    {
+        "Date": "2022-04-07T13:00:00",
+        "AppUserId": 5,
+        "ActivityId": 1,
+        "LobbyId": 10
+    },
+
+
+
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 1,
+        "ActivityId": 2,
+        "LobbyId": 1
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 5,
+        "ActivityId": 2,
+        "LobbyId": 2
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 6,
+        "ActivityId": 2,
+        "LobbyId": 3
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 7,
+        "ActivityId": 2,
+        "LobbyId": 4
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 8,
+        "ActivityId": 2,
+        "LobbyId": 5
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 9,
+        "ActivityId": 2,
+        "LobbyId": 6
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 10,
+        "ActivityId": 2,
+        "LobbyId": 7
+    },
+    {
+        "Date": "2022-04-08T11:00:00",
+        "AppUserId": 1,
+        "ActivityId": 2,
+        "LobbyId": 8
+    },
+    {
+        "Date": "2022-04-07T11:00:00",
+        "AppUserId": 1,
+        "ActivityId": 2,
+        "LobbyId": 9
+    },
+    {
+        "Date": "2022-04-07T12:00:00",
+        "AppUserId": 2,
+        "ActivityId": 2,
+        "LobbyId": 10
+    },
+
+    
+
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 1,
+        "ActivityId": 4,
+        "MemberFollowedId": 2
+    },
+    {
+        "Date": "2022-04-08T12:00:00",
+        "AppUserId": 1,
+        "ActivityId": 4,
+        "MemberFollowedId": 4
+    },
+    {
+        "Date": "2022-04-07T12:00:00",
+        "AppUserId": 1,
+        "ActivityId": 4,
+        "MemberFollowedId": 6
+    },
+    {
+        "Date": "2022-04-06T12:00:00",
+        "AppUserId": 1,
+        "ActivityId": 4,
+        "MemberFollowedId": 8
+    },
+    {
+        "Date": "2022-04-05T12:00:00",
+        "AppUserId": 1,
+        "ActivityId": 4,
+        "MemberFollowedId": 10
+    },
+    {
+        "Date": "2022-04-04T12:00:00",
+        "AppUserId": 2,
+        "ActivityId": 4,
+        "MemberFollowedId": 1
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 2,
+        "ActivityId": 4,
+        "MemberFollowedId": 3
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 2,
+        "ActivityId": 4,
+        "MemberFollowedId": 4
+    },
+    {
+        "Date": "2022-04-03T12:00:00",
+        "AppUserId": 3,
+        "ActivityId": 4,
+        "MemberFollowedId": 1
+    },
+    {
+        "Date": "2022-04-04T12:00:00",
+        "AppUserId": 3,
+        "ActivityId": 4,
+        "MemberFollowedId": 5
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 3,
+        "ActivityId": 4,
+        "MemberFollowedId": 9
+    },
+    {
+        "Date": "2022-04-03T12:00:00",
+        "AppUserId": 4,
+        "ActivityId": 4,
+        "MemberFollowedId": 1
+    },
+    {
+        "Date": "2022-04-04T12:00:00",
+        "AppUserId": 5,
+        "ActivityId": 4,
+        "MemberFollowedId": 1
+    },
+    {
+        "Date": "2022-04-02T12:00:00",
+        "AppUserId": 6,
+        "ActivityId": 4,
+        "MemberFollowedId": 1
+    },
+    {
+        "Date": "2022-04-03T12:00:00",
+        "AppUserId": 6,
+        "ActivityId": 4,
+        "MemberFollowedId": 7
+    },
+    {
+        "Date": "2022-04-06T12:00:00",
+        "AppUserId": 7,
+        "ActivityId": 4,
+        "MemberFollowedId": 1
+    },
+    {
+        "Date": "2022-04-07T12:00:00",
+        "AppUserId": 7,
+        "ActivityId": 4,
+        "MemberFollowedId": 4
+    },
+    {
+        "Date": "2022-04-09T12:00:00",
+        "AppUserId": 8,
+        "ActivityId": 4,
+        "MemberFollowedId": 1
+    },
+    {
+        "Date": "2022-04-03T12:00:00",
+        "AppUserId": 9,
+        "ActivityId": 4,
+        "MemberFollowedId": 1
+    },
+    {
+        "Date": "2022-04-04T12:00:00",
+        "AppUserId": 10,
+        "ActivityId": 4,
+        "MemberFollowedId": 1
+    }
+]

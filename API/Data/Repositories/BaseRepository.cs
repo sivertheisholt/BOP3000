@@ -17,7 +17,7 @@ namespace API.Data.Repositories
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Deleted;
         }
 
         public async Task<bool> SaveAllAsync()
@@ -28,6 +28,11 @@ namespace API.Data.Repositories
         public void Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public async Task resetId(string tableName)
+        {
+            await _context.Database.ExecuteSqlRawAsync($"DBCC CHECKIDENT ('{tableName}', RESEED, 0)");
         }
 
         protected DataContext Context { get { return _context; } }

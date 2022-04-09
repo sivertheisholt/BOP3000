@@ -11,5 +11,7 @@ namespace API.Interfaces.IRepositories
         void Update(T entity);
 
         void Delete(T entity);
+
+        Task resetId(string tableName);
     }
 }

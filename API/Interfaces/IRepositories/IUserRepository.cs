@@ -28,5 +28,7 @@ namespace API.Interfaces.IRepositories
         Task<ulong> GetUserDiscordIdFromUid(int id);
 
         Task<AppUserConnections> GetUserConnectionsFromUid(int id);
+
+        Task<List<AppUser>> GetAllUsers();
     }
 }

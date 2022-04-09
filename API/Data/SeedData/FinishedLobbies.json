@@ -1,0 +1,65 @@
+[
+    {
+        "MaxUsers": 5,
+        "AdminUid": 1,
+        "Title": "Let's rank up!",
+        "LobbyDescription": "Looking for serious players - Road to global!",
+        "GameId": 11,
+        "GameName": "",
+        "GameType": "Competetive",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "Log": {
+
+        },
+        "FinishedDate": "2022-04-08T12:00:00",
+        "StartDate": "2022-04-08T11:00:00",
+        "Users": [
+            1, 2, 3
+        ],
+        "Finished": true
+    },
+    {
+        "MaxUsers": 10,
+        "AdminUid": 1,
+        "Title": "Chill",
+        "LobbyDescription": "Looking for chill players to play with",
+        "GameId": 12,
+        "GameName": "",
+        "GameType": "Casual",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "Log": {
+
+        },
+        "FinishedDate": "2022-04-07T12:00:00",
+        "StartDate": "2022-04-07T11:00:00",
+        "Users": [
+            1, 4, 5
+        ],
+        "Finished": true
+    },
+    {
+        "MaxUsers": 3,
+        "AdminUid": 2,
+        "Title": "I need friends",
+        "LobbyDescription": "Looking for friends to play with",
+        "GameId": 13,
+        "GameName": "",
+        "GameType": "Casual",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "Log": {
+
+        },
+        "FinishedDate": "2022-04-07T13:00:00",
+        "StartDate": "2022-04-07T12:00:00",
+        "Users": [
+            2, 4, 5
+        ],
+        "Finished": true
+    }
+]

@@ -11,7 +11,9 @@ namespace API.Interfaces.IRepositories
     {
         Task<Activity> GetActivity(int id);
 
-        Task AddActivity(Activity activity);
+        void AddActivity(Activity activity);
+
+        Task<List<Activity>> GetActivities();
 
     }
 }

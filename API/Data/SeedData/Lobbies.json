@@ -1,0 +1,93 @@
+[
+    {
+        "MaxUsers": 5,
+        "AdminUid": 1,
+        "Title": "Ayo let's play",
+        "LobbyDescription": "Please only nice people. If you want we can also change game later!",
+        "GameId": 11,
+        "GameName": "",
+        "GameType": "Casual",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "StartDate": "2022-04-09T12:00:00"
+    },
+    {
+        "MaxUsers": 5,
+        "AdminUid": 5,
+        "Title": "Road to global",
+        "LobbyDescription": " If you are trash don't bother - LEM is required",
+        "GameId": 11,
+        "GameName": "",
+        "GameType": "Competetive",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "StartDate": "2022-04-09T12:00:00"
+    },
+    {
+        "MaxUsers": 8,
+        "AdminUid": 6,
+        "Title": "The grind is on",
+        "LobbyDescription": "We need a Gunner, Mage and Assassin. I can be Warrior",
+        "GameId": 12,
+        "GameName": "",
+        "GameType": "Casual",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "StartDate": "2022-04-09T12:00:00"
+    },
+    {
+        "MaxUsers": 5,
+        "AdminUid": 7,
+        "Title": "Road to pred",
+        "LobbyDescription": "Only join if you are Master rank - Diamond no good",
+        "GameId": 13,
+        "GameName": "",
+        "GameType": "Competetive",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "StartDate": "2022-04-09T12:00:00"
+    },
+    {
+        "MaxUsers": 4,
+        "AdminUid": 8,
+        "Title": "Trolling the killers",
+        "LobbyDescription": "Just having fun with the killer. Please just enjoy the game",
+        "GameId": 14,
+        "GameName": "",
+        "GameType": "Casual",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "StartDate": "2022-04-09T12:00:00"
+    },
+    {
+        "MaxUsers": 6,
+        "AdminUid": 9,
+        "Title": "Automate everything",
+        "LobbyDescription": "Manual work is eww. Automation is yaaay",
+        "GameId": 15,
+        "GameName": "",
+        "GameType": "Casual",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "StartDate": "2022-04-09T12:00:00"
+    },
+    {
+        "MaxUsers": 2,
+        "AdminUid": 10,
+        "Title": "Speedrun",
+        "LobbyDescription": "Getting that new record, currently at 5 hours record. Let's beat it!",
+        "GameId": 15,
+        "GameName": "",
+        "GameType": "Competetive",
+        "LobbyRequirement": {
+            "Gender": "Male"
+        },
+        "StartDate": "2022-04-09T12:00:00"
+    }
+]

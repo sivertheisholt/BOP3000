@@ -1,0 +1,412 @@
+[
+    {
+        "UserName": "Playfu1",
+        "Email": "admin@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Male",
+            "Description": "Look at me, i'm the captain now! ",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 420,
+                "Downvotes": 360,
+                "Followers": [
+                    2, 3, 4, 5, 6, 7, 8, 9, 10
+                ],
+                "Following": [
+                    2, 4, 6, 8, 10
+                ],
+                "UserFavoriteGames": [
+                    11, 13
+                ],
+                "FinishedLobbies": [
+                    8, 9
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    },
+    {
+        "UserName": "Playfu2",
+        "Email": "Playfu2@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Male",
+            "Description": "I'm just that good",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 999,
+                "Downvotes": 0,
+                "Followers": [
+                    1
+                ],
+                "Following": [
+                    1, 3, 4
+                ],
+                "UserFavoriteGames": [
+                    12, 13
+                ],
+                "FinishedLobbies": [
+                    8, 10
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    },
+    {
+        "UserName": "Playfu3",
+        "Email": "Playfu3@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Male",
+            "Description": "I'm just that bad",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 2,
+                "Downvotes": 420,
+                "Followers": [
+                    2
+                ],
+                "Following": [
+                    1, 5, 9
+                ],
+                "UserFavoriteGames": [
+                    15
+                ],
+                "FinishedLobbies": [
+                    8
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    },
+    {
+        "UserName": "Playfu4",
+        "Email": "admin@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Male",
+            "Description": "Sometimes I wonder if earth is flat",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 10,
+                "Downvotes": 5,
+                "Followers": [
+                    1, 2, 7
+                ],
+                "Following": [
+                    1
+                ],
+                "UserFavoriteGames": [
+                    13, 14, 15
+                ],
+                "FinishedLobbies": [
+                    9, 10
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    },
+    {
+        "UserName": "Playfu5",
+        "Email": "Playfu5@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Female",
+            "Description": "Sit down or I will destroy you fucking noob",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 360,
+                "Downvotes": 122,
+                "Followers": [
+                    3
+                ],
+                "Following": [
+                    1
+                ],
+                "UserFavoriteGames": [
+                    11, 13
+                ],
+                "FinishedLobbies": [
+                    9, 10
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    },
+    {
+        "UserName": "Playfu6",
+        "Email": "Playfu6@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Male",
+            "Description": "I like playing with friendly people, I hate when people swear",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 10,
+                "Downvotes": 5,
+                "Followers": [
+                    1
+                ],
+                "Following": [
+                    1, 7
+                ],
+                "UserFavoriteGames": [
+                    14, 15
+                ],
+                "FinishedLobbies": [
+                    
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    },
+    {
+        "UserName": "Playfu7",
+        "Email": "Playfu7@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Male",
+            "Description": "I like playing games with people, both casual and competetive",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 99,
+                "Downvotes": 33,
+                "Followers": [
+                    7
+                ],
+                "Following": [
+                    1, 4
+                ],
+                "UserFavoriteGames": [
+                    12, 13
+                ],
+                "FinishedLobbies": [
+                    
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    },
+    {
+        "UserName": "Playfu8",
+        "Email": "Playfu8@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Male",
+            "Description": "To be or not to be",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 1,
+                "Downvotes": 1,
+                "Followers": [
+                    1
+                ],
+                "Following": [
+                    1
+                ],
+                "UserFavoriteGames": [
+                    
+                ],
+                "FinishedLobbies": [
+                    
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    },
+    {
+        "UserName": "Playfu9",
+        "Email": "Playfu9@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Male",
+            "Description": "Knock knock. Who's there? Says. Says who? Says me, that's who!",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 42,
+                "Downvotes": 0,
+                "Followers": [
+                    3
+                ],
+                "Following": [
+                    1
+                ],
+                "UserFavoriteGames": [
+                    5, 6, 7
+                ],
+                "FinishedLobbies": [
+                    
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    },
+    {
+        "UserName": "Playfu10",
+        "Email": "Playfu10@test.com",
+        "AppUserProfile": {
+            "Birthday": "1998-07-30T00:00:00",
+            "Gender": "Female",
+            "Description": "When I randomly decide to call an old friend and they say “I was just thinking about you!”",
+            "CountryIso": {
+
+            },
+            "AppUserData": {
+                "Upvotes": 9999,
+                "Downvotes": 0,
+                "Followers": [
+                    1
+                ],
+                "Following": [
+                    1
+                ],
+                "UserFavoriteGames": [
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+                ],
+                "FinishedLobbies": [
+                    
+                ]
+            },
+            "AppUserPhoto": {
+                "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "UserConnections": {
+                "SteamConnected": false,
+                "DiscordConnected": false,
+                "Steam": {
+
+                },
+                "Discord": {
+
+                }
+            }
+        }
+    }
+]

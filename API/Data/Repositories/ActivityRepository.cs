@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Entities.Activities;
 using API.Interfaces.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
@@ -13,10 +14,14 @@ namespace API.Data.Repositories
         {
         }
 
-        public Task AddActivity(Activity activity)
+        public void AddActivity(Activity activity)
         {
             Context.Activity.Add(activity);
-            return Task.CompletedTask;
+        }
+
+        public async Task<List<Activity>> GetActivities()
+        {
+            return await Context.Activity.ToListAsync();
         }
 
         public async Task<Activity> GetActivity(int id)
