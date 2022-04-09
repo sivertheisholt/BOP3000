@@ -30,9 +30,9 @@ namespace API.Services
             {
                 acc = new Account
                 (
-                    envConfig.GetSection("CLOUDINARY_SETTINGS")["CLOUDINARY_SETTINGS_CLOUDNAME"],
-                    envConfig.GetSection("CLOUDINARY_SETTINGS")["CLOUDINARY_SETTINGS_API_KEY"],
-                    envConfig.GetSection("CLOUDINARY_SETTINGS")["CLOUDINARY_SETTINGS_API_SECRET"]
+                    Environment.GetEnvironmentVariable("CLOUDINARY_SETTINGS_CLOUDNAME"),
+                    Environment.GetEnvironmentVariable("CLOUDINARY_SETTINGS_API_KEY"),
+                    Environment.GetEnvironmentVariable("CLOUDINARY_SETTINGS_API_SECRET")
                 );
             }
 
