@@ -50,7 +50,7 @@ jobs:
           dotnet tool install dotnet-ef
 
       - name: dotnet publish
-        run: dotnet publish BOP3000.sln -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish API.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
     runs-on: ubuntu-latest
