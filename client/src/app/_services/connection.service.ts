@@ -14,7 +14,7 @@ export class ConnectionService{
     }
 
     connectToSteam(){
-          return this.httpClient.post<any>('https://localhost:5001/api/accounts/steam', "", {
+          return this.httpClient.post<any>(this.baseUrl + 'api/accounts/steam', "", {
               headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
               responseType: 'text' as 'json',
               observe: 'response' as 'body'
@@ -22,7 +22,7 @@ export class ConnectionService{
     }
 
     connectToDiscord(){
-          return this.httpClient.post<any>('https://localhost:5001/api/accounts/discord', '', {
+          return this.httpClient.post<any>(this.baseUrl + 'accounts/discord', '', {
             headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
             responseType: "text" as "json",
             observe: "response" as "body"
@@ -30,10 +30,10 @@ export class ConnectionService{
     }
 
     onDiscordSuccess(){
-        return this.http.patch('https://localhost:5001/api/accounts/discord-success', {});
+        return this.http.patch(this.baseUrl + 'accounts/discord-success', {});
     }
 
     onSteamSuccess(){
-        return this.http.patch('https://localhost:5001/api/accounts/steam-success', {});
+        return this.http.patch(this.baseUrl + 'accounts/steam-success', {});
     }
 }
