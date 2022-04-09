@@ -125,6 +125,12 @@ export class LobbyHubService {
         console.log("Lobby starting...");
         this.lobbyStart.next(url);
       });
+      this.hubConnection.on("LobbyCancelled", () => {
+        console.log("Lobby cancelled...");
+      });
+      this.hubConnection.on("RedirectFinished", () => {
+        console.log("Lobby cancelled...");
+      });
 
       // Only caller will get this
       this.hubConnection.on("QueueMembers", ids => {
@@ -185,11 +191,11 @@ export class LobbyHubService {
   }
   async acceptReadyCheck(lobbyId: number){
     await this.connectionStatus;
-    this.hubConnection.invoke("Accept", lobbyId);
+    this.hubConnection.invoke("AcceptCheck", lobbyId);
   }
   async declineReadyCheck(lobbyId: number){
     await this.connectionStatus;
-    this.hubConnection.invoke("Decline", lobbyId);
+    this.hubConnection.invoke("DeclineCheck", lobbyId);
   }
 
 
