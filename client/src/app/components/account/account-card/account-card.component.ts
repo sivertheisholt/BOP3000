@@ -78,6 +78,7 @@ export class AccountCardComponent implements OnInit {
         this.user!.memberProfile!.memberPhoto = res;
       },(error) => {
         this.errorStatus = true;
+        return;
       }
     );
   }

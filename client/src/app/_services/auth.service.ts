@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../_models/user';
 import { LobbyHubService } from './lobby-hub.service';
@@ -14,6 +14,8 @@ export class AuthService {
 
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
+  loggedInSource = new BehaviorSubject<boolean>(false);
+  loggedIn$ = this.loggedInSource.asObservable();
 
   constructor(private http: HttpClient, private lobbyHub: LobbyHubService) {
   }
@@ -78,11 +80,18 @@ export class AuthService {
     localStorage.removeItem('token');
     this.currentUserSource.next(undefined);
     this.lobbyHub.stopHubConnection();
+    this.loggedInSource.next(false);
   }
 
   get isLoggedIn(): boolean{
     let authToken = localStorage.getItem('token');
-    return (authToken !== null) ? true : false;
+    if(authToken !== null){
+      this.loggedInSource.next(true);
+      return true;
+    }
+    this.loggedInSource.next(false);
+    return false;
+    //return (authToken !== null) ? true : false;
   }
 
   getUserId(){
