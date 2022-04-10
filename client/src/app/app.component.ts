@@ -15,29 +15,21 @@ import { LobbyHubService } from './_services/lobby-hub.service';
 export class AppComponent implements OnInit {
   title = 'BOP3000';
   users: any;
-  loggedIn : boolean;
-  navEnabled?: boolean;
+  loggedIn?: boolean;
 
   constructor(private authService: AuthService, private lobbyHubService: LobbyHubService, private route: ActivatedRoute) {
-    this.loggedIn = authService.isLoggedIn;
-    if(this.loggedIn){
-      this.lobbyHubService.createHubConnection(this.authService.getUserId());
-    }
-    this.authService.navEnabled$.subscribe(
+    this.authService.loggedIn$.subscribe(
       (status) => {
-        this.navEnabled = status;
+        this.loggedIn = status;
+        if(status){
+          this.lobbyHubService.createHubConnection(this.authService.getUserId());
+        }
       }
     )
   }
 
   ngOnInit() {
-    this.setCurrentUser();
+
   }
 
-
-  setCurrentUser() {
-    if(this.loggedIn) {
-      
-    }
-  }
 }

@@ -14,8 +14,8 @@ export class AuthService {
 
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
-  navEnabled = new BehaviorSubject<boolean>(false);
-  navEnabled$ = this.navEnabled.asObservable();
+  loggedInSource = new BehaviorSubject<boolean>(false);
+  loggedIn$ = this.loggedInSource.asObservable();
 
   constructor(private http: HttpClient, private lobbyHub: LobbyHubService) {
   }
@@ -79,17 +79,17 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     this.currentUserSource.next(undefined);
-    this.navEnabled.next(false);
     this.lobbyHub.stopHubConnection();
+    this.loggedInSource.next(false);
   }
 
   get isLoggedIn(): boolean{
     let authToken = localStorage.getItem('token');
     if(authToken !== null){
-      this.navEnabled.next(true);
+      this.loggedInSource.next(true);
       return true;
     }
-    this.navEnabled.next(false);
+    this.loggedInSource.next(false);
     return false;
     //return (authToken !== null) ? true : false;
   }
