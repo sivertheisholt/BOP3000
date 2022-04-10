@@ -6,7 +6,7 @@
 <div class="error danger mt-3" *ngIf="imageHeightWidth || imageSize || errorStatus">
     <div *ngIf="imageHeightWidth">Image can be maximum 500x500</div>
     <div *ngIf="imageSize">Image must be less than 3mb</div>
-    <div *ngIf="errorStatus">Something went wrong, try again later.</div>
+    <div *ngIf="errorStatus">You can only upload JPEG/JPG/PNG</div>
 </div>
 
 

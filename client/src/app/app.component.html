@@ -1,6 +1,6 @@
-<app-navbar *ngIf="loggedIn"></app-navbar>
+<app-navbar *ngIf="navEnabled"></app-navbar>
 <section class="app">
-  <div class="left-navigation" *ngIf="loggedIn">
+  <div class="left-navigation" *ngIf="navEnabled">
     <app-sidebar></app-sidebar>
   </div>
   <div class="main-content">
