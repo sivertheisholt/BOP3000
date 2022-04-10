@@ -1,12 +1,12 @@
 <h1 class="title p-3 text-is-light">Connections</h1>
 <div class="connections-settings-wrapper is-flex is-flex-direction-column">
     <section class="section">
-        <button *ngIf="!discordData?.connected" (click)="onDiscordLink()" type="button" class="button discordbtn">
+        <a *ngIf="!discordData?.connected" href="api/accounts/discord" class="button discordbtn">
             <span>Link Your Discord</span>
             <div class="icon">
                 <img class="image is-64by64" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="">
             </div>
-        </button>
+        </a>
         <button *ngIf="discordData?.connected" (click)="onDiscordUnlink()" type="button" class="button discordbtn">
             <span>Unlink Your Discord</span>
             <div class="icon">
@@ -31,12 +31,12 @@
         </div>
     </section>
     <section class="section">
-        <button *ngIf="!steamData?.connected" (click)="onSteamLink()" type="button" class="button steambtn">
+        <a *ngIf="!steamData?.connected" href="api/accounts/steam" type="button" class="button steambtn">
             <span>Link Your Steam</span>
             <div class="icon">
                 <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">
             </div>
-        </button>
+        </a>
         <button *ngIf="steamData?.connected" (click)="onSteamUnlink()" type="button" class="button steambtn">
             <span>Unlink Your Steam</span>
             <div class="icon">

@@ -18,17 +18,24 @@ export class AccountComponent implements OnInit {
   finishedLobbies: Lobby[] = [];
 
   constructor(private route: ActivatedRoute, private userService: UserService, private lobbyService: LobbyService, private gamesService: GamesService) {
-    this.userService.getSpecificUser(this.route.snapshot.params.id).subscribe(
-      (response) => {
-        this.user = response;
-        console.log(this.user);
-        response.memberProfile?.memberData?.finishedLobbies?.forEach(lobbyId => {
-          this.lobbyService.fetchLobbyWithId(lobbyId).subscribe(
-            (response) => {
-              this.finishedLobbies.push(response);
-            }
-          )
-        })
+
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      (val: any)  => {
+        this.userService.getSpecificUser(val.id).subscribe(
+          (response) => {
+            this.user = response;
+            response.memberProfile?.memberData?.finishedLobbies?.forEach(lobbyId => {
+              this.lobbyService.fetchLobbyWithId(lobbyId).subscribe(
+                (response) => {
+                  this.finishedLobbies.push(response);
+                }
+              )
+            })
+          }
+        )
       }
     )
 
@@ -37,9 +44,5 @@ export class AccountComponent implements OnInit {
         this.currentUser = response;
       }
     )
-  }
-
-  ngOnInit(): void {
-    
   }
 }

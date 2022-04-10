@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using API.DTOs;
 using API.DTOs.Accounts;
 using API.Entities.Applications;
@@ -126,7 +127,7 @@ namespace API.Controllers
             };
         }
 
-        [HttpPost("steam")]
+        [HttpGet("steam")]
         public async Task<IActionResult> SignInSteam()
         {
             var provider = "Steam";
@@ -144,7 +145,7 @@ namespace API.Controllers
 
             return Challenge(new AuthenticationProperties { RedirectUri = "/settings?success=true&provider=steam" }, provider);
         }
-        [HttpPost("discord")]
+        [HttpGet("discord")]
         public async Task<IActionResult> SignInDiscord()
         {
             var provider = "Discord";

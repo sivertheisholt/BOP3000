@@ -13,10 +13,10 @@ export class AccordionDirective implements OnInit{
 
     @HostListener('click') toggleAccordion(){
         let element = this.el.nativeElement.nextElementSibling;
-        if (element.style.maxHeight == '0px' || element.style.maxHeight == '') {
-          element.style.maxHeight = '1000px';
+        if (element.style.display == 'none' || element.style.display == '') {
+          element.style.display = 'block';
         } else {
-          element.style.maxHeight = '0px';
+          element.style.display = 'none';
         }
     }
 }

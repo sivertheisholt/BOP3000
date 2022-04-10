@@ -52,6 +52,8 @@ import { UserPanelComponent } from './components/lobby/user-panel/user-panel.com
 import { UpgradeAccountComponent } from './components/upgrade-account/upgrade-account.component';
 import { ActivityLogComponent } from './components/activity-log/activity-log.component';
 import { JoinVoiceComponent } from './components/lobby/join-voice/join-voice.component';
+import { FaqComponent } from './components/help/faq/faq.component';
+import { AboutComponent } from './components/help/about/about.component';
 
 
 @NgModule({
@@ -100,7 +102,9 @@ import { JoinVoiceComponent } from './components/lobby/join-voice/join-voice.com
     UserPanelComponent,
     UpgradeAccountComponent,
     ActivityLogComponent,
-    JoinVoiceComponent
+    JoinVoiceComponent,
+    FaqComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
