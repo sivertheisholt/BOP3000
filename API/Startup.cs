@@ -53,23 +53,27 @@ namespace API
 
             app.UseHttpsRedirection();
 
+
+
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
                 context.Response.Headers.Add("Content-Security-Policy",
-                             "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src https://discord.com 'self' https://steamcommunity.com; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline'");
+                             "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src https://discord.com https://steamcommunity.com 'self' ; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline'");
                 context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
                 context.Response.Headers.Add("Referrer-Policy", "no-referrer");
                 context.Response.Headers.Add("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
                 await next();
             });
 
             app.UseRouting();
 
-            app.UseCors(policy => policy.AllowAnyHeader()
+            app.UseCors(policy => policy.WithOrigins("https://localhost:4200", "https://localhost:5001")
                 .AllowAnyMethod()
-                .AllowCredentials()
-                .WithOrigins("https://localhost:4200", "https://localhost:5001", "http://bop3000.azurewebsites.net"));
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseAuthentication();
             app.UseAuthorization();

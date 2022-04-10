@@ -26,7 +26,6 @@ export class ConnectionsComponent implements OnInit {
         this.userService.getDiscordConnectionStatus(user.id!).subscribe(
           (discordResponse) => {
             this.discordData = discordResponse;
-            
           }
         )
         this.userService.getSteamConnectionStatus(user.id!).subscribe(
@@ -37,25 +36,8 @@ export class ConnectionsComponent implements OnInit {
       }
     )
   }
-
-  onSteamLink(){
-    this.connectionService.connectToSteam().subscribe(
-      (res: any) => {
-        this.document.location.href = res.url!;
-      }
-    )
-  }
-
   onSteamUnlink(){
 
-  }
-
-  onDiscordLink(){
-    this.connectionService.connectToDiscord().subscribe(
-      (res: any) => {
-        this.document.location.href = res.url!;
-      }
-    )
   }
 
   onDiscordUnlink(){
