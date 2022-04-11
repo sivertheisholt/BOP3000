@@ -30,5 +30,7 @@ namespace API.Interfaces.IRepositories
         Task<AppUserConnections> GetUserConnectionsFromUid(int id);
 
         Task<List<AppUser>> GetAllUsers();
+
+        Task<bool> CheckIfDiscordConnected(int id);
     }
 }

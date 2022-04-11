@@ -1,6 +1,7 @@
 using API.DTOs.Activities;
 using API.DTOs.Applications;
 using API.DTOs.Members;
+using API.Entities.Applications;
 using API.Entities.Users;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
@@ -267,6 +268,38 @@ namespace API.Controllers
             if (user == null) return NotFound();
             if (user.AppUserProfile.BlockedUsers == null) user.AppUserProfile.BlockedUsers = new List<int>();
             user.AppUserProfile.BlockedUsers.Add(id);
+            _userRepository.Update(user);
+            await _userRepository.SaveAllAsync();
+
+            return NoContent();
+        }
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("discord/unlink")]
+        public async Task<ActionResult<SteamStatusDto>> UnlinkDiscord(int id)
+        {
+            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+
+            if (user == null) return NotFound();
+
+            user.AppUserProfile.UserConnections.Discord = new DiscordProfile { };
+            user.AppUserProfile.UserConnections.DiscordConnected = false;
+
+            _userRepository.Update(user);
+            await _userRepository.SaveAllAsync();
+
+            return NoContent();
+        }
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("steam/unlink")]
+        public async Task<ActionResult<SteamStatusDto>> UnlinkSteam(int id)
+        {
+            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+
+            if (user == null) return NotFound();
+
+            user.AppUserProfile.UserConnections.Steam = new SteamProfile { };
+            user.AppUserProfile.UserConnections.SteamConnected = false;
+
             _userRepository.Update(user);
             await _userRepository.SaveAllAsync();
 

@@ -23,6 +23,16 @@ namespace API.Data.Repositories
             user.AppUserProfile.UserConnections.Steam.SteamId = steamId;
         }
 
+        public async Task<bool> CheckIfDiscordConnected(int id)
+        {
+            return await Context.Users.Where(x => x.Id == id)
+                .Include(x => x.AppUserProfile)
+                .ThenInclude(x => x.UserConnections)
+                .ThenInclude(x => x.DiscordConnected)
+                .Select(x => x.AppUserProfile.UserConnections.DiscordConnected)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<bool> CheckIfUserExists(int id)
         {
             return await Context.Users.AnyAsync(x => x.Id == id);

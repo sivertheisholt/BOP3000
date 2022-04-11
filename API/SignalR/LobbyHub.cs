@@ -87,6 +87,8 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
+            if (!await _userRepository.CheckIfDiscordConnected(uid)) return;
+
             if (!await _lobbyTracker.JoinQueue(lobbyId, uid)) return;
 
             if (!await _lobbyTracker.CheckIfMemberIsBanned(lobbyId, uid))
