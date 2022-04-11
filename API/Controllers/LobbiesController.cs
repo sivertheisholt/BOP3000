@@ -171,7 +171,13 @@ namespace API.Controllers
                 });
 
             _lobbiesRepository.Update(lobby);
-            await _lobbiesRepository.SaveAllAsync();
+            if (!await _lobbiesRepository.SaveAllAsync()) return StatusCode(StatusCodes.Status500InternalServerError);
+
+            var upvotedUser = await _userRepository.GetUserByIdAsync(uid);
+
+            upvotedUser.AppUserProfile.AppUserData.Upvotes++;
+            _userRepository.Update(upvotedUser);
+            if (!await _userRepository.SaveAllAsync()) return StatusCode(StatusCodes.Status500InternalServerError);
 
             return NoContent();
         }
@@ -199,7 +205,13 @@ namespace API.Controllers
                 });
 
             _lobbiesRepository.Update(lobby);
-            await _lobbiesRepository.SaveAllAsync();
+            if (!await _lobbiesRepository.SaveAllAsync()) return StatusCode(StatusCodes.Status500InternalServerError);
+
+            var upvotedUser = await _userRepository.GetUserByIdAsync(uid);
+
+            upvotedUser.AppUserProfile.AppUserData.Downvotes++;
+            _userRepository.Update(upvotedUser);
+            if (!await _userRepository.SaveAllAsync()) return StatusCode(StatusCodes.Status500InternalServerError);
 
             return NoContent();
         }
