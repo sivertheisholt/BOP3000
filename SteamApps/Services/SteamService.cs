@@ -30,6 +30,17 @@ namespace SteamApps.Services
         public async Task InitDatabase()
         {
             Console.Clear();
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            // connection string, or development connection string from env var.
+            if (env == "Production")
+            {
+                Console.WriteLine("Production environment detected... Starting in 10s", Console.ForegroundColor = ConsoleColor.Red);
+                var task = Task.Delay(10000);
+                await task;
+                await InitProd();
+                _hostApplicationLifetime.StopApplication();
+            }
+
             var input = "";
             do
             {
