@@ -4,7 +4,7 @@
         "AdminUid": 1,
         "Title": "Let's rank up!",
         "LobbyDescription": "Looking for serious players - Road to global!",
-        "GameId": 11,
+        "GameId": 1,
         "GameName": "",
         "GameType": "Competetive",
         "LobbyRequirement": {
@@ -25,7 +25,7 @@
         "AdminUid": 1,
         "Title": "Chill",
         "LobbyDescription": "Looking for chill players to play with",
-        "GameId": 12,
+        "GameId": 2,
         "GameName": "",
         "GameType": "Casual",
         "LobbyRequirement": {
@@ -46,7 +46,7 @@
         "AdminUid": 2,
         "Title": "I need friends",
         "LobbyDescription": "Looking for friends to play with",
-        "GameId": 13,
+        "GameId": 3,
         "GameName": "",
         "GameType": "Casual",
         "LobbyRequirement": {

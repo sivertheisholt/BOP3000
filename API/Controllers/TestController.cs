@@ -36,14 +36,6 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireMemberRole")]
-        [HttpGet("seed_steam_app_info")]
-        public async Task<ActionResult> SeedSteamAppInfo()
-        {
-            await Seed.SeedSteamAppsInfo(_steamAppRepository, _steamAppsRepository, _steamStoreClient, _steamAppsClient);
-            return NoContent();
-        }
-
-        [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("send_email")]
         public async Task<ActionResult> SendEmail()
         {

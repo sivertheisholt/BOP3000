@@ -166,10 +166,10 @@ namespace API.Data
             Console.WriteLine($"Finished seeding Country Data");
         }
 
-        public static async Task SeedSteamAppsInfo(ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository,
+        public static async Task SeedCustomSteamApps(ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository,
                                                     ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient)
         {
-            if (await steamAppRepository.GetAppInfoAsync(51) != null) return;
+            if (await steamAppRepository.GetAppInfoAsync(1) != null) return;
             var apps = new Int32[] { 730, 1599340, 1172470, 381210, 427520 };
             foreach (var app in apps)
             {
