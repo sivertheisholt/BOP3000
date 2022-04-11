@@ -84,39 +84,50 @@ namespace SteamApps.Services
 
             foreach (var appInfo in appsLoop)
             {
-                if (counter == max + 1) break;
-                Console.Clear();
-                Console.Write($"App ", Console.ForegroundColor = ConsoleColor.Green);
-                Console.Write(counter.ToString(), Console.ForegroundColor = ConsoleColor.White);
-                Console.Write($" of ", Console.ForegroundColor = ConsoleColor.Green);
-                Console.Write($"{max}", Console.ForegroundColor = ConsoleColor.White);
-                Console.WriteLine();
-                Console.WriteLine($"Getting steam data for game: {appInfo.Name}", Console.ForegroundColor = ConsoleColor.Green);
-                Console.WriteLine();
-
-                var app = await _steamStoreClient.GetAppInfo(appInfo.AppId);
-
-                counter++;
-
-                if (!app.Success)
+                try
                 {
-                    Console.WriteLine("Could not get information on app, skipping...", Console.ForegroundColor = ConsoleColor.Red);
-                    var taskFailed = Task.Delay(1600);
-                    await taskFailed;
+                    if (counter == max + 1) break;
+                    Console.Clear();
+                    Console.Write($"App ", Console.ForegroundColor = ConsoleColor.Green);
+                    Console.Write(counter.ToString(), Console.ForegroundColor = ConsoleColor.White);
+                    Console.Write($" of ", Console.ForegroundColor = ConsoleColor.Green);
+                    Console.Write($"{max}", Console.ForegroundColor = ConsoleColor.White);
+                    Console.WriteLine();
+                    Console.WriteLine($"Getting steam data for game: {appInfo.Name}", Console.ForegroundColor = ConsoleColor.Green);
+                    Console.WriteLine();
+
+                    var app = await _steamStoreClient.GetAppInfo(appInfo.AppId);
+
+                    counter++;
+
+                    if (!app.Success)
+                    {
+                        Console.WriteLine("Could not get information on app, skipping...", Console.ForegroundColor = ConsoleColor.Red);
+                        apps.Apps.Remove(appInfo);
+                        var taskFailed = Task.Delay(1600);
+                        await taskFailed;
+                        continue;
+                    }
+
+                    if (app.Data.Type != "game")
+                    {
+                        Console.WriteLine("App is not game, skipping...", Console.ForegroundColor = ConsoleColor.Red);
+                        apps.Apps.Remove(appInfo);
+                    }
+                    else
+                    {
+                        Console.WriteLine("App is game, adding to database...", Console.ForegroundColor = ConsoleColor.DarkGreen);
+                    }
+
+                    var task = Task.Delay(1600);
+                    await task;
+                }
+                catch (System.Exception)
+                {
+                    apps.Apps.Remove(appInfo);
+                    Console.WriteLine("Something was wrong with app, skipping...", Console.ForegroundColor = ConsoleColor.DarkGreen);
                     continue;
                 }
-
-                if (app.Data.Type != "game")
-                {
-                    Console.WriteLine("App is not game, skipping...", Console.ForegroundColor = ConsoleColor.Red);
-                }
-                else
-                {
-                    Console.WriteLine("App is game, adding to database...", Console.ForegroundColor = ConsoleColor.DarkGreen);
-                }
-
-                var task = Task.Delay(1600);
-                await task;
             }
 
             _steamAppsRepository.AddAppsList(apps);
