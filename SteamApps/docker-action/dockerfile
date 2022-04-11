@@ -1,14 +1,18 @@
-FROM microsoft/dotnet:6.0-sdk AS build
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 
-COPY SteamApps/SteamApps.csproj .
-RUN dotnet restore SteamApps.csproj
-
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY SteamApps/SteamApps.csproj SteamApps/
+RUN dotnet restore SteamApps/SteamApps.csproj
 COPY . .
-RUN dotnet publish -c Release -o out
+WORKDIR /src/SteamApps
+RUN dotnet build SteamApps.csproj -c Release -o /app
 
-FROM microsoft/dotnet:6.0-aspnetcore-runtime AS runtime
+FROM build AS publish
+RUN dotnet publish SteamApps.csproj -c Release -o /app
+
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/out ./
-
-ENTRYPOINT ["dotnet run"]
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "SteamApps.dll"]
