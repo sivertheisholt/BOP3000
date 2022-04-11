@@ -5,7 +5,6 @@ COPY SteamApps/SteamApps.csproj .
 RUN dotnet restore SteamApps.csproj
 
 COPY . .
-RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet:6.0-aspnetcore-runtime AS runtime
 WORKDIR /app
