@@ -58,6 +58,16 @@ namespace API.Data
             builder.Entity<AppUserProfile>()
                 .HasKey(profile => profile.AppUserId);
 
+            builder.Entity<AppUserProfile>()
+                .Property(profile => profile.BlockedUsers)
+                .HasConversion(
+                    user => JsonSerializer.Serialize(user, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    user => JsonSerializer.Deserialize<List<int>>(user, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                    new ValueComparer<ICollection<int>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, user) => HashCode.Combine(a, user.GetHashCode())),
+                        c => (ICollection<int>)c.ToList()));
+
             builder.Entity<AppUserConnections>()
                 .HasOne(conn => conn.AppUserProfile)
                 .WithOne(profile => profile.UserConnections)
@@ -133,6 +143,8 @@ namespace API.Data
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, game) => HashCode.Combine(a, game.GetHashCode())),
                         c => (ICollection<int>)c.ToList()));
+
+
 
             /*********** Steam Store **************/
 

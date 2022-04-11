@@ -257,5 +257,20 @@ namespace API.Controllers
             };
             return dto;
         }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("block/{id}")]
+        public async Task<ActionResult<SteamStatusDto>> BlockMember(int id)
+        {
+            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+
+            if (user == null) return NotFound();
+            if (user.AppUserProfile.BlockedUsers == null) user.AppUserProfile.BlockedUsers = new List<int>();
+            user.AppUserProfile.BlockedUsers.Add(id);
+            _userRepository.Update(user);
+            await _userRepository.SaveAllAsync();
+
+            return NoContent();
+        }
     }
 }
