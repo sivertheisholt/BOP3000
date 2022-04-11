@@ -133,7 +133,7 @@ namespace API.SignalR
             {
                 task.Wait();
             }
-            catch (AggregateException ae)
+            catch (AggregateException)
             {
                 Console.Write("Lobby started before timer");
             }
@@ -145,7 +145,10 @@ namespace API.SignalR
                 {
                     discordIds.Add(await _userRepository.GetUserDiscordIdFromUid(userId));
                 }
-                var invitelink = await _discordBotService.CreateVoiceChannelForLobby(discordIds.ToArray());
+
+                var adminName = _userRepository.GetUsernameFromId(await _lobbyTracker.GetLobbyAdmin(lobbyId));
+                var channelName = $"{adminName}'s lobby";
+                var invitelink = await _discordBotService.CreateVoiceChannelForLobby(discordIds.ToArray(), channelName);
                 await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted", invitelink);
 
                 await _lobbyTracker.FinishLobby(lobbyId);
@@ -155,7 +158,6 @@ namespace API.SignalR
             }
             else
             {
-                await _lobbyTracker.CancelCheck(lobbyId);
                 await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyCancelled");
             }
         }
@@ -186,7 +188,7 @@ namespace API.SignalR
             var members = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
             await Clients.Caller.SendAsync("QueueMembers", members);
         }
-        
+
         public async Task GetLobbyMembers(int lobbyId)
         {
             var members = await _lobbyTracker.GetMembersInLobby(lobbyId);

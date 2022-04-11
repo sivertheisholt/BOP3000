@@ -387,7 +387,7 @@ namespace API.Data
             builder.Entity<AppListInfo>()
                 .HasKey(app => app.AppListInfoId);
 
-            /*********** Finished Lobby **************/
+            /*********** Lobby **************/
             builder.Entity<Lobby>()
                 .Property(lobby => lobby.Users)
                 .HasConversion(
@@ -397,6 +397,15 @@ namespace API.Data
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, lobby) => HashCode.Combine(a, lobby.GetHashCode())),
                         c => (ICollection<int>)c.ToList()));
+
+            builder.Entity<LobbyVote>()
+                .HasOne(vote => vote.Lobby)
+                .WithMany(lobby => lobby.Votes)
+                .HasForeignKey(vote => vote.LobbyId)
+                .IsRequired();
+
+            builder.Entity<LobbyVote>()
+                .HasKey(vote => vote.LobbyVoteId);
         }
     }
 }

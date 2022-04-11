@@ -36,7 +36,8 @@ namespace API.Data.Repositories
 
         public async Task<Lobby> GetLobbyAsync(int id)
         {
-            return await Context.Lobby.FindAsync(id);
+            return await Context.Lobby.Where(lobby => lobby.Id == id)
+                .Include(lobby => lobby.Votes).FirstOrDefaultAsync();
         }
     }
 }

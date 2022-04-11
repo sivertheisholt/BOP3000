@@ -22,7 +22,7 @@ namespace API.Services
             trd.Start();
         }
 
-        public async Task<string> CreateVoiceChannelForLobby(ulong[] userIds)
+        public async Task<string> CreateVoiceChannelForLobby(ulong[] userIds, string channelName)
         {
             await _ready;
 
@@ -30,7 +30,7 @@ namespace API.Services
 
             var guild = _client.GetGuild(933804444930412544);
 
-            var channel = await guild.CreateVoiceChannelAsync("Lobby 1", prop => prop.CategoryId = 961239473683853402);
+            var channel = await guild.CreateVoiceChannelAsync(channelName, prop => prop.CategoryId = 961239473683853402);
 
             await channel.SyncPermissionsAsync();
 

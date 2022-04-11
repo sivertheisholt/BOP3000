@@ -18,5 +18,6 @@ namespace API.Entities.Lobbies
         public ICollection<int> Users { get; set; }
         public DateTime StartDate { get; set; }
         public bool Finished { get; set; }
+        public ICollection<LobbyVote> Votes { get; set; }
     }
 }

@@ -88,7 +88,7 @@ namespace API.Controllers
             var lobbyAdmin = await _userRepository.GetUserByIdAsync(lobby.AdminUid);
             lobbyDto.AdminUsername = lobbyAdmin.UserName;
             lobbyDto.AdminProfilePic = lobbyAdmin.AppUserProfile.AppUserPhoto.Url;
-            
+
             return lobbyDto;
         }
 
@@ -146,6 +146,62 @@ namespace API.Controllers
         {
             var lobby = await _lobbiesRepository.GetLobbyAsync(id);
             return Ok(lobby.Finished);
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("{id}/upvote/{uid}")]
+        public async Task<ActionResult<IEnumerable<LobbyDto>>> Upvote(int id, int uid)
+        {
+            var lobby = await _lobbiesRepository.GetLobbyAsync(id);
+
+            if (!lobby.Finished) return BadRequest("Lobby is not finished");
+
+            if (!lobby.Users.Contains(GetUserIdFromClaim())) return BadRequest("You are not in this lobby");
+
+            var userVotes = lobby.Votes.Where(vote => vote.VoterUid == GetUserIdFromClaim()).ToList();
+
+            if (userVotes.Where(vote => vote.VotedUid == uid).FirstOrDefault() != null) return BadRequest("Already vote on this person");
+
+            lobby.Votes.Add(
+                new LobbyVote
+                {
+                    Upvote = true,
+                    VotedUid = uid,
+                    VoterUid = GetUserIdFromClaim()
+                });
+
+            _lobbiesRepository.Update(lobby);
+            await _lobbiesRepository.SaveAllAsync();
+
+            return NoContent();
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("{id}/downvote/{uid}")]
+        public async Task<ActionResult<IEnumerable<LobbyDto>>> Downvote(int id, int uid)
+        {
+            var lobby = await _lobbiesRepository.GetLobbyAsync(id);
+
+            if (!lobby.Finished) return BadRequest("Lobby is not finished");
+
+            if (!lobby.Users.Contains(GetUserIdFromClaim())) return BadRequest("You are not in this lobby");
+
+            var userVotes = lobby.Votes.Where(vote => vote.VoterUid == GetUserIdFromClaim()).ToList();
+
+            if (userVotes.Where(vote => vote.VotedUid == uid).FirstOrDefault() != null) return BadRequest("Already vote on this person");
+
+            lobby.Votes.Add(
+                new LobbyVote
+                {
+                    Upvote = false,
+                    VotedUid = uid,
+                    VoterUid = GetUserIdFromClaim()
+                });
+
+            _lobbiesRepository.Update(lobby);
+            await _lobbiesRepository.SaveAllAsync();
+
+            return NoContent();
         }
     }
 }

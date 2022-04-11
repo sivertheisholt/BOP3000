@@ -7,6 +7,6 @@ namespace API.Interfaces.IServices
 {
     public interface IDiscordBotService
     {
-        Task<string> CreateVoiceChannelForLobby(ulong[] userIds);
+        Task<string> CreateVoiceChannelForLobby(ulong[] userIds, string channelName);
     }
 }
