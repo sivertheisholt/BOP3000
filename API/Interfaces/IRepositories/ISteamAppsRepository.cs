@@ -13,5 +13,7 @@ namespace API.Interfaces.IRepositories
         void AddAppsList(AppList appList);
 
         Task<AppList> GetAppsList(int id);
+
+        Task<List<AppList>> GetAllAppsList();
     }
 }

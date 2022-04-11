@@ -31,5 +31,10 @@ namespace API.Data.Repositories
             var apps = Context.AppInfo.Where(app => queryLobby.Contains(app.Data.Id)).Select(app => app.Data).ToList();
             return Task.FromResult(apps);
         }
+
+        public Task<List<AppInfo>> GetAllApps()
+        {
+            return Context.AppInfo.ToListAsync();
+        }
     }
 }

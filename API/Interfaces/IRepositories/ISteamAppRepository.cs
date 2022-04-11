@@ -10,5 +10,7 @@ namespace API.Interfaces.IRepositories
         void AddApp(AppInfo appInfo);
 
         Task<List<AppData>> GetActiveApps();
+
+        Task<List<AppInfo>> GetAllApps();
     }
 }

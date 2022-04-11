@@ -19,6 +19,11 @@ namespace API.Data.Repositories
             Context.AppList.Add(appList);
         }
 
+        public Task<List<AppList>> GetAllAppsList()
+        {
+            return Context.AppList.ToListAsync();
+        }
+
         public async Task<AppList> GetAppsInfoAsync(int id)
         {
             return await Context.AppList.FindAsync(id);
