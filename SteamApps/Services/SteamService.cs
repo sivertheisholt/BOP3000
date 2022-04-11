@@ -106,14 +106,8 @@ namespace SteamApps.Services
 
                 var task = Task.Delay(1600);
                 await task;
-                if (counter % 10 == 0)
-                {
-                    Console.WriteLine("Stack reached, saving changes to database...", Console.ForegroundColor = ConsoleColor.DarkGreen);
-                    await _steamAppRepository.SaveAllAsync();
-                }
             }
 
-            await _steamAppRepository.SaveAllAsync();
             _steamAppsRepository.AddAppsList(apps);
             await _steamAppsRepository.SaveAllAsync();
 
