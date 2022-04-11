@@ -772,4 +772,64 @@ This endpoint will block another member
 
 `PATCH https://bop3000.azurewebsites.net/api/members/block/<ID>`
 
+## PATCH Unlink Discord
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var requestOptions = {
+  method: "PATCH",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/discord/unlink",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 (No content) status code
+
+This endpoint will unlink discord from account
+
+### HTTP Request
+
+`PATCH https://bop3000.azurewebsites.net/api/members/discord/unlink`
+
+## PATCH Unlink Steam
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var requestOptions = {
+  method: "PATCH",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/steam/unlink",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 (No content) status code
+
+This endpoint will unlink steam from account
+
+### HTTP Request
+
+`PATCH https://bop3000.azurewebsites.net/api/members/steam/unlink`
+
 <!--- DELETE --->
