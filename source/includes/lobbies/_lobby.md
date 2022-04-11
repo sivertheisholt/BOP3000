@@ -344,4 +344,66 @@ This endpoint will create a new lobby.
 
 <!--- PUT --->
 
+<!--- PATCH --->
+
+## PATCH Upvote
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var requestOptions = {
+  method: "PATCH",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/lobbies/7/upvote/1",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 (No content) status code
+
+This endpoint will upvote another member
+
+### HTTP Request
+
+`PATCH https://bop3000.azurewebsites.net/api/lobbies/<ID>/upvote/<UID>`
+
+## PATCH Downvote
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var requestOptions = {
+  method: "PATCH",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/lobbies/7/downvote/1",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 (No content) status code
+
+This endpoint will downvote another member
+
+### HTTP Request
+
+`PATCH https://bop3000.azurewebsites.net/api/lobbies/<ID>/downvote/<UID>`
+
 <!--- DELETE --->
