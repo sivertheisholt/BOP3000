@@ -8,5 +8,7 @@ namespace API.Interfaces.IServices
     public interface IDiscordBotService
     {
         Task<string> CreateVoiceChannelForLobby(ulong[] userIds, string channelName);
+
+        Task<bool> CheckIfUserInServer(ulong userId);
     }
 }

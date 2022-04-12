@@ -18,5 +18,6 @@ namespace API.DTOs.Lobbies
         public DateTime StartDate { get; set; }
         public DateTime FinishedDate { get; set; }
         public bool Finished { get; set; }
+        public ICollection<LobbyVoteDto> Votes { get; set; }
     }
 }

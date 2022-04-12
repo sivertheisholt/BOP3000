@@ -87,9 +87,13 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
+            if (await _lobbyTracker.CheckIfMemberIsBanned(lobbyId, uid)) return;
+
             if (!await _userRepository.CheckIfDiscordConnected(uid)) return;
 
-            if (await _lobbyTracker.CheckIfMemberIsBanned(lobbyId, uid)) return;
+            var discordId = await _userRepository.GetUserDiscordIdFromUid(uid);
+
+            if (!await _discordBotService.CheckIfUserInServer(discordId)) return;
 
             if (!await _lobbyTracker.JoinQueue(lobbyId, uid)) return;
 
@@ -149,7 +153,7 @@ namespace API.SignalR
                     discordIds.Add(await _userRepository.GetUserDiscordIdFromUid(userId));
                 }
 
-                var adminName = _userRepository.GetUsernameFromId(await _lobbyTracker.GetLobbyAdmin(lobbyId));
+                var adminName = await _userRepository.GetUsernameFromId(await _lobbyTracker.GetLobbyAdmin(lobbyId));
                 var channelName = $"{adminName}'s lobby";
                 var invitelink = await _discordBotService.CreateVoiceChannelForLobby(discordIds.ToArray(), channelName);
                 await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted", invitelink);

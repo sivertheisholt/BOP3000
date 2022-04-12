@@ -14,6 +14,7 @@ namespace API.Services
         private DiscordSocketClient _client;
         private Task _ready;
         private readonly IConfiguration _config;
+        private static ulong _playfuGuildId = 933804444930412544;
         public DiscordBotService(IConfiguration config)
         {
             _config = config;
@@ -28,7 +29,7 @@ namespace API.Services
 
             // Create the voice channel
 
-            var guild = _client.GetGuild(933804444930412544);
+            var guild = _client.GetGuild(_playfuGuildId);
 
             var channel = await guild.CreateVoiceChannelAsync(channelName, prop => prop.CategoryId = 961239473683853402);
 
@@ -80,5 +81,12 @@ namespace API.Services
             return Task.CompletedTask;
         }
 
+        public Task<bool> CheckIfUserInServer(ulong userId)
+        {
+            var guild = _client.GetGuild(_playfuGuildId);
+
+            if (guild.GetUser(userId) == null) return Task.FromResult(false);
+            return Task.FromResult(true);
+        }
     }
 }

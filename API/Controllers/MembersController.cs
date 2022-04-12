@@ -273,6 +273,20 @@ namespace API.Controllers
 
             return NoContent();
         }
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpPatch("unblock/{id}")]
+        public async Task<ActionResult<SteamStatusDto>> UnblockMember(int id)
+        {
+            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+
+            if (user == null) return NotFound();
+
+            user.AppUserProfile.BlockedUsers.Remove(id);
+            _userRepository.Update(user);
+            await _userRepository.SaveAllAsync();
+
+            return NoContent();
+        }
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("discord/unlink")]
@@ -310,13 +324,13 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("steam/hide")]
-        public async Task<ActionResult<SteamStatusDto>> HideSteam(bool hide)
+        public async Task<ActionResult<SteamStatusDto>> HideSteam(MemberHideConnectionDto memberHideConnectionDto)
         {
             var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
             if (user == null) return NotFound();
 
-            user.AppUserProfile.UserConnections.Steam.Hidden = hide;
+            user.AppUserProfile.UserConnections.Steam.Hidden = memberHideConnectionDto.Hide;
 
             _userRepository.Update(user);
             await _userRepository.SaveAllAsync();
@@ -325,13 +339,13 @@ namespace API.Controllers
         }
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("discord/hide")]
-        public async Task<ActionResult<SteamStatusDto>> HideDiscord(bool hide)
+        public async Task<ActionResult<SteamStatusDto>> HideDiscord(MemberHideConnectionDto memberHideConnectionDto)
         {
             var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
             if (user == null) return NotFound();
 
-            user.AppUserProfile.UserConnections.Discord.Hidden = hide;
+            user.AppUserProfile.UserConnections.Discord.Hidden = memberHideConnectionDto.Hide;
 
             _userRepository.Update(user);
             await _userRepository.SaveAllAsync();
