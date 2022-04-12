@@ -89,10 +89,11 @@ namespace API.SignalR
 
             if (!await _userRepository.CheckIfDiscordConnected(uid)) return;
 
+            if (await _lobbyTracker.CheckIfMemberIsBanned(lobbyId, uid)) return;
+
             if (!await _lobbyTracker.JoinQueue(lobbyId, uid)) return;
 
-            if (!await _lobbyTracker.CheckIfMemberIsBanned(lobbyId, uid))
-                await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("JoinedLobbyQueue", uid);
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("JoinedLobbyQueue", uid);
         }
 
         public async Task LeaveQueue(int lobbyId)

@@ -64,7 +64,11 @@ namespace API.SignalR
                 Uid = uid
             };
 
-            lock (Lobby) Lobby[lobbyId].UsersLobby.Add(lobbyUser);
+            lock (Lobby)
+            {
+                Lobby[lobbyId].UsersLobby.Add(lobbyUser);
+                Lobby[lobbyId].UsersQueue.Remove(lobbyId);
+            }
 
             return Task.FromResult(true);
         }
