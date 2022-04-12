@@ -67,7 +67,7 @@ namespace API.SignalR
             lock (Lobby)
             {
                 Lobby[lobbyId].UsersLobby.Add(lobbyUser);
-                Lobby[lobbyId].UsersQueue.Remove(lobbyId);
+                Lobby[lobbyId].UsersQueue.Remove(uid);
             }
 
             return Task.FromResult(true);
