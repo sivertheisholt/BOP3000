@@ -28,7 +28,6 @@ namespace API.Data.Repositories
             return await Context.Users.Where(x => x.Id == id)
                 .Include(x => x.AppUserProfile)
                 .ThenInclude(x => x.UserConnections)
-                .ThenInclude(x => x.DiscordConnected)
                 .Select(x => x.AppUserProfile.UserConnections.DiscordConnected)
                 .FirstOrDefaultAsync();
         }
