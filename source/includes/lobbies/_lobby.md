@@ -34,7 +34,14 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/1", requestOptions)
   "lobbyRequirement": null,
   "startDate": "2022-03-30T04:08:03.088913",
   "finishedDate": "0001-01-01T00:00:00",
-  "finished": false
+  "finished": true,
+  "votes": [
+    {
+      "voterUid": 2,
+      "votedUid": 1,
+      "upvote": true
+    }
+  ]
 }
 ```
 
@@ -63,12 +70,21 @@ This endpoint retrieves a specific lobby.
 | startDate        | Date             |
 | finishedDate     | Date, optional   |
 | finished         | bool             |
+| votes            | Vote[]           |
 
 #### LobbyRequirement
 
 | Key    | Type             |
 | ------ | ---------------- |
 | gender | string, optional |
+
+#### Vote
+
+| Key      | Type |
+| -------- | ---- |
+| voterUid | int  |
+| votedUid | int  |
+| upvote   | int  |
 
 #### Log
 
@@ -108,7 +124,14 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies", requestOptions)
     "lobbyRequirement": null,
     "startDate": "2022-03-30T04:08:03.0981973",
     "finishedDate": "2022-03-30T04:08:03.098157",
-    "finished": false
+    "finished": true,
+    "votes": [
+      {
+        "voterUid": 2,
+        "votedUid": 1,
+        "upvote": true
+      }
+    ]
   }
 ]
 ```
@@ -138,12 +161,21 @@ This endpoint retrieves all lobbies.
 | startDate        | Date             |
 | finishedDate     | Date, optional   |
 | finished         | bool             |
+| votes            | Vote[]           |
 
 #### LobbyRequirement
 
 | Key    | Type             |
 | ------ | ---------------- |
 | gender | string, optional |
+
+#### Vote
+
+| Key      | Type |
+| -------- | ---- |
+| voterUid | int  |
+| votedUid | int  |
+| upvote   | int  |
 
 #### Log
 
@@ -186,7 +218,14 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/game/51", requestOptions)
     "lobbyRequirement": null,
     "startDate": "2022-03-30T04:08:03.088913",
     "finishedDate": "0001-01-01T00:00:00",
-    "finished": false
+    "finished": true,
+    "votes": [
+      {
+        "voterUid": 2,
+        "votedUid": 1,
+        "upvote": true
+      }
+    ]
   }
 ]
 ```
@@ -215,13 +254,21 @@ This endpoint retrieves all lobbies with a specific game ID.
 | lobbyRequirement | LobbyRequirement |
 | startDate        | Date             |
 | finishedDate     | Date, optional   |
-| finished         | bool             |
+| votes            | Vote[]           |
 
 #### LobbyRequirement
 
 | Key    | Type             |
 | ------ | ---------------- |
 | gender | string, optional |
+
+#### Vote
+
+| Key      | Type |
+| -------- | ---- |
+| voterUid | int  |
+| votedUid | int  |
+| upvote   | int  |
 
 #### Log
 
