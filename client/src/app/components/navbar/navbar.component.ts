@@ -4,6 +4,8 @@ import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye,
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/_services/auth.service';
+import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
+import { SpinnerService } from 'src/app/_services/spinner.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -19,16 +21,21 @@ export class NavbarComponent implements OnInit {
   searchResults: any;
   isNotiVisible = false;
   isNavVisible = false;
-  notifications = [
-    {id: 1, text: 'test 1'},
-    {id: 2, text: 'test 2'}
-  ];
-  totalNotifications = this.notifications.length;
+  notifications: string[] = [];
+  totalNotifications: number = 0;
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService){
+
+  constructor(private authService: AuthService, private router: Router, private userService: UserService, private lobbyHubService: LobbyHubService){
   }
 
   ngOnInit(): void {
+    this.lobbyHubService.notifyUser$.subscribe(
+      (res) => {
+        this.notifications.push(res);
+        this.totalNotifications = this.notifications.length;
+      }
+    )
+
     this.router.events.subscribe(
       (val) => {
         this.isNavVisible = false;
@@ -38,9 +45,11 @@ export class NavbarComponent implements OnInit {
     fromEvent(this.searchInput?.nativeElement, 'keyup').pipe(
       map((event: any) => {
         if(event.target.value == ''){
+          this.searchInput?.nativeElement.classList.remove('loading');
           this.searchResults = [];
           return event.target.value;
         }
+        this.searchInput?.nativeElement.classList.add('loading');
         return event.target.value;
       })
       ,filter(res => res.length > 2)
@@ -48,8 +57,10 @@ export class NavbarComponent implements OnInit {
       ,distinctUntilChanged()
     ).subscribe((input: string) => {
       this.userService.searchUser(input).subscribe((response) => {
+        this.searchInput?.nativeElement.classList.remove('loading');
         this.searchResults = response;
       }, (err) => {
+        this.searchInput?.nativeElement.classList.remove('loading');
         console.log(err);
       })
     })

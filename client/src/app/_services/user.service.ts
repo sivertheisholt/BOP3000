@@ -105,4 +105,12 @@ export class UserService{
         return this.http.post<ProfileImage>(this.baseUrl + 'members/set-photo', formData, options);
     }
 
+    blockUser(id: number){
+        return this.http.patch(this.baseUrl + 'members/block/' + id, '');
+    }
+
+    unblockUser(id: number){
+        return this.http.patch(this.baseUrl + 'members/unblock/' + id, '');
+    }
+
 }

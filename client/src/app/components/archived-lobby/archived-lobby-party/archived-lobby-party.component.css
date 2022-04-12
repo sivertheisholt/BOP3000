@@ -34,3 +34,8 @@
 .half-width{
   width: 50%;
 }
+
+.username-text{
+  cursor: pointer;
+  color:rgb(164, 219, 255);
+}

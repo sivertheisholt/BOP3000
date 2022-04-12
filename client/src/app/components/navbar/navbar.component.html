@@ -10,7 +10,9 @@
     </div>
     <div class="nav-items">
       <div class="navbar-item">
-        <input class="input is-primary is-small" type="text" placeholder="Search..." #searchInput>
+        <div>
+          <input class="input is-primary is-small" type="text" placeholder="Search..." #searchInput>
+        </div>
         <div class="search-results has-text-centered">
           <div class="result-item" *ngFor="let user of searchResults">
             <a (click)="clearSearch()" [routerLink]="'account/' + user.id "> {{ user.userName }} </a>
@@ -28,7 +30,7 @@
           <div class="dropdown-menu" id="dropdown-menu2" role="menu">
             <div class="dropdown-content">
               <div class="dropdown-item" *ngFor="let notification of notifications">
-                <p>{{ notification.text }}</p>
+                <p>{{ notification }}</p>
               </div>
             </div>
           </div>

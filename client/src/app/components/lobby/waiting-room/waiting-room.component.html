@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="waiting-room-user-wrapper is-flex is-align-items-center is-justify-content-center half-width">
-                <div class="text-is-light">{{ user.username }}</div>
+                <div [routerLink]="['../../account/', user.id]" class="username-text">{{ user.username }}</div>
             </div>
             <div class="waiting-room-btn-wrapper quarter-width is-flex is-align-items-center is-justify-content-center">
                 <div *ngIf="currentUser?.id == lobby.adminUid">

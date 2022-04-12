@@ -16,6 +16,10 @@
   font-size: 18px;
 }
 
+.username-text{
+  cursor: pointer;
+  color:rgb(23, 152, 238);
+}
 
 .half-width{
   width: 50%;
