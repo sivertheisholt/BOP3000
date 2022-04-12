@@ -127,6 +127,8 @@ namespace API.SignalR
 
             lock (Lobby) Lobby[lobbyId].UsersQueue.Remove(uid);
 
+            lock (MemberTracker) MemberTracker.Remove(uid);
+
             return Task.FromResult(true);
         }
 
