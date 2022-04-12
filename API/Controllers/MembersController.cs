@@ -261,7 +261,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("block/{id}")]
-        public async Task<ActionResult<SteamStatusDto>> BlockMember(int id)
+        public async Task<ActionResult> BlockMember(int id)
         {
             var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
@@ -275,7 +275,7 @@ namespace API.Controllers
         }
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("unblock/{id}")]
-        public async Task<ActionResult<SteamStatusDto>> UnblockMember(int id)
+        public async Task<ActionResult> UnblockMember(int id)
         {
             var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
@@ -290,7 +290,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("discord/unlink")]
-        public async Task<ActionResult<SteamStatusDto>> UnlinkDiscord()
+        public async Task<ActionResult> UnlinkDiscord()
         {
             var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
@@ -307,7 +307,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("steam/unlink")]
-        public async Task<ActionResult<SteamStatusDto>> UnlinkSteam()
+        public async Task<ActionResult> UnlinkSteam()
         {
             var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
@@ -324,7 +324,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("steam/hide")]
-        public async Task<ActionResult<SteamStatusDto>> HideSteam(MemberHideConnectionDto memberHideConnectionDto)
+        public async Task<ActionResult> HideSteam(MemberHideConnectionDto memberHideConnectionDto)
         {
             var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
@@ -339,7 +339,7 @@ namespace API.Controllers
         }
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("discord/hide")]
-        public async Task<ActionResult<SteamStatusDto>> HideDiscord(MemberHideConnectionDto memberHideConnectionDto)
+        public async Task<ActionResult> HideDiscord(MemberHideConnectionDto memberHideConnectionDto)
         {
             var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 

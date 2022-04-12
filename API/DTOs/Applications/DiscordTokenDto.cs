@@ -7,8 +7,8 @@ namespace API.DTOs.Applications
 {
     public class DiscordTokenDto
     {
-        public string AccessToken { get; set; }
-        public int ExpiresIn { get; set; }
-        public int MyProperty { get; set; }
+        public string Access_Token { get; set; }
+        public int Expires_In { get; set; }
+        public int Refresh_Token { get; set; }
     }
 }
