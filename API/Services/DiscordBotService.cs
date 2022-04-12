@@ -81,12 +81,12 @@ namespace API.Services
             return Task.CompletedTask;
         }
 
-        public Task<bool> CheckIfUserInServer(ulong userId)
+        public async Task<bool> CheckIfUserInServer(ulong userId)
         {
             var guild = _client.GetGuild(_playfuGuildId);
 
-            if (guild.GetUser(userId) == null) return Task.FromResult(false);
-            return Task.FromResult(true);
+            if (await _client.GetUserAsync(userId) == null) return false;
+            return true;
         }
     }
 }
