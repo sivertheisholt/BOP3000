@@ -14,7 +14,9 @@
                 </div>
             </div>
             <div class="joined-users-user-wrapper is-flex is-align-items-center is-justify-content-center half-width">
-                <div class="text-is-light">{{ user.username }}</div>
+                <div [routerLink]="['../../account/', user.id]" class="username-text">
+                    {{ user.username }}
+                </div>
             </div>
             <div class="quarter-width is-flex is-align-items-center is-justify-content-center">
                 <div *ngIf="currentUser?.id == lobby.adminUid && user.id != lobby.adminUid">

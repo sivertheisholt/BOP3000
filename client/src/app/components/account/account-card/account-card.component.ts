@@ -48,13 +48,23 @@ export class AccountCardComponent implements OnInit {
   }
 
   blockUser(){
-    console.log(`User with id ${this.currentUser?.id} has blocked user with id ${this.user?.id}`);
-    this.blocked = true;
+    this.userService.blockUser(this.user?.id!).subscribe(
+      (res) => {
+        this.blocked = true;
+      }, error => {
+        this.blocked = false;
+      }
+    )
   }
 
   unblockUser(){
-    console.log(`User with id ${this.currentUser?.id} has unblocked user with id ${this.user?.id}`);
-    this.blocked = false;
+    this.userService.unblockUser(this.user?.id!).subscribe(
+      (res) => {
+        this.blocked = false;
+      }, error => {
+        this.blocked = true;
+      }
+    )
   }
 
   onUploadProfilePicture(event: any){

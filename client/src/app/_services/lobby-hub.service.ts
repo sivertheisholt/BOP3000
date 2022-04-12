@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -21,6 +22,7 @@ export class LobbyHubService {
   acceptedReadyCheckMembers = new Subject<number[]>();
   declinedReadyCheckMembers = new Subject<number>();
   lobbyStart = new BehaviorSubject<string>('');
+  notifyUserSource = new Subject<string>();
 
   acceptedMembers$ = this.acceptedMembers.asObservable();
   lobbyQueueMembers$ = this.lobbyQueueMembers.asObservable();
@@ -31,8 +33,9 @@ export class LobbyHubService {
   acceptedReadyCheckMembers$ = this.acceptedReadyCheckMembers.asObservable();
   declinedReadyCheckMembers$ = this.declinedReadyCheckMembers.asObservable();
   lobbyStart$ = this.lobbyStart.asObservable();
+  notifyUser$ = this.notifyUserSource.asObservable();
 
-  constructor() {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   createHubConnection(token: string) {
     this.connectionStatus = new Promise(resolve => {
@@ -53,18 +56,24 @@ export class LobbyHubService {
       
       // Member that is accepted will get this
       this.hubConnection.on('Accepted', () => {
+        this.notifyUserSource.next('You have been accepted to the lobby.');
         console.log("You have been accepted!");
       });
       // Member that is declined will get this
       this.hubConnection.on('Declined', () => {
+        this.notifyUserSource.next('You have been declined from the lobby.');
         console.log("You have been declined!");
       });
       // Member that is banned will get this
       this.hubConnection.on('Banned', () => {
+        this.notifyUserSource.next('You have been banned from the lobby.');
         console.log("You have been declined!");
       });
       // Member that is kicked will get this
       this.hubConnection.on('Kicked', () => {
+        this.notifyUserSource.next('You have been kicked from the lobby.');
+        console.log(this.route.url);
+        this.router.navigate(['home']);
         console.log("You have been kicked!");
       });
 

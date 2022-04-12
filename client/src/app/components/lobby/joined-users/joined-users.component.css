@@ -16,6 +16,11 @@
   align-items: center;
 }
 
+.username-text{
+  cursor: pointer;
+  color:rgb(23, 152, 238);
+}
+
 .header-text{
   display: flex;
   justify-content: flex-start;

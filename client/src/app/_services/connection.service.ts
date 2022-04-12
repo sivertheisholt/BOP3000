@@ -29,6 +29,14 @@ export class ConnectionService{
           });
     }
 
+    disconnectFromDiscord(){
+        return this.http.patch(this.baseUrl + 'members/discord/unlink', '');
+    }
+
+    disconnectFromSteam(){
+        return this.http.patch(this.baseUrl + 'members/steam/unlink', '');
+    }
+
     onDiscordSuccess(){
         return this.http.patch(this.baseUrl + 'accounts/discord-success', {});
     }

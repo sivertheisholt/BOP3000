@@ -116,6 +116,14 @@ li a:hover{
     padding: 10px;
 }
 
+.loading {    
+    background-color: #ffffff;
+    background-image: url(../../../assets/spinner/Spin-1s-257px.gif);
+    background-size: 25px 25px;
+    background-position:right center;
+    background-repeat: no-repeat;
+}
+
 .upgrade-btn:hover{
     background-color: rgb(194, 194, 194);
     color:rgb(6, 138, 179);

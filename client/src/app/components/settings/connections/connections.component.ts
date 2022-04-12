@@ -37,11 +37,19 @@ export class ConnectionsComponent implements OnInit {
     )
   }
   onSteamUnlink(){
-
+    this.connectionService.disconnectFromSteam().subscribe(
+      (res) => {
+        
+      }
+    )
   }
 
   onDiscordUnlink(){
+    this.connectionService.disconnectFromDiscord().subscribe(
+      (res) => {
 
+      }
+    )
   }
 
   onDiscordHide(e: any){
