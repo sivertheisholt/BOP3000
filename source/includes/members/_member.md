@@ -832,4 +832,80 @@ This endpoint will unlink steam from account
 
 `PATCH https://bop3000.azurewebsites.net/api/members/steam/unlink`
 
+## PATCH Hide Steam
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  hide: true,
+});
+
+var requestOptions = {
+  method: "PATCH",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow",
+};
+
+fetch("https://bop3000.azurewebsites.net/members/steam/hide", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 (No content) status code
+
+This endpoint will hide steam from account
+
+### HTTP Request
+
+`PATCH https://bop3000.azurewebsites.net/api/members/steam/hide`
+
+### Body Schema
+
+| Key  | Type |
+| ---- | ---- |
+| hide | bool |
+
+## PATCH Hide Discord
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  hide: true,
+});
+
+var requestOptions = {
+  method: "PATCH",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow",
+};
+
+fetch("https://bop3000.azurewebsites.net/members/discord/hide", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 (No content) status code
+
+This endpoint will hide steam from account
+
+### HTTP Request
+
+`PATCH https://bop3000.azurewebsites.net/api/members/discord/hide`
+
+### Body Schema
+
+| Key  | Type |
+| ---- | ---- |
+| hide | bool |
+
 <!--- DELETE --->
