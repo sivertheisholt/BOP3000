@@ -413,7 +413,7 @@ var requestOptions = {
 };
 
 fetch(
-  "https://bop3000.azurewebsites.net/api/members/check-block?memberId=1",
+  "https://bop3000.azurewebsites.net/api/members/check-blocking?memberId=1",
   requestOptions
 )
   .then((response) => response.text())
@@ -423,11 +423,43 @@ fetch(
 
 > The above command returns true/False
 
-This endpoint checks if member is blocked
+This endpoint checks if blocking user
 
 ### HTTP Request
 
-`GET https://bop3000.azurewebsites.net/api/members/check-block?memberId=1`
+`GET https://bop3000.azurewebsites.net/api/members/check-blocking?memberId=1`
+
+### Response Class (Status 200)
+
+True/False
+
+## GET Check if blocked
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/check-blocked?memberId=1",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns true/False
+
+This endpoint checks if blocked by a user
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/members/check-blocked?memberId=1`
 
 ### Response Class (Status 200)
 
