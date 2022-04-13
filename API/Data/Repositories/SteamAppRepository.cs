@@ -26,7 +26,7 @@ namespace API.Data.Repositories
 
         public Task<List<AppData>> GetActiveApps()
         {
-            var queryLobby = Context.Lobby.Select(u => u.GameId).Distinct().AsQueryable();
+            var queryLobby = Context.Lobby.Where(lobby => !lobby.Finished).Select(u => u.GameId).Distinct().AsQueryable();
 
             var apps = Context.AppInfo.Where(app => queryLobby.Contains(app.Data.Id)).Select(app => app.Data).ToList();
             return Task.FromResult(apps);
