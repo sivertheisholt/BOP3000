@@ -44,7 +44,7 @@ namespace API.SignalR
             if (!result) return;
 
             await AddToGroup($"lobby_{lobbyId.ToString()}");
-            await Clients.Group($"user_{acceptedUid.ToString()}").SendAsync("Accepted");
+            await Clients.Group($"user_{acceptedUid.ToString()}").SendAsync("Accepted", lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAccepted", new List<int>() { lobbyId, acceptedUid });
         }
         public async Task DeclineMember(int lobbyId, int declinedUid)
@@ -55,7 +55,7 @@ namespace API.SignalR
 
             if (!result) return;
 
-            await Clients.Group($"user_{declinedUid.ToString()}").SendAsync("Declined");
+            await Clients.Group($"user_{declinedUid.ToString()}").SendAsync("Declined", lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclined", new List<int>() { lobbyId, declinedUid });
         }
 
@@ -67,7 +67,7 @@ namespace API.SignalR
 
             if (!result) return;
 
-            await Clients.Group($"user_{bannedUid.ToString()}").SendAsync("Banned");
+            await Clients.Group($"user_{bannedUid.ToString()}").SendAsync("Banned", lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberBanned", new List<int>() { lobbyId, bannedUid });
         }
 
@@ -79,7 +79,7 @@ namespace API.SignalR
 
             if (!result) return;
 
-            await Clients.Group($"user_{kickedUid.ToString()}").SendAsync("Kicked");
+            await Clients.Group($"user_{kickedUid.ToString()}").SendAsync("Kicked", lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberKicked", new List<int>() { lobbyId, kickedUid });
         }
 
