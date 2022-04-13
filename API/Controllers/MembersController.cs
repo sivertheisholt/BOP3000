@@ -143,15 +143,22 @@ namespace API.Controllers
         {
             var userId = GetUserIdFromClaim();
             var user = await _userRepository.GetUserByIdAsync(userId);
+            var userTarget = await _userRepository.GetUserByIdAsync(memberId);
 
             if (user == null) return NotFound();
+
+            if (userTarget == null) return NotFound();
 
             if (!await _userRepository.CheckIfUserExists(memberId)) return NotFound("Member you are trying to follow doesn't exist");
 
             if (user.AppUserProfile.AppUserData.Following.Contains(memberId)) return NoContent();
 
+            if (userTarget.AppUserProfile.AppUserData.Followers.Contains(userId)) return NoContent();
+
             user.AppUserProfile.AppUserData.Following.Add(memberId);
+            userTarget.AppUserProfile.AppUserData.Followers.Add(userId);
             _userRepository.Update(user);
+            _userRepository.Update(userTarget);
 
             if (await _userRepository.SaveAllAsync()) return NoContent();
 
@@ -164,15 +171,22 @@ namespace API.Controllers
         {
             var userId = GetUserIdFromClaim();
             var user = await _userRepository.GetUserByIdAsync(userId);
+            var userTarget = await _userRepository.GetUserByIdAsync(memberId);
 
             if (user == null) return NotFound();
+
+            if (userTarget == null) return NotFound();
 
             if (!await _userRepository.CheckIfUserExists(memberId)) return NotFound("Member you are trying to follow doesn't exist");
 
             if (!user.AppUserProfile.AppUserData.Following.Contains(memberId)) return NoContent();
 
+            if (!userTarget.AppUserProfile.AppUserData.Followers.Contains(userId)) return NoContent();
+
             user.AppUserProfile.AppUserData.Following.Remove(memberId);
+            userTarget.AppUserProfile.AppUserData.Followers.Remove(userId);
             _userRepository.Update(user);
+            _userRepository.Update(userTarget);
 
             if (await _userRepository.SaveAllAsync()) return NoContent();
 
