@@ -397,6 +397,9 @@
                     <a href="#get-check-if-blocking-user" class="toc-h2 toc-link" data-title="GET Check if blocking user">GET Check if blocking user</a>
                   </li>
                   <li>
+                    <a href="#get-check-if-blocked" class="toc-h2 toc-link" data-title="GET Check if blocked">GET Check if blocked</a>
+                  </li>
+                  <li>
                     <a href="#get-search-for-member" class="toc-h2 toc-link" data-title="GET Search for member">GET Search for member</a>
                   </li>
                   <li>
@@ -2173,7 +2176,7 @@
 <span class="p">};</span>
 
 <span class="nx">fetch</span><span class="p">(</span>
-  <span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/members/check-block?memberId=1</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/members/check-blocking?memberId=1</span><span class="dl">"</span><span class="p">,</span>
   <span class="nx">requestOptions</span>
 <span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
@@ -2184,10 +2187,35 @@
 <p>The above command returns true/False</p>
 </blockquote>
 
-<p>This endpoint checks if member is blocked</p>
+<p>This endpoint checks if blocking user</p>
 <h3 id='http-request-6'>HTTP Request</h3>
-<p><code>GET https://bop3000.azurewebsites.net/api/members/check-block?memberId=1</code></p>
+<p><code>GET https://bop3000.azurewebsites.net/api/members/check-blocking?memberId=1</code></p>
 <h3 id='response-class-status-200-6'>Response Class (Status 200)</h3>
+<p>True/False</p>
+<h2 id='get-check-if-blocked'>GET Check if blocked</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/members/check-blocked?memberId=1</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">requestOptions</span>
+<span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns true/False</p>
+</blockquote>
+
+<p>This endpoint checks if blocked by a user</p>
+<h3 id='http-request-7'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/members/check-blocked?memberId=1</code></p>
+<h3 id='response-class-status-200-7'>Response Class (Status 200)</h3>
 <p>True/False</p>
 <h2 id='get-search-for-member'>GET Search for member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
@@ -2217,9 +2245,9 @@
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint searches for members.</p>
-<h3 id='http-request-7'>HTTP Request</h3>
+<h3 id='http-request-8'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/members/search?name=admin</code></p>
-<h3 id='response-class-status-200-7'>Response Class (Status 200)</h3>
+<h3 id='response-class-status-200-8'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2265,9 +2293,9 @@
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint gets the current logged in member&#39;s activity list</p>
-<h3 id='http-request-8'>HTTP Request</h3>
+<h3 id='http-request-9'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/members/current/activity</code></p>
-<h3 id='response-class-status-200-8'>Response Class (Status 200)</h3>
+<h3 id='response-class-status-200-9'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2317,9 +2345,9 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint gets the discord connected status for a user</p>
-<h3 id='http-request-9'>HTTP Request</h3>
+<h3 id='http-request-10'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/members/&lt;ID&gt;/discord</code></p>
-<h3 id='response-class-status-200-9'>Response Class (Status 200)</h3>
+<h3 id='response-class-status-200-10'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2371,9 +2399,9 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint gets the steam connected status for a user</p>
-<h3 id='http-request-10'>HTTP Request</h3>
+<h3 id='http-request-11'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/members/&lt;ID&gt;/steam</code></p>
-<h3 id='response-class-status-200-10'>Response Class (Status 200)</h3>
+<h3 id='response-class-status-200-11'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2423,7 +2451,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint sets the profile picture for the current user</p>
-<h3 id='http-request-11'>HTTP Request</h3>
+<h3 id='http-request-12'>HTTP Request</h3>
 <p><code>POST https://bop3000.azurewebsites.net/api/members/set-photo</code></p>
 
 <!--- PUT --->
@@ -2459,7 +2487,7 @@
 </blockquote>
 
 <p>This endpoint updates a single member</p>
-<h3 id='http-request-12'>HTTP Request</h3>
+<h3 id='http-request-13'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members</code></p>
 <h3 id='body-schema'>Body Schema</h3>
 <table><thead>
@@ -2515,7 +2543,7 @@
 </blockquote>
 
 <p>This endpoint will follow another member</p>
-<h3 id='http-request-13'>HTTP Request</h3>
+<h3 id='http-request-14'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/follow?memberId=1</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
@@ -2551,7 +2579,7 @@
 </blockquote>
 
 <p>This endpoint will unfollow another member</p>
-<h3 id='http-request-14'>HTTP Request</h3>
+<h3 id='http-request-15'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/unfollow?memberId=1</code></p>
 <h3 id='query-parameters-2'>Query Parameters</h3>
 <table><thead>
@@ -2585,7 +2613,7 @@
 </blockquote>
 
 <p>This endpoint will block another member</p>
-<h3 id='http-request-15'>HTTP Request</h3>
+<h3 id='http-request-16'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/block/&lt;ID&gt;</code></p>
 <h2 id='patch-unblock-member'>PATCH Unblock member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
@@ -2607,7 +2635,7 @@
 </blockquote>
 
 <p>This endpoint will block another member</p>
-<h3 id='http-request-16'>HTTP Request</h3>
+<h3 id='http-request-17'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/unblock/&lt;ID&gt;</code></p>
 <h2 id='patch-unlink-discord'>PATCH Unlink Discord</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
@@ -2632,7 +2660,7 @@
 </blockquote>
 
 <p>This endpoint will unlink discord from account</p>
-<h3 id='http-request-17'>HTTP Request</h3>
+<h3 id='http-request-18'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/discord/unlink</code></p>
 <h2 id='patch-unlink-steam'>PATCH Unlink Steam</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
@@ -2657,7 +2685,7 @@
 </blockquote>
 
 <p>This endpoint will unlink steam from account</p>
-<h3 id='http-request-18'>HTTP Request</h3>
+<h3 id='http-request-19'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/steam/unlink</code></p>
 <h2 id='patch-hide-steam'>PATCH Hide Steam</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
@@ -2684,7 +2712,7 @@
 </blockquote>
 
 <p>This endpoint will hide steam from account</p>
-<h3 id='http-request-19'>HTTP Request</h3>
+<h3 id='http-request-20'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/steam/hide</code></p>
 <h3 id='body-schema-2'>Body Schema</h3>
 <table><thead>
@@ -2723,7 +2751,7 @@
 </blockquote>
 
 <p>This endpoint will hide steam from account</p>
-<h3 id='http-request-20'>HTTP Request</h3>
+<h3 id='http-request-21'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/discord/hide</code></p>
 <h3 id='body-schema-3'>Body Schema</h3>
 <table><thead>
