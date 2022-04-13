@@ -368,7 +368,21 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireMemberRole")]
-        [HttpGet("check-block")]
+        [HttpGet("check-blocked")]
+        public async Task<ActionResult<bool>> CheckIfBlockedBy(int memberId)
+        {
+            var userId = GetUserIdFromClaim();
+            var user = await _userRepository.GetUserByIdAsync(memberId);
+
+            if (user == null) return NotFound();
+
+            if (user.AppUserProfile.BlockedUsers.Contains(memberId)) return Ok(true);
+
+            return Ok(false);
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("check-blocking")]
         public async Task<ActionResult<bool>> CheckIfBlocked(int memberId)
         {
             var userId = GetUserIdFromClaim();
