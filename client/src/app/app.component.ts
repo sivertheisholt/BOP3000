@@ -22,7 +22,10 @@ export class AppComponent implements OnInit {
       (status) => {
         this.loggedIn = status;
         if(status){
-          this.lobbyHubService.createHubConnection(this.authService.getUserId());
+          if(this.lobbyHubService.connectionStatus == null)
+          {
+            this.lobbyHubService.createHubConnection(this.authService.getUserId());
+          }
         }
       }
     )
