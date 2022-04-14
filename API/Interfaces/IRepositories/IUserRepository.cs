@@ -26,11 +26,15 @@ namespace API.Interfaces.IRepositories
 
         Task<string> GetUserDiscordAccessToken(int id);
         Task<ulong> GetUserDiscordIdFromUid(int id);
+        Task<long> GetUserSteamIdFromUid(int id);
 
         Task<AppUserConnections> GetUserConnectionsFromUid(int id);
 
         Task<List<AppUser>> GetAllUsers();
 
         Task<bool> CheckIfDiscordConnected(int id);
+
+        Task<bool> CheckIfDiscordAccountExists(ulong discordId);
+        Task<bool> CheckIfSteamAccountExists(long steamId);
     }
 }

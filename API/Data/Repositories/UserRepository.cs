@@ -23,6 +23,15 @@ namespace API.Data.Repositories
             user.AppUserProfile.UserConnections.Steam.SteamId = steamId;
         }
 
+        public async Task<bool> CheckIfDiscordAccountExists(ulong discordId)
+        {
+            return await Context.Users.Include(x => x.AppUserProfile)
+                .ThenInclude(x => x.UserConnections)
+                .ThenInclude(x => x.Discord)
+                .Where(x => x.AppUserProfile.UserConnections.Discord.DiscordId == discordId)
+                .AnyAsync();
+        }
+
         public async Task<bool> CheckIfDiscordConnected(int id)
         {
             return await Context.Users.Where(x => x.Id == id)
@@ -30,6 +39,15 @@ namespace API.Data.Repositories
                 .ThenInclude(x => x.UserConnections)
                 .Select(x => x.AppUserProfile.UserConnections.DiscordConnected)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> CheckIfSteamAccountExists(long steamId)
+        {
+            return await Context.Users.Include(x => x.AppUserProfile)
+                .ThenInclude(x => x.UserConnections)
+                .ThenInclude(x => x.Steam)
+                .Where(x => x.AppUserProfile.UserConnections.Steam.SteamId == steamId)
+                .AnyAsync();
         }
 
         public async Task<bool> CheckIfUserExists(int id)
@@ -133,6 +151,17 @@ namespace API.Data.Repositories
         public async Task<IEnumerable<AppUser>> GetUsersMeiliAsync()
         {
             return await Context.Users.ToListAsync();
+        }
+
+        public async Task<long> GetUserSteamIdFromUid(int id)
+        {
+            var steamId = await Context.Users.Where(p => p.Id == id)
+            .Include(p => p.AppUserProfile)
+            .ThenInclude(p => p.UserConnections)
+            .ThenInclude(p => p.Steam)
+            .Select(p => p.AppUserProfile.UserConnections.Steam.SteamId)
+            .FirstOrDefaultAsync();
+            return steamId;
         }
 
         public void UpdateUsername(AppUser user, string username)

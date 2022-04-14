@@ -178,6 +178,7 @@ namespace API.Controllers
 
             if (user == null) return NotFound();
             if (user.AppUserProfile.UserConnections.SteamConnected) return BadRequest("Steam account already connected");
+            if (await _userRepository.CheckIfSteamAccountExists(Int64.Parse(steamId))) return BadRequest("Steam account already connected to another user");
 
             _userRepository.AddSteamId(user, Int64.Parse(steamId));
             await _userRepository.SaveAllAsync();
@@ -204,6 +205,8 @@ namespace API.Controllers
             if (user.AppUserProfile.UserConnections.DiscordConnected) return BadRequest("Discord account already connected");
 
             var userObject = await _discordApiClient.GetUserObjectFromToken(access_token);
+
+            if (await _userRepository.CheckIfDiscordAccountExists(ulong.Parse(userObject.Id))) return BadRequest("Discord account already connected to another user");
 
             var discord = new DiscordProfile
             {
