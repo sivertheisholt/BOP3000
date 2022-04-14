@@ -72,6 +72,16 @@ namespace API.SignalR
             return Task.FromResult(SortedList);
         }
 
+        public Task LobbyChatDone(int lobbyId)
+        {
+            foreach (var member in Chat[lobbyId])
+            {
+                lock (MemberTracker) MemberTracker.Remove(member.Key);
+            }
+            lock (Chat) Chat.Remove(lobbyId);
+            return Task.CompletedTask;
+        }
+
         public Task<int> GetLobbyIdFromUser(int uid)
         {
             return Task.FromResult(MemberTracker.Where(member => member.Key == uid).FirstOrDefault().Value);

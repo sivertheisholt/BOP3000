@@ -14,5 +14,7 @@ namespace API.Entities.Lobbies
         public DateTime DateSent { get; set; }
 
         public string ChatMessage { get; set; }
+        public Log Log { get; set; }
+        public int LogId { get; set; }
     }
 }

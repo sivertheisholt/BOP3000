@@ -187,18 +187,15 @@ namespace API.SignalR
             return Task.FromResult(true);
         }
 
-        public Task<bool> FinishLobby(int lobbyId)
+        public Task FinishLobby(int lobbyId)
         {
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
-
             Lobby[lobbyId].UsersLobby.ForEach(user =>
             {
                 lock (MemberTracker) MemberTracker.Remove(user.Uid);
             });
 
             lock (Lobby) Lobby.Remove(lobbyId);
-
-            return Task.FromResult(true);
+            return Task.CompletedTask;
         }
 
         public Task<bool> AcceptReady(int lobbyId, int uid)

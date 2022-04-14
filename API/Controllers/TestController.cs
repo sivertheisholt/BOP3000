@@ -20,27 +20,17 @@ namespace API.Controllers
         private readonly ISteamStoreClient _steamStoreClient;
         private readonly ISteamAppsClient _steamAppsClient;
         private readonly ILobbiesRepository _lobbiesRepository;
-        private readonly IEmailService _emailservice;
         private readonly IMeilisearchService _meilisearchService;
         private readonly IUserRepository _userRepository;
         public TestController(IMapper mapper, ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, ILobbiesRepository lobbiesRepository, IMeilisearchService meilisearchService, IUserRepository userRepository) : base(mapper)
         {
             _userRepository = userRepository;
             _meilisearchService = meilisearchService;
-            //_emailservice = emailservice;
             _lobbiesRepository = lobbiesRepository;
             _steamAppsClient = steamAppsClient;
             _steamStoreClient = steamStoreClient;
             _steamAppsRepository = steamAppsRepository;
             _steamAppRepository = steamAppRepository;
-        }
-
-        [Authorize(Policy = "RequireMemberRole")]
-        [HttpGet("send_email")]
-        public async Task<ActionResult> SendEmail()
-        {
-            await Task.Run(() => _emailservice.SendForgottenPasswordMail("test", "playfu3000@gmail.com"));
-            return NoContent();
         }
 
         [Authorize(Policy = "RequireMemberRole")]
@@ -68,8 +58,6 @@ namespace API.Controllers
             return Ok();
         }
 
-
-
         [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("seed_index")]
         public async Task<ActionResult> SeedIndex()
@@ -96,7 +84,5 @@ namespace API.Controllers
             cont.Wait();
             return NoContent();
         }
-
-
     }
 }

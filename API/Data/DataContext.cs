@@ -398,6 +398,7 @@ namespace API.Data
                         c => c.Aggregate(0, (a, lobby) => HashCode.Combine(a, lobby.GetHashCode())),
                         c => (ICollection<int>)c.ToList()));
 
+            /*********** LobbyVote **************/
             builder.Entity<LobbyVote>()
                 .HasOne(vote => vote.Lobby)
                 .WithMany(lobby => lobby.Votes)
@@ -406,6 +407,13 @@ namespace API.Data
 
             builder.Entity<LobbyVote>()
                 .HasKey(vote => vote.LobbyVoteId);
+
+            /*********** Message **************/
+            builder.Entity<Message>()
+                .HasOne(message => message.Log)
+                .WithMany(log => log.messages)
+                .HasForeignKey(message => message.LogId)
+                .IsRequired();
         }
     }
 }

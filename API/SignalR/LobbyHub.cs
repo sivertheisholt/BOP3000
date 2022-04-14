@@ -17,12 +17,15 @@ namespace API.SignalR
         private readonly IDiscordBotService _discordBotService;
         private static readonly Dictionary<int, CancellationTokenSource> LobbyStartingTask = new Dictionary<int, CancellationTokenSource>();
         private readonly IUserRepository _userRepository;
-        public LobbyHub(LobbyTracker lobbyTracker, ILobbiesRepository lobbiesRepository, IDiscordBotService discordService, IUserRepository userRepository)
+
+        private readonly LobbyChatTracker _lobbyChatTracker;
+        public LobbyHub(LobbyTracker lobbyTracker, ILobbiesRepository lobbiesRepository, IDiscordBotService discordService, IUserRepository userRepository, LobbyChatTracker lobbyChatTracker)
         {
             _userRepository = userRepository;
             _lobbiesRepository = lobbiesRepository;
             _discordBotService = discordService;
             _lobbyTracker = lobbyTracker;
+            _lobbyChatTracker = lobbyChatTracker;
         }
 
         public async Task CreateLobbyTest(Lobby lobby, int uid)
@@ -155,21 +158,7 @@ namespace API.SignalR
 
             if (await _lobbyTracker.CheckReadyState(lobbyId))
             {
-                var discordIds = new List<ulong>();
-                foreach (var userId in await _lobbyTracker.GetMembersInLobby(lobbyId))
-                {
-                    discordIds.Add(await _userRepository.GetUserDiscordIdFromUid(userId));
-                }
-
-                var adminName = await _userRepository.GetUsernameFromId(await _lobbyTracker.GetLobbyAdmin(lobbyId));
-                var channelName = $"{adminName}'s lobby";
-                var invitelink = await _discordBotService.CreateVoiceChannelForLobby(discordIds.ToArray(), channelName);
-                await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted", invitelink);
-
-                await _lobbyTracker.FinishLobby(lobbyId);
-                var finishTask = Task.Delay(60 * 1000);
-                await finishTask;
-                await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("RedirectFinished", invitelink);
+                await AllReady(lobbyId);
             }
             else
             {
@@ -240,6 +229,49 @@ namespace API.SignalR
         private async Task RemoveFromGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+        }
+
+
+        private async Task AllReady(int lobbyId)
+        {
+            await StartLobby(lobbyId);
+            await FinishLobby(lobbyId);
+        }
+
+        private async Task StartLobby(int lobbyId)
+        {
+            var discordIds = new List<ulong>();
+            foreach (var userId in await _lobbyTracker.GetMembersInLobby(lobbyId))
+            {
+                discordIds.Add(await _userRepository.GetUserDiscordIdFromUid(userId));
+            }
+
+            var adminName = await _userRepository.GetUsernameFromId(await _lobbyTracker.GetLobbyAdmin(lobbyId));
+            var channelName = $"{adminName}'s lobby";
+            var invitelink = await _discordBotService.CreateVoiceChannelForLobby(discordIds.ToArray(), channelName);
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted", invitelink);
+        }
+        private async Task FinishLobby(int lobbyId)
+        {
+            var lobby = await _lobbiesRepository.GetLobbyAsync(lobbyId);
+            lobby.Finished = true;
+            lobby.Users = await _lobbyTracker.GetMembersInLobby(lobbyId);
+            lobby.FinishedDate = DateTime.Now;
+            lobby.Log = new Log
+            {
+                messages = await _lobbyChatTracker.GetMessages(lobbyId)
+            };
+
+            await _lobbyTracker.FinishLobby(lobbyId);
+
+            var finishTask = Task.Delay(20 * 1000);
+            await finishTask;
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("RedirectFinished");
+
+            _lobbiesRepository.Update(lobby);
+            await _lobbiesRepository.SaveAllAsync();
+
+            await _lobbyChatTracker.LobbyChatDone(lobbyId);
         }
     }
 }

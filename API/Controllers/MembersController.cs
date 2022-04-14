@@ -251,7 +251,7 @@ namespace API.Controllers
                 DiscordId = user.Discord.DiscordId,
                 Connected = user.DiscordConnected,
                 Username = user.Discord.Username,
-                Discriminator = user.Discord.Distriminator,
+                Discriminator = user.Discord.Discriminator,
                 Hidden = user.Discord.Hidden
             };
             return dto;
