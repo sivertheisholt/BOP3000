@@ -15,5 +15,6 @@ namespace API.Entities.Lobbies.LobbyTracking
         public List<int> BannedUsers { get; set; }
         public bool LobbyReadyCheck { get; set; }
         public bool Finished { get; set; }
+        public int MaxUsers { get; set; }
     }
 }

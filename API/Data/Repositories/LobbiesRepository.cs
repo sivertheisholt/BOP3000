@@ -20,6 +20,11 @@ namespace API.Data.Repositories
             return Task.FromResult(Context.Lobby.Where(o => o.GameId == id).Count());
         }
 
+        public async Task<List<Lobby>> GetActiveLobbies()
+        {
+            return await Context.Lobby.Where(x => !x.Finished).ToListAsync();
+        }
+
         public Task<List<Lobby>> GetLobbiesAsync()
         {
             //var query = Context.Lobby.Where(x => x.GameType == "Casual").OrderBy(X => X.Id).Take(5).Skip(5).AsQueryable();

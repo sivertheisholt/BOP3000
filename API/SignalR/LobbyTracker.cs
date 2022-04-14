@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Entities.Lobbies;
 using API.Entities.Lobbies.LobbyTracking;
 using API.Interfaces.IRepositories;
 
@@ -12,13 +13,13 @@ namespace API.SignalR
         private static readonly Dictionary<int, LobbyStatusTracker> Lobby = new Dictionary<int, LobbyStatusTracker>();
         private static readonly Dictionary<int, int> MemberTracker = new Dictionary<int, int>();
 
-        public Task CreateLobby(int lobbyId, int adminUid)
+        public Task CreateLobby(Lobby lobby, int adminUid)
         {
-            var lobby = new LobbyStatusTracker
+            var lobbyTracker = new LobbyStatusTracker
             {
                 AdminUid = adminUid,
                 BannedUsers = new List<int>(),
-                LobbyId = lobbyId,
+                LobbyId = lobby.Id,
                 UsersLobby = new List<LobbyUser>()
                     {
                         new LobbyUser
@@ -27,11 +28,12 @@ namespace API.SignalR
                             Ready = false
                         }
                     },
-                UsersQueue = new List<int>()
+                UsersQueue = new List<int>(),
+                MaxUsers = lobby.MaxUsers
             };
 
-            lock (Lobby) Lobby.Add(lobbyId, lobby);
-            lock (MemberTracker) MemberTracker.Add(adminUid, lobbyId);
+            lock (Lobby) Lobby.Add(lobby.Id, lobbyTracker);
+            lock (MemberTracker) MemberTracker.Add(adminUid, lobby.Id);
 
             return Task.CompletedTask;
         }
@@ -277,6 +279,10 @@ namespace API.SignalR
         public Task<bool> CheckReadyState(int lobbyId)
         {
             return Task.FromResult(Lobby[lobbyId].LobbyReadyCheck);
+        }
+        public Task<bool> CheckIfLobbyFull(int lobbyId)
+        {
+            return Task.FromResult(Lobby[lobbyId].MaxUsers == Lobby[lobbyId].UsersLobby.Count);
         }
     }
 }

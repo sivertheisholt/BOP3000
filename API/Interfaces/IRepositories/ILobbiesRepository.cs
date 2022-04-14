@@ -15,5 +15,7 @@ namespace API.Interfaces.IRepositories
 
         Task<int> CountLobbiesWithGameId(int id);
 
+        Task<List<Lobby>> GetActiveLobbies();
+
     }
 }

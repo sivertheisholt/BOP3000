@@ -214,13 +214,11 @@ namespace API.Data
 
         public static async Task SeedLobbyHub(ILobbiesRepository lobbiesRepository, LobbyHub lobbyHub)
         {
-            await lobbyHub.CreateLobbyTest(1, 1);
-            await lobbyHub.CreateLobbyTest(2, 5);
-            await lobbyHub.CreateLobbyTest(3, 6);
-            await lobbyHub.CreateLobbyTest(4, 7);
-            await lobbyHub.CreateLobbyTest(5, 8);
-            await lobbyHub.CreateLobbyTest(6, 9);
-            await lobbyHub.CreateLobbyTest(7, 10);
+            var testLobbies = await lobbiesRepository.GetActiveLobbies();
+            foreach (var lobby in testLobbies)
+            {
+                await lobbyHub.CreateLobbyTest(lobby, lobby.AdminUid);
+            }
             Console.WriteLine($"Finished seeding lobby hub data");
         }
 

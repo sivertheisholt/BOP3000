@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Entities.Lobbies;
 using API.Extentions;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
@@ -24,20 +25,26 @@ namespace API.SignalR
             _lobbyTracker = lobbyTracker;
         }
 
-        public async Task CreateLobbyTest(int lobbyId, int uid)
+        public async Task CreateLobbyTest(Lobby lobby, int uid)
         {
-            await _lobbyTracker.CreateLobby(lobbyId, uid);
+            await _lobbyTracker.CreateLobby(lobby, uid);
         }
 
-        public async Task CreateLobby(int lobbyId, int uid)
+        public async Task CreateLobby(Lobby lobby, int uid)
         {
-            await _lobbyTracker.CreateLobby(lobbyId, uid);
-            await AddToGroup($"lobby_{lobbyId.ToString()}");
+            await _lobbyTracker.CreateLobby(lobby, uid);
+            await AddToGroup($"lobby_{lobby.Id.ToString()}");
         }
 
         public async Task AcceptMember(int lobbyId, int acceptedUid)
         {
             var uid = Context.User.GetUserId();
+
+            if (await _lobbyTracker.CheckIfLobbyFull(lobbyId))
+            {
+                await Clients.Caller.SendAsync("FullLobby");
+                return;
+            }
 
             var result = await _lobbyTracker.AcceptMember(lobbyId, acceptedUid, uid);
 
@@ -96,6 +103,7 @@ namespace API.SignalR
             if (!await _discordBotService.CheckIfUserInServer(discordId)) return;
 
             if (!await _lobbyTracker.JoinQueue(lobbyId, uid)) return;
+
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("JoinedLobbyQueue", uid);
         }
