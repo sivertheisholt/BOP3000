@@ -58,7 +58,6 @@ namespace API
                 await contex.Database.MigrateAsync();
                 await Seed.SeedCountryIso(countryRepository);
                 await Seed.SeedUsers(userManager, roleManager, countryRepository, meilisearchService, userRepository, mapper);
-                //await Seed.SeedSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient, meilisearchService);
                 await Seed.SeedCustomSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient);
                 await Seed.SeedLobbies(lobbiesRepository, lobbyHub, steamAppRepository);
                 await Seed.SeedLobbyHub(lobbiesRepository, lobbyHub);
