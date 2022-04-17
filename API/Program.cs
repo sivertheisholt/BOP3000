@@ -62,6 +62,7 @@ namespace API
                 await Seed.SeedLobbies(lobbiesRepository, lobbyHub, steamAppRepository);
                 await Seed.SeedLobbyHub(lobbiesRepository, lobbyHub);
                 await Seed.SeedActivities(activitiesRepository, activityRepository);
+                await Seed.SeedMeilisearch(meilisearchService, steamAppsrepository, userRepository, mapper);
             }
             catch (Exception ex)
             {

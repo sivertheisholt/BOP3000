@@ -248,5 +248,48 @@ namespace API.Data
             await activityRepository.SaveAllAsync();
             await activitiesRepository.SaveAllAsync();
         }
+
+        public static async Task SeedMeilisearch(IMeilisearchService meilisearchService, ISteamAppsRepository steamAppsRepository, IUserRepository userRepository, IMapper mapper)
+        {
+            var apps = await steamAppsRepository.GetAppsList(1);
+            //Seed apps to search
+            var createTaskApps = meilisearchService.CreateIndexAsync("apps");
+
+            var contApps = createTaskApps.ContinueWith(task =>
+            {
+                var index = meilisearchService.GetIndex("apps");
+
+                var docsTask = meilisearchService.AddDocumentsAsync(apps.Apps.ToArray(), index);
+
+                var docs = docsTask.ContinueWith(docsTask =>
+                {
+                    Console.WriteLine("Meilisearch apps docs successfully uploaded");
+                });
+                docs.Wait();
+            });
+
+            contApps.Wait();
+
+            //Seed members to search
+
+            var createTaskMembers = meilisearchService.CreateIndexAsync("members");
+
+            var usersMeili = mapper.Map<List<AppUserMeili>>(await userRepository.GetUsersMeiliAsync());
+
+            var contMembers = createTaskMembers.ContinueWith(task =>
+            {
+                var index = meilisearchService.GetIndex("members");
+
+                var docsTask = meilisearchService.AddDocumentsAsync(usersMeili.ToArray(), index);
+
+                var docs = docsTask.ContinueWith(docsTask =>
+                {
+                    Console.WriteLine("Meilisearch member docs successfully uploaded");
+                });
+                docs.Wait();
+            });
+
+            contMembers.Wait();
+        }
     }
 }
