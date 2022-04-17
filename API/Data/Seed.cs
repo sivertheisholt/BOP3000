@@ -252,6 +252,7 @@ namespace API.Data
         public static async Task SeedMeilisearch(IMeilisearchService meilisearchService, ISteamAppsRepository steamAppsRepository, IUserRepository userRepository, IMapper mapper)
         {
             var apps = await steamAppsRepository.GetAppsList(1);
+            if (apps == null) return;
             //Seed apps to search
             var createTaskApps = meilisearchService.CreateIndexAsync("apps");
 
