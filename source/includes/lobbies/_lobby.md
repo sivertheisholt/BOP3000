@@ -29,8 +29,41 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/1", requestOptions)
   "lobbyDescription": "Hello there",
   "adminUid": 1,
   "adminUsername": "adminTest",
-  "users": [],
-  "log": null,
+  "users": [1, 2],
+  "log": {
+    "messages": [
+      {
+        "uid": 1,
+        "dateSent": "2022-04-14T14:33:55.1220942",
+        "username": "Playfu1",
+        "chatMessage": "yo"
+      },
+      {
+        "uid": 1,
+        "dateSent": "2022-04-14T14:33:55.9965347",
+        "username": "Playfu1",
+        "chatMessage": "sup"
+      },
+      {
+        "uid": 2,
+        "dateSent": "2022-04-14T14:33:58.4013644",
+        "username": "Playfu2",
+        "chatMessage": "not much"
+      },
+      {
+        "uid": 2,
+        "dateSent": "2022-04-14T14:33:59.6158034",
+        "username": "Playfu2",
+        "chatMessage": "how are u"
+      },
+      {
+        "uid": 2,
+        "dateSent": "2022-04-14T14:34:00.9457239",
+        "username": "Playfu2",
+        "chatMessage": "test"
+      }
+    ]
+  },
   "lobbyRequirement": null,
   "startDate": "2022-03-30T04:08:03.088913",
   "finishedDate": "0001-01-01T00:00:00",
@@ -88,8 +121,18 @@ This endpoint retrieves a specific lobby.
 
 #### Log
 
-| Key | Type |
-| --- | ---- |
+| Key      | Type      |
+| -------- | --------- |
+| messages | Message[] |
+
+#### Message
+
+| Key         | Type   |
+| ----------- | ------ |
+| uid         | int    |
+| dateSent    | string |
+| username    | string |
+| chatMessage | string |
 
 ## GET All lobbies
 
