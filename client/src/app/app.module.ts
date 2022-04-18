@@ -54,6 +54,7 @@ import { ActivityLogComponent } from './components/activity-log/activity-log.com
 import { JoinVoiceComponent } from './components/lobby/join-voice/join-voice.component';
 import { FaqComponent } from './components/help/faq/faq.component';
 import { AboutComponent } from './components/help/about/about.component';
+import { NotifierModule } from 'angular-notifier';
 
 
 @NgModule({
@@ -111,7 +112,21 @@ import { AboutComponent } from './components/help/about/about.component';
     AppRoutingModule,
     SharedModule,
     NgSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NotifierModule.withConfig({
+      position: {
+        horizontal: {
+          position: 'right',
+          distance: 12
+        },
+        vertical: {
+          position: 'bottom',
+          distance: 12,
+          gap: 10
+        }
+      },
+      theme: 'material'
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

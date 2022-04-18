@@ -8,14 +8,20 @@ import { environment } from '../../environments/environment';
 @Injectable({providedIn: 'root'})
 export class UserSettingsService{
     baseUrl = environment.apiUrl;
-    private http: HttpClient
 
-    constructor(private handler: HttpBackend){
-        this.http = new HttpClient(handler);
+    constructor(private http: HttpClient){
     }
 
 
     getAllLanguages(){
         return this.http.get<Country[]>(this.baseUrl + 'countries');
+    }
+
+    hideSteam(status: boolean){
+        return this.http.patch<boolean>(this.baseUrl + 'members/steam/hide', {hide: status});
+    }
+
+    hideDiscord(status: boolean){
+        return this.http.patch<boolean>(this.baseUrl + 'members/discord/hide', {hide: status});
     }
 }

@@ -17,7 +17,7 @@ export class AccountCardComponent implements OnInit {
   imageHeightWidth: boolean = false;
   imageSize: boolean = false;
   errorStatus: boolean = false;
-  blocked: boolean = false;
+  isBlocked: boolean = false;
 
   constructor(private userService: UserService, private route: ActivatedRoute) { 
     
@@ -27,6 +27,11 @@ export class AccountCardComponent implements OnInit {
     this.userService.checkFollowing(this.route.snapshot.params.id).subscribe(
       (res) => {
         this.isFollowing = res;
+      }
+    )
+    this.userService.checkIfBlocking(this.route.snapshot.params.id).subscribe(
+      (res) => {
+        this.isBlocked = res;
       }
     )
   }
@@ -50,9 +55,9 @@ export class AccountCardComponent implements OnInit {
   blockUser(){
     this.userService.blockUser(this.user?.id!).subscribe(
       (res) => {
-        this.blocked = true;
+        this.isBlocked = true;
       }, error => {
-        this.blocked = false;
+        this.isBlocked = false;
       }
     )
   }
@@ -60,9 +65,9 @@ export class AccountCardComponent implements OnInit {
   unblockUser(){
     this.userService.unblockUser(this.user?.id!).subscribe(
       (res) => {
-        this.blocked = false;
+        this.isBlocked = false;
       }, error => {
-        this.blocked = true;
+        this.isBlocked = true;
       }
     )
   }

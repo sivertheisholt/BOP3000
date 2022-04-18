@@ -113,4 +113,20 @@ export class UserService{
         return this.http.patch(this.baseUrl + 'members/unblock/' + id, '');
     }
 
+    checkIfBlocking(id: number){
+        return this.http.get<boolean>(this.baseUrl + 'members/check-blocking?memberId=' + id).pipe(
+            map((res) => {
+                return res;
+            })
+        )
+    }
+
+    checkIfBlocked(id: number){
+        return this.http.get<boolean>(this.baseUrl + 'members/check-blocked?memberId=' + id).pipe(
+            map((res) => {
+                return res;
+            })
+        )
+    }
+
 }

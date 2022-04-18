@@ -4,20 +4,20 @@
         <a *ngIf="!discordData?.connected" href="api/accounts/discord" class="button discordbtn">
             <span>Link Your Discord</span>
             <div class="icon">
-                <img class="image is-64by64" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="">
+                <img class="image is-64by64" src="../../../../assets/images/discord_icon.png" alt="Discord Icon">
             </div>
         </a>
         <button *ngIf="discordData?.connected" (click)="onDiscordUnlink()" type="button" class="button discordbtn">
             <span>Unlink Your Discord</span>
             <div class="icon">
-                <img class="image is-64by64" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="">
+                <img class="image is-64by64" src="../../../../assets/images/discord_icon.png" alt="Discord Icon">
             </div>
         </button>
         <div class="connections-text mt-4 text-is-light">
             <div class="connected" *ngIf="discordData?.connected">
                 <fa-icon class="icon" [icon]="faCheckCircle"></fa-icon>
                 ID: 
-                <a class="ml-1" href="{{'https://discord.com/users/' + discordData?.discordId}}" target="_blank">
+                <a class="ml-1" href="{{'https://discord.com/users/' + discordData?.discordId}}" rel="noopener">
                     {{ discordData?.discordId }}
                 </a>
             </div>
@@ -34,25 +34,25 @@
         <a *ngIf="!steamData?.connected" href="api/accounts/steam" type="button" class="button steambtn">
             <span>Link Your Steam</span>
             <div class="icon">
-                <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">
+                <img class="image is-64by64" src="../../../../assets/images/steam-icon-blue.png" alt="Steam Icon">
             </div>
         </a>
         <button *ngIf="steamData?.connected" (click)="onSteamUnlink()" type="button" class="button steambtn">
             <span>Unlink Your Steam</span>
             <div class="icon">
-                <img class="image is-64by64" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="">
+                <img class="image is-64by64" src="../../../../assets/images/steam-icon-blue.png" alt="Steam Icon">
             </div>
         </button>
         <div class="connections-text mt-4 text-is-light">
             <div class="connected" *ngIf="steamData?.connected">
                 <fa-icon class="icon" [icon]="faCheckCircle"></fa-icon>
                 ID: 
-                <a class="ml-1" href="{{'https://steamcommunity.com/profiles/' + steamData?.steamid}}" target="_blank">
+                <a class="ml-1" href="{{'https://steamcommunity.com/profiles/' + steamData?.steamid}}" rel="noopener">
                     {{ steamData?.steamid }}
                 </a>
             </div>
             <div *ngIf="steamData?.connected" class="check">
-                <input (click)="onSteamHide($event)" type="checkbox" [checked]="steamData?.hidden"> Hide Steam from profile.
+                <input (click)="onSteamHide($event)" type="checkbox" [checked]="steamHidden"> Hide Steam from profile.
             </div>
             <p>
                 By linking your Steam account, you acknowledge and agree that your Steam ID will be publicly visible in the Playfu API.

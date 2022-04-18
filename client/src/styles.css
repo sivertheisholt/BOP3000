@@ -1,4 +1,12 @@
-@import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('~bulma/css/bulma.css');
+@import url('~angular-notifier/styles/core.css');
+@import url('~angular-notifier/styles/themes/theme-material.css');
+@import url('~angular-notifier/styles/types/type-default.css');
+@import url('~angular-notifier/styles/types/type-success.css');
+@import url('~angular-notifier/styles/types/type-error.css');
+@import url('~angular-notifier/styles/types/type-info.css');
+@import url('~angular-notifier/styles/types/type-warning.css');
+@import url('~@ng-select/ng-select/themes/default.theme.css');
 
 #background-video {
   height: 100vh;

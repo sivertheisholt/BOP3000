@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,6 @@ export class LobbyHubService {
   acceptedReadyCheckMembers = new Subject<number[]>();
   declinedReadyCheckMembers = new Subject<number>();
   lobbyStart = new BehaviorSubject<string>('');
-  notifyUserSource = new Subject<string>();
 
   acceptedMembers$ = this.acceptedMembers.asObservable();
   lobbyQueueMembers$ = this.lobbyQueueMembers.asObservable();
@@ -33,9 +33,8 @@ export class LobbyHubService {
   acceptedReadyCheckMembers$ = this.acceptedReadyCheckMembers.asObservable();
   declinedReadyCheckMembers$ = this.declinedReadyCheckMembers.asObservable();
   lobbyStart$ = this.lobbyStart.asObservable();
-  notifyUser$ = this.notifyUserSource.asObservable();
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private notificationService: NotificationService, private route: ActivatedRoute) {}
 
   createHubConnection(token: string) {
     this.connectionStatus = new Promise(resolve => {
@@ -55,26 +54,22 @@ export class LobbyHubService {
 
       
       // Member that is accepted will get this
-      this.hubConnection.on('Accepted', () => {
-        this.notifyUserSource.next('You have been accepted to the lobby.');
-        console.log("You have been accepted!");
+      this.hubConnection.on('Accepted', id => {
+        this.notificationService.setNewNotification('You have been accepted to the lobby.');
       });
       // Member that is declined will get this
-      this.hubConnection.on('Declined', () => {
-        this.notifyUserSource.next('You have been declined from the lobby.');
-        console.log("You have been declined!");
+      this.hubConnection.on('Declined', id => {
+        this.notificationService.setNewNotification('You have been declined from the lobby.');
       });
       // Member that is banned will get this
-      this.hubConnection.on('Banned', () => {
-        this.notifyUserSource.next('You have been banned from the lobby.');
-        console.log("You have been declined!");
+      this.hubConnection.on('Banned', id => {
+        this.redirectUser(this.router.url, +id);
+        this.notificationService.setNewNotification('You have been banned from the lobby.');
       });
       // Member that is kicked will get this
-      this.hubConnection.on('Kicked', () => {
-        this.notifyUserSource.next('You have been kicked from the lobby.');
-        console.log(this.route.url);
-        this.router.navigate(['home']);
-        console.log("You have been kicked!");
+      this.hubConnection.on('Kicked', id => {
+        this.redirectUser(this.router.url, +id);
+        this.notificationService.setNewNotification('You have been removed from the lobby.');
       });
 
       // Everyone in lobby will get this
@@ -214,5 +209,14 @@ export class LobbyHubService {
 
   addUserToObservable(id: any) {
     this.lobbyQueueMembers.next(id);
+  }
+
+  redirectUser(currentUrl: string, lobbyId: number){
+    const lobbyUrl: string = '/lobby/' + lobbyId;
+    console.log(lobbyUrl);
+    if(currentUrl == lobbyUrl){
+      this.router.navigate(['..']);
+    }
+    return;
   }
 }

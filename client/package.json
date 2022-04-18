@@ -24,6 +24,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@microsoft/signalr": "^6.0.2",
     "@ng-select/ng-select": "^7.4.0",
+    "angular-notifier": "^10.0.0",
     "babel-plugin-polyfill-corejs2": "^0.3.1",
     "bulma": "^0.9.3",
     "fastq": "^1.13.0",
