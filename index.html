@@ -359,7 +359,7 @@
                     <a href="#get-all-lobbies" class="toc-h2 toc-link" data-title="GET All lobbies">GET All lobbies</a>
                   </li>
                   <li>
-                    <a href="#get-lobbies-with-specific-game-id" class="toc-h2 toc-link" data-title="GET Lobbies with specific game ID">GET Lobbies with specific game ID</a>
+                    <a href="#get-active-lobbies-with-specific-game-id" class="toc-h2 toc-link" data-title="GET Active lobbies with specific game ID">GET Active lobbies with specific game ID</a>
                   </li>
                   <li>
                     <a href="#get-check-if-lobby-is-finished" class="toc-h2 toc-link" data-title="GET Check if lobby is finished">GET Check if lobby is finished</a>
@@ -450,7 +450,7 @@
                     <a href="#get-search-for-app" class="toc-h2 toc-link" data-title="GET Search for app">GET Search for app</a>
                   </li>
                   <li>
-                    <a href="#get-single-app" class="toc-h2 toc-link" data-title="GET Single app">GET Single app</a>
+                    <a href="#get-specfic-app" class="toc-h2 toc-link" data-title="GET Specfic app">GET Specfic app</a>
                   </li>
                   <li>
                     <a href="#get-active-apps-that-has-lobbies" class="toc-h2 toc-link" data-title="GET Active apps that has lobbies">GET Active apps that has lobbies</a>
@@ -1061,6 +1061,25 @@
 <p>This endpoint retrieves all lobbies.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/lobbies</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pageNumber</td>
+<td>1</td>
+<td>Page to get results from</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>50</td>
+<td>Size of a page</td>
+</tr>
+</tbody></table>
 <h3 id='response-class-status-200-2'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
@@ -1173,7 +1192,7 @@
 </tr>
 </thead><tbody>
 </tbody></table>
-<h2 id='get-lobbies-with-specific-game-id'>GET Lobbies with specific game ID</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<h2 id='get-active-lobbies-with-specific-game-id'>GET Active lobbies with specific game ID</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
@@ -1219,6 +1238,25 @@
 <p>This endpoint retrieves all lobbies with a specific game ID.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/lobbies/game/&lt;ID&gt;</code></p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pageNumber</td>
+<td>1</td>
+<td>Page to get results from</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>50</td>
+<td>Size of a page</td>
+</tr>
+</tbody></table>
 <h3 id='response-class-status-200-3'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
@@ -1592,6 +1630,25 @@
 <p>This endpoint retrieves all members.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/members</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pageNumber</td>
+<td>1</td>
+<td>Page to get results from</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>50</td>
+<td>Size of a page</td>
+</tr>
+</tbody></table>
 <h3 id='response-class-status-200'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
@@ -2545,7 +2602,7 @@
 <p>This endpoint will follow another member</p>
 <h3 id='http-request-14'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/follow?memberId=1</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<h3 id='query-parameters-2'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2581,7 +2638,7 @@
 <p>This endpoint will unfollow another member</p>
 <h3 id='http-request-15'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/members/unfollow?memberId=1</code></p>
-<h3 id='query-parameters-2'>Query Parameters</h3>
+<h3 id='query-parameters-3'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2850,7 +2907,7 @@
 <td>10</td>
 </tr>
 </tbody></table>
-<h2 id='get-single-app'>GET Single app</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<h2 id='get-specfic-app'>GET Specfic app</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
@@ -2874,7 +2931,7 @@
   </span><span class="nl">"activeLobbies"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint retrieves a single app</p>
+<p>This endpoint retrieves a specific app</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/apps/&lt;ID&gt;</code></p>
 <h3 id='response-class-status-200-2'>Response Class (Status 200)</h3>
@@ -2942,6 +2999,25 @@
 <p>This endpoint retrieves all apps that has a lobby</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/apps/active</code></p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pageNumber</td>
+<td>1</td>
+<td>Page to get results from</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>50</td>
+<td>Size of a page</td>
+</tr>
+</tbody></table>
 <h3 id='response-class-status-200-3'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
