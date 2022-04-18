@@ -1,7 +1,9 @@
 using API.DTOs.GameApps;
 using API.DTOs.SteamApps;
 using API.Entities.SteamApps;
-using API.Interfaces.IRepositories;
+using API.Extentions;
+using API.Helpers.PaginationsParams;
+using API.Interfaces;
 using API.Interfaces.IServices;
 using AutoMapper;
 using Meilisearch;
@@ -13,12 +15,10 @@ namespace API.Controllers
     public class AppsController : BaseApiController
     {
         private readonly IMeilisearchService _meilisearchService;
-        private readonly ISteamAppRepository _steamAppRepository;
-        private readonly ILobbiesRepository _lobbiesRepository;
-        public AppsController(IMapper mapper, IMeilisearchService meilisearchService, ISteamAppRepository steamAppRepository, ILobbiesRepository lobbiesRepository) : base(mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public AppsController(IMapper mapper, IMeilisearchService meilisearchService, IUnitOfWork unitOfWork) : base(mapper)
         {
-            _lobbiesRepository = lobbiesRepository;
-            _steamAppRepository = steamAppRepository;
+            _unitOfWork = unitOfWork;
             _meilisearchService = meilisearchService;
         }
 
@@ -33,14 +33,17 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("active")]
-        public async Task<ActionResult<IEnumerable<GameAppInfoDto>>> GetActiveApps()
+        public async Task<ActionResult<IEnumerable<GameAppInfoDto>>> GetActiveApps([FromQuery] UniversalParams universalParams)
         {
-            var apps = await _steamAppRepository.GetActiveApps();
+            var apps = await _unitOfWork.steamAppRepository.GetActiveApps(universalParams);
+
+            Response.AddPaginationHeader(apps.CurrentPage, apps.PageSize, apps.TotalCount, apps.TotalPages);
+
             var appsDto = Mapper.Map<List<GameAppInfoDto>>(apps);
 
             foreach (var app in appsDto)
             {
-                app.ActiveLobbies = await _lobbiesRepository.CountLobbiesWithGameId(app.Id);
+                app.ActiveLobbies = await _unitOfWork.lobbiesRepository.CountActiveLobbiesWithGameId(app.Id);
             }
             return appsDto;
         }
@@ -49,13 +52,13 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GameAppInfoDto>> GetGameAppInfo(int id)
         {
-            var app = await _steamAppRepository.GetAppInfoAsync(id);
+            var app = await _unitOfWork.steamAppRepository.GetAppInfoAsync(id);
 
             if (app == null) return NotFound();
 
             var appDto = Mapper.Map<GameAppInfoDto>(app.Data);
 
-            appDto.ActiveLobbies = await _lobbiesRepository.CountLobbiesWithGameId(app.Id);
+            appDto.ActiveLobbies = await _unitOfWork.lobbiesRepository.CountActiveLobbiesWithGameId(app.Id);
 
             return appDto;
         }

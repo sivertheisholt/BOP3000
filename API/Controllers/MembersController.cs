@@ -3,7 +3,9 @@ using API.DTOs.Applications;
 using API.DTOs.Members;
 using API.Entities.Applications;
 using API.Entities.Users;
-using API.Interfaces.IRepositories;
+using API.Extentions;
+using API.Helpers.PaginationsParams;
+using API.Interfaces;
 using API.Interfaces.IServices;
 using API.SignalR;
 using AutoMapper;
@@ -15,27 +17,23 @@ namespace API.Controllers
 {
     public class MembersController : BaseApiController
     {
-        private readonly IUserRepository _userRepository;
-        private readonly ICountryRepository _countryRepository;
         private readonly LobbyTracker _lobbyTracker;
         private readonly IMeilisearchService _meilisearchService;
-        private readonly IActivitiesRepository _activitiesRepository;
         private readonly IPhotoService _photoService;
-        public MembersController(IUserRepository userRepository, IMapper mapper, ICountryRepository countryRepository, LobbyTracker lobbyTracker, IMeilisearchService meilisearchService, IActivitiesRepository activitiesRepository, IPhotoService photoService) : base(mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public MembersController(IMapper mapper, LobbyTracker lobbyTracker, IMeilisearchService meilisearchService, IPhotoService photoService, IUnitOfWork unitOfWork) : base(mapper)
         {
+            _unitOfWork = unitOfWork;
             _photoService = photoService;
-            _activitiesRepository = activitiesRepository;
             _meilisearchService = meilisearchService;
             _lobbyTracker = lobbyTracker;
-            _countryRepository = countryRepository;
-            _userRepository = userRepository;
         }
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("{id}")]
         public async Task<ActionResult<MemberDto>> GetMember(int id)
         {
-            var user = await _userRepository.GetUserByIdAsync(id);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(id);
 
             if (user == null) return NotFound();
 
@@ -44,9 +42,11 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembers([FromQuery] MemberParams memberParams)
         {
-            var users = await _userRepository.GetUsersAsync();
+            var users = await _unitOfWork.userRepository.GetAllUsers(memberParams);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             if (users == null) return NotFound();
 
@@ -59,19 +59,19 @@ namespace API.Controllers
         {
             var userId = GetUserIdFromClaim();
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
 
             if (user == null) return NotFound();
 
             var member = Mapper.Map(memberUpdateDto, user);
-            member.AppUserProfile.CountryIso = await _countryRepository.GetCountryIsoByIdAsync(memberUpdateDto.CountryId);
+            member.AppUserProfile.CountryIso = await _unitOfWork.countryRepository.GetCountryIsoByIdAsync(memberUpdateDto.CountryId);
             member.AppUserProfile.Birthday = DateTime.Parse(memberUpdateDto.Birthday);
             member.AppUserProfile.Gender = memberUpdateDto.Gender;
             member.AppUserProfile.Description = memberUpdateDto.Description;
 
-            _userRepository.Update(member);
+            _unitOfWork.userRepository.Update(member);
 
-            if (await _userRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest();
         }
@@ -82,7 +82,7 @@ namespace API.Controllers
         {
             var userId = GetUserIdFromClaim();
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
 
             if (user == null) return NotFound();
 
@@ -95,19 +95,19 @@ namespace API.Controllers
         {
             var uid = GetUserIdFromClaim();
 
-            var followers = await _userRepository.GetUserFollowers(uid);
+            var followers = await _unitOfWork.userRepository.GetUserFollowers(uid);
 
             var activities = new List<ActivityLogDto>();
 
             foreach (var follower in followers)
             {
 
-                var activites = await _activitiesRepository.GetActivitiesForUser(follower);
+                var activites = await _unitOfWork.activitiesRepository.GetActivitiesForUser(follower);
                 var activitiesDto = Mapper.Map<List<ActivityLogDto>>(activites);
 
                 foreach (var activityDto in activitiesDto)
                 {
-                    activityDto.Username = await _userRepository.GetUsernameFromId(activityDto.AppUserId);
+                    activityDto.Username = await _unitOfWork.userRepository.GetUsernameFromId(activityDto.AppUserId);
                     activities.Add(activityDto);
                 }
             }
@@ -142,14 +142,14 @@ namespace API.Controllers
         public async Task<ActionResult> FollowMember(int memberId)
         {
             var userId = GetUserIdFromClaim();
-            var user = await _userRepository.GetUserByIdAsync(userId);
-            var userTarget = await _userRepository.GetUserByIdAsync(memberId);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
+            var userTarget = await _unitOfWork.userRepository.GetUserByIdAsync(memberId);
 
             if (user == null) return NotFound();
 
             if (userTarget == null) return NotFound();
 
-            if (!await _userRepository.CheckIfUserExists(memberId)) return NotFound("Member you are trying to follow doesn't exist");
+            if (!await _unitOfWork.userRepository.CheckIfUserExists(memberId)) return NotFound("Member you are trying to follow doesn't exist");
 
             if (user.AppUserProfile.AppUserData.Following.Contains(memberId)) return NoContent();
 
@@ -157,10 +157,10 @@ namespace API.Controllers
 
             user.AppUserProfile.AppUserData.Following.Add(memberId);
             userTarget.AppUserProfile.AppUserData.Followers.Add(userId);
-            _userRepository.Update(user);
-            _userRepository.Update(userTarget);
+            _unitOfWork.userRepository.Update(user);
+            _unitOfWork.userRepository.Update(userTarget);
 
-            if (await _userRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest();
         }
@@ -170,14 +170,14 @@ namespace API.Controllers
         public async Task<ActionResult> UnFollowMember(int memberId)
         {
             var userId = GetUserIdFromClaim();
-            var user = await _userRepository.GetUserByIdAsync(userId);
-            var userTarget = await _userRepository.GetUserByIdAsync(memberId);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
+            var userTarget = await _unitOfWork.userRepository.GetUserByIdAsync(memberId);
 
             if (user == null) return NotFound();
 
             if (userTarget == null) return NotFound();
 
-            if (!await _userRepository.CheckIfUserExists(memberId)) return NotFound("Member you are trying to follow doesn't exist");
+            if (!await _unitOfWork.userRepository.CheckIfUserExists(memberId)) return NotFound("Member you are trying to follow doesn't exist");
 
             if (!user.AppUserProfile.AppUserData.Following.Contains(memberId)) return NoContent();
 
@@ -185,10 +185,10 @@ namespace API.Controllers
 
             user.AppUserProfile.AppUserData.Following.Remove(memberId);
             userTarget.AppUserProfile.AppUserData.Followers.Remove(userId);
-            _userRepository.Update(user);
-            _userRepository.Update(userTarget);
+            _unitOfWork.userRepository.Update(user);
+            _unitOfWork.userRepository.Update(userTarget);
 
-            if (await _userRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest();
         }
@@ -198,7 +198,7 @@ namespace API.Controllers
         public async Task<ActionResult<bool>> CheckIfFollowed(int memberId)
         {
             var userId = GetUserIdFromClaim();
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
             if (user == null) return NotFound();
 
             if (user.AppUserProfile.AppUserData.Following.Contains(memberId)) return Ok(true);
@@ -219,7 +219,7 @@ namespace API.Controllers
         [HttpPost("set-photo")]
         public async Task<ActionResult<MemberPhotoDto>> AddPhoto(IFormFile file)
         {
-            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
             var result = await _photoService.AddPhotoAsync(file);
 
@@ -233,7 +233,7 @@ namespace API.Controllers
 
             user.AppUserProfile.AppUserPhoto = photo;
 
-            if (await _userRepository.SaveAllAsync()) return Mapper.Map<MemberPhotoDto>(photo);
+            if (await _unitOfWork.Complete()) return Mapper.Map<MemberPhotoDto>(photo);
 
             return BadRequest("Problem adding photo");
         }
@@ -242,7 +242,7 @@ namespace API.Controllers
         [HttpGet("{id}/discord")]
         public async Task<ActionResult<DiscordStatusDto>> DiscordConnection(int id)
         {
-            var user = await _userRepository.GetUserConnectionsFromUid(id);
+            var user = await _unitOfWork.userRepository.GetUserConnectionsFromUid(id);
 
             if (user == null) return NotFound();
 
@@ -260,7 +260,7 @@ namespace API.Controllers
         [HttpGet("{id}/steam")]
         public async Task<ActionResult<SteamStatusDto>> SteamConnection(int id)
         {
-            var user = await _userRepository.GetUserConnectionsFromUid(id);
+            var user = await _unitOfWork.userRepository.GetUserConnectionsFromUid(id);
 
             if (user == null) return NotFound();
 
@@ -277,13 +277,13 @@ namespace API.Controllers
         [HttpPatch("block/{id}")]
         public async Task<ActionResult> BlockMember(int id)
         {
-            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
             if (user == null) return NotFound();
             if (user.AppUserProfile.BlockedUsers == null) user.AppUserProfile.BlockedUsers = new List<int>();
             user.AppUserProfile.BlockedUsers.Add(id);
-            _userRepository.Update(user);
-            await _userRepository.SaveAllAsync();
+            _unitOfWork.userRepository.Update(user);
+            await _unitOfWork.Complete();
 
             return NoContent();
         }
@@ -291,13 +291,13 @@ namespace API.Controllers
         [HttpPatch("unblock/{id}")]
         public async Task<ActionResult> UnblockMember(int id)
         {
-            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
             if (user == null) return NotFound();
 
             user.AppUserProfile.BlockedUsers.Remove(id);
-            _userRepository.Update(user);
-            await _userRepository.SaveAllAsync();
+            _unitOfWork.userRepository.Update(user);
+            await _unitOfWork.Complete();
 
             return NoContent();
         }
@@ -306,15 +306,15 @@ namespace API.Controllers
         [HttpPatch("discord/unlink")]
         public async Task<ActionResult> UnlinkDiscord()
         {
-            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
             if (user == null) return NotFound();
 
             user.AppUserProfile.UserConnections.Discord = new DiscordProfile { };
             user.AppUserProfile.UserConnections.DiscordConnected = false;
 
-            _userRepository.Update(user);
-            await _userRepository.SaveAllAsync();
+            _unitOfWork.userRepository.Update(user);
+            await _unitOfWork.Complete();
 
             return NoContent();
         }
@@ -323,15 +323,15 @@ namespace API.Controllers
         [HttpPatch("steam/unlink")]
         public async Task<ActionResult> UnlinkSteam()
         {
-            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
             if (user == null) return NotFound();
 
             user.AppUserProfile.UserConnections.Steam = new SteamProfile { };
             user.AppUserProfile.UserConnections.SteamConnected = false;
 
-            _userRepository.Update(user);
-            await _userRepository.SaveAllAsync();
+            _unitOfWork.userRepository.Update(user);
+            await _unitOfWork.Complete();
 
             return NoContent();
         }
@@ -340,14 +340,14 @@ namespace API.Controllers
         [HttpPatch("steam/hide")]
         public async Task<ActionResult> HideSteam(MemberHideConnectionDto memberHideConnectionDto)
         {
-            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
             if (user == null) return NotFound();
 
             user.AppUserProfile.UserConnections.Steam.Hidden = memberHideConnectionDto.Hide;
 
-            _userRepository.Update(user);
-            await _userRepository.SaveAllAsync();
+            _unitOfWork.userRepository.Update(user);
+            await _unitOfWork.Complete();
 
             return NoContent();
         }
@@ -355,14 +355,14 @@ namespace API.Controllers
         [HttpPatch("discord/hide")]
         public async Task<ActionResult> HideDiscord(MemberHideConnectionDto memberHideConnectionDto)
         {
-            var user = await _userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 
             if (user == null) return NotFound();
 
             user.AppUserProfile.UserConnections.Discord.Hidden = memberHideConnectionDto.Hide;
 
-            _userRepository.Update(user);
-            await _userRepository.SaveAllAsync();
+            _unitOfWork.userRepository.Update(user);
+            await _unitOfWork.Complete();
 
             return NoContent();
         }
@@ -372,7 +372,7 @@ namespace API.Controllers
         public async Task<ActionResult<bool>> CheckIfBlockedBy(int memberId)
         {
             var userId = GetUserIdFromClaim();
-            var user = await _userRepository.GetUserByIdAsync(memberId);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(memberId);
 
             if (user == null) return NotFound();
 
@@ -384,7 +384,7 @@ namespace API.Controllers
         public async Task<ActionResult<bool>> CheckIfBlocked(int memberId)
         {
             var userId = GetUserIdFromClaim();
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
             if (user == null) return NotFound();
 
             return user.AppUserProfile.BlockedUsers.Contains(memberId);

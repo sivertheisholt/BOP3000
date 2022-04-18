@@ -411,7 +411,7 @@ namespace API.Data
             /*********** Message **************/
             builder.Entity<Message>()
                 .HasOne(message => message.Log)
-                .WithMany(log => log.messages)
+                .WithMany(log => log.Messages)
                 .HasForeignKey(message => message.LogId)
                 .IsRequired();
         }

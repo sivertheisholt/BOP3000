@@ -64,6 +64,8 @@ namespace API.Helpers
                 opt => opt.MapFrom(src => src.Activity.Identifier));
 
             CreateMap<AppUserPhoto, MemberPhotoDto>();
+
+            CreateMap<Log, LogDto>();
         }
     }
 }

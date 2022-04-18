@@ -20,11 +20,6 @@ namespace API.Data.Repositories
             _context.Entry(entity).State = EntityState.Deleted;
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
-
         public void Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;

@@ -26,7 +26,10 @@ namespace API.Data.Repositories
 
         public Task<List<ActivityLog>> GetActivitiesForUser(int uid)
         {
-            return Task.FromResult(Context.ActivityLog.Where(x => x.AppUserId == uid).Include(x => x.Activity).OrderByDescending(x => x.Id).ToList());
+            return Context.ActivityLog.Where(x => x.AppUserId == uid)
+                .Include(x => x.Activity)
+                .OrderByDescending(x => x.Id)
+                .ToListAsync();
         }
     }
 }

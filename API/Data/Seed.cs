@@ -6,6 +6,8 @@ using API.Entities.Roles;
 using API.Entities.SteamApps;
 using API.Entities.Users;
 using API.Enums;
+using API.Helpers.PaginationsParams;
+using API.Interfaces;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
@@ -26,7 +28,7 @@ namespace API.Data
         /// <param name="userManager"></param>
         /// <param name="roleManager"></param>
         /// <returns></returns>
-        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ICountryRepository countryRepository, IMeilisearchService meilisearchService, IUserRepository userRepository, IMapper mapper)
+        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMeilisearchService meilisearchService, IMapper mapper, IUnitOfWork unitOfWork)
         {
             if (await userManager.Users.AnyAsync()) return;
 
@@ -49,7 +51,7 @@ namespace API.Data
                 Random rnd = new Random();
                 foreach (var user in users)
                 {
-                    user.AppUserProfile.CountryIso = await countryRepository.GetCountryIsoByIdAsync(rnd.Next(1, 50));
+                    user.AppUserProfile.CountryIso = await unitOfWork.countryRepository.GetCountryIsoByIdAsync(rnd.Next(1, 50));
 
                     if (user.UserName == "Playfu1")
                     {
@@ -67,7 +69,7 @@ namespace API.Data
             //Seed to search
             var createTask = meilisearchService.CreateIndexAsync("members");
 
-            var usersMeili = mapper.Map<List<AppUserMeili>>(await userRepository.GetUsersMeiliAsync());
+            var usersMeili = mapper.Map<List<AppUserMeili>>(await unitOfWork.userRepository.GetUsersMeiliAsync());
 
             var cont = createTask.ContinueWith(task =>
             {
@@ -88,13 +90,11 @@ namespace API.Data
         /// <summary>
         /// Will seed 10 games to the database for development and add all the apps to the database. 
         /// </summary>
-        /// <param name="steamAppRepository"></param>
+        /// <param name="unitOfWork.steamAppRepository"></param>
         /// <param name="steamStoreClient"></param>
         /// <param name="steamAppsClient"></param>
         /// <returns></returns>
-        public static async Task SeedSteamApps(ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository,
-                                                    ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient,
-                                                        IMeilisearchService meilisearchService)
+        public static async Task SeedSteamApps(ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, IMeilisearchService meilisearchService, IUnitOfWork unitOfWork)
         {
             var max = 10;
             var counter = 0;
@@ -102,9 +102,9 @@ namespace API.Data
             var apps = await steamAppsClient.GetAppsList();
 
 
-            if (await steamAppRepository.GetAppInfoAsync(1) != null) return;
+            if (await unitOfWork.steamAppRepository.GetAppInfoAsync(1) != null) return;
 
-            steamAppsRepository.AddAppsList(apps);
+            unitOfWork.steamAppsRepository.AddAppsList(apps);
 
             foreach (AppListInfo app in apps.Apps)
             {
@@ -113,13 +113,12 @@ namespace API.Data
                 var gameResult = await steamStoreClient.GetAppInfo(app.AppId);
                 if (!gameResult.Success) continue;
 
-                steamAppRepository.AddApp(gameResult);
+                unitOfWork.steamAppRepository.AddApp(gameResult);
 
                 counter++;
             }
 
-            await steamAppRepository.SaveAllAsync();
-            await steamAppsRepository.SaveAllAsync();
+            await unitOfWork.Complete();
 
             //Seed to search
             var createTask = meilisearchService.CreateIndexAsync("apps");
@@ -145,11 +144,11 @@ namespace API.Data
         /// <summary>
         /// Will seed all the countries to the database
         /// </summary>
-        /// <param name="countryRepository"></param>
+        /// <param name="unitOfWork.countryRepository"></param>
         /// <returns></returns>
-        public static async Task SeedCountryIso(ICountryRepository countryRepository)
+        public static async Task SeedCountryIso(IUnitOfWork unitOfWork)
         {
-            if (await countryRepository.GetCountryIsoByIdAsync(1) != null) return;
+            if (await unitOfWork.countryRepository.GetCountryIsoByIdAsync(1) != null) return;
 
             foreach (Country country in ISO3166.Country.List)
             {
@@ -160,30 +159,29 @@ namespace API.Data
                     ThreeLetterCode = country.ThreeLetterCode,
                     NumericCode = country.NumericCode
                 };
-                countryRepository.AddCountryIso(countryIso);
+                unitOfWork.countryRepository.AddCountryIso(countryIso);
             }
-            await countryRepository.SaveAllAsync();
+            await unitOfWork.Complete();
             Console.WriteLine($"Finished seeding Country Data");
         }
 
-        public static async Task SeedCustomSteamApps(ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository,
-                                                    ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient)
+        public static async Task SeedCustomSteamApps(ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, IUnitOfWork unitOfWork)
         {
-            if (await steamAppRepository.GetAppInfoAsync(1) != null) return;
+            if (await unitOfWork.steamAppRepository.GetAppInfoAsync(1) != null) return;
             var apps = new Int32[] { 730, 1599340, 1172470, 381210, 427520 };
             foreach (var app in apps)
             {
                 var appResult = await steamStoreClient.GetAppInfo(app);
                 if (!appResult.Success) return;
-                steamAppRepository.AddApp(appResult);
+                unitOfWork.steamAppRepository.AddApp(appResult);
             }
-            await steamAppRepository.SaveAllAsync();
+            await unitOfWork.Complete();
             Console.WriteLine($"Finished seeding custom steam apps Data");
         }
 
-        public static async Task SeedLobbies(ILobbiesRepository lobbiesRepository, LobbyHub lobbyHub, ISteamAppRepository steamAppRepository)
+        public static async Task SeedLobbies(LobbyHub lobbyHub, IUnitOfWork unitOfWork)
         {
-            if (await lobbiesRepository.GetLobbyAsync(1) != null) return;
+            if (await unitOfWork.lobbiesRepository.GetLobbyAsync(1) != null) return;
 
             using (StreamReader r = new StreamReader("Data/SeedData/Lobbies.json"))
             {
@@ -191,8 +189,8 @@ namespace API.Data
                 List<Lobby> lobbies = JsonConvert.DeserializeObject<List<Lobby>>(json);
                 foreach (var lobby in lobbies)
                 {
-                    lobby.GameName = (await steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
-                    lobbiesRepository.AddLobby(lobby);
+                    lobby.GameName = (await unitOfWork.steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
+                    unitOfWork.lobbiesRepository.AddLobby(lobby);
                 }
             }
 
@@ -202,19 +200,19 @@ namespace API.Data
                 List<Lobby> lobbies = JsonConvert.DeserializeObject<List<Lobby>>(json);
                 foreach (var lobby in lobbies)
                 {
-                    lobby.GameName = (await steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
-                    lobbiesRepository.AddLobby(lobby);
+                    lobby.GameName = (await unitOfWork.steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
+                    unitOfWork.lobbiesRepository.AddLobby(lobby);
                 }
             }
 
-            await lobbiesRepository.SaveAllAsync();
+            await unitOfWork.Complete();
 
             Console.WriteLine($"Finished seeding lobbies data");
         }
 
-        public static async Task SeedLobbyHub(ILobbiesRepository lobbiesRepository, LobbyHub lobbyHub)
+        public static async Task SeedLobbyHub(IUnitOfWork unitOfWork, LobbyHub lobbyHub)
         {
-            var testLobbies = await lobbiesRepository.GetActiveLobbies();
+            var testLobbies = await unitOfWork.lobbiesRepository.GetActiveLobbies(new UniversalParams { });
             foreach (var lobby in testLobbies)
             {
                 await lobbyHub.CreateLobbyTest(lobby, lobby.AdminUid);
@@ -222,9 +220,9 @@ namespace API.Data
             Console.WriteLine($"Finished seeding lobby hub data");
         }
 
-        public static async Task SeedActivities(IActivitiesRepository activitiesRepository, IActivityRepository activityRepository)
+        public static async Task SeedActivities(IUnitOfWork unitOfWork)
         {
-            if (await activityRepository.GetActivity(1) != null) return;
+            if (await unitOfWork.activityRepository.GetActivity(1) != null) return;
 
             using (StreamReader r = new StreamReader("Data/SeedData/Activities.json"))
             {
@@ -232,7 +230,7 @@ namespace API.Data
                 List<Activity> activities = JsonConvert.DeserializeObject<List<Activity>>(json);
                 foreach (var activity in activities)
                 {
-                    activityRepository.AddActivity(activity);
+                    unitOfWork.activityRepository.AddActivity(activity);
                 }
             }
             using (StreamReader r = new StreamReader("Data/SeedData/ActivityLogs.json"))
@@ -241,17 +239,16 @@ namespace API.Data
                 List<ActivityLog> activityLogs = JsonConvert.DeserializeObject<List<ActivityLog>>(json);
                 foreach (var activityLog in activityLogs)
                 {
-                    activitiesRepository.AddActivityLog(activityLog);
+                    unitOfWork.activitiesRepository.AddActivityLog(activityLog);
                 }
             }
 
-            await activityRepository.SaveAllAsync();
-            await activitiesRepository.SaveAllAsync();
+            await unitOfWork.Complete();
         }
 
-        public static async Task SeedMeilisearch(IMeilisearchService meilisearchService, ISteamAppsRepository steamAppsRepository, IUserRepository userRepository, IMapper mapper)
+        public static async Task SeedMeilisearch(IMeilisearchService meilisearchService, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            var apps = await steamAppsRepository.GetAppsList(1);
+            var apps = await unitOfWork.steamAppsRepository.GetAppsList(1);
             if (apps == null) return;
             //Seed apps to search
             var createTaskApps = meilisearchService.CreateIndexAsync("apps");
@@ -275,7 +272,7 @@ namespace API.Data
 
             var createTaskMembers = meilisearchService.CreateIndexAsync("members");
 
-            var usersMeili = mapper.Map<List<AppUserMeili>>(await userRepository.GetUsersMeiliAsync());
+            var usersMeili = mapper.Map<List<AppUserMeili>>(await unitOfWork.userRepository.GetUsersMeiliAsync());
 
             var contMembers = createTaskMembers.ContinueWith(task =>
             {

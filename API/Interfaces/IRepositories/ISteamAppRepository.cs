@@ -1,5 +1,7 @@
 using API.Entities.SteamApp;
 using API.Entities.SteamApp.Information;
+using API.Helpers;
+using API.Helpers.PaginationsParams;
 
 namespace API.Interfaces.IRepositories
 {
@@ -9,8 +11,10 @@ namespace API.Interfaces.IRepositories
 
         void AddApp(AppInfo appInfo);
 
-        Task<List<AppData>> GetActiveApps();
+        Task<PagedList<AppData>> GetActiveApps(UniversalParams universalParams);
 
-        Task<List<AppInfo>> GetAllApps();
+        Task<PagedList<AppInfo>> GetAllApps(UniversalParams universalParams);
+
+        Task<bool> CheckIfSaved(int gameId);
     }
 }

@@ -7,6 +7,6 @@ namespace API.DTOs.Lobbies
 {
     public class LogDto
     {
-        
+        public ICollection<MessageDto> Messages { get; set; }
     }
 }

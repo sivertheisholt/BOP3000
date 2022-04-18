@@ -84,7 +84,7 @@ namespace API.SignalR
 
         public Task<int> GetLobbyIdFromUser(int uid)
         {
-            return Task.FromResult(MemberTracker.Where(member => member.Key == uid).FirstOrDefault().Value);
+            return Task.FromResult(MemberTracker.FirstOrDefault(member => member.Key == uid).Value);
         }
         public Task<bool> CheckIfChatExists(int lobbyId)
         {

@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using API.Data;
 using API.Entities.Users;
+using API.Interfaces;
 using API.Interfaces.IClients;
-using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -15,22 +10,16 @@ namespace API.Controllers
 {
     public class TestController : BaseApiController
     {
-        private readonly ISteamAppRepository _steamAppRepository;
-        private readonly ISteamAppsRepository _steamAppsRepository;
         private readonly ISteamStoreClient _steamStoreClient;
         private readonly ISteamAppsClient _steamAppsClient;
-        private readonly ILobbiesRepository _lobbiesRepository;
         private readonly IMeilisearchService _meilisearchService;
-        private readonly IUserRepository _userRepository;
-        public TestController(IMapper mapper, ISteamAppRepository steamAppRepository, ISteamAppsRepository steamAppsRepository, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, ILobbiesRepository lobbiesRepository, IMeilisearchService meilisearchService, IUserRepository userRepository) : base(mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public TestController(IMapper mapper, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, IMeilisearchService meilisearchService, IUnitOfWork unitOfWork) : base(mapper)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _meilisearchService = meilisearchService;
-            _lobbiesRepository = lobbiesRepository;
             _steamAppsClient = steamAppsClient;
             _steamStoreClient = steamStoreClient;
-            _steamAppsRepository = steamAppsRepository;
-            _steamAppRepository = steamAppRepository;
         }
 
         [Authorize(Policy = "RequireMemberRole")]
@@ -39,7 +28,7 @@ namespace API.Controllers
         {
             var createTask = _meilisearchService.CreateIndexAsync("members");
 
-            var users = Mapper.Map<List<AppUserMeili>>(await _userRepository.GetUsersMeiliAsync());
+            var users = Mapper.Map<List<AppUserMeili>>(await _unitOfWork.userRepository.GetUsersMeiliAsync());
 
             var cont = createTask.ContinueWith(task =>
             {
@@ -62,7 +51,7 @@ namespace API.Controllers
         [HttpGet("seed_index")]
         public async Task<ActionResult> SeedIndex()
         {
-            var apps = await _steamAppsRepository.GetAppsList(1);
+            var apps = await _unitOfWork.steamAppsRepository.GetAppsList(1);
 
             var appsArray = apps.Apps.ToArray();
 

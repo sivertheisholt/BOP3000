@@ -2,6 +2,7 @@ using API.Clients;
 using API.Data;
 using API.Data.Repositories;
 using API.Helpers;
+using API.Interfaces;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
@@ -32,13 +33,7 @@ namespace API.Extentions
             services.AddSingleton<IEmailService, EmailService>();
             services.AddSingleton<IMeilisearchService, MeilisearchService>();
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ILobbiesRepository, LobbiesRepository>();
-            services.AddScoped<ISteamAppRepository, SteamAppRepository>();
-            services.AddScoped<ISteamAppsRepository, SteamAppsRepository>();
-            services.AddScoped<ICountryRepository, CountryRepository>();
-            services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
-            services.AddScoped<IActivityRepository, ActivityRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSingleton<IDiscordBotService, DiscordBotService>();
 

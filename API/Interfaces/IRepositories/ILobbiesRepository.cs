@@ -1,5 +1,7 @@
 using API.Entities.Lobbies;
 using API.Entities.SteamApp;
+using API.Helpers;
+using API.Helpers.PaginationsParams;
 
 namespace API.Interfaces.IRepositories
 {
@@ -9,13 +11,13 @@ namespace API.Interfaces.IRepositories
 
         Task<Lobby> GetLobbyAsync(int id);
 
-        Task<List<Lobby>> GetLobbiesAsync();
+        Task<PagedList<Lobby>> GetLobbiesAsync(UniversalParams universalParams);
 
-        Task<List<Lobby>> GetLobbiesWithGameId(int id);
+        Task<PagedList<Lobby>> GetLobbiesWithGameId(int id, UniversalParams universalParams);
 
-        Task<int> CountLobbiesWithGameId(int id);
+        Task<int> CountActiveLobbiesWithGameId(int id);
 
-        Task<List<Lobby>> GetActiveLobbies();
+        Task<PagedList<Lobby>> GetActiveLobbies(UniversalParams universalParams);
 
     }
 }

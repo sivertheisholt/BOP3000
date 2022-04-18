@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Entities.Lobbies;
 using API.Extentions;
+using API.Interfaces;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using Microsoft.AspNetCore.SignalR;
@@ -13,19 +14,16 @@ namespace API.SignalR
     public class LobbyHub : Hub
     {
         private readonly LobbyTracker _lobbyTracker;
-        private readonly ILobbiesRepository _lobbiesRepository;
         private readonly IDiscordBotService _discordBotService;
         private static readonly Dictionary<int, CancellationTokenSource> LobbyStartingTask = new Dictionary<int, CancellationTokenSource>();
-        private readonly IUserRepository _userRepository;
-
         private readonly LobbyChatTracker _lobbyChatTracker;
-        public LobbyHub(LobbyTracker lobbyTracker, ILobbiesRepository lobbiesRepository, IDiscordBotService discordService, IUserRepository userRepository, LobbyChatTracker lobbyChatTracker)
+        private readonly IUnitOfWork _unitOfWork;
+        public LobbyHub(LobbyTracker lobbyTracker, IDiscordBotService discordService, LobbyChatTracker lobbyChatTracker, IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
-            _lobbiesRepository = lobbiesRepository;
             _discordBotService = discordService;
             _lobbyTracker = lobbyTracker;
             _lobbyChatTracker = lobbyChatTracker;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task CreateLobbyTest(Lobby lobby, int uid)
@@ -99,9 +97,9 @@ namespace API.SignalR
 
             if (await _lobbyTracker.CheckIfMemberIsBanned(lobbyId, uid)) return;
 
-            if (!await _userRepository.CheckIfDiscordConnected(uid)) return;
+            if (!await _unitOfWork.userRepository.CheckIfDiscordConnected(uid)) return;
 
-            var discordId = await _userRepository.GetUserDiscordIdFromUid(uid);
+            var discordId = await _unitOfWork.userRepository.GetUserDiscordIdFromUid(uid);
 
             if (!await _discordBotService.CheckIfUserInServer(discordId)) return;
 
@@ -243,23 +241,23 @@ namespace API.SignalR
             var discordIds = new List<ulong>();
             foreach (var userId in await _lobbyTracker.GetMembersInLobby(lobbyId))
             {
-                discordIds.Add(await _userRepository.GetUserDiscordIdFromUid(userId));
+                discordIds.Add(await _unitOfWork.userRepository.GetUserDiscordIdFromUid(userId));
             }
 
-            var adminName = await _userRepository.GetUsernameFromId(await _lobbyTracker.GetLobbyAdmin(lobbyId));
+            var adminName = await _unitOfWork.userRepository.GetUsernameFromId(await _lobbyTracker.GetLobbyAdmin(lobbyId));
             var channelName = $"{adminName}'s lobby";
             var invitelink = await _discordBotService.CreateVoiceChannelForLobby(discordIds.ToArray(), channelName);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted", invitelink);
         }
         private async Task FinishLobby(int lobbyId)
         {
-            var lobby = await _lobbiesRepository.GetLobbyAsync(lobbyId);
+            var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(lobbyId);
             lobby.Finished = true;
             lobby.Users = await _lobbyTracker.GetMembersInLobby(lobbyId);
             lobby.FinishedDate = DateTime.Now;
             lobby.Log = new Log
             {
-                messages = await _lobbyChatTracker.GetMessages(lobbyId)
+                Messages = await _lobbyChatTracker.GetMessages(lobbyId)
             };
 
             await _lobbyTracker.FinishLobby(lobbyId);
@@ -268,8 +266,8 @@ namespace API.SignalR
             await finishTask;
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("RedirectFinished");
 
-            _lobbiesRepository.Update(lobby);
-            await _lobbiesRepository.SaveAllAsync();
+            _unitOfWork.lobbiesRepository.Update(lobby);
+            await _unitOfWork.Complete();
 
             await _lobbyChatTracker.LobbyChatDone(lobbyId);
         }

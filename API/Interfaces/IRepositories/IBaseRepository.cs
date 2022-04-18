@@ -7,7 +7,6 @@ namespace API.Interfaces.IRepositories
 {
     public interface IBaseRepository<T> where T : class
     {
-        Task<bool> SaveAllAsync();
         void Update(T entity);
 
         void Delete(T entity);

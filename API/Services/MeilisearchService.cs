@@ -46,7 +46,7 @@ namespace API.Services
 
         public Meilisearch.Index GetIndex(string indexName)
         {
-            var index = Indexes.Where(index => index.Key == indexName).FirstOrDefault().Value;
+            var index = Indexes.FirstOrDefault(index => index.Key == indexName).Value;
             return index;
         }
 

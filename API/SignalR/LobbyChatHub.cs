@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.DTOs.Lobbies;
 using API.Entities.Lobbies;
 using API.Extentions;
+using API.Interfaces;
 using API.Interfaces.IRepositories;
 using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
@@ -15,10 +16,10 @@ namespace API.SignalR
     {
         private readonly LobbyChatTracker _lobbyChatTracker;
         private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
-        public LobbyChatHub(LobbyChatTracker lobbyChatTracker, IMapper mapper, IUserRepository userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public LobbyChatHub(LobbyChatTracker lobbyChatTracker, IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _lobbyChatTracker = lobbyChatTracker;
         }
@@ -61,7 +62,7 @@ namespace API.SignalR
         {
             var httpContext = Context.GetHttpContext();
             var uid = Context.User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(uid);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(uid);
 
             var Chatmessage = new Message
             {

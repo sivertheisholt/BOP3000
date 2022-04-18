@@ -19,9 +19,9 @@ namespace API.Data.Repositories
             Context.AppList.Add(appList);
         }
 
-        public Task<List<AppList>> GetAllAppsList()
+        public async Task<List<AppList>> GetAllAppsList()
         {
-            return Context.AppList.ToListAsync();
+            return await Context.AppList.ToListAsync();
         }
 
         public async Task<AppList> GetAppsInfoAsync(int id)
@@ -31,9 +31,8 @@ namespace API.Data.Repositories
 
         public async Task<AppList> GetAppsList(int id)
         {
-            return await Context.AppList.Where(app => app.Id == id)
-                .Include(app => app.Apps)
-                .FirstOrDefaultAsync();
+            return await Context.AppList.Include(app => app.Apps)
+                .FirstOrDefaultAsync(app => app.Id == id);
         }
     }
 }

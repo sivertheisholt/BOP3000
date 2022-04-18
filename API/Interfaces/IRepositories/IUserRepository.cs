@@ -1,11 +1,12 @@
 using API.Entities.Applications;
 using API.Entities.Users;
+using API.Helpers;
+using API.Helpers.PaginationsParams;
 
 namespace API.Interfaces.IRepositories
 {
     public interface IUserRepository : IBaseRepository<AppUser>
     {
-        Task<IEnumerable<AppUser>> GetUsersAsync();
         Task<IEnumerable<AppUser>> GetUsersMeiliAsync();
         Task<AppUser> GetUserByUsernameAsync(string username);
         Task<AppUser> GetUserByIdAsync(int id);
@@ -30,7 +31,7 @@ namespace API.Interfaces.IRepositories
 
         Task<AppUserConnections> GetUserConnectionsFromUid(int id);
 
-        Task<List<AppUser>> GetAllUsers();
+        Task<PagedList<AppUser>> GetAllUsers(MemberParams memberParams);
 
         Task<bool> CheckIfDiscordConnected(int id);
 

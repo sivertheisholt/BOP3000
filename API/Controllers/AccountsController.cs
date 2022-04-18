@@ -1,13 +1,11 @@
-using System;
-using System.Net;
 using API.DTOs;
 using API.DTOs.Accounts;
 using API.Entities.Applications;
 using API.Entities.Users;
 using API.Enums;
 using API.Extentions;
+using API.Interfaces;
 using API.Interfaces.IClients;
-using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
@@ -24,7 +22,6 @@ namespace API.Controllers
     public class AccountsController : BaseApiController
     {
         private readonly ITokenService _tokenService;
-        private readonly IUserRepository _userRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
@@ -34,18 +31,17 @@ namespace API.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="tokenService"></param>
-        private readonly ICountryRepository _countryRepository;
         private readonly IDiscordApiClient _discordApiClient;
         private readonly IEmailService _emailService;
-        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository, ICountryRepository countryRepository, IDiscordApiClient discordApiClient, IEmailService emailService) : base(mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IDiscordApiClient discordApiClient, IEmailService emailService, IUnitOfWork unitOfWork) : base(mapper)
         {
+            _unitOfWork = unitOfWork;
             _emailService = emailService;
             _discordApiClient = discordApiClient;
-            _countryRepository = countryRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _tokenService = tokenService;
-            _userRepository = userRepository;
         }
 
 
@@ -71,12 +67,27 @@ namespace API.Controllers
                 Email = registerDto.Email.ToLower(),
                 AppUserProfile = new AppUserProfile
                 {
-                    CountryIso = await _countryRepository.GetCountryIsoByIdAsync(registerDto.CountryId),
+                    CountryIso = await _unitOfWork.countryRepository.GetCountryIsoByIdAsync(registerDto.CountryId),
                     Gender = registerDto.Gender,
                     AppUserData = new AppUserData
                     {
-
-                    }
+                        Followers = new List<int>(),
+                        Following = new List<int>(),
+                        FinishedLobbies = new List<int>(),
+                        UserFavoriteGames = new List<int>(),
+                    },
+                    AppUserPhoto = new AppUserPhoto
+                    {
+                        Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+                    },
+                    UserConnections = new AppUserConnections
+                    {
+                        Discord = new DiscordProfile { },
+                        Steam = new SteamProfile { },
+                        DiscordConnected = false,
+                        SteamConnected = false,
+                    },
+                    BlockedUsers = new List<int>()
                 }
             };
 
@@ -109,7 +120,7 @@ namespace API.Controllers
         {
             // Gets the user by email from the database
             //var user = await _userManager.Users.SingleOrDefaultAsync(x => x.Email == loginDto.Email.ToLower());
-            var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
+            var user = await _unitOfWork.userRepository.GetUserByEmailAsync(loginDto.Email);
 
             // Checks if user exists
             if (user == null) return Unauthorized("Invalid email");
@@ -174,14 +185,14 @@ namespace API.Controllers
 
             var uid = GetUserIdFromClaim();
 
-            var user = await _userRepository.GetUserByIdAsync(uid);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(uid);
 
             if (user == null) return NotFound();
             if (user.AppUserProfile.UserConnections.SteamConnected) return BadRequest("Steam account already connected");
-            if (await _userRepository.CheckIfSteamAccountExists(Int64.Parse(steamId))) return BadRequest("Steam account already connected to another user");
+            if (await _unitOfWork.userRepository.CheckIfSteamAccountExists(Int64.Parse(steamId))) return BadRequest("Steam account already connected to another user");
 
-            _userRepository.AddSteamId(user, Int64.Parse(steamId));
-            await _userRepository.SaveAllAsync();
+            _unitOfWork.userRepository.AddSteamId(user, Int64.Parse(steamId));
+            await _unitOfWork.Complete();
 
             return Ok();
         }
@@ -198,7 +209,7 @@ namespace API.Controllers
 
             var uid = GetUserIdFromClaim();
 
-            var user = await _userRepository.GetUserByIdAsync(uid);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(uid);
 
             if (user == null) return NotFound();
 
@@ -206,7 +217,7 @@ namespace API.Controllers
 
             var userObject = await _discordApiClient.GetUserObjectFromToken(access_token);
 
-            if (await _userRepository.CheckIfDiscordAccountExists(ulong.Parse(userObject.Id))) return BadRequest("Discord account already connected to another user");
+            if (await _unitOfWork.userRepository.CheckIfDiscordAccountExists(ulong.Parse(userObject.Id))) return BadRequest("Discord account already connected to another user");
 
             var discord = new DiscordProfile
             {
@@ -218,8 +229,8 @@ namespace API.Controllers
                 Expires = DateTime.Parse(token_expires)
             };
 
-            _userRepository.AddDiscord(user, discord);
-            await _userRepository.SaveAllAsync();
+            _unitOfWork.userRepository.AddDiscord(user, discord);
+            await _unitOfWork.Complete();
 
             return Ok();
         }
@@ -233,7 +244,7 @@ namespace API.Controllers
         public async Task<ActionResult> Delete()
         {
             var userId = GetUserIdFromClaim();
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
 
             if (user == null) return NotFound();
 
@@ -251,7 +262,7 @@ namespace API.Controllers
         [HttpPost("forgotten_password")]
         public async Task<ActionResult> ForgottenPassword(ForgottenPasswordDto forgottenPasswordDto)
         {
-            var user = await _userRepository.GetUserByEmailAsync(forgottenPasswordDto.Email);
+            var user = await _unitOfWork.userRepository.GetUserByEmailAsync(forgottenPasswordDto.Email);
 
             if (user == null) return NotFound();
 
@@ -272,7 +283,7 @@ namespace API.Controllers
         public async Task<ActionResult> ChangeForgottenPassword(ChangeForgottenPasswordDto changeForgottenPasswordDto, string token)
         {
             //Get user
-            var user = await _userRepository.GetUserByEmailAsync(changeForgottenPasswordDto.Email);
+            var user = await _unitOfWork.userRepository.GetUserByEmailAsync(changeForgottenPasswordDto.Email);
 
             if (user == null) return NotFound();
 
@@ -294,7 +305,7 @@ namespace API.Controllers
         public async Task<ActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
         {
             var userId = GetUserIdFromClaim();
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
 
             var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
             if (!result.Succeeded) BadRequest(result.Errors);

@@ -1,19 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Entities.Activities;
-using API.Entities.Countries;
 using API.Entities.Lobbies;
 using API.Entities.Roles;
 using API.Entities.SteamApps;
 using API.Entities.Users;
 using API.Enums;
+using API.Helpers.PaginationsParams;
+using API.Interfaces;
 using API.Interfaces.IClients;
-using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
 using AutoMapper;
-using ISO3166;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -22,46 +17,34 @@ namespace API.Controllers
 {
     public class SeedController : BaseApiController
     {
-        private readonly IUserRepository _userRespository;
-        private readonly ILobbiesRepository _lobbiesRepository;
-        private readonly ICountryRepository _countryRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
-        private readonly ISteamAppRepository _steamAppRepository;
         private readonly IMeilisearchService _meilisearchService;
-        private readonly IActivitiesRepository _activitiesRepository;
-        private readonly IActivityRepository _activityRepository;
-        private readonly ISteamAppsRepository _steamAppsRepository;
         private readonly ISteamStoreClient _steamStoreClient;
         private readonly ISteamAppsClient _steamAppsClient;
-        public SeedController(IMapper mapper, IUserRepository userRespository, ILobbiesRepository lobbiesRepository, ICountryRepository countryRepository, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ISteamAppRepository steamAppRepository, IMeilisearchService meilisearchService, IActivitiesRepository activitiesRepository, IActivityRepository activityRepository, ISteamAppsRepository steamAppsRepository, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient) : base(mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public SeedController(IMapper mapper, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMeilisearchService meilisearchService, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, IUnitOfWork unitOfWork) : base(mapper)
         {
+            _unitOfWork = unitOfWork;
             _steamAppsClient = steamAppsClient;
             _steamStoreClient = steamStoreClient;
-            _steamAppsRepository = steamAppsRepository;
-            _activityRepository = activityRepository;
-            _activitiesRepository = activitiesRepository;
             _meilisearchService = meilisearchService;
-            _steamAppRepository = steamAppRepository;
             _roleManager = roleManager;
             _userManager = userManager;
-            _countryRepository = countryRepository;
-            _lobbiesRepository = lobbiesRepository;
-            _userRespository = userRespository;
         }
 
         [HttpPatch("seed_users")]
-        public async Task<ActionResult> SeedUsers()
+        public async Task<ActionResult> SeedUsers([FromQuery] MemberParams memberParams)
         {
-            var currentUsers = await _userRespository.GetAllUsers();
+            var currentUsers = await _unitOfWork.userRepository.GetAllUsers(memberParams);
             foreach (var user in currentUsers)
             {
-                _userRespository.Delete(user);
+                _unitOfWork.userRepository.Delete(user);
             }
 
-            await _userRespository.resetId("AspNetUsers");
+            await _unitOfWork.userRepository.resetId("AspNetUsers");
 
-            await _userRespository.SaveAllAsync();
+            await _unitOfWork.Complete();
 
             using (StreamReader r = new StreamReader("Data/SeedData/Users.json"))
             {
@@ -70,7 +53,7 @@ namespace API.Controllers
                 Random rnd = new Random();
                 foreach (var user in users)
                 {
-                    user.AppUserProfile.CountryIso = await _countryRepository.GetCountryIsoByIdAsync(rnd.Next(1, 50));
+                    user.AppUserProfile.CountryIso = await _unitOfWork.countryRepository.GetCountryIsoByIdAsync(rnd.Next(1, 50));
 
                     if (user.UserName == "Playfu1")
                     {
@@ -85,12 +68,12 @@ namespace API.Controllers
                 }
             }
 
-            await _userRespository.SaveAllAsync();
+            await _unitOfWork.Complete();
 
             //Seed to search
             var createTask = _meilisearchService.CreateIndexAsync("members");
 
-            var usersMeili = Mapper.Map<List<AppUserMeili>>(await _userRespository.GetUsersMeiliAsync());
+            var usersMeili = Mapper.Map<List<AppUserMeili>>(await _unitOfWork.userRepository.GetUsersMeiliAsync());
 
             var cont = createTask.ContinueWith(task =>
             {
@@ -113,15 +96,15 @@ namespace API.Controllers
         [HttpPatch("seed_lobbies")]
         public async Task<ActionResult> SeedLobbies()
         {
-            var currentLobbies = await _lobbiesRepository.GetLobbiesAsync();
+            var currentLobbies = await _unitOfWork.lobbiesRepository.GetLobbiesAsync(new UniversalParams { });
             foreach (var lobby in currentLobbies)
             {
-                _lobbiesRepository.Delete(lobby);
+                _unitOfWork.lobbiesRepository.Delete(lobby);
             }
 
-            await _lobbiesRepository.resetId("Lobby");
+            await _unitOfWork.lobbiesRepository.resetId("Lobby");
 
-            await _lobbiesRepository.SaveAllAsync();
+            await _unitOfWork.Complete();
 
             using (StreamReader r = new StreamReader("Data/SeedData/Lobbies.json"))
             {
@@ -129,8 +112,8 @@ namespace API.Controllers
                 List<Lobby> lobbies = JsonConvert.DeserializeObject<List<Lobby>>(json);
                 foreach (var lobby in lobbies)
                 {
-                    lobby.GameName = (await _steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
-                    _lobbiesRepository.AddLobby(lobby);
+                    lobby.GameName = (await _unitOfWork.steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
+                    _unitOfWork.lobbiesRepository.AddLobby(lobby);
                 }
             }
 
@@ -140,12 +123,12 @@ namespace API.Controllers
                 List<Lobby> lobbies = JsonConvert.DeserializeObject<List<Lobby>>(json);
                 foreach (var lobby in lobbies)
                 {
-                    lobby.GameName = (await _steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
-                    _lobbiesRepository.AddLobby(lobby);
+                    lobby.GameName = (await _unitOfWork.steamAppRepository.GetAppInfoAsync(lobby.GameId)).Data.Name;
+                    _unitOfWork.lobbiesRepository.AddLobby(lobby);
                 }
             }
 
-            await _lobbiesRepository.SaveAllAsync();
+            await _unitOfWork.Complete();
 
             return NoContent();
         }
@@ -153,23 +136,23 @@ namespace API.Controllers
         [HttpPatch("seed_activities")]
         public async Task<ActionResult> SeedActivities()
         {
-            var CurrentActivities = await _activityRepository.GetActivities();
+            var CurrentActivities = await _unitOfWork.activityRepository.GetActivities();
             foreach (var activity in CurrentActivities)
             {
-                _activityRepository.Delete(activity);
+                _unitOfWork.activityRepository.Delete(activity);
             }
 
-            var currentActivityLogs = await _activitiesRepository.GetActivities();
+            var currentActivityLogs = await _unitOfWork.activitiesRepository.GetActivities();
             foreach (var activityLog in currentActivityLogs)
             {
-                _activitiesRepository.Delete(activityLog);
+                _unitOfWork.activitiesRepository.Delete(activityLog);
             }
 
-            await _activityRepository.SaveAllAsync();
-            await _activitiesRepository.SaveAllAsync();
+            await _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
-            await _activityRepository.resetId("Activity");
-            await _activitiesRepository.resetId("ActivityLog");
+            await _unitOfWork.activityRepository.resetId("Activity");
+            await _unitOfWork.activitiesRepository.resetId("ActivityLog");
 
             using (StreamReader r = new StreamReader("Data/SeedData/Activities.json"))
             {
@@ -177,7 +160,7 @@ namespace API.Controllers
                 List<Activity> activities = JsonConvert.DeserializeObject<List<Activity>>(json);
                 foreach (var activity in activities)
                 {
-                    _activityRepository.AddActivity(activity);
+                    _unitOfWork.activityRepository.AddActivity(activity);
                 }
             }
             using (StreamReader r = new StreamReader("Data/SeedData/ActivityLogs.json"))
@@ -186,12 +169,12 @@ namespace API.Controllers
                 List<ActivityLog> activityLogs = JsonConvert.DeserializeObject<List<ActivityLog>>(json);
                 foreach (var activityLog in activityLogs)
                 {
-                    _activitiesRepository.AddActivityLog(activityLog);
+                    _unitOfWork.activitiesRepository.AddActivityLog(activityLog);
                 }
             }
 
-            await _activityRepository.SaveAllAsync();
-            await _activitiesRepository.SaveAllAsync();
+            await _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             return NoContent();
         }
@@ -201,29 +184,29 @@ namespace API.Controllers
             var max = 10;
             var counter = 0;
 
-            var currentApps = await _steamAppRepository.GetAllApps();
+            var currentApps = await _unitOfWork.steamAppRepository.GetAllApps(new UniversalParams { });
 
             foreach (var app in currentApps)
             {
-                _steamAppRepository.Delete(app);
+                _unitOfWork.steamAppRepository.Delete(app);
             }
 
-            await _steamAppRepository.SaveAllAsync();
-            await _steamAppRepository.resetId("AppInfo");
+            await _unitOfWork.Complete();
+            await _unitOfWork.steamAppRepository.resetId("AppInfo");
 
-            var currentAppsList = await _steamAppsRepository.GetAllAppsList();
+            var currentAppsList = await _unitOfWork.steamAppsRepository.GetAllAppsList();
 
             foreach (var appsList in currentAppsList)
             {
-                _steamAppsRepository.Delete(appsList);
+                _unitOfWork.steamAppsRepository.Delete(appsList);
             }
 
-            await _steamAppsRepository.SaveAllAsync();
-            await _steamAppsRepository.resetId("AppList");
+            await _unitOfWork.Complete();
+            await _unitOfWork.steamAppsRepository.resetId("AppList");
 
             var apps = await _steamAppsClient.GetAppsList();
 
-            _steamAppsRepository.AddAppsList(apps);
+            _unitOfWork.steamAppsRepository.AddAppsList(apps);
 
             foreach (AppListInfo app in apps.Apps)
             {
@@ -232,7 +215,7 @@ namespace API.Controllers
                 var gameResult = await _steamStoreClient.GetAppInfo(app.AppId);
                 if (!gameResult.Success) continue;
 
-                _steamAppRepository.AddApp(gameResult);
+                _unitOfWork.steamAppRepository.AddApp(gameResult);
 
                 counter++;
             }
@@ -242,11 +225,11 @@ namespace API.Controllers
             foreach (var app in appsCustom)
             {
                 var appResult = await _steamStoreClient.GetAppInfo(app);
-                _steamAppRepository.AddApp(appResult);
+                _unitOfWork.steamAppRepository.AddApp(appResult);
             }
 
-            await _steamAppRepository.SaveAllAsync();
-            await _steamAppsRepository.SaveAllAsync();
+            await _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             //Seed to search
             var createTask = _meilisearchService.CreateIndexAsync("apps");

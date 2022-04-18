@@ -1,4 +1,6 @@
 using API.Entities.Lobbies;
+using API.Helpers;
+using API.Helpers.PaginationsParams;
 using API.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,34 +17,39 @@ namespace API.Data.Repositories
             Context.Lobby.Add(lobby);
         }
 
-        public Task<int> CountLobbiesWithGameId(int id)
+        public async Task<int> CountActiveLobbiesWithGameId(int id)
         {
-            return Task.FromResult(Context.Lobby.Where(o => o.GameId == id).Count());
+            return await Context.Lobby.Where(o => o.GameId == id)
+                .Where(o => !o.Finished)
+                .CountAsync();
         }
 
-        public async Task<List<Lobby>> GetActiveLobbies()
+        public async Task<PagedList<Lobby>> GetActiveLobbies(UniversalParams universalParams)
         {
-            return await Context.Lobby.Where(x => !x.Finished).ToListAsync();
+            var query = Context.Lobby.Where(x => !x.Finished)
+                .AsNoTracking();
+            return await PagedList<Lobby>.CreateAsync(query, universalParams.PageNumber, universalParams.PageSize);
         }
 
-        public Task<List<Lobby>> GetLobbiesAsync()
+        public async Task<PagedList<Lobby>> GetLobbiesAsync(UniversalParams universalParams)
         {
-            //var query = Context.Lobby.Where(x => x.GameType == "Casual").OrderBy(X => X.Id).Take(5).Skip(5).AsQueryable();
-            return Task.FromResult(Context.Lobby.ToList());
+            var query = Context.Lobby.AsNoTracking();
+            return await PagedList<Lobby>.CreateAsync(query, universalParams.PageNumber, universalParams.PageSize);
         }
 
-        public Task<List<Lobby>> GetLobbiesWithGameId(int id)
+        public async Task<PagedList<Lobby>> GetLobbiesWithGameId(int id, UniversalParams universalParams)
         {
-            var lobbies = Context.Lobby.Where(lobby => lobby.GameId == id)
-            .Include(lobby => lobby.LobbyRequirement)
-            .ToList();
-            return Task.FromResult(lobbies);
+            var query = Context.Lobby.Where(lobby => lobby.GameId == id)
+            .Include(lobby => lobby.LobbyRequirement);
+            return await PagedList<Lobby>.CreateAsync(query, universalParams.PageNumber, universalParams.PageSize);
         }
 
         public async Task<Lobby> GetLobbyAsync(int id)
         {
-            return await Context.Lobby.Where(lobby => lobby.Id == id)
-                .Include(lobby => lobby.Votes).FirstOrDefaultAsync();
+            return await Context.Lobby.Include(lobby => lobby.Votes)
+                .Include(lobby => lobby.Log)
+                .ThenInclude(log => log.Messages)
+                .FirstOrDefaultAsync(lobby => lobby.Id == id);
         }
     }
 }

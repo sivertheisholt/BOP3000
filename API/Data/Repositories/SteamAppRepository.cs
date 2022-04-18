@@ -1,6 +1,8 @@
 using API.Entities.Lobbies;
 using API.Entities.SteamApp;
 using API.Entities.SteamApp.Information;
+using API.Helpers;
+using API.Helpers.PaginationsParams;
 using API.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +18,8 @@ namespace API.Data.Repositories
 
         public async Task<AppInfo> GetAppInfoAsync(int id)
         {
-            return await Context.AppInfo.Where(app => app.Id == id).Include(test => test.Data).FirstOrDefaultAsync();
+            return await Context.AppInfo.Include(test => test.Data)
+                .FirstOrDefaultAsync(app => app.Id == id);
         }
 
         public void AddApp(AppInfo appInfo)
@@ -24,17 +27,30 @@ namespace API.Data.Repositories
             Context.AppInfo.Add(appInfo);
         }
 
-        public Task<List<AppData>> GetActiveApps()
+        public async Task<PagedList<AppData>> GetActiveApps(UniversalParams universalParams)
         {
-            var queryLobby = Context.Lobby.Where(lobby => !lobby.Finished).Select(u => u.GameId).Distinct().AsQueryable();
+            var queryLobby = Context.Lobby.Where(lobby => !lobby.Finished)
+                .Select(u => u.GameId)
+                .Distinct()
+                .AsQueryable();
 
-            var apps = Context.AppInfo.Where(app => queryLobby.Contains(app.Data.Id)).Select(app => app.Data).ToList();
-            return Task.FromResult(apps);
+            var query = Context.AppInfo.Where(app => queryLobby.Contains(app.Data.Id))
+                .Select(app => app.Data)
+                .AsNoTracking();
+
+            return await PagedList<AppData>.CreateAsync(query, universalParams.PageNumber, universalParams.PageSize);
         }
 
-        public Task<List<AppInfo>> GetAllApps()
+        public async Task<PagedList<AppInfo>> GetAllApps(UniversalParams universalParams)
         {
-            return Context.AppInfo.ToListAsync();
+            var query = Context.AppInfo;
+
+            return await PagedList<AppInfo>.CreateAsync(query, universalParams.PageNumber, universalParams.PageSize);
+        }
+
+        public async Task<bool> CheckIfSaved(int gameId)
+        {
+            return await Context.AppInfo.Where(x => x.Data.SteamAppid == gameId).AnyAsync();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Entities.Countries;
 using API.Interfaces.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
@@ -20,7 +21,7 @@ namespace API.Data.Repositories
 
         public async Task<ICollection<CountryIso>> GetAllCountriesAsync()
         {
-            return await Task.FromResult(Context.CountryIso.ToList());
+            return await Context.CountryIso.ToListAsync();
         }
 
         public async Task<CountryIso> GetCountryIsoByIdAsync(int id)

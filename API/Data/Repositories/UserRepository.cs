@@ -1,5 +1,7 @@
 using API.Entities.Applications;
 using API.Entities.Users;
+using API.Helpers;
+using API.Helpers.PaginationsParams;
 using API.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,10 +27,10 @@ namespace API.Data.Repositories
 
         public async Task<bool> CheckIfDiscordAccountExists(ulong discordId)
         {
-            return await Context.Users.Include(x => x.AppUserProfile)
+            return await Context.Users.Where(x => x.AppUserProfile.UserConnections.Discord.DiscordId == discordId)
+                .Include(x => x.AppUserProfile)
                 .ThenInclude(x => x.UserConnections)
                 .ThenInclude(x => x.Discord)
-                .Where(x => x.AppUserProfile.UserConnections.Discord.DiscordId == discordId)
                 .AnyAsync();
         }
 
@@ -55,9 +57,16 @@ namespace API.Data.Repositories
             return await Context.Users.AnyAsync(x => x.Id == id);
         }
 
-        public async Task<List<AppUser>> GetAllUsers()
+        public async Task<PagedList<AppUser>> GetAllUsers(MemberParams memberParams)
         {
-            return await Context.Users.ToListAsync();
+
+            var query = Context.Users
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.AppUserData)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.CountryIso)
+                .AsNoTracking();
+            return await PagedList<AppUser>.CreateAsync(query, memberParams.PageNumber, memberParams.PageSize);
         }
 
         public async Task<AppUser> GetUserByEmailAsync(string email)
@@ -67,7 +76,7 @@ namespace API.Data.Repositories
 
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
-            var user = await Context.Users.Where(p => p.Id == id)
+            return await Context.Users.Where(p => p.Id == id)
                 .Include(p => p.AppUserProfile)
                 .ThenInclude(p => p.AppUserData)
                 .Include(p => p.AppUserProfile)
@@ -81,8 +90,6 @@ namespace API.Data.Repositories
                 .ThenInclude(p => p.UserConnections)
                 .ThenInclude(p => p.Discord)
                 .FirstOrDefaultAsync();
-
-            return user;
         }
 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
@@ -105,47 +112,38 @@ namespace API.Data.Repositories
 
         public async Task<string> GetUserDiscordAccessToken(int id)
         {
-            var token = await Context.Users.Where(p => p.Id == id)
-            .Include(p => p.AppUserProfile)
-            .ThenInclude(p => p.UserConnections)
-            .ThenInclude(p => p.Discord)
-            .Select(p => p.AppUserProfile.UserConnections.Discord.AccessToken)
-            .FirstOrDefaultAsync();
-            return token;
+            return await Context.Users.Where(p => p.Id == id)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.UserConnections)
+                .ThenInclude(p => p.Discord)
+                .Select(p => p.AppUserProfile.UserConnections.Discord.AccessToken)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<ulong> GetUserDiscordIdFromUid(int id)
         {
-            var discordId = await Context.Users.Where(p => p.Id == id)
-            .Include(p => p.AppUserProfile)
-            .ThenInclude(p => p.UserConnections)
-            .ThenInclude(p => p.Discord)
-            .Select(p => p.AppUserProfile.UserConnections.Discord.DiscordId)
-            .FirstOrDefaultAsync();
-            return discordId;
+            return await Context.Users.Where(p => p.Id == id)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.UserConnections)
+                .ThenInclude(p => p.Discord)
+                .Select(p => p.AppUserProfile.UserConnections.Discord.DiscordId)
+                .FirstOrDefaultAsync();
         }
 
-        public Task<ICollection<int>> GetUserFollowers(int id)
+        public async Task<ICollection<int>> GetUserFollowers(int id)
         {
-            return Task.FromResult(Context.Users.Where(user => user.Id == id)
-                    .Include(user => user.AppUserProfile)
-                    .ThenInclude(user => user.AppUserData)
-                    .Select(x => x.AppUserProfile.AppUserData.Followers).FirstOrDefault());
+            return await Context.Users.Where(user => user.Id == id)
+                .Include(user => user.AppUserProfile)
+                .ThenInclude(user => user.AppUserData)
+                .Select(x => x.AppUserProfile.AppUserData.Followers)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<string> GetUsernameFromId(int id)
         {
-            return await Context.Users.Where(x => x.Id == id).Select(x => x.UserName).FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<AppUser>> GetUsersAsync()
-        {
-            return await Context.Users
-                .Include(p => p.AppUserProfile)
-                .ThenInclude(p => p.AppUserData)
-                .Include(p => p.AppUserProfile)
-                .ThenInclude(p => p.CountryIso)
-                .ToListAsync();
+            return await Context.Users.Where(x => x.Id == id)
+                .Select(x => x.UserName)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersMeiliAsync()
@@ -155,13 +153,12 @@ namespace API.Data.Repositories
 
         public async Task<long> GetUserSteamIdFromUid(int id)
         {
-            var steamId = await Context.Users.Where(p => p.Id == id)
-            .Include(p => p.AppUserProfile)
-            .ThenInclude(p => p.UserConnections)
-            .ThenInclude(p => p.Steam)
-            .Select(p => p.AppUserProfile.UserConnections.Steam.SteamId)
-            .FirstOrDefaultAsync();
-            return steamId;
+            return await Context.Users.Where(p => p.Id == id)
+                .Include(p => p.AppUserProfile)
+                .ThenInclude(p => p.UserConnections)
+                .ThenInclude(p => p.Steam)
+                .Select(p => p.AppUserProfile.UserConnections.Steam.SteamId)
+                .FirstOrDefaultAsync();
         }
 
         public void UpdateUsername(AppUser user, string username)

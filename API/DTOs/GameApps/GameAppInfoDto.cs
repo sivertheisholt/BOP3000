@@ -12,5 +12,6 @@ namespace API.DTOs.GameApps
         public string HeaderImage { get; set; }
         public string Background { get; set; }
         public int ActiveLobbies { get; set; }
+        public int SteamAppid { get; set; }
     }
 }

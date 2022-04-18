@@ -98,7 +98,7 @@ namespace API.SignalR
 
             if (Lobby[lobbyId].AdminUid != adminUid) return Task.FromResult(false);
 
-            var userLobby = Lobby[lobbyId].UsersLobby.Where(user => user.Uid == uid).FirstOrDefault();
+            var userLobby = Lobby[lobbyId].UsersLobby.FirstOrDefault(user => user.Uid == uid);
 
             lock (Lobby) Lobby[lobbyId].UsersLobby.Remove(userLobby);
 
@@ -113,7 +113,7 @@ namespace API.SignalR
 
             if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
 
-            var userLobby = Lobby[lobbyId].UsersLobby.Where(user => user.Uid == uid).FirstOrDefault();
+            var userLobby = Lobby[lobbyId].UsersLobby.FirstOrDefault(user => user.Uid == uid);
 
             lock (Lobby) Lobby[lobbyId].UsersLobby.Remove(userLobby);
             lock (MemberTracker) MemberTracker.Remove(uid);
@@ -166,7 +166,7 @@ namespace API.SignalR
             lock (Lobby)
             {
                 Lobby[lobbyId].LobbyReadyCheck = true;
-                Lobby[lobbyId].UsersLobby.Where(u => u.Uid == adminUid).FirstOrDefault().Ready = true;
+                Lobby[lobbyId].UsersLobby.FirstOrDefault(u => u.Uid == adminUid).Ready = true;
             }
 
             return Task.FromResult(true);
@@ -204,7 +204,7 @@ namespace API.SignalR
 
             if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
 
-            lock (Lobby) Lobby[lobbyId].UsersLobby.Where(u => u.Uid == uid).FirstOrDefault().Ready = true;
+            lock (Lobby) Lobby[lobbyId].UsersLobby.FirstOrDefault(u => u.Uid == uid).Ready = true;
 
             return Task.FromResult(true);
         }
@@ -215,7 +215,7 @@ namespace API.SignalR
 
             if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
 
-            lock (Lobby) Lobby[lobbyId].UsersLobby.Where(u => u.Uid == uid).FirstOrDefault().Ready = false;
+            lock (Lobby) Lobby[lobbyId].UsersLobby.FirstOrDefault(u => u.Uid == uid).Ready = false;
 
             return Task.FromResult(true);
         }

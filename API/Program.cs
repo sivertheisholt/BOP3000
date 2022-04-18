@@ -2,6 +2,7 @@ using API.Data;
 using API.Entities.Roles;
 using API.Entities.Users;
 using API.Helpers;
+using API.Interfaces;
 using API.Interfaces.IClients;
 using API.Interfaces.IRepositories;
 using API.Interfaces.IServices;
@@ -35,34 +36,25 @@ namespace API
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
 
-                var steamAppRepository = services.GetRequiredService<ISteamAppRepository>();
-                var steamAppsrepository = services.GetRequiredService<ISteamAppsRepository>();
-
                 var steamStoreClient = services.GetRequiredService<ISteamStoreClient>();
                 var steamAppsClient = services.GetRequiredService<ISteamAppsClient>();
 
                 var meilisearchService = services.GetRequiredService<IMeilisearchService>();
 
-                var countryRepository = services.GetRequiredService<ICountryRepository>();
-                var lobbiesRepository = services.GetRequiredService<ILobbiesRepository>();
-                var userRepository = services.GetRequiredService<IUserRepository>();
-
-
-                var activitiesRepository = services.GetRequiredService<IActivitiesRepository>();
-                var activityRepository = services.GetRequiredService<IActivityRepository>();
-
                 var lobbyHub = services.GetRequiredService<LobbyHub>();
 
                 var mapper = services.GetRequiredService<IMapper>();
 
+                var unitOfWork = services.GetRequiredService<IUnitOfWork>();
+
                 await contex.Database.MigrateAsync();
-                await Seed.SeedCountryIso(countryRepository);
-                await Seed.SeedUsers(userManager, roleManager, countryRepository, meilisearchService, userRepository, mapper);
-                await Seed.SeedCustomSteamApps(steamAppRepository, steamAppsrepository, steamStoreClient, steamAppsClient);
-                await Seed.SeedLobbies(lobbiesRepository, lobbyHub, steamAppRepository);
-                await Seed.SeedLobbyHub(lobbiesRepository, lobbyHub);
-                await Seed.SeedActivities(activitiesRepository, activityRepository);
-                await Seed.SeedMeilisearch(meilisearchService, steamAppsrepository, userRepository, mapper);
+                await Seed.SeedCountryIso(unitOfWork);
+                await Seed.SeedUsers(userManager, roleManager, meilisearchService, mapper, unitOfWork);
+                await Seed.SeedCustomSteamApps(steamStoreClient, steamAppsClient, unitOfWork);
+                await Seed.SeedLobbies(lobbyHub, unitOfWork);
+                await Seed.SeedLobbyHub(unitOfWork, lobbyHub);
+                await Seed.SeedActivities(unitOfWork);
+                await Seed.SeedMeilisearch(meilisearchService, unitOfWork, mapper);
             }
             catch (Exception ex)
             {
