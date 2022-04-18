@@ -70,7 +70,7 @@ This endpoint retrieves the results from the search.
 | name      | The name of the app |         |
 | limit     | Max items to return | 10      |
 
-## GET Single app
+## GET Specfic app
 
 ```javascript
 var myHeaders = new Headers();
@@ -99,7 +99,7 @@ fetch("https://bop3000.azurewebsites.net/api/apps/2", requestOptions)
 }
 ```
 
-This endpoint retrieves a single app
+This endpoint retrieves a specific app
 
 ### HTTP Request
 
@@ -159,6 +159,13 @@ This endpoint retrieves all apps that has a lobby
 ### HTTP Request
 
 `GET https://bop3000.azurewebsites.net/api/apps/active`
+
+### Query Parameters
+
+| Parameter  | Default | Description              |
+| ---------- | ------- | ------------------------ |
+| pageNumber | 1       | Page to get results from |
+| pageSize   | 50      | Size of a page           |
 
 ### Response Class (Status 200)
 

@@ -62,6 +62,13 @@ This endpoint retrieves all members.
 
 `GET https://bop3000.azurewebsites.net/api/members`
 
+### Query Parameters
+
+| Parameter  | Default | Description              |
+| ---------- | ------- | ------------------------ |
+| pageNumber | 1       | Page to get results from |
+| pageSize   | 50      | Size of a page           |
+
 ### Response Class (Status 200)
 
 | Key           | Type          |

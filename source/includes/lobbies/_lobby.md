@@ -142,6 +142,13 @@ This endpoint retrieves all lobbies.
 
 `GET https://bop3000.azurewebsites.net/api/lobbies`
 
+### Query Parameters
+
+| Parameter  | Default | Description              |
+| ---------- | ------- | ------------------------ |
+| pageNumber | 1       | Page to get results from |
+| pageSize   | 50      | Size of a page           |
+
 ### Response Class (Status 200)
 
 | Key              | Type             |
@@ -182,7 +189,7 @@ This endpoint retrieves all lobbies.
 | Key | Type |
 | --- | ---- |
 
-## GET Lobbies with specific game ID
+## GET Active lobbies with specific game ID
 
 ```javascript
 var myHeaders = new Headers();
@@ -235,6 +242,13 @@ This endpoint retrieves all lobbies with a specific game ID.
 ### HTTP Request
 
 `GET https://bop3000.azurewebsites.net/api/lobbies/game/<ID>`
+
+### Query Parameters
+
+| Parameter  | Default | Description              |
+| ---------- | ------- | ------------------------ |
+| pageNumber | 1       | Page to get results from |
+| pageSize   | 50      | Size of a page           |
 
 ### Response Class (Status 200)
 
