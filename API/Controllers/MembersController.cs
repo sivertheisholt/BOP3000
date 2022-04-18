@@ -376,9 +376,7 @@ namespace API.Controllers
 
             if (user == null) return NotFound();
 
-            if (user.AppUserProfile.BlockedUsers.Contains(memberId)) return Ok(true);
-
-            return Ok(false);
+            return user.AppUserProfile.BlockedUsers.Contains(userId);
         }
 
         [Authorize(Policy = "RequireMemberRole")]
@@ -389,9 +387,7 @@ namespace API.Controllers
             var user = await _userRepository.GetUserByIdAsync(userId);
             if (user == null) return NotFound();
 
-            if (user.AppUserProfile.BlockedUsers.Contains(memberId)) return Ok(true);
-
-            return Ok(false);
+            return user.AppUserProfile.BlockedUsers.Contains(memberId);
         }
     }
 }
