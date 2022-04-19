@@ -117,7 +117,7 @@ This endpoint retrieves a specific lobby.
 | -------- | ---- |
 | voterUid | int  |
 | votedUid | int  |
-| upvote   | int  |
+| upvote   | bool |
 
 #### Log
 
