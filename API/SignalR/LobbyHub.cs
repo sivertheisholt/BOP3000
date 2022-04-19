@@ -196,6 +196,16 @@ namespace API.SignalR
             var members = await _lobbyTracker.GetMembersInLobby(lobbyId);
             await Clients.Caller.SendAsync("LobbyMembers", members);
         }
+        public async Task EndLobby(int lobbyId)
+        {
+            var queueUsers = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
+            await _lobbyTracker.FinishLobby(lobbyId);
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("EndedLobby");
+            foreach (var user in queueUsers)
+            {
+                await Clients.Group($"user_{user}").SendAsync("EndedLobby", lobbyId);
+            }
+        }
 
         public override async Task OnConnectedAsync()
         {
@@ -248,6 +258,11 @@ namespace API.SignalR
             var channelName = $"{adminName}'s lobby";
             var invitelink = await _discordBotService.CreateVoiceChannelForLobby(discordIds.ToArray(), channelName);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted", invitelink);
+            var queueUsers = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
+            foreach (var user in queueUsers)
+            {
+                await Clients.Group($"user_{user}").SendAsync("QueueLobbyStarted");
+            }
         }
         private async Task FinishLobby(int lobbyId)
         {
