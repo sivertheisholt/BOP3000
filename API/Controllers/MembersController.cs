@@ -206,7 +206,6 @@ namespace API.Controllers
             return Ok(false);
         }
 
-        [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<MemberMeiliDto>>> SearchForMember(string name, int limit = 10)
         {
