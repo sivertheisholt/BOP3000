@@ -264,7 +264,7 @@ namespace API.SignalR
 
             var finishTask = Task.Delay(20 * 1000);
             await finishTask;
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("RedirectFinished");
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("RedirectFinished", lobbyId);
 
             _unitOfWork.lobbiesRepository.Update(lobby);
             await _unitOfWork.Complete();
