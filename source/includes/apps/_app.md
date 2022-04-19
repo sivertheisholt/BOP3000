@@ -95,7 +95,8 @@ fetch("https://bop3000.azurewebsites.net/api/apps/2", requestOptions)
   "name": "Carnival and Girls",
   "headerImage": "https://cdn.akamai.steamstatic.com/steam/apps/1573430/header.jpg?t=1617118165",
   "background": "https://cdn.akamai.steamstatic.com/steam/apps/1573430/page_bg_generated_v6b.jpg?t=1617118165",
-  "activeLobbies": 1
+  "activeLobbies": 1,
+  "steamAppid": 730
 }
 ```
 
@@ -114,6 +115,7 @@ This endpoint retrieves a specific app
 | headerImage   | string |
 | background    | string |
 | activeLobbies | int    |
+| steamAppid    | int    |
 
 ## GET Active apps that has lobbies
 
