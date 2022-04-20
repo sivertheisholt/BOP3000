@@ -107,6 +107,7 @@ namespace API.SignalR
 
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("JoinedLobbyQueue", uid);
+            await Clients.Caller.SendAsync("InQueue");
         }
 
         public async Task LeaveQueue(int lobbyId)
