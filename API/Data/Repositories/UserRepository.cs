@@ -43,6 +43,11 @@ namespace API.Data.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<bool> CheckIfMailTaken(string mail)
+        {
+            return await Context.Users.Where(x => x.Email == mail).AnyAsync();
+        }
+
         public async Task<bool> CheckIfSteamAccountExists(long steamId)
         {
             return await Context.Users.Include(x => x.AppUserProfile)

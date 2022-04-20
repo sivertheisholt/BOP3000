@@ -214,6 +214,12 @@ namespace API.Controllers
             return Ok(Mapper.Map<IEnumerable<AppUserMeili>>(hits.Hits));
         }
 
+        [HttpGet("check-mail-exists")]
+        public async Task<ActionResult<bool>> CheckIfMailExists(string mail)
+        {
+            return await _unitOfWork.userRepository.CheckIfMailTaken(mail);
+        }
+
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPost("set-photo")]
         public async Task<ActionResult<MemberPhotoDto>> AddPhoto(IFormFile file)

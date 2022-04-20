@@ -37,5 +37,7 @@ namespace API.Interfaces.IRepositories
 
         Task<bool> CheckIfDiscordAccountExists(ulong discordId);
         Task<bool> CheckIfSteamAccountExists(long steamId);
+
+        Task<bool> CheckIfMailTaken(string mail);
     }
 }
