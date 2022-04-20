@@ -408,6 +408,38 @@ This endpoint checks if member is followed
 
 True/False
 
+## GET Check if mail exists
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/check-mail-exists?mail=test",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns true/False
+
+This endpoint checks if mail is already taken
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/members/check-mail-exists?mail=test`
+
+### Response Class (Status 200)
+
+True/False
+
 ## GET Check if blocking user
 
 ```javascript
