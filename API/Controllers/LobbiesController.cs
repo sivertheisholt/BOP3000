@@ -1,4 +1,5 @@
 using API.DTOs.Lobbies;
+using API.Entities.Activities;
 using API.Entities.Lobbies;
 using API.Extentions;
 using API.Helpers.PaginationsParams;
@@ -57,15 +58,23 @@ namespace API.Controllers
             _unitOfWork.lobbiesRepository.AddLobby(lobby);
 
             // Checks the result from adding the new Game Room
-            if (await _unitOfWork.Complete())
-            {
-                var createdLobby = Mapper.Map<NewLobbyDto>(lobby);
-                await _lobbyHub.CreateLobby(lobby, GetUserIdFromClaim());
-                await _lobbyChatHub.CreateChat(createdLobby.Id);
-                return Ok(createdLobby);
-            }
+            var createdLobby = Mapper.Map<NewLobbyDto>(lobby);
+            await _lobbyHub.CreateLobby(lobby, GetUserIdFromClaim());
+            await _lobbyChatHub.CreateChat(createdLobby.Id);
 
-            return BadRequest("Failed to create room");
+            var activityLog = new ActivityLog
+            {
+                Date = DateTime.Now,
+                LobbyId = createdLobby.Id,
+                AppUserId = GetUserIdFromClaim(),
+                ActivityId = 2,
+            };
+
+            _unitOfWork.activitiesRepository.AddActivityLog(activityLog);
+
+            if (!await _unitOfWork.Complete()) return BadRequest("Could not create lobby");
+
+            return Ok(createdLobby);
         }
 
         [HttpGet("{id}")]

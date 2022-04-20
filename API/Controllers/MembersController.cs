@@ -1,6 +1,7 @@
 using API.DTOs.Activities;
 using API.DTOs.Applications;
 using API.DTOs.Members;
+using API.Entities.Activities;
 using API.Entities.Applications;
 using API.Entities.Users;
 using API.Extentions;
@@ -159,6 +160,16 @@ namespace API.Controllers
             userTarget.AppUserProfile.AppUserData.Followers.Add(userId);
             _unitOfWork.userRepository.Update(user);
             _unitOfWork.userRepository.Update(userTarget);
+
+            var activityLog = new ActivityLog
+            {
+                Date = DateTime.Now,
+                AppUserId = userId,
+                ActivityId = 4,
+                MemberFollowedId = memberId
+            };
+
+            _unitOfWork.activitiesRepository.AddActivityLog(activityLog);
 
             if (await _unitOfWork.Complete()) return NoContent();
 

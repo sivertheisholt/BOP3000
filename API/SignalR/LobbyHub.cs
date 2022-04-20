@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Entities.Activities;
 using API.Entities.Lobbies;
 using API.Extentions;
 using API.Interfaces;
@@ -50,6 +51,18 @@ namespace API.SignalR
             var result = await _lobbyTracker.AcceptMember(lobbyId, acceptedUid, uid);
 
             if (!result) return;
+
+            var activityLog = new ActivityLog
+            {
+                Date = DateTime.Now,
+                LobbyId = lobbyId,
+                AppUserId = acceptedUid,
+                ActivityId = 3,
+            };
+
+            _unitOfWork.activitiesRepository.AddActivityLog(activityLog);
+
+            await _unitOfWork.Complete();
 
             await AddToGroup($"lobby_{lobbyId.ToString()}");
             await Clients.Group($"user_{acceptedUid.ToString()}").SendAsync("Accepted", lobbyId);
@@ -268,8 +281,9 @@ namespace API.SignalR
         private async Task FinishLobby(int lobbyId)
         {
             var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(lobbyId);
+            var users = await _lobbyTracker.GetMembersInLobby(lobbyId);
             lobby.Finished = true;
-            lobby.Users = await _lobbyTracker.GetMembersInLobby(lobbyId);
+            lobby.Users = users;
             lobby.FinishedDate = DateTime.Now;
             lobby.Log = new Log
             {
@@ -283,9 +297,23 @@ namespace API.SignalR
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("RedirectFinished", lobbyId);
 
             _unitOfWork.lobbiesRepository.Update(lobby);
-            await _unitOfWork.Complete();
 
             await _lobbyChatTracker.LobbyChatDone(lobbyId);
+
+            foreach (var uid in users)
+            {
+                var activityLog = new ActivityLog
+                {
+                    Date = DateTime.Now,
+                    LobbyId = lobbyId,
+                    AppUserId = uid,
+                    ActivityId = 1,
+                };
+
+                _unitOfWork.activitiesRepository.AddActivityLog(activityLog);
+            }
+
+            await _unitOfWork.Complete();
         }
     }
 }
