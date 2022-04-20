@@ -261,7 +261,7 @@ namespace API.SignalR
             var queueUsers = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
             foreach (var user in queueUsers)
             {
-                await Clients.Group($"user_{user}").SendAsync("QueueLobbyStarted");
+                await Clients.Group($"user_{user}").SendAsync("QueueKicked");
             }
         }
         private async Task FinishLobby(int lobbyId)
