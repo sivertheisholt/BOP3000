@@ -233,10 +233,10 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPost("set-background")]
-        public async Task<ActionResult<MemberPhotoDto>> SetBackground([FromBody] string url)
+        public async Task<ActionResult<MemberPhotoDto>> SetBackground(MemberBackgroundDto background)
         {
             var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
-            user.AppUserProfile.AccountCustomization.BackgroundUrl = url;
+            user.AppUserProfile.AccountCustomization.BackgroundUrl = background.Url;
             if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Could not set background");
