@@ -2,7 +2,7 @@ export interface Lobby{
     id: number;
     maxUsers: number;
     title: string;
-    startDate?: Date;
+    startDate?: string;
     finishDate?: Date;
     lobbyDescription? : string;
     gameId: number;

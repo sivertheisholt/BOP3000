@@ -3,7 +3,7 @@
         {{ 'HISTORY' | translate }}
     </div>
     <div class="lobby-history-item p-3" *ngFor="let lobby of finishedLobbies">
-        <div class="one-quarter-width"> {{ fixDate(lobby.startDate) }} </div>
+        <div class="one-quarter-width"> {{ lobby.startDate }} </div>
         <div class="one-quarter-width">
             <a [routerLink]="['../../lobby', lobby.id]">
                 #{{ lobby.id }}

@@ -82,8 +82,8 @@ export class LobbyHubService {
         this.notificationService.setNewNotification({type: 'info', message: 'You have requested to join a lobby.'});
       });
 
-      this.hubConnection.on("NotInDiscordServer", id => {
-        console.log("User with id: " + id);
+      this.hubConnection.on("NotInDiscordServer", () => {
+        console.log("Not in discord server");
       });
 
       // Everyone in lobby will get this

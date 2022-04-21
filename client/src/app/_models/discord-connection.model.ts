@@ -4,4 +4,5 @@ export interface DiscordConnection{
     username?: string;
     discriminator?: number;
     hidden: boolean;
+    inServer: boolean;
 }
