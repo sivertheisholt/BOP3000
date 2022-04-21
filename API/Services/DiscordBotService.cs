@@ -89,7 +89,9 @@ namespace API.Services
 
             var users = await guild.GetUsersAsync().FirstAsync();
 
-            if (users.Where(x => x.Id == userId) == null) return false;
+            Console.WriteLine(users.Where(x => x.Id == userId));
+
+            if (users.Where(x => x.Id == userId).FirstOrDefault() == null) return false;
 
             return true;
         }
