@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -14,13 +15,14 @@ import { LobbyService } from 'src/app/_services/lobby.service';
 export class RoomcardComponent implements OnInit {
   lobbies: Lobby[] = [];
   loadedLobbies: Lobby[] = [];
-  inQueue? : boolean;
-  currentId?: number;
   dropdownStatus: boolean = false;
   @Input('game') game?: Game;
   pageNumber: number = 1;
   pageSize: number = 10;
-  inQueueStatus?: string;
+
+  lobbyId: number = 0;
+  inQueue: boolean = false;
+  queueStatus: string = '';
 
   constructor(private lobbyHubService: LobbyHubService, private lobbyService: LobbyService) { }
 
@@ -28,26 +30,33 @@ export class RoomcardComponent implements OnInit {
     this.getLobbies();
     this.lobbyService.getQueueStatus().subscribe(
       (response) => {
-        this.inQueue = response.inQueue;
-        this.currentId = response.lobbyId;
+        if(!response.inQueue && response.lobbyId == 0){
+          this.lobbyHubService.inQueue.next({lobbyId: response.lobbyId, inQueue: response.inQueue, inQueueStatus: 'notInQueue'});
+        }
+        if(response.inQueue && response.lobbyId != 0){
+          this.lobbyHubService.inQueue.next({lobbyId: response.lobbyId, inQueue: response.inQueue, inQueueStatus: 'inQueue'});
+        }
+        if(!response.inQueue && response.lobbyId != 0){
+          this.lobbyHubService.inQueue.next({lobbyId: response.lobbyId, inQueue: response.inQueue, inQueueStatus: 'accepted'});
+        }
       }
     );
     this.lobbyHubService.inQueue.subscribe(
       (res) => {
-        this.inQueueStatus = res;
+        console.log(+res.lobbyId);
+        this.lobbyId = res.lobbyId;
+        this.inQueue = res.inQueue;
+        this.queueStatus = res.inQueueStatus;
       }
     )
   }
 
   requestToJoin(id: number){
     this.lobbyHubService.goInQueue(id);
-    this.inQueue = true;
-    this.currentId = id;
   }
 
   cancelJoin(id: number){
     this.lobbyHubService.leaveQueue(id);
-    this.inQueue = false;
   }
 
   toggleDropdown(){
