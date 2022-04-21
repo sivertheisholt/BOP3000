@@ -150,7 +150,7 @@ namespace API.SignalR
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftLobby", uid);
             await Clients.Caller.SendAsync("CancelLobby");
         }
-        
+
         public async Task StartCheck(int lobbyId)
         {
             var uid = Context.User.GetUserId();
@@ -220,7 +220,7 @@ namespace API.SignalR
         {
             var queueUsers = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
             await _lobbyTracker.FinishLobby(lobbyId);
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("EndedLobby");
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("EndedLobby", lobbyId);
             foreach (var user in queueUsers)
             {
                 await Clients.Group($"user_{user}").SendAsync("EndedLobby", lobbyId);
