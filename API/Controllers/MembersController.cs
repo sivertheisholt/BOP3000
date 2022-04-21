@@ -232,8 +232,19 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireMemberRole")]
+        [HttpPost("set-background")]
+        public async Task<ActionResult<MemberPhotoDto>> SetBackground([FromBody] string url)
+        {
+            var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
+            user.AppUserProfile.AccountCustomization.BackgroundUrl = url;
+            if (await _unitOfWork.Complete()) return NoContent();
+
+            return BadRequest("Could not set background");
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
         [HttpPost("set-photo")]
-        public async Task<ActionResult<MemberPhotoDto>> AddPhoto(IFormFile file)
+        public async Task<ActionResult<MemberPhotoDto>> SetPhoto(IFormFile file)
         {
             var user = await _unitOfWork.userRepository.GetUserByIdAsync(GetUserIdFromClaim());
 

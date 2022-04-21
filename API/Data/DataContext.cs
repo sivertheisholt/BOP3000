@@ -414,6 +414,16 @@ namespace API.Data
                 .WithMany(log => log.Messages)
                 .HasForeignKey(message => message.LogId)
                 .IsRequired();
+
+            /*********** AppUserCustomization **************/
+            builder.Entity<AppUserCustomization>()
+                .HasOne(c => c.AppUserProfile)
+                .WithOne(app => app.AccountCustomization)
+                .HasForeignKey<AppUserCustomization>(c => c.AppUserProfileId)
+                .IsRequired();
+
+            builder.Entity<AppUserCustomization>()
+                .HasKey(c => c.AppUserProfileId);
         }
     }
 }

@@ -80,6 +80,10 @@ namespace API.Controllers
                     {
                         Url = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
                     },
+                    AccountCustomization = new AppUserCustomization
+                    {
+                        BackgroundUrl = "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+                    },
                     UserConnections = new AppUserConnections
                     {
                         Discord = new DiscordProfile { },

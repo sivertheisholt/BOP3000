@@ -12,6 +12,7 @@ namespace API.Entities.Users
         public CountryIso CountryIso { get; set; }
         public AppUserData AppUserData { get; set; }
         public AppUserPhoto AppUserPhoto { get; set; }
+        public AppUserCustomization AccountCustomization { get; set; }
         public ICollection<int> BlockedUsers { get; set; }
         public AppUser AppUser { get; set; }
         public int AppUserId { get; set; }

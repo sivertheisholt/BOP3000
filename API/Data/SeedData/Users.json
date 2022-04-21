@@ -28,6 +28,9 @@
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
             },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+            },
             "BlockedUsers": [],
             "UserConnections": {
                 "SteamConnected": false,
@@ -69,6 +72,9 @@
             },
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
             },
             "BlockedUsers": [],
             "UserConnections": {
@@ -112,6 +118,9 @@
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
             },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+            },
             "BlockedUsers": [],
             "UserConnections": {
                 "SteamConnected": false,
@@ -153,6 +162,9 @@
             },
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
             },
             "BlockedUsers": [],
             "UserConnections": {
@@ -196,6 +208,9 @@
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
             },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+            },
             "BlockedUsers": [],
             "UserConnections": {
                 "SteamConnected": false,
@@ -237,6 +252,9 @@
             },
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
             },
             "BlockedUsers": [],
             "UserConnections": {
@@ -280,6 +298,9 @@
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
             },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+            },
             "BlockedUsers": [],
             "UserConnections": {
                 "SteamConnected": false,
@@ -321,6 +342,9 @@
             },
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
             },
             "BlockedUsers": [],
             "UserConnections": {
@@ -364,6 +388,9 @@
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
             },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+            },
             "BlockedUsers": [],
             "UserConnections": {
                 "SteamConnected": false,
@@ -405,6 +432,9 @@
             },
             "AppUserPhoto": {
                 "Url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1649157462/933-9332131_profile-picture-default-png_i8rgef.png"
+            },
+            "AccountCustomization": {
+                "BackgroundUrl": "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
             },
             "BlockedUsers": [],
             "UserConnections": {
