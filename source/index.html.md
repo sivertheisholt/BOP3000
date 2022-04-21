@@ -15,6 +15,7 @@ includes:
   - apps/app
   - countries/country
   - support/support
+  - images/image
   - errors
 
 search: true

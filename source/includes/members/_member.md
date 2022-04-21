@@ -755,6 +755,41 @@ This endpoint sets the profile picture for the current user
 
 `POST https://bop3000.azurewebsites.net/api/members/set-photo`
 
+## POST Set background
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  url: "https://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg",
+});
+
+var requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/members/set-background",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns a 204 No Content status code
+
+This endpoint sets the background picture for the current user
+
+### HTTP Request
+
+`POST https://bop3000.azurewebsites.net/api/members/set-background`
+
 <!--- PUT --->
 
 <!--- PATCH --->
