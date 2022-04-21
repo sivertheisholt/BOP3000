@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { QueueStatus } from '../_models/queuestatus.model';
 import { NotificationService } from './notification.service';
 
 @Injectable({
@@ -23,7 +24,7 @@ export class LobbyHubService {
   acceptedReadyCheckMembers = new Subject<number[]>();
   declinedReadyCheckMembers = new Subject<number>();
   lobbyStart = new BehaviorSubject<string>('');
-  inQueue = new BehaviorSubject<string>('notInQueue');
+  inQueue = new BehaviorSubject<QueueStatus>({lobbyId: 0, inQueue: false, inQueueStatus: ''});
 
   acceptedMembers$ = this.acceptedMembers.asObservable();
   lobbyQueueMembers$ = this.lobbyQueueMembers.asObservable();
@@ -57,33 +58,44 @@ export class LobbyHubService {
       
       // Member that is accepted will get this
       this.hubConnection.on('Accepted', id => {
-        this.inQueue.next('accepted');
+        this.inQueue.next({lobbyId: id, inQueue: false, inQueueStatus: 'accepted'});
         this.notificationService.setNewNotification({type: 'success', message: 'You have been accepted to the lobby. Check your notifications to go directly to the lobby.', lobbyId: id});
       });
       // Member that is declined will get this
       this.hubConnection.on('Declined', id => {
-        this.inQueue.next('notInQueue');
+        this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
         this.notificationService.setNewNotification({type: 'info', message: 'You have been declined from the lobby.'});
       });
       // Member that is banned will get this
       this.hubConnection.on('Banned', id => {
-        this.inQueue.next('notInQueue');
+        this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
         this.redirectUser(this.router.url, +id);
         this.notificationService.setNewNotification({type: 'error', message: 'You have been banned from the lobby.'});
       });
       // Member that is kicked will get this
       this.hubConnection.on('Kicked', id => {
-        this.inQueue.next('notInQueue');
+        this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
         this.redirectUser(this.router.url, +id);
         this.notificationService.setNewNotification({type: 'error', message: 'You have been kicked from the lobby.'});
       });
-      this.hubConnection.on('InQueue', () => {
-        this.inQueue.next('inQueue');
-        this.notificationService.setNewNotification({type: 'info', message: 'You have requested to join a lobby.'});
+      this.hubConnection.on('InQueue', id => {
+        this.inQueue.next({lobbyId: id, inQueue: true, inQueueStatus: 'inQueue'});
+        this.notificationService.setNewNotification({type: 'success', message: 'You have requested to join a lobby.'});
       });
 
       this.hubConnection.on("NotInDiscordServer", () => {
-        console.log("Not in discord server");
+        this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
+        this.notificationService.setNewNotification({type: 'info', message: 'You need to join our Discord server in order to join lobbies. You can do so here'});
+      });
+
+      this.hubConnection.on("CancelQueue", () => {
+        this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
+        this.notificationService.setNewNotification({type: 'info', message: 'You left the queue.'});
+      });
+
+      this.hubConnection.on("CancelLobby", () => {
+        this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
+        this.notificationService.setNewNotification({type: 'info', message: 'You left the lobby.'});
       });
 
       // Everyone in lobby will get this
