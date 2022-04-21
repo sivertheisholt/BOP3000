@@ -72,7 +72,7 @@ export class UserService{
     }
 
     searchUser(input: string){
-        return this.http.get<UserSearch>(this.baseUrl + 'members/search?name=' + input);
+        return this.http.get<UserSearch[]>(this.baseUrl + 'members/search?name=' + input);
     }
 
     getUserActivities(){
@@ -127,6 +127,10 @@ export class UserService{
                 return res;
             })
         )
+    }
+
+    searchEmailExists(input: string){
+        return this.http.get<boolean>(this.baseUrl + 'members/check-mail-exists?mail=' + input);
     }
 
 }

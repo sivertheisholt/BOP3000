@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Game } from 'src/app/_models/game.model';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
@@ -11,25 +13,36 @@ import { LobbyService } from 'src/app/_services/lobby.service';
 })
 export class RoomcardComponent implements OnInit {
   lobbies: Lobby[] = [];
+  loadedLobbies: Lobby[] = [];
   inQueue? : boolean;
   currentId?: number;
   dropdownStatus: boolean = false;
+  @Input('game') game?: Game;
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  inQueueStatus?: string;
 
-  constructor(private route: ActivatedRoute, private lobbyHubService: LobbyHubService, private lobbyService: LobbyService) { }
+  constructor(private lobbyHubService: LobbyHubService, private lobbyService: LobbyService) { }
 
   ngOnInit(): void {
-    this.lobbies = this.route.snapshot.data['lobbies'];
+    this.getLobbies();
     this.lobbyService.getQueueStatus().subscribe(
       (response) => {
         this.inQueue = response.inQueue;
         this.currentId = response.lobbyId;
       }
     );
+    this.lobbyHubService.inQueue.subscribe(
+      (res) => {
+        this.inQueueStatus = res;
+      }
+    )
   }
 
   requestToJoin(id: number){
     this.lobbyHubService.goInQueue(id);
     this.inQueue = true;
+    this.currentId = id;
   }
 
   cancelJoin(id: number){
@@ -39,6 +52,18 @@ export class RoomcardComponent implements OnInit {
 
   toggleDropdown(){
     this.dropdownStatus = !this.dropdownStatus;
+  }
+
+  onScroll(){
+    this.pageNumber++;
+    this.lobbyService.fetchAllLobbiesWithGameIdTest(this.game?.id!, this.pageNumber, this.pageSize).subscribe(
+      (res) => {
+        res.forEach(lobby => {
+          this.lobbies.push(lobby);
+        })
+        
+      }
+    )
   }
 
   filterLobby(id: number){
@@ -72,7 +97,7 @@ export class RoomcardComponent implements OnInit {
 
   filterLobbies(type: string){
     this.lobbies = [];
-    for(let lobby of this.route.snapshot.data['lobbies']){
+    for(let lobby of this.loadedLobbies){
       if(lobby.gameType == type){
         this.lobbies.push(lobby);
       }
@@ -80,6 +105,15 @@ export class RoomcardComponent implements OnInit {
   }
 
   resetFilter(){
-    this.lobbies = this.route.snapshot.data['lobbies'];
+    this.lobbies = this.loadedLobbies;
+  }
+
+  getLobbies(){
+    this.lobbyService.fetchAllLobbiesWithGameIdTest(this.game?.id!, this.pageNumber, this.pageSize).subscribe(
+      (res) => {
+        this.lobbies = res;
+        this.loadedLobbies = res;
+      }
+    )
   }
 }

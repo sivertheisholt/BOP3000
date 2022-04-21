@@ -9,8 +9,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
-import { catchError, tap } from 'rxjs/operators';
-import { SpinnerService } from '../_services/spinner.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

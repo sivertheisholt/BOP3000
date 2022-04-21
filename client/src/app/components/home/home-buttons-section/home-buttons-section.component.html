@@ -1,13 +1,13 @@
 <div class="has-text-centered mb-6 mt-6">
-    <h1 class="title has-text-light">Start now by creating your own room, and wait for others to join.</h1>
-    <h1 class="title has-text-light">Or join others and find new friends to play wi</h1>
+    <h1 class="title has-text-light">{{ 'HOME_FIRST_TITLE' | translate }}</h1>
+    <h1 class="title has-text-light">{{ 'HOME_SECOND_TITLE' | translate }}</h1>
 </div>
 <div class="has-text-centered btn-wrapper">
     <div class="btn-element">
         <a routerLink="/create-lobby">
             <div class="create-btn is-flex is-justify-content-center is-align-items-center">
                 <div class="btn-content">
-                Create A Room
+                    {{ 'CREATE_A_ROOM' | translate }}
                 </div>
             </div>
         </a>
@@ -16,7 +16,7 @@
         <a routerLink="/find-lobby">
             <div class="join-btn is-flex is-justify-content-center is-align-items-center">
                 <div class="btn-content">
-                Join Others
+                    {{ 'JOIN_OTHERS' | translate }}
                 </div>
             </div>
         </a>

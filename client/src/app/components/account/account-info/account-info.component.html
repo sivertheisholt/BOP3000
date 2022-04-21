@@ -2,12 +2,12 @@
     <div class="username-text is-flex">
         <h1 class="has-text-light"> {{ user?.username }} </h1>
         <div class="user-connections">
-            <a class="ml-2" *ngIf="discordStatus?.connected && !discordStatus?.hidden" href="{{'https://discord.com/users/' + discordStatus?.discordId}}" rel="noopener">
+            <a class="ml-2" *ngIf="discordStatus?.connected && !discordStatus?.hidden" href="{{'https://discord.com/users/' + discordStatus?.discordId}}" target="_blank" rel="noopener">
                 <div class="icon">
                     <img class="image is-64by64" src="../../../../assets/images/discord_icon.png" alt="Discord Icon">
                 </div>
             </a>
-            <a class="ml-2" *ngIf="steamStatus?.connected && !steamStatus?.hidden" href="{{'https://steamcommunity.com/profiles/' + steamStatus?.steamid}}" rel="noopener">
+            <a class="ml-2" *ngIf="steamStatus?.connected && !steamStatus?.hidden" href="{{'https://steamcommunity.com/profiles/' + steamStatus?.steamid}}" target="_blank" rel="noopener">
                 <div class="icon">
                     <img class="image is-64by64" src="../../../../assets/images/steam-icon-blue.png" alt="Steam Icon">
                 </div>
@@ -15,5 +15,4 @@
         </div>
     </div>
     <p> {{ user?.memberProfile?.description }} </p>
-    <p><strong class="text-is-light">Favorite Game:</strong> League of Legends</p>
 </div>

@@ -6,6 +6,9 @@ aside{
 
 .sidebar{
     width: 225px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .menu-list a{
@@ -19,6 +22,11 @@ aside{
 
 .sidebar-items{
     margin-top: 75px;
+}
+
+.flag-wrapper{
+    flex-grow: 1;
+    margin-bottom: 30px;
 }
 
 

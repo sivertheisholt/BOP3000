@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityLog } from 'src/app/_models/activity-log.model';
-import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-activity-log',
@@ -11,7 +10,7 @@ import { UserService } from 'src/app/_services/user.service';
 export class ActivityLogComponent implements OnInit {
   activities: ActivityLog[] = [];
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {
+  constructor(private route: ActivatedRoute) {
     this.activities = this.route.snapshot.data['activities'];
 
   }

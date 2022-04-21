@@ -1,6 +1,6 @@
 <div class="lobby-history-list">
     <div class="lobby-history-header">
-        History
+        {{ 'HISTORY' | translate }}
     </div>
     <div class="lobby-history-item p-3" *ngFor="let lobby of finishedLobbies">
         <div class="one-quarter-width"> {{ fixDate(lobby.startDate) }} </div>

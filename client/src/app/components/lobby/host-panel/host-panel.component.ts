@@ -99,10 +99,13 @@ export class HostPanelComponent implements OnInit {
     )
   }
 
-  confirmEndLobby(){
+  confirmEndLobbyModal(){
     this.endLobbyModal = !this.endLobbyModal;
   }
-  
+
+  confirmEndLobby(){
+    this.lobbyHubService.endLobby(this.lobby?.id!);
+  }
   closeEndLobbyModal(){
     this.endLobbyModal = false;
   }

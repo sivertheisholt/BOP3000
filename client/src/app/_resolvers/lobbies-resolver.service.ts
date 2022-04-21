@@ -7,7 +7,7 @@ import { LobbyService } from "../_services/lobby.service";
 export class LobbiesResolver implements Resolve<any> {
     constructor(private lobbyService: LobbyService){}
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return this.lobbyService.fetchAllLobbiesWithGameId(route.params.id).pipe(
+        return this.lobbyService.fetchAllLobbiesWithGameId(route.params.id, 1, 5).pipe(
             map(response => {
                 return response;
         }));

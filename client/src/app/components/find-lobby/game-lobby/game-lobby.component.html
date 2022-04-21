@@ -1,16 +1,21 @@
 <div class="game-lobby-background" *ngIf="gameInfo" [ngStyle]="{'background-image': 'url(' + gameInfo?.background + ')'}">
     <section class="game-lobby-header-section section is-small is-flex">
-        <div class="header-game-image">
+        <div class="header-game-image one-quarter-width">
             <img *ngIf="gameInfo" [src]="gameInfo?.headerImage" alt="Game Header Image">
         </div>
-        <div class="game-lobby-section-wrapper is-flex is-flex-direction-column">
-            <h1 class="title p-5 text-is-light">{{ gameInfo?.name }}</h1>
-            <h1 class="subtitle p-5 text-is-light">Active lobbies: {{ gameInfo.activeLobbies }}</h1>
+        <div class="game-lobby-section-wrapper is-flex is-flex-direction-column three-quarter-width is-justify-content-center is-align-items-center has-text-centered">
+            <h1 class="title text-is-light p-2">{{ gameInfo?.name }}</h1>
+            <h1 class="text-is-light">{{ 'ACTIVE_LOBBIES' | translate }} {{ gameInfo.activeLobbies }}</h1>
+            <p class="text-is-light"> {{ 'FIND_LOBBY_LATEST_NEWS' | translate }}
+                <a href="{{'https://store.steampowered.com/news/app/' + gameInfo.steamAppid}}" rel="noopener" target="_blank">
+                     {{ 'FIND_LOBBY_LATEST_NEWS_BTN' | translate }} 
+                </a>
+            </p>
         </div>
     </section>
     <div class="game-lobby-container">
         <div class="content">
-            <app-roomcard></app-roomcard>
+            <app-roomcard [game]="gameInfo"></app-roomcard>
         </div>
     </div>
 </div>

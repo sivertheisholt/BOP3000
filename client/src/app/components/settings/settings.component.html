@@ -1,10 +1,10 @@
 <div class="settings-container">
     <div class="tabs">
         <ul>
-          <li [class.active]="viewMode == 'tab1'" rel="tab1" ><a (click)="viewMode='tab1'">Profile</a></li>
-          <li [class.active]="viewMode == 'tab2'" rel="tab2" ><a (click)="viewMode='tab2'">Security</a></li>
-          <li [class.active]="viewMode == 'tab3'" rel="tab3" ><a (click)="viewMode='tab3'">Connections</a></li>
-          <li [class.active]="viewMode == 'tab4'" rel="tab4" ><a (click)="viewMode='tab4'">Manage</a></li>
+          <li [class.active]="viewMode == 'tab1'" rel="tab1" ><a (click)="viewMode='tab1'">{{ 'PROFILE' | translate}}</a></li>
+          <li [class.active]="viewMode == 'tab2'" rel="tab2" ><a (click)="viewMode='tab2'">{{ 'SECURITY' | translate}}</a></li>
+          <li [class.active]="viewMode == 'tab3'" rel="tab3" ><a (click)="viewMode='tab3'">{{ 'CONNECTIONS' | translate}}</a></li>
+          <li [class.active]="viewMode == 'tab4'" rel="tab4" ><a (click)="viewMode='tab4'">{{ 'MANAGE' | translate}}</a></li>
         </ul>
     </div>
     <div class="container" [ngSwitch]="viewMode">

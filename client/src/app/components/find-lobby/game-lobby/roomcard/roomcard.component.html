@@ -1,37 +1,42 @@
 <div class="dropdown" [ngClass]="dropdownStatus ? 'is-active' : ''">
     <div class="dropdown-trigger">
         <a class="button" aria-haspopup="true" aria-controls="dropdown-filter-lobby" (click)="toggleDropdown()">
-            <span>Filter</span>
+            <span>{{ 'FILTER' | translate }}</span>
         </a>
     </div>
     <div class="dropdown-menu " id="dropdown-filter-lobby" role="menu">
         <div class="dropdown-content">
             <a class="dropdown-item" (click)="filterLobby(1)">
-            Competetive
+                {{ 'COMPETITIVE' | translate }}
             </a>
             <a class="dropdown-item" (click)="filterLobby(2)">
-            Ranked
+                {{ 'RANKED' | translate }}
             </a>
             <a class="dropdown-item" (click)="filterLobby(3)">
-            Fun
+                {{ 'FUN' | translate }}
             </a>
             <a class="dropdown-item" (click)="filterLobby(4)">
-            Tryhard
+                {{ 'TRYHARD' | translate }}
             </a>
             <a class="dropdown-item" (click)="filterLobby(5)">
-            Chill
+                {{ 'CHILL' | translate }}
             </a>
             <a class="dropdown-item" (click)="filterLobby(6)">
-                Casual
+                {{ 'CASUAL' | translate }}
             </a>
             <hr class="dropdown-divider">
             <a class="dropdown-item" (click)="filterLobby(7)">
-              Reset
+                {{ 'RESET' | translate }}
             </a>
         </div>
     </div>
 </div>
-<div class="game-lobbies-container p-6">
+<div class="game-lobbies-container p-6"
+    infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="300"
+    (scrolled)="onScroll()">
+
     <div class="card" *ngFor="let lobby of lobbies">
         <div class="has-text-centered is-flex is-justify-content-center p-3">
             <div class="image is-128x128">
@@ -47,23 +52,26 @@
             </div>
             <div class="lobby-card-wrapper is-flex is-justify-content-space-between mt-5">
                 <div class="lobby-card-type">
-                    <p>Gametype</p>
+                    <p>{{ 'GAMETYPE' | translate }}</p>
                     {{ lobby.gameType }}
                 </div>
                 <div class="lobby-card-players">
-                    <p>Players</p>
+                    <p>{{ 'PLAYERS' | translate }}</p>
                      {{ lobby.users.length }}  / {{ lobby.maxUsers }}
                 </div>
             </div>
             <div class="lobby-card-creator mt-5">
-                <p>Created By:</p>
+                <p>{{ 'CREATED_BY' | translate }}</p>
                 {{ lobby.adminUsername }}
             </div>
         </div>
         <div class="lobby-btn-wrapper">
-            <button (click)="requestToJoin(lobby.id)" *ngIf="currentId == 0 && !inQueue" class="button is-info">Request to join</button>
-            <button (click)="cancelJoin(lobby.id)" *ngIf="inQueue && currentId != 0" class="button is-info">Waiting...</button>
-            <button *ngIf="!inQueue && currentId == lobby.id" class="button is-info" [routerLink]="['/lobby', lobby.id]">Go to lobby</button>
+            <button (click)="requestToJoin(lobby.id)" *ngIf="currentId == 0 && !inQueue" class="button is-info">{{ 'BTN_REQUEST_JOIN' | translate }}</button>
+            <button (click)="cancelJoin(lobby.id)" *ngIf="inQueue && currentId == lobby.id" class="button is-info">{{ 'BTN_WAITING' | translate }}</button>
+            <button *ngIf="!inQueue && currentId == lobby.id" class="button is-info" [routerLink]="['/lobby', lobby.id]">{{ 'BTN_GO_TO_LOBBY' | translate }}</button>
+<!--             <button (click)="requestToJoin(lobby.id)" *ngIf="inQueueStatus == 'notInQueue' && currentId == 0 && !inQueue" class="button is-info">{{ 'BTN_GO_TO_LOBBY' | translate }}</button>
+            <button (click)="cancelJoin(lobby.id)" *ngIf="inQueueStatus == 'inQueue' && inQueue && currentId == lobby.id" class="button is-info">{{ 'BTN_WAITING' | translate }}</button>
+            <button *ngIf="inQueueStatus == 'accepted' || !inQueue && currentId == lobby.id" class="button is-info" [routerLink]="['/lobby', lobby.id]">{{ 'BTN_REQUEST_JOIN' | translate }}</button> -->
         </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ import { map } from "rxjs/operators";
 import { Country } from "../_models/country.model";
 import { Member } from "../_models/member.model";
 import { environment } from '../../environments/environment';
+import { CustomImg } from "../_models/custom-img.model";
 
 @Injectable({providedIn: 'root'})
 export class UserSettingsService{
@@ -23,5 +24,18 @@ export class UserSettingsService{
 
     hideDiscord(status: boolean){
         return this.http.patch<boolean>(this.baseUrl + 'members/discord/hide', {hide: status});
+    }
+
+    getCustomizationImages(){
+        return this.http.get<CustomImg[]>(this.baseUrl + 'images/customizer_images').pipe(
+            map((res) => {
+                return res;
+            })
+        );
+    }
+
+    postChangeAccountBackground(url: string){
+        console.log(url);
+        return this.http.post<string>(this.baseUrl + 'members/set-background', {url: url});
     }
 }

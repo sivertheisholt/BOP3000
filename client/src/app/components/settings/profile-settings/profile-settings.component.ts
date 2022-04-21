@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Country } from 'src/app/_models/country.model';
+import { CustomImg } from 'src/app/_models/custom-img.model';
 import { Member } from 'src/app/_models/member.model';
+import { UserSettingsService } from 'src/app/_services/user-settings.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -18,11 +20,21 @@ export class ProfileSettingsComponent implements OnInit {
   months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
   years: number[] = [];
+  selectedImgUrl: string = '';
+  customizationImages: CustomImg[] = [];
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private userService: UserService, private userSettingsService: UserSettingsService) {
     this.countries = this.route.snapshot.data['countries'];
     this.user = this.route.snapshot.data['user'];
-   }
+    
+    this.userSettingsService.getCustomizationImages().subscribe(
+      (res) => {
+        console.log(res);
+        this.customizationImages = res;
+        this.selectedImgUrl = this.user.memberProfile?.memberCustomization.backgroundUrl!;
+      }
+    )
+  }
 
   ngOnInit(): void {
     let d = new Date();
@@ -56,5 +68,15 @@ export class ProfileSettingsComponent implements OnInit {
       birthday: someDate
     }
     this.userService.updateMember(model);
+  }
+
+  onChangeAccountBg(url: string){
+    this.selectedImgUrl = url;
+    this.userSettingsService.postChangeAccountBackground(url).subscribe(
+      (res) => {
+        console.log(res);
+      }
+    )
+    
   }
 }

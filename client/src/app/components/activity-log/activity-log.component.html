@@ -4,7 +4,7 @@
             <div class="activity-container">
                 <div class="activity-card" *ngFor="let activity of activities">
                     <div class="activity-text">
-                        <a [routerLink]="['../account', activity.appUserId]"> {{ activity.username }} </a> {{ activity.outputText }}
+                        <a [routerLink]="['../account', activity.appUserId]"> {{ activity.username }} </a> &nbsp; {{ activity.outputText }}
                     </div>
                     <div class="activity-date">
                         {{ fixDate(activity.date) }}

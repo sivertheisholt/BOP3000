@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Game } from 'src/app/_models/game.model';
 import { Lobby } from 'src/app/_models/lobby.model';
-import { Member } from 'src/app/_models/member.model';
 import { GamesService } from 'src/app/_services/games.service';
 import { UserService } from 'src/app/_services/user.service';
 

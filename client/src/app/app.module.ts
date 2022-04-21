@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './_modules/shared.module';
 import { TestErrorsComponent } from './components/errors/test-errors/test-errors.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ServerErrorComponent } from './components/errors/server-error/server-error.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -13,7 +13,6 @@ import { HomeComponent } from './components/home/home.component';
 import { StartComponent } from './components/start/start.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
-import { ActivityListComponent } from './components/home/activity-list/activity-list.component';
 import { HomeButtonsSectionComponent } from './components/home/home-buttons-section/home-buttons-section.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
@@ -41,7 +40,6 @@ import { HelpComponent } from './components/help/help.component';
 import { AccordionDirective } from './_directives/accordion.directive';
 import { ContactFormComponent } from './components/help/contact-form/contact-form.component';
 import { HostPanelComponent } from './components/lobby/host-panel/host-panel.component';
-import { SpinnerComponent } from './core/spinner/spinner.component';
 import { ArchivedLobbyComponent } from './components/archived-lobby/archived-lobby.component';
 import { ArchivedLobbyPartyComponent } from './components/archived-lobby/archived-lobby-party/archived-lobby-party.component';
 import { ArchivedLobbyInfoComponent } from './components/archived-lobby/archived-lobby-info/archived-lobby-info.component';
@@ -55,7 +53,14 @@ import { JoinVoiceComponent } from './components/lobby/join-voice/join-voice.com
 import { FaqComponent } from './components/help/faq/faq.component';
 import { AboutComponent } from './components/help/about/about.component';
 import { NotifierModule } from 'angular-notifier';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { QuickJoinComponent } from './components/home/quick-join/quick-join.component';
 
+export function httpTranslateLoaderFactory(http: HttpClient){
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -68,7 +73,6 @@ import { NotifierModule } from 'angular-notifier';
     TestErrorsComponent,
     ServerErrorComponent,
     NotFoundComponent,
-    ActivityListComponent,
     HomeButtonsSectionComponent,
     FooterComponent,
     LoginComponent,
@@ -93,7 +97,6 @@ import { NotifierModule } from 'angular-notifier';
     AccordionDirective,
     ContactFormComponent,
     HostPanelComponent,
-    SpinnerComponent,
     ArchivedLobbyComponent,
     ArchivedLobbyPartyComponent,
     ArchivedLobbyInfoComponent,
@@ -105,7 +108,8 @@ import { NotifierModule } from 'angular-notifier';
     ActivityLogComponent,
     JoinVoiceComponent,
     FaqComponent,
-    AboutComponent
+    AboutComponent,
+    QuickJoinComponent
   ],
   imports: [
     BrowserModule,
@@ -126,7 +130,17 @@ import { NotifierModule } from 'angular-notifier';
         }
       },
       theme: 'material'
-    })
+    }),
+    
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    InfiniteScrollModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

@@ -1,13 +1,16 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle, faUsers, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { TranslateService } from '@ngx-translate/core';
 import { NotifierService } from 'angular-notifier';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import { Member } from 'src/app/_models/member.model';
+import { NotificationModel } from 'src/app/_models/notification.model';
+import { UserSearch } from 'src/app/_models/user-search.model';
 import { AuthService } from 'src/app/_services/auth.service';
-import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
+import { LobbyService } from 'src/app/_services/lobby.service';
 import { NotificationService } from 'src/app/_services/notification.service';
-import { SpinnerService } from 'src/app/_services/spinner.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -20,32 +23,40 @@ export class NavbarComponent implements OnInit, OnDestroy {
   @ViewChild('navBurger') navBurger!: ElementRef;
   @ViewChild('navMenu') navMenu!: ElementRef;
   @ViewChild('searchInput', {static: true}) searchInput? : ElementRef;
-  searchResults: any;
+  searchResults: UserSearch[] = [];
   isNotiVisible = false;
   isNavVisible = false;
-  notifications: string[] = [];
+  notifications: NotificationModel[] = [];
   totalNotifications: number = 0;
+  inLobby: boolean = false;
+  inLobbyId: number = 0;
+  user?: Member;
   private destroyStreamSource = new Subject<void>()
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService, private lobbyHubService: LobbyHubService, private notifierService: NotifierService, private notificationService: NotificationService){
-  }
+  constructor(private authService: AuthService, private router: Router, private userService: UserService, private notifierService: NotifierService, private notificationService: NotificationService, private translateService: TranslateService, private lobbyService: LobbyService){}
 
   ngOnInit(): void {
+    this.userService.getUserData().subscribe(
+      (res) => {
+        this.user = res;
+      }
+    )
     this.notificationService.notificationObservable
     .pipe(takeUntil(this.destroyStreamSource))
-    .subscribe((message: string) => {
-      this.notifications.push(message);
-      this.notifierService.notify('info', message);
-      this.totalNotifications = this.notifications.length;
+    .subscribe((notification: NotificationModel) => {
+      this.notifications.push(notification);
+      this.notifierService.notify(notification.type, notification.message);
+      this.totalNotifications++;
     })
 
-/*     this.lobbyHubService.notifyUser$.subscribe(
+    this.lobbyService.getQueueStatus().subscribe(
       (res) => {
-        
-
+        if(res.lobbyId != 0 && !res.inQueue){
+          this.inLobby = true;
+          this.inLobbyId = res.lobbyId;
+        }
       }
-    ) */
-
+    )
 
     this.router.events.subscribe(
       (val) => {
@@ -55,15 +66,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     fromEvent(this.searchInput?.nativeElement, 'keyup').pipe(
       map((event: any) => {
-        if(event.target.value == ''){
-          this.searchInput?.nativeElement.classList.remove('loading');
-          this.searchResults = [];
+        if(event.target.value.length > 2){
+          this.searchInput?.nativeElement.classList.add('loading');
           return event.target.value;
         }
-        this.searchInput?.nativeElement.classList.add('loading');
-        return event.target.value;
+        this.searchInput?.nativeElement.classList.remove('loading');
+        this.searchResults = [];
       })
-      ,filter(res => res.length > 2)
+      ,filter(res => res != undefined)
       ,debounceTime(1000)
       ,distinctUntilChanged()
     ).subscribe((input: string) => {
@@ -98,5 +108,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   clearSearch(){
     this.searchResults = [];
+  }
+
+  changeLang(lang: string){
+    this.translateService.use(lang);
+    localStorage.setItem('selectedLang', lang);
   }
 }

@@ -1,17 +1,20 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="nav-items-wrapper">
     <div class="navbar-brand">
-      <a class="navbar-item navbar-logo">
+      <a class="navbar-item navbar-logo" [routerLink]="['home']">
         <img src="../../../assets/images/playfu.png" alt="Playfu Logo">
       </a>
       <a [routerLink]="['upgrade']" class="upgrade-btn">
-        UPGRADE
+        {{ 'UPGRADE' | translate }}
+      </a>
+      <a [routerLink]="['lobby/' + inLobbyId]" class="goto-lobby-btn ml-3" *ngIf="inLobby">
+        {{ 'BTN_GO_TO_LOBBY' | translate }}
       </a>
     </div>
     <div class="nav-items">
       <div class="navbar-item">
         <div>
-          <input class="input is-primary is-small" type="text" placeholder="Search..." #searchInput>
+          <input class="input is-primary is-small" type="text" placeholder="{{ 'SEARCH' | translate }}" #searchInput>
         </div>
         <div class="search-results has-text-centered">
           <div class="result-item" *ngFor="let user of searchResults">
@@ -30,7 +33,14 @@
           <div class="dropdown-menu" id="dropdown-menu2" role="menu">
             <div class="dropdown-content">
               <div class="dropdown-item" *ngFor="let notification of notifications">
-                <p>{{ notification }}</p>
+                <div class="notification-item">
+                  <div class="notification-text">
+                    {{ notification.message }}
+                  </div>
+                  <div class="notification-link" *ngIf="notification.lobbyId != null">
+                    {{ 'GO_TO_LOBBY_NOTI_BTN1' | translate }} <a [routerLink]="['lobby/' + notification.lobbyId]">{{ 'GO_TO_LOBBY_NOTI_BTN2' | translate }}</a> {{ 'GO_TO_LOBBY_NOTI' | translate }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -46,23 +56,35 @@
     </div>
   </div>
 
-  <div id="navbar-burger-menu" class="ml-3" #navMenu *ngIf="isNavVisible">
-    <p class="menu-label has-text-centered mt-5">Navigation</p>
+  <div id="navbar-burger-menu" #navMenu *ngIf="isNavVisible">
+    <p class="menu-label has-text-centered mt-5">{{ 'NAV_NAVIGATION' | translate }}</p>
     <ul class="menu-list">
-      <li><a [routerLink]="['home']"><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>Home</a></li>
+      <li><a [routerLink]="['home']"><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>{{ 'NAV_HOME' | translate }}</a></li>
     </ul>
-    <p class="menu-label has-text-centered">Matchmaking</p>
+    <p class="menu-label has-text-centered">{{ 'NAV_MATCHMAKING' | translate }}</p>
     <ul class="menu-list">
-      <li><a [routerLink]="['create-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>Create Lobby</a></li>
-      <li><a [routerLink]="['find-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faUsers"></fa-icon>Find Lobby</a></li>
+      <li><a [routerLink]="['create-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>{{ 'NAV_CREATE_LOBBY' | translate }}</a></li>
+      <li><a [routerLink]="['find-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faUsers"></fa-icon>{{ 'NAV_FIND_LOBBY' | translate }}</a></li>
     </ul>
-    <p class="menu-label has-text-centered">Account</p>
+    <p class="menu-label has-text-centered">{{ 'NAV_ACCOUNT' | translate }}</p>
     <ul class="menu-list">
-      <li><a [routerLink]="['account']"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Account</a></li>
-      <li><a [routerLink]="['activity']"><fa-icon class="fa-lg mr-2" [icon]="faGlobe"></fa-icon>Activity</a></li>
-      <li><a [routerLink]="['settings']"><fa-icon class="fa-lg mr-2" [icon]="faCogs"></fa-icon>Settings</a></li>
-      <li><a [routerLink]="['help']"><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>Help</a></li>
-        <li><a (click)="logOut()"><fa-icon class="fa-lg mr-2" [icon]="faSignOutAlt"></fa-icon>Log Out</a></li>
+      <li><a [routerLink]="['account', user?.id]"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>{{ 'NAV_ACCOUNT' | translate }}</a></li>
+      <li><a [routerLink]="['activity']"><fa-icon class="fa-lg mr-2" [icon]="faGlobe"></fa-icon>{{ 'NAV_ACTIVITY' | translate }}</a></li>
+      <li><a [routerLink]="['settings']"><fa-icon class="fa-lg mr-2" [icon]="faCogs"></fa-icon>{{ 'NAV_SETTINGS' | translate }}</a></li>
+      <li><a [routerLink]="['help']"><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>{{ 'NAV_HELP' | translate }}</a></li>
+        <li><a (click)="logOut()"><fa-icon class="fa-lg mr-2" [icon]="faSignOutAlt"></fa-icon>{{ 'LOG_OUT' | translate }}</a></li>
     </ul>
+    <div class="flag-wrapper is-flex is-justify-content-center is-align-items-end">
+      <a (click)="changeLang('no')">
+          <div class="image is-32x32 mr-2">
+              <img src="https://img.icons8.com/color/452/norway-circular.png" alt="User Icon">
+          </div>
+      </a>
+      <a (click)="changeLang('en')">
+          <div class="image is-32x32 mr-2">
+              <img src="https://img.icons8.com/color/452/usa-circular.png" alt="User Icon">
+          </div>
+      </a>
+  </div>
   </div>
 </nav>

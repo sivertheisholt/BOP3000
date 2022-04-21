@@ -29,6 +29,7 @@ import { ActivityLogComponent } from './components/activity-log/activity-log.com
 import { ActivityLogResolver } from './_resolvers/activity-log-resolver.service';
 import { CreateLobbyGuard } from './_guards/create-lobby.guard';
 import { BlockedGuard } from './_guards/blocked.guard';
+import { DiscordConnectionGuard } from './_guards/discord-connection.guard';
 
 const routes: Routes = [
   { path: '', component: StartComponent, canActivate: [AuthGuard] },
@@ -40,7 +41,7 @@ const routes: Routes = [
   { path: 'account/:id', component: AccountComponent, canActivate: [UnAuthGuard, BlockedGuard] },
   { path: 'lobby/:id', component: LobbyComponent, canActivate:[UnAuthGuard, LobbyGuard], resolve: {lobby: LobbyResolver} },
   { path: 'archived-lobby/:id', component: ArchivedLobbyComponent, canActivate:[UnAuthGuard, ArchivedLobbyGuard], resolve: {lobby: LobbyResolver, user: UserResolver} },
-  { path: 'find-lobby', component: FindLobbyComponent, canActivate: [UnAuthGuard], resolve: {games: GamesResolver}},
+  { path: 'find-lobby', component: FindLobbyComponent, canActivate: [UnAuthGuard, DiscordConnectionGuard], resolve: {games: GamesResolver}},
   { path: 'game-lobby/:id', component: GameLobbyComponent, canActivate: [UnAuthGuard], resolve: {lobbies: LobbiesResolver}},
   { path: 'activity', component: ActivityLogComponent, canActivate: [UnAuthGuard], resolve: {activities: ActivityLogResolver }},
   { path: 'settings', component: SettingsComponent, canActivate: [UnAuthGuard], resolve: {countries: CountryResolver, user: UserResolver} },

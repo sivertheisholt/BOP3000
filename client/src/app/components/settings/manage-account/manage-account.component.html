@@ -1,37 +1,36 @@
-<h1 class="title p-3 text-is-light">Manage</h1>
+<h1 class="title p-3 text-is-light">{{ 'MANAGE' | translate }}</h1>
 <div class="manage-account-wrapper is-flex is-flex-direction-column">
     <section class="section text-is-light">
-        <h1 class="subtitle text-is-light">Request Data</h1>
+        <h1 class="subtitle text-is-light">{{ 'REQUEST_DATA' | translate }}</h1>
         <div class="mb-3">
-            If you would like to request a copy of the personal data you've given us over the lifetime of your account,
-            you can do so by clicking the "Request" button.
+            {{ 'REQUEST_DATA_INFO' | translate }}
             <ul class="request-list m-5">
-                <li>It may take up to 14 days.</li>
-                <li>You can't make a request while a request is pending.</li>
-                <li>When your data is ready, you will recieve an email containing the data.</li>
-                <li>Do not change your email while the request is pending. The data will be sent to the email address you had when you first requested the data.</li>
-                <li>If you delete your account, the request will be cancelled.</li>
+                <li>{{ 'REQUEST_DATA_INFO_ONE' | translate }}</li>
+                <li>{{ 'REQUEST_DATA_INFO_TWO' | translate }}</li>
+                <li>{{ 'REQUEST_DATA_INFO_THREE' | translate }}</li>
+                <li>{{ 'REQUEST_DATA_INFO_FOUR' | translate }}</li>
+                <li>{{ 'REQUEST_DATA_INFO_FIVE' | translate }}</li>
             </ul>
         </div>
-        <button class="button is-warning">Request</button>
+        <button class="button is-warning">{{ 'REQUEST' | translate }}</button>
     </section>
     <section class="section text-is-light">
-        <h1 class="subtitle text-is-light">Delete Account</h1>
+        <h1 class="subtitle text-is-light">{{ 'DELETE_ACCOUNT' | translate }}</h1>
         <div class="mb-3">
-            When you delete your account, your profile, history, connections, followers and likes will be permanently removed. This can not be undone. 
+            {{ 'DELETE_ACCOUNT_INFO' | translate }}
         </div>
-        <button class="button is-danger" (click)="toggleModal()" data-target="modal-delete-account">Delete Account</button>
+        <button class="button is-danger" (click)="toggleModal()" data-target="modal-delete-account">{{ 'DELETE_ACCOUNT' | translate }}</button>
     </section>
     <div id="modal-delete-account" class="modal" [ngClass]="status ? 'is-active' : ''">
         <div class="modal-background"></div>
         <div class="modal-content">
           <div class="box">
             <div class="box-text">
-                Are you sure you want to delete your account?
+                {{ 'DELETE_ACCOUNT_CONFIRM' | translate }}
             </div>
             <div class="button-wrapper p-3">
-                <button class="button is-danger mr-2" (click)="onDeleteAccount()">Delete Account</button>
-                <button class="button is-warning ml-2" (click)="toggleModal()">Cancel</button>
+                <button class="button is-danger mr-2" (click)="onDeleteAccount()">{{ 'DELETE_ACCOUNT' | translate }}</button>
+                <button class="button is-warning ml-2" (click)="toggleModal()">{{ 'CANCEL' | translate }}</button>
             </div>
           </div>
         </div>

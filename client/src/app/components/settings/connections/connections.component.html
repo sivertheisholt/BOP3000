@@ -1,14 +1,14 @@
-<h1 class="title p-3 text-is-light">Connections</h1>
+<h1 class="title p-3 text-is-light">{{ 'CONNECTIONS' | translate }}</h1>
 <div class="connections-settings-wrapper is-flex is-flex-direction-column">
     <section class="section">
-        <a *ngIf="!discordData?.connected" href="api/accounts/discord" class="button discordbtn">
-            <span>Link Your Discord</span>
+        <a *ngIf="!discordData?.connected" href="api/accounts/discord" target="_blank" rel="noopener" class="button discordbtn">
+            <span>{{ 'LINK_DISCORD' | translate }}</span>
             <div class="icon">
                 <img class="image is-64by64" src="../../../../assets/images/discord_icon.png" alt="Discord Icon">
             </div>
         </a>
         <button *ngIf="discordData?.connected" (click)="onDiscordUnlink()" type="button" class="button discordbtn">
-            <span>Unlink Your Discord</span>
+            <span>{{ 'UNLINK_DISCORD' | translate }}</span>
             <div class="icon">
                 <img class="image is-64by64" src="../../../../assets/images/discord_icon.png" alt="Discord Icon">
             </div>
@@ -17,28 +17,27 @@
             <div class="connected" *ngIf="discordData?.connected">
                 <fa-icon class="icon" [icon]="faCheckCircle"></fa-icon>
                 ID: 
-                <a class="ml-1" href="{{'https://discord.com/users/' + discordData?.discordId}}" rel="noopener">
+                <a class="ml-1" href="{{'https://discord.com/users/' + discordData?.discordId}}" target="_blank" rel="noopener">
                     {{ discordData?.discordId }}
                 </a>
             </div>
             <div *ngIf="discordData?.connected" class="check">
-                <input (click)="onDiscordHide($event)" type="checkbox" [checked]="discordData?.hidden"> Hide Discord from profile.
+                <input (click)="onDiscordHide($event)" type="checkbox" [checked]="discordData?.hidden"> {{ 'DISCORD_HIDE' | translate }}
             </div>
             <p>
-                By linking your Discord account, you acknowledge and agree that your Discord ID will be publicly visible in the Playfu API.
-                You may choose to hide this information from other users after connecting. If you do not want this information shared, please disconnect your account.
+                {{ 'DISCORD_TERMS' | translate }}
             </p>
         </div>
     </section>
     <section class="section">
-        <a *ngIf="!steamData?.connected" href="api/accounts/steam" type="button" class="button steambtn">
-            <span>Link Your Steam</span>
+        <a *ngIf="!steamData?.connected" href="api/accounts/steam" target="_blank" rel="noopener" type="button" class="button steambtn">
+            <span>{{ 'LINK_STEAM' | translate }}</span>
             <div class="icon">
                 <img class="image is-64by64" src="../../../../assets/images/steam-icon-blue.png" alt="Steam Icon">
             </div>
         </a>
         <button *ngIf="steamData?.connected" (click)="onSteamUnlink()" type="button" class="button steambtn">
-            <span>Unlink Your Steam</span>
+            <span>{{ 'UNLINK_STEAM' | translate }}</span>
             <div class="icon">
                 <img class="image is-64by64" src="../../../../assets/images/steam-icon-blue.png" alt="Steam Icon">
             </div>
@@ -47,16 +46,15 @@
             <div class="connected" *ngIf="steamData?.connected">
                 <fa-icon class="icon" [icon]="faCheckCircle"></fa-icon>
                 ID: 
-                <a class="ml-1" href="{{'https://steamcommunity.com/profiles/' + steamData?.steamid}}" rel="noopener">
+                <a class="ml-1" href="{{'https://steamcommunity.com/profiles/' + steamData?.steamid}}" target="_blank" rel="noopener">
                     {{ steamData?.steamid }}
                 </a>
             </div>
             <div *ngIf="steamData?.connected" class="check">
-                <input (click)="onSteamHide($event)" type="checkbox" [checked]="steamHidden"> Hide Steam from profile.
+                <input (click)="onSteamHide($event)" type="checkbox" [checked]="steamHidden"> {{ 'STEAM_HIDE' | translate }}
             </div>
             <p>
-                By linking your Steam account, you acknowledge and agree that your Steam ID will be publicly visible in the Playfu API.
-                You may choose to hide this information from other users after connecting. If you do not want this information shared, please disconnect your account.
+                {{ 'STEAM_TERMS' | translate }}
             </p>
         </div>
     </section>

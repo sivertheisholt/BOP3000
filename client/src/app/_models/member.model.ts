@@ -26,5 +26,8 @@ export interface Member{
             userFavoriteGames?: number[];
             finishedLobbies?: number[];
         }
+        memberCustomization: {
+            backgroundUrl?: string;
+        }
     }
 }

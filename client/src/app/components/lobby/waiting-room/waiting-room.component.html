@@ -1,6 +1,6 @@
 <div class="waiting-room-list">
     <div class="waiting-room-header">
-        Waiting to join...
+        {{ 'LOBBY_WAITING' |  translate }}
     </div>
     <div class="waiting-room-item" *ngFor="let user of usersInQueue">
         <div class="is-flex is-justify-content-center is-align-items-center mt-3">

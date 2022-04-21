@@ -1,14 +1,16 @@
 .lobby-history-list{
   width: 100%;
-  height: 200px;
+  min-width: 450px;
+  height: 400px;
+  overflow: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: rgba(37, 37, 37, 0.7);
 }
 
 .lobby-history-header{
-  background-color: rgb(175, 58, 58);
+  background-color: rgb(88, 15, 15);
   height: 40px;
+  font-size: 20px;
   color: white;
   justify-content: center;
   display: flex;

@@ -9,7 +9,6 @@ export class CountryResolver implements Resolve<any>{
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this.userSettingsService.getAllLanguages().pipe(
             map(response => {
-                console.log(response);
                 return response;
             })
         )

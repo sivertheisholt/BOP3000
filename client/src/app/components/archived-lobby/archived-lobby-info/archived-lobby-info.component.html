@@ -2,7 +2,7 @@
     <div class="header-lobby">
         <div class="header-lobby-game-title">
             <p class="subtitle text-is-light">{{ game?.name }}</p>
-            <p class="text-is-light mb-3">Lobbyid: {{ lobby?.id }}</p>
+            <p class="text-is-light mb-3">{{ 'LOBBYID' | translate }} {{ lobby?.id }}</p>
         </div>
         <div class="header-lobby-image is-flex">
             <img [src]="game?.headerImage" alt="Game Header Image">

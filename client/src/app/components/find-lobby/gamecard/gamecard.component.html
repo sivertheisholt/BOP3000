@@ -1,5 +1,5 @@
 <div class="has-text-centered">
-    <input class="input is-primary mt-2" type="text" (keyup)="onGameSearch($event)" placeholder="Search for a game..." #gameSearchInput>
+    <input class="input is-primary mt-2" type="text" (keyup)="onGameSearch($event)" placeholder="{{ 'SEARCH_FOR_GAME' | translate }}" #gameSearchInput>
 </div>
 
 <div class="games-container p-6">
@@ -12,7 +12,7 @@
             </div>
             <div class="card-content is-flex is-justify-content-center is-flex-direction-column has-text-centered">
                 <p class="">{{ game.name }}</p>
-                <p class="">Active Lobbies: {{ game.activeLobbies }}</p>
+                <p class="">{{ 'ACTIVE_LOBBIES' | translate }} {{ game.activeLobbies }}</p>
             </div>
         </a>
     </div>

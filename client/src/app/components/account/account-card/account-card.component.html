@@ -1,49 +1,51 @@
-<div class="has-text-centered is-flex is-justify-content-center">
-    <div class="image is-128x128">
-        <img class="is-rounded" [src]="user?.memberProfile?.memberPhoto?.url" alt="User Icon">
+<div class="account-card-wrapper">
+    <div class="has-text-centered is-flex is-justify-content-center">
+        <div class="image is-128x128">
+            <img class="is-rounded" [src]="user?.memberProfile?.memberPhoto?.url" alt="User Icon">
+        </div>
     </div>
-</div>
-<div class="error danger mt-3" *ngIf="imageHeightWidth || imageSize || errorStatus">
-    <div *ngIf="imageHeightWidth">Image can be maximum 500x500</div>
-    <div *ngIf="imageSize">Image must be less than 3mb</div>
-    <div *ngIf="errorStatus">You can only upload JPEG/JPG/PNG</div>
-</div>
-
-
-<div class="file mt-5 is-centered" *ngIf="user?.id == currentUser?.id">
-    <label class="file-label">
-        <input #imageInput class="file-input" type="file" accept="image/png, image/jpg, image/jpeg" (change)="onUploadProfilePicture($event)">
-        <span class="file-cta">
-            <span class="file-icon">
-                <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+    <div class="error danger mt-3" *ngIf="imageHeightWidth || imageSize || errorStatus">
+        <div *ngIf="imageHeightWidth">{{ 'IMAGE_UPLOAD_HEIGHT_WIDTH_ERROR' | translate }}</div>
+        <div *ngIf="imageSize">{{ 'IMAGE_UPLOAD_SIZE_ERROR' | translate }}</div>
+        <div *ngIf="errorStatus">{{ 'IMAGE_UPLOAD_TYPE_ERROR' | translate }}</div>
+    </div>
+    
+    
+    <div class="file mt-5 is-centered" *ngIf="user?.id == currentUser?.id">
+        <label class="file-label">
+            <input #imageInput class="file-input" type="file" accept="image/png, image/jpg, image/jpeg" (change)="onUploadProfilePicture($event)">
+            <span class="file-cta">
+                <span class="file-icon">
+                    <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+                </span>
+                <span class="file-label">
+                    {{ 'UPLOAD' | translate }}
+                </span>
             </span>
-            <span class="file-label">
-                Upload
-            </span>
-        </span>
-    </label>
-</div>
-<div class="is-flex is-flex-direction-column has-text-centered mt-5" *ngIf="user?.id != currentUser?.id">
-    <button class="sm-button is-dark" *ngIf="!isFollowing" (click)="onFollowUser()">Follow</button>
-    <button class="sm-button is-dark" *ngIf="isFollowing" (click)="onUnFollowUser()">Unfollow</button>
-    <button class="sm-button is-dark mt-2" *ngIf="!isBlocked" (click)="blockUser()">Block</button>
-    <button class="sm-button is-dark mt-2" *ngIf="isBlocked" (click)="unblockUser()">Unblock</button>
-</div>
-<div class="image-content mt-5 text-is-light">
-    <div class="following mb-3">
-        <p>FOLLOWING</p>
-        <p> {{ user?.memberProfile?.memberData?.following?.length }} </p>
+        </label>
     </div>
-    <div class="followers mb-3">
-        <p>FOLLOWERS</p>
-        <p> {{ user?.memberProfile?.memberData?.followers?.length }} </p>
+    <div class="is-flex is-flex-direction-column has-text-centered mt-5" *ngIf="user?.id != currentUser?.id">
+        <button class="sm-button is-dark" *ngIf="!isFollowing" (click)="onFollowUser()">{{ 'FOLLOW' | translate }}</button>
+        <button class="sm-button is-dark" *ngIf="isFollowing" (click)="onUnFollowUser()">{{ 'UNFOLLOW' | translate }}</button>
+        <button class="sm-button is-dark mt-2" *ngIf="!isBlocked" (click)="blockUser()">{{ 'BLOCK' | translate }}</button>
+        <button class="sm-button is-dark mt-2" *ngIf="isBlocked" (click)="unblockUser()">{{ 'UNBLOCK' | translate }}</button>
     </div>
-    <div class="thumbs-up mb-3">
-        <p><fa-icon class="fa-lg" [icon]="faThumbsUp"></fa-icon></p>
-        <p> {{ user?.memberProfile?.memberData?.upvotes }} </p>
-    </div>
-    <div class="thumbs-down">
-        <p><fa-icon class="fa-lg" [icon]="faThumbsDown"></fa-icon></p>
-        <p> {{ user?.memberProfile?.memberData?.downvotes }} </p>
+    <div class="image-content mt-5 text-is-light">
+        <div class="following mb-3">
+            <p>{{ 'FOLLOWING' | translate }}</p>
+            <p> {{ user?.memberProfile?.memberData?.following?.length }} </p>
+        </div>
+        <div class="followers mb-3">
+            <p>{{ 'FOLLOWERS' | translate }}</p>
+            <p> {{ user?.memberProfile?.memberData?.followers?.length }} </p>
+        </div>
+        <div class="thumbs-up mb-3">
+            <p><fa-icon class="fa-lg" [icon]="faThumbsUp"></fa-icon></p>
+            <p> {{ user?.memberProfile?.memberData?.upvotes }} </p>
+        </div>
+        <div class="thumbs-down">
+            <p><fa-icon class="fa-lg" [icon]="faThumbsDown"></fa-icon></p>
+            <p> {{ user?.memberProfile?.memberData?.downvotes }} </p>
+        </div>
     </div>
 </div>

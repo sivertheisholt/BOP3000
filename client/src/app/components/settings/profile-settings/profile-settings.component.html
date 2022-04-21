@@ -3,22 +3,22 @@
     <form [formGroup]="profileSettingsForm" (ngSubmit)="onSubmit()">
         <div class="is-flex is-flex-direction-column">
             <div class="control">
-                <label for="newusername">Change Username</label>
+                <label for="newusername">{{ 'CHANGE_USERNAME' | translate }}</label>
                 <input class="input mt-3 mb-3" id="newusername" type="text" formControlName="username" [value]="user?.username">
             </div>
             <div class="control">
-                <label for="newusername">Change Email</label>
+                <label for="newusername">{{ 'CHANGE_EMAIL' | translate }}</label>
                 <input class="input mt-3 mb-3" id="newemail" type="email" formControlName="email" [value]="user?.email">
             </div>
             <div class="field">
                 <div class="control">
-                    <label for="profiledesc">Bio</label>
+                    <label for="profiledesc">{{ 'BIO' | translate }}</label>
                     <textarea class="textarea has-fixed-size mt-3 mb-3" id="profiledesc" [value]="user.memberProfile?.description" formControlName="description"></textarea>
                 </div>
             </div>
             <div class="is-flex mt-3 mb-3 is-justify-content-space-between">
                 <div class="control dropdown-ng">
-                    <label for="location">Country</label>
+                    <label for="location">{{ 'COUNTRY' | translate }}</label>
                     <ng-select 
                         [items]="countries" 
                         bindLabel="name" 
@@ -30,10 +30,10 @@
                     </ng-select>
                 </div>
                 <div class="control dropdown-ng">
-                    <label for="gender">Gender</label>
+                    <label for="gender">{{ 'GENDER' | translate }}</label>
                     <ng-select 
-                        [items]="genders" 
-                        placeholder="Gender"
+                        [items]="genders"
+                        placeholder="{{ 'GENDER' | translate }}"
                         formControlName="gender"
                         [closeOnSelect]='true'
                         class="custom">
@@ -42,25 +42,35 @@
             </div>
 
             <div class="control">
-                <label for="date">Birthday</label>
+                <label for="date">{{ 'BIRTHDAY' | translate }}</label>
                 <div class="date-wrapper is-flex mt-3 mb-3">
                     <select name="" id="day" formControlName="dateDay" [value]="22">
                         <option *ngFor="let day of days" [value]="day"> {{ day }}</option>
                     </select>
-                    <!-- <input class="input day-input" id="day" type="text" placeholder="DD" maxlength="2" formControlName="dateDay"> -->
                     <div class="date-divider">-</div>
                     <select name="" id="day" formControlName="dateMonth">
                         <option *ngFor="let month of months" [value]="month"> {{ month }}</option>
                     </select>
-                    <!-- <input class="input month-input" id="month" type="text" placeholder="MM" maxlength="2" formControlName="dateMonth"> -->
                     <div class="date-divider">-</div>
                     <select name="" id="day" formControlName="dateYear">
                         <option *ngFor="let year of years" [value]="year"> {{ year }}</option>
                     </select>
-                    <!-- <input class="input year-input" id="year" type="text" placeholder="YYYY" maxlength="4" formControlName="dateYear"> -->
                 </div>
             </div>
         </div>
-        <button class="button is-success mt-5">Save</button>
+        <button class="button is-success mt-5">{{ 'SAVE' | translate }}</button>
     </form>
+</div>
+<h1 class="title p-3 mt-4 text-is-light">{{ 'ACCOUNT_CUSTOMIZATION' | translate }}</h1>
+<div class="account-customization-container text-is-light">
+    <div class="change-background-text p-3">
+        {{ 'CHANGE_BACKGROUND' | translate }}
+    </div>
+    <div class="image-template-wrapper is-flex">
+        <div class="image placeholder-img p-3" *ngFor="let image of customizationImages;">
+            <a (click)="onChangeAccountBg(image.backgroundUrl)">
+                <img [ngClass]="{'selected-img': selectedImgUrl == image.backgroundUrl}" [src]="image.iconUrl">
+            </a>
+        </div>
+    </div>
 </div>

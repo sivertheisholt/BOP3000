@@ -6,13 +6,43 @@ button {
     background: linear-gradient(90deg, rgba(29, 29, 29, 0.6) 0%, rgb(51, 51, 51) 100%);
 }
 
+.register-bg{
+    width: 100%;
+    height:100vh;
+    background:linear-gradient(
+      rgba(49, 49, 49, 0.93),
+      rgba(6, 32, 56, 0.999)
+    ),
+    url(https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/159520989/original/b0ccd1868f52407d823dbd9d42d48a684188e4b7/play-any-game-with-you.jpg);
+    background-size: cover;
+}
+
+.container{
+    height: 100%;
+}
+  
+
 .radio:hover{
     color: white;
 }
 
 .register-section{
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.loading {    
+    background-color: #ffffff;
+    background-image: url(../../../assets/spinner/Spin-1s-257px.gif);
+    background-size: 25px 25px;
+    background-position:right center;
+    background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 1023px) {
+    .register-bg{
+        height:100%;
+    }
 }

@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="lobby-chat-input is-flex">
-        <input class="input" type="text" (keydown.enter)="onSubmit()" placeholder="Type a message..." #chatMessage>
-        <button class="button is-success" (click)="onSubmit()">Send</button>
+        <input class="input" type="text" (keydown.enter)="onSubmit()" maxlength="100" placeholder="{{ 'SEND_MESSAGE_PLACEHOLDER' | translate }}" #chatMessage>
+        <button class="button is-success" (click)="onSubmit()">{{ 'SEND' | translate }}</button>
     </div>
 </div>

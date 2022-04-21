@@ -1,6 +1,7 @@
 .settings-container{
-    height: 100vh;
+    height: 100%;
     width: 100%;
+    background-color: rgb(53, 49, 49);
 }
 
 .content-wrapper{
@@ -25,4 +26,20 @@ a:hover{
 
 .tabs ul {
     justify-content: center;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+    
+::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+    
+::-webkit-scrollbar-thumb {
+    background: rgb(64, 75, 228);
+}
+    
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(92, 84, 84);
 }

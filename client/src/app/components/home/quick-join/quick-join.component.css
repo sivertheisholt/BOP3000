@@ -1,0 +1,43 @@
+.quick-join-list-container{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    min-width: 500px;
+}
+
+.quick-join-list-header{
+    display: flex;
+    background-color: #471616;
+    color: rgb(223, 223, 223);
+}
+
+.quick-join-list-item:nth-child(even){
+    display: flex;
+    color: rgb(223, 223, 223);
+    background-color: rgb(37, 37, 37);
+}
+
+.quick-join-list-item:nth-child(odd){
+    display: flex;
+    color: rgb(223, 223, 223);
+    background-color: rgb(63, 44, 44);
+}
+
+.quick-join-host{
+    width: 25%;
+}
+
+.quick-join-game{
+    width: 30%;
+}
+
+.quick-join-players{
+    width: 10%;
+}
+
+.quick-join-lobbyname{
+    width: 25%;
+}
+
+.quick-join-button{
+    width: 10%;
+}

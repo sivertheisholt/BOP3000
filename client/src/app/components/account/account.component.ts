@@ -16,18 +16,21 @@ export class AccountComponent implements OnInit {
   user?: Member;
   currentUser?: Member;
   finishedLobbies: Lobby[] = [];
+  bgUrl = '';
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private lobbyService: LobbyService, private gamesService: GamesService) {
+  constructor(private route: ActivatedRoute, private userService: UserService, private lobbyService: LobbyService) {
 
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(
       (val: any)  => {
+        this.finishedLobbies = [];
         this.userService.getSpecificUser(val.id).subscribe(
           (response) => {
             this.user = response;
-            response.memberProfile?.memberData?.finishedLobbies?.forEach(lobbyId => {
+            this.bgUrl = this.user.memberProfile?.memberCustomization.backgroundUrl!;
+            this.user.memberProfile?.memberData?.finishedLobbies?.forEach(lobbyId => {
               this.lobbyService.fetchLobbyWithId(lobbyId).subscribe(
                 (response) => {
                   this.finishedLobbies.push(response);

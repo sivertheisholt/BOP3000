@@ -4,4 +4,5 @@ export interface Game{
     headerImage: string;
     background: string;
     activeLobbies: number;
+    steamAppid: number;
 }

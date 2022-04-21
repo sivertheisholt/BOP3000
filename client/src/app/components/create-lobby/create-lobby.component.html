@@ -6,18 +6,28 @@
                 <div class="card-content">
                     <div class="game-wrapper">
                         <input class="input is-primary" type="text" placeholder="Search for a game..." #gameInput>
-                        <app-spinner></app-spinner>
                         <div class="results has-text-centered">
                             <div class="result-item" *ngFor="let game of games">
                                 <a (click)="selectGame(game)">{{ game.name }}</a>
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="!createLobbyForm.controls.gameId.valid && submitted" class="has-text-centered has-text-light">Choose a game</div>
+                    <div class="error danger mt-2" *ngIf="createLobbyForm.get('gameId')?.invalid && createLobbyForm.get('gameId')?.errors">
+                        <div *ngIf="createLobbyForm.get('gameId')?.hasError('required')">
+                            {{ 'REQUIRED_FIELD' | translate }}
+                        </div>
+                        <div *ngIf="createLobbyForm.get('gameId')?.hasError('noResult')">
+                            {{ 'NO_SEARCH_RESULTS' | translate }}
+                        </div>
+                    </div>
                     <label for="title"></label>
                     <input class="input is-normal mt-6" type="text" placeholder="Lobby name" name="title" formControlName="title">
-                    <div *ngIf="!createLobbyForm.controls.title.valid && submitted" class="has-text-centered has-text-light">Please include a short name for your lobby!</div>
-                    <textarea class="textarea is-primary mt-6" placeholder="Describe what you are looking for(optional)" formControlName="lobbyDescription"></textarea>
+                    <div class="error danger mt-2" *ngIf="createLobbyForm.get('title')?.invalid && createLobbyForm.get('title')?.errors && (createLobbyForm.get('title')?.dirty || createLobbyForm.get('title')?.touched)">
+                        <div *ngIf="createLobbyForm.get('title')?.hasError('required')">
+                            {{ 'CREATE_LOBBY_LOBBYNAME_ERROR' | translate }}
+                        </div>
+                    </div>
+                    <textarea class="textarea is-primary mt-6" placeholder="Describe what you are looking for(optional)" maxlength="160" formControlName="lobbyDescription"></textarea>
                     <div class="columns">
                         <div class="column is-half">
                             <ng-select 
@@ -28,22 +38,34 @@
                                 [closeOnSelect]='true'
                                 class="custom mt-6">
                         </ng-select>
-                        <div *ngIf="!createLobbyForm.controls.gameType.valid && submitted" class="has-text-centered has-text-light">Choose the type of lobby.</div>
+                        <div class="error danger mt-2" *ngIf="createLobbyForm.get('gameType')?.invalid && createLobbyForm.get('gameType')?.errors && (createLobbyForm.get('gameType')?.dirty || createLobbyForm.get('gameType')?.touched)">
+                            <div *ngIf="createLobbyForm.get('gameType')?.hasError('required')">
+                                {{ 'CREATE_LOBBY_LOBBYTYPE_ERROR' | translate }}
+                            </div>
+                        </div>
                         </div>
                         <div class="column is-half">
-                            <ng-select 
-                                [items]="selectedMaxplayers" 
-                                bindLabel="name" 
-                                placeholder="How many players including yourself?"
-                                formControlName="maxUsers"
-                                [closeOnSelect]='true'
-                                class="custom mt-6">
-                            </ng-select>
-                            <div *ngIf="!createLobbyForm.controls.maxUsers.valid && submitted" class="has-text-centered has-text-light">Amount of players your looking for.</div>
+                            <input class="input is-normal mt-6" type="text" placeholder="How many players including yourself?" name="title" formControlName="title" formControlName="maxUsers">
+                            <div class="error danger mt-2" *ngIf="createLobbyForm.get('maxUsers')?.invalid && createLobbyForm.get('maxUsers')?.errors && (createLobbyForm.get('maxUsers')?.dirty || createLobbyForm.get('maxUsers')?.touched)">
+                                <div *ngIf="createLobbyForm.get('maxUsers')?.hasError('required')">
+                                    {{ 'REQUIRED_FIELD' | translate }}
+                                </div>
+                                <div *ngIf="createLobbyForm.get('maxUsers')?.hasError('onlyNumber')">
+                                    {{ 'CREATE_LOBBY_DIGITS_ERROR' | translate }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <button class="button create-lobby-button is-normal text-is-light" type="submit">Create Lobby</button>
-                    <button class="button go-back-btn is-normal text-is-light mt-5" type="button" routerLink="../home">Cancel</button>
+                    <div *ngIf="createLobbyForm.invalid && createLobbyForm.errors">
+                        <div class="error danger m-2" *ngIf="createLobbyForm.hasError('missingFields')">
+                          {{ 'ALL_FIELDS_REQUIRED' | translate }}
+                        </div>
+                        <div class="error danger m-2" *ngIf="createLobbyForm.hasError('serverError')">
+                            {{ 'SOMETHING_WENT_WRONG' | translate }}
+                        </div>
+                    </div>
+                    <button class="button create-lobby-button is-normal text-is-light" type="submit">{{ 'CREATE_LOBBY' | translate }}</button>
+                    <button class="button go-back-btn is-normal text-is-light mt-5" type="button" routerLink="../home">{{ 'CANCEL' | translate }}</button>
                 </div>
             </div> 
         </form>

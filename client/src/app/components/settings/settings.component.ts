@@ -10,7 +10,9 @@ import { ConnectionService } from 'src/app/_services/connection.service';
 export class SettingsComponent implements OnInit {
   viewMode = 'tab1';
   constructor(private route: ActivatedRoute, private connectionService: ConnectionService) { 
-    console.log(this.route.snapshot.queryParamMap);
+    if(this.route.snapshot.queryParams.viewMode != null){
+      this.viewMode = this.route.snapshot.queryParams.viewMode;
+    }
     if(this.route.snapshot.queryParams.success != null){
       if(this.route.snapshot.queryParams.provider == "discord") this.discordSuccess()
       if(this.route.snapshot.queryParams.provider == "steam") this.steamSuccess();

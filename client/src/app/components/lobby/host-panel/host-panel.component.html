@@ -1,13 +1,12 @@
 <div class="host-panel-wrapper is-flex is-justify-content-center is-flex-direction-column is-align-items-center">
-    <h1 class="subtitle text-is-light">Only the creator of this lobby can see this.</h1>
     <div class="p-2">
-        <button class="button is-success" data-target="modal-ready-check" [disabled]="lobby?.maxUsers != totalParty" (click)="startReadyCheck()">Ready Check</button>
+        <button class="button is-success" data-target="modal-ready-check" [disabled]="lobby?.maxUsers != totalParty" (click)="startReadyCheck()">{{ 'LOBBY_READY_CHECK' | translate }}</button>
     </div>
     <div class="p-2">
-        <button class="button is-danger" data-target="modal-end-lobby" (click)="confirmEndLobby()">End Lobby</button>
+        <button class="button is-danger" data-target="modal-end-lobby" (click)="confirmEndLobbyModal()">{{ 'LOBBY_END_LOBBY' | translate }}</button>
     </div>
     <div class="p-2">
-        <button class="button is-danger">Contact Admin</button>
+        <button class="button is-danger">{{ 'LOBBY_CONTACT_ADMIN' | translate }}</button>
     </div>
     <div id="modal-ready-check" class="modal" [ngClass]="readyCheckModal ? 'is-active' : ''">
         <div class="modal-background"></div>
@@ -15,12 +14,12 @@
           <div class="box is-flex is-justify-content-center is-align-items-center is-flex-direction-column">
                 <div class="subtitle">
                     <p class="is-flex is-justify-content-center numberCircle">{{ start }}</p>
-                    <p>The host has started a ready check...</p>
+                    <p>{{ 'LOBBY_READY_CHECK_TEXT' | translate }}</p>
                 </div>
                 <div class="users-ready-status p-3 mb-3">
                     <div class="users-count-item">
                         {{ usersAccepted }} / {{ totalParty }}
-                        <div class="error danger mt-3" *ngIf="userDeclined != 0">Someone has declined... Going back to lobby...</div>
+                        <div class="error danger mt-3" *ngIf="userDeclined != 0">{{ 'LOBBY_DECLINED_ERROR' | translate }}</div>
                         <fa-icon *ngIf="!accepted && !declined" class="fa-lg mt-2" [icon]="faCheckCircle"></fa-icon>
                         <fa-icon *ngIf="accepted" class="fa-lg mt-2" [ngStyle]="{ 'color': ( 'green' )  }" [icon]="faCheckCircle"></fa-icon>
                         <fa-icon *ngIf="declined" class="fa-lg mt-2" [ngStyle]="{ 'color': ( 'red' ) }" [icon]="faCheckCircle"></fa-icon>
@@ -34,11 +33,11 @@
         <div class="modal-content">
           <div class="box is-flex is-justify-content-center is-align-items-center is-flex-direction-column">
                 <div class="subtitle">
-                    <p>Are you sure you want to end the lobby?</p>
+                    <p>{{ 'LOBBY_END_LOBBY_TEXT' | translate }}</p>
                 </div>
                 <div class="">
-                    <button class="button is-danger">End</button>
-                    <button class="button is-info" (click)="closeEndLobbyModal()">Go back</button>
+                    <button class="button is-danger" (click)="confirmEndLobby()">{{ 'LOBBY_END' | translate }}</button>
+                    <button class="button is-info" (click)="closeEndLobbyModal()">{{ 'GO_BACK' | translate }}</button>
                 </div>
             </div>
         </div>

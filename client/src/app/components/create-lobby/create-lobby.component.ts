@@ -3,9 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { GameSearch } from 'src/app/_models/game-search.model';
 import { GamesService } from 'src/app/_services/games.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
-import { SpinnerService } from 'src/app/_services/spinner.service';
+import { CustomValidator } from 'src/app/_validators/custom-validator';
 
 @Component({
   selector: 'app-create-lobby',
@@ -15,26 +16,25 @@ import { SpinnerService } from 'src/app/_services/spinner.service';
 export class CreateLobbyComponent implements OnInit {
   createLobbyForm!: FormGroup;
   submitted = false;
-  games: any;
+  games: GameSearch[] = [];
   selectedType = ['Fun', 'Competitive', 'Ranked', 'Tryhard', 'Chill'];
-  selectedMaxplayers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16, 17, 18, 19, 20];
 
 
   model: any = {};
 
   @ViewChild('gameInput', {static: true}) gameInput? : ElementRef;
 
-  constructor(private lobbyService: LobbyService, private gamesService: GamesService, private router: Router, private spinnerService: SpinnerService) {
+  constructor(private lobbyService: LobbyService, private gamesService: GamesService, private router: Router) {
 
   }
 
   ngOnInit(): void {
     this.createLobbyForm = new FormGroup({
-      gameId: new FormControl(null),
+      gameId: new FormControl(null, [Validators.required]),
       title: new FormControl(null, [Validators.required]),
       lobbyDescription: new FormControl(null),
       gameType: new FormControl(null, [Validators.required]),
-      maxUsers: new FormControl(null, [Validators.required]),
+      maxUsers: new FormControl(null, [Validators.required, CustomValidator.patternValidator(/^[0-9]*$/, { onlyNumber: true })]),
       lobbyRequirement: new FormGroup({
         gender: new FormControl(null)
       })
@@ -42,41 +42,48 @@ export class CreateLobbyComponent implements OnInit {
 
     fromEvent(this.gameInput?.nativeElement, 'keyup').pipe(
       map((event: any) => {
-        if(event.target.value == ''){
+        console.log(event.target.value.length);
+        if(event.target.value.length > 1){
           this.games = [];
-          this.spinnerService.resetSpinner();
-          this.spinnerService.requestEnded();
+          this.gameInput?.nativeElement.classList.add('loading');
           return event.target.value;
+        } else {
+          this.gameInput?.nativeElement.classList.remove('loading');
         }
-        this.spinnerService.requestStarted();
-        return event.target.value;
       })
-      ,filter(response => response.length > 2)
+      ,filter(response => response != undefined)
       , debounceTime(1000)
       ,distinctUntilChanged()
     ).subscribe((input: string) => {
       this.gamesService.searchGame(input).subscribe((response) => {
-        this.spinnerService.resetSpinner();
-        this.spinnerService.requestEnded();
+        if(response.length == 0){
+          this.gameInput?.nativeElement.classList.remove('loading');
+          this.createLobbyForm.get('gameId')?.setErrors({'noResult': 'Game not found.'});
+          return;
+        }
+        this.gameInput?.nativeElement.classList.remove('loading');
         this.games = response;
+        return;
       }, (err) => {
-        this.spinnerService.requestEnded();
-        console.log(err);
+        this.gameInput?.nativeElement.classList.remove('loading');
       })
     })
   }
 
   onSubmit(){
-    this.submitted = true;
-    this.lobbyService.postLobby(this.createLobbyForm.value).subscribe(
-      (res) => {
-        //Redirect bruker til det nye rommet
-        console.log(res);
-        this.router.navigate(['lobby', res.id]);
-      }, err => {
-        console.log(err);
-      }
-    )
+    if(this.createLobbyForm.valid){
+      this.lobbyService.postLobby(this.createLobbyForm.value).subscribe(
+        (res) => {
+          this.router.navigate(['lobby', res.id]);
+        }, err => {
+          this.createLobbyForm.setErrors({'serverError': 'Something went wrong.'});
+        }
+      )
+    } else {
+      this.createLobbyForm.setErrors({'missingFields': 'Have you filled every field thats required?'});
+      console.log(this.createLobbyForm);
+    }
+
   }
 
   selectGame(game: any){

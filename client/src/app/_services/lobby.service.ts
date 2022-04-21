@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, retry } from "rxjs/operators";
+import { catchError, map, retry } from "rxjs/operators";
 import { Lobby } from "../_models/lobby.model";
 import { QueueStatus } from "../_models/queuestatus.model";
 import { environment } from '../../environments/environment';
@@ -28,8 +28,26 @@ export class LobbyService{
         return this.http.get<Lobby[]>(this.baseUrl + 'lobbies');
     }
 
-    fetchAllLobbiesWithGameId(id: number){
-        return this.http.get<Lobby[]>(this.baseUrl + 'lobbies/game/' + id);
+    fetchAllLobbiesWithGameId(id: number, pageNumber: number, pageSize: number){
+        return this.http.get<Lobby[]>(this.baseUrl + 'lobbies/game/' + id, {
+            params: {
+                pageNumber: pageNumber,
+                pageSize: pageSize
+            }
+        });
+    }
+
+    fetchAllLobbiesWithGameIdTest(id: number, pageNumber: number, pageSize: number){
+        return this.http.get<Lobby[]>(this.baseUrl + 'lobbies/game/' + id, {
+            params: {
+                pageNumber: pageNumber,
+                pageSize: pageSize
+            }
+        }).pipe(
+            map((res) => {
+                return res;
+            })
+        );
     }
 
     getQueueStatus(){
@@ -54,6 +72,14 @@ export class LobbyService{
                 return response;
             })
         );
+    }
+
+    upvoteUser(lobbyId: number, uid: number){
+        return this.http.patch(this.baseUrl + 'lobbies/' + lobbyId + '/upvote/' + uid, '');
+    }
+
+    downvoteUser(lobbyId: number, uid: number){
+        return this.http.patch(this.baseUrl + 'lobbies/' + lobbyId + '/downvote/' + uid, '');
     }
 
     

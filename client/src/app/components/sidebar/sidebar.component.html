@@ -1,21 +1,34 @@
 <aside class="sidebar">
     <div class="ml-3 sidebar-items">
-        <p class="menu-label has-text-centered mt-5">Navigation</p>
+        <p class="menu-label has-text-centered mt-5">{{ 'NAV_NAVIGATION' | translate }}</p>
         <ul class="menu-list">
-            <li><a [routerLink]="['home']"><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>Home</a></li>
+            <li><a [routerLink]="['home']"><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>{{ 'NAV_HOME' | translate }}</a></li>
         </ul>
-        <p class="menu-label has-text-centered">Matchmaking</p>
+        <p class="menu-label has-text-centered">{{ 'NAV_MATCHMAKING' | translate }}</p>
         <ul class="menu-list">
-            <li><a [routerLink]="['create-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>Create Lobby</a></li>
-            <li><a [routerLink]="['find-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faUsers"></fa-icon>Find Lobby</a></li>
+            <li><a [routerLink]="['create-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>{{ 'NAV_CREATE_LOBBY' | translate }} </a></li>
+            <li><a [routerLink]="['find-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faUsers"></fa-icon>{{ 'NAV_FIND_LOBBY' | translate }}</a></li>
         </ul>
-        <p class="menu-label has-text-centered">Account</p>
+        <p class="menu-label has-text-centered">{{ 'NAV_ACCOUNT' | translate }}</p>
         <ul class="menu-list">
-            <li><a [routerLink]="['account', user?.id]"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>Account</a></li>
-            <li><a [routerLink]="['activity']"><fa-icon class="fa-lg mr-2" [icon]="faGlobe"></fa-icon>Activity</a></li>
-            <li><a [routerLink]="['settings']"><fa-icon class="fa-lg mr-2" [icon]="faCogs"></fa-icon>Settings</a></li>
-            <li><a [routerLink]="['help']"><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>Help</a></li>
-            <li><a (click)="logOut()"><fa-icon class="fa-lg mr-2" [icon]="faSignOutAlt"></fa-icon>Log Out</a></li>
+            <li><a [routerLink]="['account', user?.id]"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>{{ 'NAV_ACCOUNT' | translate }}</a></li>
+            <li><a [routerLink]="['activity']"><fa-icon class="fa-lg mr-2" [icon]="faGlobe"></fa-icon>{{ 'NAV_ACTIVITY' | translate }}</a></li>
+            <li><a [routerLink]="['settings']"><fa-icon class="fa-lg mr-2" [icon]="faCogs"></fa-icon>{{ 'NAV_SETTINGS' | translate }}</a></li>
+            <li><a [routerLink]="['help']"><fa-icon class="fa-lg mr-2" [icon]="faQuestionCircle"></fa-icon>{{ 'NAV_HELP' | translate }}</a></li>
+            <li><a (click)="logOut()"><fa-icon class="fa-lg mr-2" [icon]="faSignOutAlt"></fa-icon>{{ 'LOG_OUT' | translate }}</a></li>
         </ul>
+
+    </div>
+    <div class="flag-wrapper is-flex is-justify-content-center is-align-items-end">
+        <a (click)="changeLang('no')">
+            <div class="image is-32x32 mr-2">
+                <img src="https://img.icons8.com/color/452/norway-circular.png" alt="User Icon">
+            </div>
+        </a>
+        <a (click)="changeLang('en')">
+            <div class="image is-32x32 mr-2">
+                <img src="https://img.icons8.com/color/452/usa-circular.png" alt="User Icon">
+            </div>
+        </a>
     </div>
 </aside>

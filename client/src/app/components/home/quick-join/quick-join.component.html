@@ -1,0 +1,32 @@
+<div class="container">
+    <h1 class="title has-text-centered has-text-light">{{ 'QUICK_JOIN_TITLE' | translate }}</h1>
+    <div class="quick-join-list-container">
+        <div class="quick-join-list-header p-2">
+            <div class="quick-join-host">{{ 'HOST' | translate }}</div>
+            <div class="quick-join-game">{{ 'GAME' | translate }}</div>
+            <div class="quick-join-lobbyname">{{ 'LOBBY_NAME' | translate }}</div>
+            <div class="quick-join-players">{{ 'PLAYERS' | translate }}</div>
+            <div class="quick-join-button"></div>
+        </div>
+        <div class="quick-join-list-item p-2" *ngFor="let lobby of gameRooms">
+            <div class="quick-join-host is-flex">
+                <div class="image is-32x32 mr-2 is-flex is-align-items-center">
+                    <img class="is-rounded" [src]="lobby.adminProfilePic" alt="User Image">
+                </div>
+                <div class="is-flex is-align-items-center">
+                    {{ lobby.adminUsername }}
+                </div>
+            </div>
+            <div class="quick-join-game is-flex is-align-items-center">
+                {{ lobby.gameName }}
+            </div>
+            <div class="quick-join-lobbyname is-flex is-align-items-center">
+                {{ lobby.title }}
+            </div>
+            <div class="quick-join-players is-flex is-align-items-center">
+                {{ lobby.users.length }} / {{ lobby.maxUsers }}
+            </div>
+            <a (click)="requestToJoin(lobby.id)" class="button quick-join-button is-success">{{ 'JOIN' | translate }}</a>
+        </div>
+    </div>
+</div>

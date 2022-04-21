@@ -1,6 +1,6 @@
 <div class="joined-users-list">
     <div class="joined-users-header">
-        <div class="header-text">Party</div>
+        <div class="header-text">{{ 'PARTY' | translate }}</div>
         <div class="party-size">{{ totalParty }} / {{ lobby.maxUsers }}</div>
     </div>
     <div class="joined-users-item" *ngFor="let user of usersInParty; let i = index;">
@@ -20,7 +20,7 @@
             </div>
             <div class="quarter-width is-flex is-align-items-center is-justify-content-center">
                 <div *ngIf="currentUser?.id == lobby.adminUid && user.id != lobby.adminUid">
-                    <a (click)="kickFromParty(user.id!)">Remove</a>
+                    <a (click)="kickFromParty(user.id!)">{{ 'REMOVE' | translate }}</a>
                 </div>
             </div>
         </div>

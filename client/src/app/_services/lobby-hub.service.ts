@@ -23,6 +23,7 @@ export class LobbyHubService {
   acceptedReadyCheckMembers = new Subject<number[]>();
   declinedReadyCheckMembers = new Subject<number>();
   lobbyStart = new BehaviorSubject<string>('');
+  inQueue = new BehaviorSubject<string>('notInQueue');
 
   acceptedMembers$ = this.acceptedMembers.asObservable();
   lobbyQueueMembers$ = this.lobbyQueueMembers.asObservable();
@@ -33,8 +34,9 @@ export class LobbyHubService {
   acceptedReadyCheckMembers$ = this.acceptedReadyCheckMembers.asObservable();
   declinedReadyCheckMembers$ = this.declinedReadyCheckMembers.asObservable();
   lobbyStart$ = this.lobbyStart.asObservable();
+  inQueue$ = this.inQueue.asObservable();
 
-  constructor(private router: Router, private notificationService: NotificationService, private route: ActivatedRoute) {}
+  constructor(private router: Router, private notificationService: NotificationService) {}
 
   createHubConnection(token: string) {
     this.connectionStatus = new Promise(resolve => {
@@ -55,21 +57,33 @@ export class LobbyHubService {
       
       // Member that is accepted will get this
       this.hubConnection.on('Accepted', id => {
-        this.notificationService.setNewNotification('You have been accepted to the lobby.');
+        this.inQueue.next('accepted');
+        this.notificationService.setNewNotification({type: 'success', message: 'You have been accepted to the lobby. Check your notifications to go directly to the lobby.', lobbyId: id});
       });
       // Member that is declined will get this
       this.hubConnection.on('Declined', id => {
-        this.notificationService.setNewNotification('You have been declined from the lobby.');
+        this.inQueue.next('notInQueue');
+        this.notificationService.setNewNotification({type: 'info', message: 'You have been declined from the lobby.'});
       });
       // Member that is banned will get this
       this.hubConnection.on('Banned', id => {
+        this.inQueue.next('notInQueue');
         this.redirectUser(this.router.url, +id);
-        this.notificationService.setNewNotification('You have been banned from the lobby.');
+        this.notificationService.setNewNotification({type: 'error', message: 'You have been banned from the lobby.'});
       });
       // Member that is kicked will get this
       this.hubConnection.on('Kicked', id => {
+        this.inQueue.next('notInQueue');
         this.redirectUser(this.router.url, +id);
-        this.notificationService.setNewNotification('You have been removed from the lobby.');
+        this.notificationService.setNewNotification({type: 'error', message: 'You have been kicked from the lobby.'});
+      });
+      this.hubConnection.on('InQueue', () => {
+        this.inQueue.next('inQueue');
+        this.notificationService.setNewNotification({type: 'info', message: 'You have requested to join a lobby.'});
+      });
+
+      this.hubConnection.on("NotInDiscordServer", id => {
+        console.log("User with id: " + id);
       });
 
       // Everyone in lobby will get this
@@ -123,17 +137,30 @@ export class LobbyHubService {
         this.acceptedReadyCheckMembers.next(id);
         console.log("User with id: " + id + " accepted ready check!");
       });
+      
+      this.hubConnection.on("FullLobby", () => {
+        this.notificationService.setNewNotification({type: 'error', message: "Can't accept new members, lobby is full"});
+      });
+
+      this.hubConnection.on("EndedLobby", id => {
+        this.notificationService.setNewNotification({type: 'error', message: "Lobby was ended by the host."});
+        this.redirectUser(this.router.url, id);
+      });
 
       this.hubConnection.on("LobbyStarted", url => {
-        console.log(url);
-        console.log("Lobby starting...");
         this.lobbyStart.next(url);
       });
-      this.hubConnection.on("LobbyCancelled", () => {
-        console.log("Lobby cancelled...");
+
+      this.hubConnection.on("QueueKicked", () => {
+        this.notificationService.setNewNotification({type: 'info', message: 'Left queue as lobby has started.'});
       });
-      this.hubConnection.on("RedirectFinished", () => {
-        console.log("Lobby cancelled...");
+      
+      this.hubConnection.on("LobbyCancelled", () => {
+        console.log("Ready check cancelled...");
+      });
+
+      this.hubConnection.on("RedirectFinished", id => {
+        this.redirectUserAfterFinished(this.router.url, id);
       });
 
       // Only caller will get this
@@ -201,6 +228,12 @@ export class LobbyHubService {
     await this.connectionStatus;
     this.hubConnection.invoke("DeclineCheck", lobbyId);
   }
+  async endLobby(lobbyId: number){
+    await this.connectionStatus;
+    this.hubConnection.invoke("EndLobby", lobbyId);
+  }
+
+  
 
 
   stopHubConnection() {
@@ -213,9 +246,16 @@ export class LobbyHubService {
 
   redirectUser(currentUrl: string, lobbyId: number){
     const lobbyUrl: string = '/lobby/' + lobbyId;
-    console.log(lobbyUrl);
     if(currentUrl == lobbyUrl){
       this.router.navigate(['..']);
+    }
+    return;
+  }
+
+  redirectUserAfterFinished(currentUrl: string, lobbyId: number){
+    const lobbyUrl: string = '/lobby/' + lobbyId;
+    if(currentUrl == lobbyUrl){
+      this.router.navigate(['archived-lobby/' + lobbyId]);
     }
     return;
   }

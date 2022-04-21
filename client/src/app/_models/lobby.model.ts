@@ -14,6 +14,11 @@ export interface Lobby{
     adminUsername?: string;
     adminProfilePic?: string;
     finished?: boolean;
+    votes?: [{
+        voterUid: number;
+        votedUid: number;
+        upvote: boolean;
+    }];
     lobbyRequirement: {
         gender?: string;
     };
