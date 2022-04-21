@@ -47,6 +47,9 @@ fetch("https://bop3000.azurewebsites.net/api/members", requestOptions)
         "userFavoriteGames": [2, 3, 4, 6, 7],
         "finishedLobbies": [2, 3, 4, 6, 7]
       },
+      "memberCustomization": {
+        "backgroundUrl": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+      },
       "memberPhoto": {
         "id": 2,
         "url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1648988522/qyf8mc0optfwaebzj0cp.png"
@@ -79,15 +82,16 @@ This endpoint retrieves all members.
 
 #### MemberProfile
 
-| Key         | Type        |
-| ----------- | ----------- |
-| birthday    | string      |
-| age         | int         |
-| gender      | string      |
-| description | string      |
-| countryIso  | CountryIso  |
-| memberPhoto | MemberPhoto |
-| memberData  | MemberData  |
+| Key                 | Type                |
+| ------------------- | ------------------- |
+| birthday            | string              |
+| age                 | int                 |
+| gender              | string              |
+| description         | string              |
+| countryIso          | CountryIso          |
+| memberPhoto         | MemberPhoto         |
+| memberData          | MemberData          |
+| memberCustomization | MemberCustomization |
 
 #### CountryIso
 
@@ -116,6 +120,12 @@ This endpoint retrieves all members.
 | following         | int[] |
 | userFavoriteGames | int[] |
 | finishedLobbies   | int[] |
+
+#### MemberCustomizaiton
+
+| Key           | Type   |
+| ------------- | ------ |
+| backgroundUrl | string |
 
 ## GET A specific member
 
@@ -161,6 +171,9 @@ fetch("https://bop3000.azurewebsites.net/api/members/1", requestOptions)
       "userFavoriteGames": [2, 3, 4, 6, 7],
       "finishedLobbies": [2, 3, 4, 6, 7]
     },
+    "memberCustomization": {
+      "backgroundUrl": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+    },
     "memberPhoto": {
       "id": 2,
       "url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1648988522/qyf8mc0optfwaebzj0cp.png"
@@ -191,15 +204,15 @@ This endpoint retrieves a specific member.
 
 #### MemberProfile
 
-| Key         | Type        |
-| ----------- | ----------- |
-| birthday    | string      |
-| age         | int         |
-| gender      | string      |
-| description | string      |
-| countryIso  | CountryIso  |
-| memberPhoto | MemberPhoto |
-| memberData  | MemberData  |
+| Key                 | Type                |
+| ------------------- | ------------------- |
+| birthday            | string              |
+| age                 | int                 |
+| gender              | string              |
+| description         | string              |
+| countryIso          | CountryIso          |
+| memberPhoto         | MemberPhoto         |
+| memberCustomization | MemberCustomization |
 
 #### CountryIso
 
@@ -228,6 +241,12 @@ This endpoint retrieves a specific member.
 | following         | int[] |
 | userFavoriteGames | int[] |
 | finishedLobbies   | int[] |
+
+#### MemberCustomizaiton
+
+| Key           | Type   |
+| ------------- | ------ |
+| backgroundUrl | string |
 
 ## GET Current member info
 
@@ -272,6 +291,9 @@ fetch("https://bop3000.azurewebsites.net/api/members/current", requestOptions)
       "userFavoriteGames": [2, 3, 4, 6, 7],
       "finishedLobbies": [2, 3, 4, 6, 7]
     },
+    "memberCustomization": {
+      "backgroundUrl": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+    },
     "memberPhoto": {
       "id": 2,
       "url": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1648988522/qyf8mc0optfwaebzj0cp.png"
@@ -296,15 +318,16 @@ This endpoint retrieves the current member.
 
 #### MemberProfile
 
-| Key         | Type        |
-| ----------- | ----------- |
-| birthday    | string      |
-| age         | int         |
-| gender      | string      |
-| description | string      |
-| countryIso  | CountryIso  |
-| memberPhoto | MemberPhoto |
-| memberData  | MemberData  |
+| Key                 | Type                |
+| ------------------- | ------------------- |
+| birthday            | string              |
+| age                 | int                 |
+| gender              | string              |
+| description         | string              |
+| countryIso          | CountryIso          |
+| memberPhoto         | MemberPhoto         |
+| memberData          | MemberData          |
+| memberCustomization | Membercustomization |
 
 #### CountryIso
 
@@ -333,6 +356,12 @@ This endpoint retrieves the current member.
 | following         | int[] |
 | userFavoriteGames | int[] |
 | finishedLobbies   | int[] |
+
+#### MemberCustomization
+
+| Key           | Type   |
+| ------------- | ------ |
+| backgroundUrl | string |
 
 ## GET Current member lobby status
 
