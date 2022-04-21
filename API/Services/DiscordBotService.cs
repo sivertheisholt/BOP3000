@@ -87,7 +87,9 @@ namespace API.Services
 
             var guild = _client.GetGuild(_playfuGuildId);
 
-            if (guild.GetUser(userId) == null) return false;
+            var users = await guild.GetUsersAsync().FirstAsync();
+
+            if (users.Where(x => x.Id == userId) == null) return false;
 
             return true;
         }
