@@ -135,6 +135,8 @@ namespace API.SignalR
             await _lobbyTracker.MemberLeftQueueLobby(lobbyId, uid);
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftQueue", uid);
+            await Clients.Caller.SendAsync("CancelQueue");
+
         }
 
         public async Task LeaveLobby(int lobbyId)
@@ -146,8 +148,9 @@ namespace API.SignalR
             await _lobbyTracker.MemberLeftLobby(lobbyId, uid);
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftLobby", uid);
+            await Clients.Caller.SendAsync("CancelLobby");
         }
-
+        
         public async Task StartCheck(int lobbyId)
         {
             var uid = Context.User.GetUserId();
