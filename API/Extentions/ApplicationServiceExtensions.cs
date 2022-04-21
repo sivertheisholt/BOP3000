@@ -28,12 +28,15 @@ namespace API.Extentions
             services.AddHttpClient<ISteamStoreClient, SteamStoreClient>();
             services.AddHttpClient<IDiscordApiClient, DiscordApiClient>();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddSingleton<IEmailService, EmailService>();
             services.AddSingleton<IMeilisearchService, MeilisearchService>();
+            services.AddScoped<IFileService, FileService>();
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSingleton<IDiscordBotService, DiscordBotService>();
 

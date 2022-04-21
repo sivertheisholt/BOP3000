@@ -33,6 +33,8 @@ namespace API.Services
 
             var channel = await guild.CreateVoiceChannelAsync(channelName, prop => prop.CategoryId = 961239473683853402);
 
+
+
             await channel.SyncPermissionsAsync();
 
             // Add users to permissions
@@ -54,6 +56,7 @@ namespace API.Services
             _client = new DiscordSocketClient();
             _client.Log += Logger.Log;
             _client.Ready += ReadyAsync;
+            //_client.ChannelUpdated += OnchannelUpdated;
             // Login and connect.
 
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -88,8 +91,6 @@ namespace API.Services
             var guild = _client.GetGuild(_playfuGuildId);
 
             var users = await guild.GetUsersAsync().FirstAsync();
-
-            Console.WriteLine(users.Where(x => x.Id == userId));
 
             if (users.Where(x => x.Id == userId).FirstOrDefault() == null) return false;
 

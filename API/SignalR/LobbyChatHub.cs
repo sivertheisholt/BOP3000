@@ -33,7 +33,6 @@ namespace API.SignalR
         {
             var httpContext = Context.GetHttpContext();
             var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
-            Console.WriteLine(lobbyId);
             var uid = Context.User.GetUserId();
 
             if (!await _lobbyChatTracker.CheckIfChatExists(1))

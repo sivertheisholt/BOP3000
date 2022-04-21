@@ -82,7 +82,7 @@ namespace API.Controllers
                     },
                     AccountCustomization = new AppUserCustomization
                     {
-                        BackgroundUrl = "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"
+                        BackgroundUrl = "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650544575/AccountBackgrounds/pexels-suzukii-xingfu-698319_brqyfl.jpg"
                     },
                     UserConnections = new AppUserConnections
                     {
@@ -313,8 +313,6 @@ namespace API.Controllers
 
             var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
             if (!result.Succeeded) BadRequest(result.Errors);
-
-            Console.WriteLine(result.Succeeded);
 
             return NoContent();
         }

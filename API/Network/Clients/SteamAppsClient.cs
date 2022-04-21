@@ -54,8 +54,6 @@ namespace API.Clients
                 var appsResult = JsonConvert.DeserializeObject<AppList>(resultString);
                 appsResult.Success = true;
 
-                Console.WriteLine(appsResult);
-
                 return appsResult;
             }
         }

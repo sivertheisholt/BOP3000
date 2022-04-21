@@ -45,8 +45,6 @@ namespace API.Network.Clients
                 // Deserialize the JSON string
                 var userResult = JsonConvert.DeserializeObject<DiscordUserDto>(resultString);
 
-                Console.WriteLine(userResult);
-
                 return userResult;
             }
         }

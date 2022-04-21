@@ -14,8 +14,10 @@ namespace API.Controllers
         private readonly ISteamAppsClient _steamAppsClient;
         private readonly IMeilisearchService _meilisearchService;
         private readonly IUnitOfWork _unitOfWork;
-        public TestController(IMapper mapper, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, IMeilisearchService meilisearchService, IUnitOfWork unitOfWork) : base(mapper)
+        private readonly IFileService _fileService;
+        public TestController(IMapper mapper, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, IMeilisearchService meilisearchService, IUnitOfWork unitOfWork, IFileService fileService) : base(mapper)
         {
+            _fileService = fileService;
             _unitOfWork = unitOfWork;
             _meilisearchService = meilisearchService;
             _steamAppsClient = steamAppsClient;
@@ -45,6 +47,14 @@ namespace API.Controllers
 
             cont.Wait();
             return Ok();
+        }
+
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("test_file")]
+        public async Task<ActionResult> TestFile()
+        {
+            await _fileService.CreateUserData();
+            return NoContent();
         }
 
         [Authorize(Policy = "RequireMemberRole")]
