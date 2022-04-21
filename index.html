@@ -1683,6 +1683,9 @@
         </span><span class="nl">"userFavoriteGames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w">
         </span><span class="nl">"finishedLobbies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">]</span><span class="w">
       </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"memberCustomization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"backgroundUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
       </span><span class="nl">"memberPhoto"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
         </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dzpzecnx5/image/upload/v1648988522/qyf8mc0optfwaebzj0cp.png"</span><span class="w">
@@ -1768,6 +1771,10 @@
 <td>memberData</td>
 <td>MemberData</td>
 </tr>
+<tr>
+<td>memberCustomization</td>
+<td>MemberCustomization</td>
+</tr>
 </tbody></table>
 <h4 id='countryiso'>CountryIso</h4>
 <table><thead>
@@ -1845,6 +1852,18 @@
 <td>int[]</td>
 </tr>
 </tbody></table>
+<h4 id='membercustomizaiton'>MemberCustomizaiton</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>backgroundUrl</td>
+<td>string</td>
+</tr>
+</tbody></table>
 <h2 id='get-a-specific-member'>GET A specific member</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
 
@@ -1884,6 +1903,9 @@
       </span><span class="nl">"following"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w">
       </span><span class="nl">"userFavoriteGames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w">
       </span><span class="nl">"finishedLobbies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"memberCustomization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"backgroundUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nl">"memberPhoto"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
@@ -1959,8 +1981,8 @@
 <td>MemberPhoto</td>
 </tr>
 <tr>
-<td>memberData</td>
-<td>MemberData</td>
+<td>memberCustomization</td>
+<td>MemberCustomization</td>
 </tr>
 </tbody></table>
 <h4 id='countryiso-2'>CountryIso</h4>
@@ -2039,6 +2061,18 @@
 <td>int[]</td>
 </tr>
 </tbody></table>
+<h4 id='membercustomizaiton-2'>MemberCustomizaiton</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>backgroundUrl</td>
+<td>string</td>
+</tr>
+</tbody></table>
 <h2 id='get-current-member-info'>GET Current member info</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
 
@@ -2077,6 +2111,9 @@
       </span><span class="nl">"following"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w">
       </span><span class="nl">"userFavoriteGames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w">
       </span><span class="nl">"finishedLobbies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"memberCustomization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"backgroundUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dzpzecnx5/image/upload/v1650547054/AccountCustomizerIcons/accountbg1-icon_lsztqe.jpg"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nl">"memberPhoto"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
@@ -2142,6 +2179,10 @@
 <tr>
 <td>memberData</td>
 <td>MemberData</td>
+</tr>
+<tr>
+<td>memberCustomization</td>
+<td>Membercustomization</td>
 </tr>
 </tbody></table>
 <h4 id='countryiso-3'>CountryIso</h4>
@@ -2218,6 +2259,18 @@
 <tr>
 <td>finishedLobbies</td>
 <td>int[]</td>
+</tr>
+</tbody></table>
+<h4 id='membercustomization'>MemberCustomization</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>backgroundUrl</td>
+<td>string</td>
 </tr>
 </tbody></table>
 <h2 id='get-current-member-lobby-status'>GET Current member lobby status</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
