@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, DoCheck, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { Member } from 'src/app/_models/member.model';
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/_services/user.service';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, DoCheck {
 
   user?: Member;
   currentUser?: Member;
@@ -33,6 +33,7 @@ export class AccountComponent implements OnInit {
             this.user.memberProfile?.memberData?.finishedLobbies?.forEach(lobbyId => {
               this.lobbyService.fetchLobbyWithId(lobbyId).subscribe(
                 (response) => {
+                  response.startDate = this.fixDate(response.startDate!);
                   this.finishedLobbies.push(response);
                 }
               )
@@ -47,5 +48,15 @@ export class AccountComponent implements OnInit {
         this.currentUser = response;
       }
     )
+  }
+
+  ngDoCheck(): void {
+    this.finishedLobbies.sort((a, b) => new Date(b.startDate!).getTime() - new Date(a.startDate!).getTime());
+  }
+
+  fixDate(lobbyStartDate: string){
+    let date = new Date(lobbyStartDate);
+    let fixedDate = ('0' + date.getDate()).slice(-2) + '.' + ('0' + date.getMonth()).slice(-2) + '.' + ('0' + date.getFullYear()).slice(-2);
+    return fixedDate;
   }
 }

@@ -15,9 +15,5 @@ export class AccountLobbyHistoryComponent implements OnInit {
 
   }
 
-  fixDate(lobbyStartDate: Date){
-    let date = new Date(lobbyStartDate);
-    let fixedDate = ('0' + date.getDate()).slice(-2) + '.' + ('0' + date.getMonth()).slice(-2) + '.' + ('0' + date.getFullYear()).slice(-2);
-    return fixedDate;
-  }
+
 }

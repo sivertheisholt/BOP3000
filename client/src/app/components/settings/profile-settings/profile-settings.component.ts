@@ -29,7 +29,6 @@ export class ProfileSettingsComponent implements OnInit {
     
     this.userSettingsService.getCustomizationImages().subscribe(
       (res) => {
-        console.log(res);
         this.customizationImages = res;
         this.selectedImgUrl = this.user.memberProfile?.memberCustomization.backgroundUrl!;
       }
