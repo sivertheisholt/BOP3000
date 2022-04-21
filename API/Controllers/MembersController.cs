@@ -22,8 +22,10 @@ namespace API.Controllers
         private readonly IMeilisearchService _meilisearchService;
         private readonly IPhotoService _photoService;
         private readonly IUnitOfWork _unitOfWork;
-        public MembersController(IMapper mapper, LobbyTracker lobbyTracker, IMeilisearchService meilisearchService, IPhotoService photoService, IUnitOfWork unitOfWork) : base(mapper)
+        private readonly IDiscordBotService _discordBotService;
+        public MembersController(IMapper mapper, LobbyTracker lobbyTracker, IMeilisearchService meilisearchService, IPhotoService photoService, IUnitOfWork unitOfWork, IDiscordBotService discordBotService) : base(mapper)
         {
+            _discordBotService = discordBotService;
             _unitOfWork = unitOfWork;
             _photoService = photoService;
             _meilisearchService = meilisearchService;
@@ -279,7 +281,8 @@ namespace API.Controllers
                 Connected = user.DiscordConnected,
                 Username = user.Discord.Username,
                 Discriminator = user.Discord.Discriminator,
-                Hidden = user.Discord.Hidden
+                Hidden = user.Discord.Hidden,
+                InServer = await _discordBotService.CheckIfUserInServer(user.Discord.DiscordId)
             };
             return dto;
         }

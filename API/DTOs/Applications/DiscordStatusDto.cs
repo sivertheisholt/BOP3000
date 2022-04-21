@@ -12,5 +12,6 @@ namespace API.DTOs.Applications
         public string Username { get; set; }
         public string Discriminator { get; set; }
         public bool Hidden { get; set; }
+        public bool InServer { get; set; }
     }
 }

@@ -83,9 +83,12 @@ namespace API.Services
 
         public async Task<bool> CheckIfUserInServer(ulong userId)
         {
+            if (userId == 0) return false;
+
             var guild = _client.GetGuild(_playfuGuildId);
 
-            if (await _client.GetUserAsync(userId) == null) return false;
+            if (guild.GetUser(userId) == null) return false;
+
             return true;
         }
     }
