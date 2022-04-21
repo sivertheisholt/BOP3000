@@ -30,6 +30,7 @@ namespace API.Helpers
             CreateMap<LobbyVote, LobbyVoteDto>();
             CreateMap<MemberUpdateDto, AppUser>();
             CreateMap<AppListInfo, AppListInfoDto>();
+            CreateMap<AppUserCustomization, MemberCustomizationDto>();
 
             CreateMap<AppUserProfile, MemberProfileDto>()
                 .ForMember(
@@ -37,7 +38,10 @@ namespace API.Helpers
                     opt => opt.MapFrom(src => src.AppUserData))
                 .ForMember(
                     dest => dest.MemberPhoto,
-                    opt => opt.MapFrom(src => src.AppUserPhoto));
+                    opt => opt.MapFrom(src => src.AppUserPhoto))
+                .ForMember(
+                    dest => dest.MemberCustomization,
+                    opt => opt.MapFrom(src => src.AccountCustomization));
 
             CreateMap<MemberProfileDto, AppUserProfile>().ReverseMap()
                 .ForMember(
@@ -45,7 +49,10 @@ namespace API.Helpers
                     opt => opt.MapFrom(src => src.AppUserData))
                 .ForMember(
                     dest => dest.MemberPhoto,
-                    opt => opt.MapFrom(src => src.AppUserPhoto));
+                    opt => opt.MapFrom(src => src.AppUserPhoto))
+                .ForMember(
+                    dest => dest.MemberCustomization,
+                    opt => opt.MapFrom(src => src.AccountCustomization));
 
             CreateMap<AppUserData, MemberDataDto>();
             CreateMap<MemberDataDto, AppUserData>().ReverseMap();
@@ -66,6 +73,8 @@ namespace API.Helpers
             CreateMap<AppUserPhoto, MemberPhotoDto>();
 
             CreateMap<Log, LogDto>();
+
+
         }
     }
 }
