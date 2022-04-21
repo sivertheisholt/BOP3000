@@ -120,12 +120,10 @@ namespace API.SignalR
                 return;
             }
 
-
             if (!await _lobbyTracker.JoinQueue(lobbyId, uid)) return;
 
-
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("JoinedLobbyQueue", uid);
-            await Clients.Caller.SendAsync("InQueue");
+            await Clients.Caller.SendAsync("InQueue", lobbyId);
         }
 
         public async Task LeaveQueue(int lobbyId)
@@ -224,6 +222,9 @@ namespace API.SignalR
             {
                 await Clients.Group($"user_{user}").SendAsync("EndedLobby", lobbyId);
             }
+            var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(lobbyId);
+            _unitOfWork.lobbiesRepository.Delete(lobby);
+            await _unitOfWork.Complete();
         }
 
         public override async Task OnConnectedAsync()
