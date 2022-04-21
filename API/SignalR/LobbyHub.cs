@@ -114,7 +114,12 @@ namespace API.SignalR
 
             var discordId = await _unitOfWork.userRepository.GetUserDiscordIdFromUid(uid);
 
-            if (!await _discordBotService.CheckIfUserInServer(discordId)) return;
+            if (!await _discordBotService.CheckIfUserInServer(discordId))
+            {
+                await Clients.Caller.SendAsync("NotInDiscordServer");
+                return;
+            }
+
 
             if (!await _lobbyTracker.JoinQueue(lobbyId, uid)) return;
 
