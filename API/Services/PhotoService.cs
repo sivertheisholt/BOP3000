@@ -7,6 +7,7 @@ using API.Interfaces.IServices;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 
 namespace API.Services
 {
@@ -63,6 +64,17 @@ namespace API.Services
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result;
+        }
+
+        public async Task<List<string>> GetBackgroundPictures()
+        {
+            var something = _cloudinary.Search();
+
+            var data = await something.Expression("folder:AccountCustomizerIcons/*").ExecuteAsync();
+
+            var queryResult = data.JsonObj["resources"].Select(x => x["url"]);
+
+            return queryResult.Values<string>().ToList();
         }
     }
 }

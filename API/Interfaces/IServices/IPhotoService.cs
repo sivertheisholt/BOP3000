@@ -11,5 +11,7 @@ namespace API.Interfaces.IServices
         Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
 
         Task<DeletionResult> DeletePhotoAsync(string publicId);
+
+        Task<List<string>> GetBackgroundPictures();
     }
 }
