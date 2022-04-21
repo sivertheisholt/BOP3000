@@ -70,7 +70,7 @@ namespace API.Services
         {
             var something = _cloudinary.Search();
 
-            var data = await something.Expression("folder:AccountCustomizerIcons/*").ExecuteAsync();
+            var data = await something.Expression("folder:AccountBackgrounds/*").ExecuteAsync();
 
             var queryResult = data.JsonObj["resources"].Select(x => x["url"]);
 
