@@ -59,6 +59,7 @@ export class LobbyHubService {
       // Member that is accepted will get this
       this.hubConnection.on('Accepted', id => {
         this.inQueue.next({lobbyId: id, inQueue: false, inQueueStatus: 'accepted'});
+        this.acceptedResponse(id);
         this.notificationService.setNewNotification({type: 'success', message: 'You have been accepted to the lobby. Check your notifications to go directly to the lobby.', lobbyId: id});
       });
       // Member that is declined will get this
@@ -85,7 +86,7 @@ export class LobbyHubService {
 
       this.hubConnection.on("NotInDiscordServer", () => {
         this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
-        this.notificationService.setNewNotification({type: 'info', message: 'You need to join our Discord server in order to join lobbies. Check your notifications.', inDiscordServer: true});
+        this.notificationService.setNewNotification({type: 'info', message: 'You need to join our Discord server in order to join lobbies. Check your notifications to join our Discord.', inDiscordServer: true});
       });
 
       this.hubConnection.on("CancelQueue", () => {
@@ -244,6 +245,10 @@ export class LobbyHubService {
   async endLobby(lobbyId: number){
     await this.connectionStatus;
     this.hubConnection.invoke("EndLobby", lobbyId);
+  }
+  async acceptedResponse(lobbyId: number){
+    await this.connectionStatus;
+    this.hubConnection.invoke("AcceptedResponse", lobbyId);
   }
 
   
