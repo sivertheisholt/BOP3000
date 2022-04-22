@@ -5,6 +5,7 @@
   background: linear-gradient(90deg, rgba(42, 45, 80, 0.8) 0%, rgba(14, 6, 82, 0.7) 100%);
   color: white;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .lobby-card-title{
@@ -36,9 +37,32 @@ p{
   font-weight: bold;
 }
 
-.game-lobbies-container{
-  max-width: 1280px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+.lobby-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  grid-gap: 5px;
+  justify-items: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1180px) {
+  .lobby-container{
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  }
+}
+
+
+@media only screen and (max-width: 956px) {
+  .lobby-container{
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  
+}
+
+@media only screen and (max-width: 471px) {
+  .lobby-container{
+      grid: none;
+      display: block;
+      margin: 0 auto;
+  }
 }

@@ -41,7 +41,7 @@
                   <fa-icon [icon]="faLock"></fa-icon>
                 </span>
               </p>
-              <div class="error neutral mt-2">
+              <div class="error neutral mt-2" *ngIf="regUserForm.get('password')?.dirty || regUserForm.get('password')?.touched">
                 <div [ngClass]="regUserForm.controls['password'].hasError('required') || regUserForm.controls['password'].hasError('minlength') ? 'has-text-danger' : 'has-text-success' ">
                   Must be atleast 8 characters!
                 </div>
@@ -76,7 +76,7 @@
                   This field is required.
                 </div>
               </div>
-              <div *ngIf="regUserForm.get('password')?.invalid && regUserForm.get('password')?.errors && (regUserForm.get('password')?.dirty || regUserForm.get('password')?.touched)">
+              <div *ngIf="regUserForm.get('password')?.dirty || regUserForm.get('password')?.touched">
                 <div class="error danger mt-2" *ngIf="regUserForm.errors?.notmatched">
                   Passwords do not match.
                 </div>

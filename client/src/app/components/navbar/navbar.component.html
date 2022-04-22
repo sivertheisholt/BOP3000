@@ -7,7 +7,7 @@
       <a [routerLink]="['upgrade']" class="upgrade-btn">
         {{ 'UPGRADE' | translate }}
       </a>
-      <a [routerLink]="['lobby/' + inLobbyId]" class="goto-lobby-btn ml-3" *ngIf="inLobby">
+      <a [routerLink]="['lobby/' + inLobbyId]" class="goto-lobby-btn ml-3" *ngIf="inLobbyStatus == 'accepted' && inLobbyId != 0 && inLobby">
         {{ 'BTN_GO_TO_LOBBY' | translate }}
       </a>
     </div>
@@ -39,6 +39,13 @@
                   </div>
                   <div class="notification-link" *ngIf="notification.lobbyId != null">
                     {{ 'GO_TO_LOBBY_NOTI_BTN1' | translate }} <a [routerLink]="['lobby/' + notification.lobbyId]">{{ 'GO_TO_LOBBY_NOTI_BTN2' | translate }}</a> {{ 'GO_TO_LOBBY_NOTI' | translate }}
+                  </div>
+                  <div class="discord-link" *ngIf="notification.inDiscordServer">
+                    <a class="button is-info" href="https://discord.gg/zcFXdYDCWn" target="_blank" rel="noopener">Join</a>
+                    <div class="link-copy-wrapper mt-3">
+                      <input type="text" [value]="voiceUrl" class="link-input" readonly #voiceLinkInput>
+                      <button (click)="copyLink(voiceLinkInput)" class="copy-link-button"><fa-icon [icon]="faCopy"></fa-icon></button>
+                  </div>
                   </div>
                 </div>
               </div>

@@ -3,4 +3,5 @@ export interface NotificationModel{
     type: string;
     message: string;
     lobbyId?: number;
+    inDiscordServer?: boolean;
 }

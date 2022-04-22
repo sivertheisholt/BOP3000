@@ -31,10 +31,10 @@
         </div>
     </div>
 </div>
-<div class="game-lobbies-container p-6"
+<div class="lobby-container p-6"
     infinite-scroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="300"
+    [infiniteScrollDistance]="0.5"
+    [infiniteScrollThrottle]="500"
     (scrolled)="onScroll()">
 
     <div class="card" *ngFor="let lobby of lobbies">

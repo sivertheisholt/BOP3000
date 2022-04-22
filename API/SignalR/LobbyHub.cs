@@ -65,7 +65,6 @@ namespace API.SignalR
 
             await _unitOfWork.Complete();
 
-            await AddToGroup($"lobby_{lobbyId.ToString()}");
             await Clients.Group($"user_{acceptedUid.ToString()}").SendAsync("Accepted", lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAccepted", new List<int>() { lobbyId, acceptedUid });
         }
@@ -216,6 +215,11 @@ namespace API.SignalR
         {
             var members = await _lobbyTracker.GetMembersInLobby(lobbyId);
             await Clients.Caller.SendAsync("LobbyMembers", members);
+        }
+
+        public async Task AcceptedResponse(int lobbyId)
+        {
+            await AddToGroup($"lobby_{lobbyId.ToString()}");
         }
         public async Task EndLobby(int lobbyId)
         {

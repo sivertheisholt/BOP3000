@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle, faUsers, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle, faUsers, faGlobe, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { TranslateService } from '@ngx-translate/core';
 import { NotifierService } from 'angular-notifier';
 import { fromEvent, Subject } from 'rxjs';
@@ -9,6 +9,7 @@ import { Member } from 'src/app/_models/member.model';
 import { NotificationModel } from 'src/app/_models/notification.model';
 import { UserSearch } from 'src/app/_models/user-search.model';
 import { AuthService } from 'src/app/_services/auth.service';
+import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
 import { NotificationService } from 'src/app/_services/notification.service';
 import { UserService } from 'src/app/_services/user.service';
@@ -19,7 +20,7 @@ import { UserService } from 'src/app/_services/user.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  faUser = faUser; faSignOutAlt = faSignOutAlt; faUserCircle = faUserCircle; faBell = faBell; faHome = faHome; faCogs = faCogs; faQuestionCircle = faQuestionCircle; faBullseye = faBullseye; faUsers = faUsers; faGlobe = faGlobe;
+  faCopy = faCopy; faUser = faUser; faSignOutAlt = faSignOutAlt; faUserCircle = faUserCircle; faBell = faBell; faHome = faHome; faCogs = faCogs; faQuestionCircle = faQuestionCircle; faBullseye = faBullseye; faUsers = faUsers; faGlobe = faGlobe;
   @ViewChild('navBurger') navBurger!: ElementRef;
   @ViewChild('navMenu') navMenu!: ElementRef;
   @ViewChild('searchInput', {static: true}) searchInput? : ElementRef;
@@ -30,10 +31,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
   totalNotifications: number = 0;
   inLobby: boolean = false;
   inLobbyId: number = 0;
+  inLobbyStatus: string = '';
+  voiceUrl: string = 'https://discord.gg/zcFXdYDCWn';
   user?: Member;
   private destroyStreamSource = new Subject<void>()
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService, private notifierService: NotifierService, private notificationService: NotificationService, private translateService: TranslateService, private lobbyService: LobbyService){}
+  constructor(private authService: AuthService,
+     private router: Router,
+      private userService: UserService,
+       private notifierService: NotifierService,
+        private notificationService: NotificationService,
+         private translateService: TranslateService,
+          private lobbyService: LobbyService,
+           private lobbyHubService: LobbyHubService){}
 
   ngOnInit(): void {
     this.userService.getUserData().subscribe(
@@ -44,17 +54,30 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.notificationService.notificationObservable
     .pipe(takeUntil(this.destroyStreamSource))
     .subscribe((notification: NotificationModel) => {
-      this.notifications.push(notification);
+      this.notifications.unshift(notification);
       this.notifierService.notify(notification.type, notification.message);
       this.totalNotifications++;
     })
 
+    
+
     this.lobbyService.getQueueStatus().subscribe(
       (res) => {
+        console.log(res);
         if(res.lobbyId != 0 && !res.inQueue){
           this.inLobby = true;
           this.inLobbyId = res.lobbyId;
+          this.inLobbyStatus = 'accepted';
         }
+      }
+    )
+
+    this.lobbyHubService.inQueue$.subscribe(
+      (res) => {
+        console.log(res);
+        this.inLobbyId = res.lobbyId;
+        this.inLobby = res.inQueue;
+        this.inLobbyStatus = res.inQueueStatus;
       }
     )
 
@@ -113,5 +136,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
   changeLang(lang: string){
     this.translateService.use(lang);
     localStorage.setItem('selectedLang', lang);
+  }
+
+  copyLink(input: any){
+    input.select();
+    input.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(input.value);
+  }
+
+  joinVoiceChat(){
+    window.open(this.voiceUrl, '_blank');
   }
 }
