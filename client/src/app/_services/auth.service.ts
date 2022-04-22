@@ -43,14 +43,7 @@ export class AuthService {
   }
 
   updateUserPassword(model : any){
-    console.log(JSON.stringify(model));
-    return this.http.patch(this.baseUrl + 'accounts/change_password', JSON.stringify(model), {responseType: 'text'}).pipe(
-      map((response) => {
-        console.log(response);
-      })
-    ).subscribe((res) => {
-      console.log(res);
-    })
+    return this.http.patch(this.baseUrl + 'accounts/change_password', model);
   }
 
   postEmailForgottenPassword(email: string){
