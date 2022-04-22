@@ -1,8 +1,7 @@
-import { AfterContentInit, AfterViewInit, Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { Member } from 'src/app/_models/member.model';
-import { GamesService } from 'src/app/_services/games.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
 import { UserService } from 'src/app/_services/user.service';
 

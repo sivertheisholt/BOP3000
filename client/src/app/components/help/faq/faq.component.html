@@ -1,23 +1,29 @@
 <div class="faq-container">
-    <button accordion class="accordion">How to do this?</button>
-    <div class="accordion-content center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, quidem.
+    <button accordion class="accordion">How do I join a server?</button>
+    <div class="accordion-content">
+        <div>
+            Go to <a [routerLink]="'../find-lobby/'">Find Lobby</a> and choose the game you wish to play.
+        </div>
+        <div>
+            Cant find it?
+        </div>
+        <div>
+            <a [routerLink]="'../create-lobby/'">Create</a> your own!
+        </div>
+        
     </div>
-    <button accordion class="accordion">How to do this?</button>
+    <button accordion class="accordion">How can I connect to Discord or Steam?</button>
     <div class="accordion-content center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, quidem.
+        Click <a [routerLink]="'../settings/'" [queryParams]="{viewMode: 'tab3'}">here</a>, or go to "Settings" in the sidebar, then "Connections" in the top menu. Then press "Link Your Steam" or "Link Your Discord" and follow the instructions.
     </div>
-    <button accordion class="accordion">How to do this?</button>
+    <button accordion class="accordion">Why connect my Discord or Steam</button>
     <div class="accordion-content center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, quidem.
-    </div>
-    <button accordion class="accordion">How to do this?</button>
-    <div class="accordion-content center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, quidem.
-    </div>
-    <button accordion class="accordion">How to do this?</button>
-    <div class="accordion-content center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, quidem.
+        <div class="">
+            In order to place you in the correct lobby in Discord, after a lobby has started, you need to connect your Discord.
+        </div>
+        <div class="">
+            In order to give you the best recommendations, based on what you play, you may connect your Steam account.
+        </div>
     </div>
 </div>
 

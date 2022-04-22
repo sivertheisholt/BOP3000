@@ -1,0 +1,40 @@
+<div class="contact-container">
+    <div class="contact-wrapper">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+            <div class="card column is-two-thirds m-3">
+                <h1 class="title has-text-centered text-is-light">{{ 'CONTACT_FORM' | translate}}</h1>
+                <div class="card-content">
+                    <ng-select 
+                        placeholder="{{ 'SUBJECT' | translate }}"
+                        formControlName="subject"
+                        [closeOnSelect]='true'
+                        class="custom">
+                        <ng-option *ngFor="let subject of selectSubject">
+                            {{subject | translate}}
+                        </ng-option>
+                    </ng-select>
+                    <div class="error danger mt-2 text-is-dark" *ngIf="contactForm.get('subject')?.invalid && contactForm.get('subject')?.errors && (contactForm.get('subject')?.dirty || contactForm.get('subject')?.touched)">
+                        <div class="text-is-dark" *ngIf="contactForm.get('subject')?.hasError('required')">
+                            {{ 'REQUIRED_FIELD' | translate }}
+                        </div>
+                    </div>
+                    <textarea class="textarea is-primary mt-3" placeholder="" formControlName="description"></textarea>
+                    <div class="error danger mt-2" *ngIf="contactForm.get('description')?.invalid && contactForm.get('description')?.errors && (contactForm.get('description')?.dirty || contactForm.get('description')?.touched)">
+                        <div class="text-is-dark" *ngIf="contactForm.get('description')?.hasError('required')">
+                            {{ 'REQUIRED_FIELD' | translate }}
+                        </div>
+                    </div>
+                    <div class="error danger m-2" *ngIf="contactForm.invalid && submitted">
+                        <p class="text-is-dark">
+                            {{ 'ALL_FIELDS_REQUIRED' | translate }}
+                        </p>
+                        
+                    </div>
+                    <button class="button is-info is-normal text-is-light mt-3" type="submit">{{ 'SEND' | translate}}</button>
+                </div>
+            </div> 
+        </form>
+    </div>
+
+</div>
+

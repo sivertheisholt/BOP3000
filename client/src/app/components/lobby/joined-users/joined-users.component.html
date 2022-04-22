@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="quarter-width is-flex is-align-items-center is-justify-content-center">
-                <div *ngIf="currentUser?.id == lobby.adminUid && user.id != lobby.adminUid">
+                <div *ngIf="currentUser?.id == lobby.adminUid && user.id != lobby.adminUid && voiceUrl == ''">
                     <a (click)="kickFromParty(user.id!)">{{ 'REMOVE' | translate }}</a>
                 </div>
             </div>

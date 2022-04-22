@@ -1,9 +1,9 @@
 <div class="host-panel-wrapper is-flex is-justify-content-center is-flex-direction-column is-align-items-center">
     <div class="p-2">
-        <button class="button is-success" data-target="modal-ready-check" [disabled]="lobby?.maxUsers != totalParty" (click)="startReadyCheck()">{{ 'LOBBY_READY_CHECK' | translate }}</button>
+        <button class="button is-success" data-target="modal-ready-check" [disabled]="totalParty == 1" (click)="startReadyCheck()">{{ 'LOBBY_READY_CHECK' | translate }}</button>
     </div>
     <div class="p-2">
-        <button class="button is-danger" data-target="modal-end-lobby" (click)="confirmEndLobbyModal()">{{ 'LOBBY_END_LOBBY' | translate }}</button>
+        <button class="button is-danger" data-target="modal-end-lobby" *ngIf="voiceUrl == ''" (click)="confirmEndLobbyModal()">{{ 'LOBBY_END_LOBBY' | translate }}</button>
     </div>
     <div class="p-2">
         <button class="button is-danger">{{ 'LOBBY_CONTACT_ADMIN' | translate }}</button>

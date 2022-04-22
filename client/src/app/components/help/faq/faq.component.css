@@ -24,4 +24,6 @@ button.accordion:hover {
     padding: 10px 20px;
     overflow: hidden;
     display: none;
+
+    text-align: center;
 }

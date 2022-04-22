@@ -138,9 +138,14 @@ export class LobbyHubService {
       });
 
       this.hubConnection.on("HostStarted", id => {
-        this.acceptedReadyCheckMembers.next(id);
+        console.log("User with id: " + id[0] + " started ready check in lobby with id: " + id[1]);
+        const lobbyUrl: string = '/lobby/' + +id[1];
+        if(this.router.url != lobbyUrl){
+          this.router.navigate(['lobby/', +id[1]]);
+        }
+        this.acceptedReadyCheckMembers.next(id[0]);
         this.lobbyReadyCheck.next(true);
-        console.log("User with id: " + id + " started ready check!");
+        return;
       });
 
       this.hubConnection.on("MemberDeclinedReady", id => {
@@ -275,6 +280,10 @@ export class LobbyHubService {
       this.router.navigate(['..']);
     }
     return;
+  }
+
+  redirectToLobby(currentUrl: string, lobbyId: number){
+
   }
 
   redirectUserAfterFinished(currentUrl: string, lobbyId: number){

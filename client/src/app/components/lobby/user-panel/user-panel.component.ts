@@ -24,12 +24,14 @@ export class UserPanelComponent implements OnInit {
   totalParty: number = 0;
   accepted: boolean = false;
   declined: boolean = false;
+  @Input('voiceUrl') voiceUrl?: string;
 
   constructor(private lobbyHubService: LobbyHubService, private router: Router) { }
 
   ngOnInit(): void {
     this.lobbyHubService.lobbyReadyCheck$.subscribe(
       (res) => {
+        console.log(res);
         if(res){
           this.readyCheckModal = res;
           this.readyCheckTimer();

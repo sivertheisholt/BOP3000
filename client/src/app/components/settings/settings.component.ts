@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConnectionService } from 'src/app/_services/connection.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 
 @Component({
   selector: 'app-settings',
@@ -9,7 +10,7 @@ import { ConnectionService } from 'src/app/_services/connection.service';
 })
 export class SettingsComponent implements OnInit {
   viewMode = 'tab1';
-  constructor(private route: ActivatedRoute, private connectionService: ConnectionService) { 
+  constructor(private route: ActivatedRoute, private connectionService: ConnectionService, private notificationService: NotificationService) { 
     if(this.route.snapshot.queryParams.viewMode != null){
       this.viewMode = this.route.snapshot.queryParams.viewMode;
     }
@@ -35,6 +36,7 @@ export class SettingsComponent implements OnInit {
     this.connectionService.onDiscordSuccess().subscribe(
       (res) => {
         this.viewMode = 'tab3';
+        this.notificationService.setNewNotification({type: 'success', message: 'You have successfully connected Discord with Playfu!. In order to start joining lobbies, you need to join our Playfu Discord. Check your notifications.', inDiscordServer: true});
       }
     )
   }

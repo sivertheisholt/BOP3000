@@ -2,11 +2,11 @@
     <h1 class="title has-text-centered has-text-light">{{ 'QUICK_JOIN_TITLE' | translate }}</h1>
     <div class="quick-join-list-container">
         <div class="quick-join-list-header p-2">
-            <div class="quick-join-host">{{ 'HOST' | translate }}</div>
-            <div class="quick-join-game">{{ 'GAME' | translate }}</div>
-            <div class="quick-join-lobbyname">{{ 'LOBBY_NAME' | translate }}</div>
-            <div class="quick-join-players">{{ 'PLAYERS' | translate }}</div>
-            <div class="quick-join-button"></div>
+            <div class="cell quick-join-host">{{ 'HOST' | translate }}</div>
+            <div class="cell quick-join-game">{{ 'GAME' | translate }}</div>
+            <div class="cell quick-join-lobbyname">{{ 'LOBBY_NAME' | translate }}</div>
+            <div class="cell quick-join-players">{{ 'PLAYERS' | translate }}</div>
+            <div class="cell quick-join-button"></div>
         </div>
         <div class="quick-join-list-item p-2" *ngFor="let lobby of gameRooms">
             <div class="quick-join-host is-flex">

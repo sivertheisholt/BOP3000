@@ -1,7 +1,7 @@
 <h1 class="title p-3 text-is-light">{{ 'CONNECTIONS' | translate }}</h1>
 <div class="connections-settings-wrapper is-flex is-flex-direction-column">
     <section class="section">
-        <a *ngIf="!discordData?.connected" href="api/accounts/discord" target="_blank" rel="noopener" class="button discordbtn">
+        <a *ngIf="!discordData?.connected" href="api/accounts/discord" rel="noopener" class="button discordbtn">
             <span>{{ 'LINK_DISCORD' | translate }}</span>
             <div class="icon">
                 <img class="image is-64by64" src="../../../../assets/images/discord_icon.png" alt="Discord Icon">
@@ -30,7 +30,7 @@
         </div>
     </section>
     <section class="section">
-        <a *ngIf="!steamData?.connected" href="api/accounts/steam" target="_blank" rel="noopener" type="button" class="button steambtn">
+        <a *ngIf="!steamData?.connected" href="api/accounts/steam" rel="noopener" type="button" class="button steambtn">
             <span>{{ 'LINK_STEAM' | translate }}</span>
             <div class="icon">
                 <img class="image is-64by64" src="../../../../assets/images/steam-icon-blue.png" alt="Steam Icon">

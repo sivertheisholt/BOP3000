@@ -1,6 +1,6 @@
 <div class="host-panel-wrapper is-flex is-justify-content-center is-flex-direction-column is-align-items-center">
     <div class="p-2">
-        <button class="button is-success" data-target="modal-leave-lobby" (click)="leaveLobbyModal()">{{ 'LEAVE' |  translate }}</button>
+        <button class="button is-success" data-target="modal-leave-lobby" *ngIf="voiceUrl == ''" (click)="leaveLobbyModal()">{{ 'LEAVE' |  translate }}</button>
     </div>
     <div id="modal-leave-lobby" class="modal" [ngClass]="leaveLobbyStatus ? 'is-active' : ''">
         <div class="modal-background"></div>

@@ -23,6 +23,7 @@ export class HostPanelComponent implements OnInit {
   totalParty: number = 0;
   accepted: boolean = false;
   declined: boolean = false;
+  @Input('voiceUrl') voiceUrl?: string;
 
   constructor(private lobbyHubService: LobbyHubService) { }
 

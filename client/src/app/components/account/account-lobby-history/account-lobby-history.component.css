@@ -1,10 +1,7 @@
 .lobby-history-list{
   width: 100%;
-  min-width: 450px;
   height: 400px;
   overflow: auto;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .lobby-history-header{

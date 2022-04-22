@@ -38,7 +38,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
 import { ManageAccountComponent } from './components/settings/manage-account/manage-account.component';
 import { HelpComponent } from './components/help/help.component';
 import { AccordionDirective } from './_directives/accordion.directive';
-import { ContactFormComponent } from './components/help/contact-form/contact-form.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { HostPanelComponent } from './components/lobby/host-panel/host-panel.component';
 import { ArchivedLobbyComponent } from './components/archived-lobby/archived-lobby.component';
 import { ArchivedLobbyPartyComponent } from './components/archived-lobby/archived-lobby-party/archived-lobby-party.component';
@@ -51,12 +51,13 @@ import { UpgradeAccountComponent } from './components/upgrade-account/upgrade-ac
 import { ActivityLogComponent } from './components/activity-log/activity-log.component';
 import { JoinVoiceComponent } from './components/lobby/join-voice/join-voice.component';
 import { FaqComponent } from './components/help/faq/faq.component';
-import { AboutComponent } from './components/help/about/about.component';
+import { AboutComponent } from './components/about/about.component';
 import { NotifierModule } from 'angular-notifier';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { QuickJoinComponent } from './components/home/quick-join/quick-join.component';
+import { TermsAgreementComponent } from './components/terms-agreement/terms-agreement.component';
 
 export function httpTranslateLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http);
@@ -109,7 +110,8 @@ export function httpTranslateLoaderFactory(http: HttpClient){
     JoinVoiceComponent,
     FaqComponent,
     AboutComponent,
-    QuickJoinComponent
+    QuickJoinComponent,
+    TermsAgreementComponent
   ],
   imports: [
     BrowserModule,

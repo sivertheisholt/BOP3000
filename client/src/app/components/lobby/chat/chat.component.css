@@ -1,5 +1,7 @@
 .lobby-chat-wrapper{
   background-color: rgba(37, 37, 37, 0.7);
+  border: 2px solid rgb(163, 163, 163);
+  border-bottom: none;
 }
 
 

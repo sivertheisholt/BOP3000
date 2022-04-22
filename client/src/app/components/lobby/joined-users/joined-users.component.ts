@@ -17,6 +17,7 @@ export class JoinedUsersComponent implements OnInit, OnDestroy{
   totalParty: number = 0;
   @Input('lobby') lobby! : Lobby;
   @Input('currentUser') currentUser?: Member;
+  @Input('voiceUrl') voiceUrl?: string;
   lobbyPartyMembersSubscription?: Subscription;
 
   constructor(private lobbyHubService: LobbyHubService, private userService: UserService) {

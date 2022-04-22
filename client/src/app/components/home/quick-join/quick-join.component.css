@@ -1,7 +1,7 @@
 .quick-join-list-container{
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow: auto;
     min-width: 500px;
+    display: block;
 }
 
 .quick-join-list-header{
