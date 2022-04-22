@@ -74,6 +74,11 @@ namespace API.Data.Repositories
             return await PagedList<AppUser>.CreateAsync(query, memberParams.PageNumber, memberParams.PageSize);
         }
 
+        public async Task<List<AppUser>> GetAllUsersNoPaging()
+        {
+            return await Context.Users.ToListAsync();
+        }
+
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
             return await Context.Users.SingleOrDefaultAsync(x => x.Email == email);

@@ -19,5 +19,7 @@ namespace API.Interfaces.IRepositories
 
         Task<PagedList<Lobby>> GetActiveLobbies(UniversalParams universalParams);
 
+        Task<List<Lobby>> GetAllLobbiesNoPaging();
+
     }
 }

@@ -36,7 +36,7 @@ namespace API.Controllers
         [HttpPatch("seed_users")]
         public async Task<ActionResult> SeedUsers([FromQuery] MemberParams memberParams)
         {
-            var currentUsers = await _unitOfWork.userRepository.GetAllUsers(memberParams);
+            var currentUsers = await _unitOfWork.userRepository.GetAllUsersNoPaging();
             foreach (var user in currentUsers)
             {
                 _unitOfWork.userRepository.Delete(user);
@@ -96,7 +96,7 @@ namespace API.Controllers
         [HttpPatch("seed_lobbies")]
         public async Task<ActionResult> SeedLobbies()
         {
-            var currentLobbies = await _unitOfWork.lobbiesRepository.GetLobbiesAsync(new UniversalParams { });
+            var currentLobbies = await _unitOfWork.lobbiesRepository.GetAllLobbiesNoPaging();
             foreach (var lobby in currentLobbies)
             {
                 _unitOfWork.lobbiesRepository.Delete(lobby);
@@ -228,7 +228,6 @@ namespace API.Controllers
                 _unitOfWork.steamAppRepository.AddApp(appResult);
             }
 
-            await _unitOfWork.Complete();
             await _unitOfWork.Complete();
 
             //Seed to search

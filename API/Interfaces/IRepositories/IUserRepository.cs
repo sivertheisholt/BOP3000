@@ -39,5 +39,7 @@ namespace API.Interfaces.IRepositories
         Task<bool> CheckIfSteamAccountExists(long steamId);
 
         Task<bool> CheckIfMailTaken(string mail);
+
+        Task<List<AppUser>> GetAllUsersNoPaging();
     }
 }

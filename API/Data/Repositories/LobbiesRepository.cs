@@ -31,6 +31,11 @@ namespace API.Data.Repositories
             return await PagedList<Lobby>.CreateAsync(query, universalParams.PageNumber, universalParams.PageSize);
         }
 
+        public async Task<List<Lobby>> GetAllLobbiesNoPaging()
+        {
+            return await Context.Lobby.ToListAsync();
+        }
+
         public async Task<PagedList<Lobby>> GetLobbiesAsync(UniversalParams universalParams)
         {
             var query = Context.Lobby.AsNoTracking();
