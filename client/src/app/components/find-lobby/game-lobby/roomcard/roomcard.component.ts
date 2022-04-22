@@ -43,7 +43,6 @@ export class RoomcardComponent implements OnInit {
     );
     this.lobbyHubService.inQueue.subscribe(
       (res) => {
-        console.log(+res.lobbyId);
         this.lobbyId = res.lobbyId;
         this.inQueue = res.inQueue;
         this.queueStatus = res.inQueueStatus;

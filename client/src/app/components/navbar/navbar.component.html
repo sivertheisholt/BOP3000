@@ -7,7 +7,7 @@
       <a [routerLink]="['upgrade']" class="upgrade-btn">
         {{ 'UPGRADE' | translate }}
       </a>
-      <a [routerLink]="['lobby/' + inLobbyId]" class="goto-lobby-btn ml-3" *ngIf="inLobby">
+      <a [routerLink]="['lobby/' + inLobbyId]" class="goto-lobby-btn ml-3" *ngIf="inLobbyStatus == 'accepted' && inLobbyId != 0 && inLobby">
         {{ 'BTN_GO_TO_LOBBY' | translate }}
       </a>
     </div>

@@ -155,7 +155,7 @@ export class LobbyHubService {
       });
 
       this.hubConnection.on("EndedLobby", id => {
-        console.log("Ending lobby with id" + id);
+        this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
         this.redirectUser(this.router.url, +id);
         this.notificationService.setNewNotification({type: 'error', message: "Lobby was ended by the host."});
       });

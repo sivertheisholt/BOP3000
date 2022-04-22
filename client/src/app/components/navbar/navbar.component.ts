@@ -9,6 +9,7 @@ import { Member } from 'src/app/_models/member.model';
 import { NotificationModel } from 'src/app/_models/notification.model';
 import { UserSearch } from 'src/app/_models/user-search.model';
 import { AuthService } from 'src/app/_services/auth.service';
+import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
 import { NotificationService } from 'src/app/_services/notification.service';
 import { UserService } from 'src/app/_services/user.service';
@@ -30,10 +31,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
   totalNotifications: number = 0;
   inLobby: boolean = false;
   inLobbyId: number = 0;
+  inLobbyStatus: string = '';
   user?: Member;
   private destroyStreamSource = new Subject<void>()
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService, private notifierService: NotifierService, private notificationService: NotificationService, private translateService: TranslateService, private lobbyService: LobbyService){}
+  constructor(private authService: AuthService,
+     private router: Router,
+      private userService: UserService,
+       private notifierService: NotifierService,
+        private notificationService: NotificationService,
+         private translateService: TranslateService,
+          private lobbyService: LobbyService,
+           private lobbyHubService: LobbyHubService){}
 
   ngOnInit(): void {
     this.userService.getUserData().subscribe(
@@ -49,12 +58,25 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.totalNotifications++;
     })
 
+    
+
     this.lobbyService.getQueueStatus().subscribe(
       (res) => {
+        console.log(res);
         if(res.lobbyId != 0 && !res.inQueue){
           this.inLobby = true;
           this.inLobbyId = res.lobbyId;
+          this.inLobbyStatus = 'accepted';
         }
+      }
+    )
+
+    this.lobbyHubService.inQueue$.subscribe(
+      (res) => {
+        console.log(res);
+        this.inLobbyId = res.lobbyId;
+        this.inLobby = res.inQueue;
+        this.inLobbyStatus = res.inQueueStatus;
       }
     )
 
