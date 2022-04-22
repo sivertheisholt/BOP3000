@@ -49,14 +49,8 @@ namespace API.Controllers
                 GameType = newLobby.GameType,
                 LobbyRequirement = new Requirement
                 {
-                    Gender = newLobby.LobbyRequirement.Gender
+                    Gender = newLobby.LobbyRequirement == null ? "Other" : newLobby.LobbyRequirement.Gender
                 },
-                Log = new Log
-                {
-                    Messages = new List<Message>()
-                },
-                Users = new List<int>(),
-                Votes = new List<LobbyVote>(),
                 StartDate = DateTime.Now
             };
 
