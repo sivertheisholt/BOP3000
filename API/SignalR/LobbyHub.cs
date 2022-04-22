@@ -333,6 +333,13 @@ namespace API.SignalR
                 _unitOfWork.activitiesRepository.AddActivityLog(activityLog);
             }
 
+            foreach (var userId in users)
+            {
+                var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
+                user.AppUserProfile.AppUserData.FinishedLobbies.Add(lobbyId);
+                _unitOfWork.userRepository.Update(user);
+            }
+
             await _unitOfWork.Complete();
         }
     }
