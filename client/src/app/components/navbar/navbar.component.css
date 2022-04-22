@@ -29,6 +29,10 @@ nav{
     background-color: rgb(37, 37, 37);
 }
 
+.discord-btn{
+    color: rgb(219, 219, 219);
+}
+
 .noti-icon{
     position: relative;
     font-size: 2em;
@@ -53,7 +57,7 @@ nav{
     border: none;
     outline: none;
     border-radius: 50%;
-  }
+}
   
 .noti-number {
     position: absolute;
@@ -77,6 +81,14 @@ nav{
 
 .notification-link a{
     color: rgb(60, 107, 170);
+}
+
+.discord-link a{
+    color: rgb(219, 219, 219);
+}
+
+.discord-link{
+    margin-top: 15px;
 }
 
 .notification-link{
@@ -243,4 +255,33 @@ li a:hover{
     .goto-lobby-btn{
         display: none;
     }
+}
+
+.link-copy-wrapper {
+    position: relative;
+    width: 300px;
+}
+
+.link-input {
+    width: 100%;
+    border: 1px solid rgb(131, 131, 131);
+    border-radius: 100px;
+    padding: 12px 70px 12px 12px;
+    line-height: 1;
+    box-sizing: border-box;
+    border: 0;
+}
+
+.copy-link-button {
+    position: absolute;
+    right: 3px; 
+    top: 3px;
+    bottom: 3px;
+    border: 0;
+    background: #0a85cc;
+    color: rgb(255, 255, 255);
+    padding: 0 10px;
+    border-radius: 100px;
+    z-index: 2;
+    cursor: pointer;
 }

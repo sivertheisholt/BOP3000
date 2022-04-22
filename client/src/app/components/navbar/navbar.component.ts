@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle, faUsers, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSignOutAlt, faUserCircle, faBell, faHome, faCogs, faBullseye, faQuestionCircle, faUsers, faGlobe, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { TranslateService } from '@ngx-translate/core';
 import { NotifierService } from 'angular-notifier';
 import { fromEvent, Subject } from 'rxjs';
@@ -20,7 +20,7 @@ import { UserService } from 'src/app/_services/user.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  faUser = faUser; faSignOutAlt = faSignOutAlt; faUserCircle = faUserCircle; faBell = faBell; faHome = faHome; faCogs = faCogs; faQuestionCircle = faQuestionCircle; faBullseye = faBullseye; faUsers = faUsers; faGlobe = faGlobe;
+  faCopy = faCopy; faUser = faUser; faSignOutAlt = faSignOutAlt; faUserCircle = faUserCircle; faBell = faBell; faHome = faHome; faCogs = faCogs; faQuestionCircle = faQuestionCircle; faBullseye = faBullseye; faUsers = faUsers; faGlobe = faGlobe;
   @ViewChild('navBurger') navBurger!: ElementRef;
   @ViewChild('navMenu') navMenu!: ElementRef;
   @ViewChild('searchInput', {static: true}) searchInput? : ElementRef;
@@ -32,6 +32,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   inLobby: boolean = false;
   inLobbyId: number = 0;
   inLobbyStatus: string = '';
+  voiceUrl: string = 'https://discord.gg/zcFXdYDCWn';
   user?: Member;
   private destroyStreamSource = new Subject<void>()
 
@@ -53,7 +54,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.notificationService.notificationObservable
     .pipe(takeUntil(this.destroyStreamSource))
     .subscribe((notification: NotificationModel) => {
-      this.notifications.push(notification);
+      this.notifications.unshift(notification);
       this.notifierService.notify(notification.type, notification.message);
       this.totalNotifications++;
     })
@@ -135,5 +136,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
   changeLang(lang: string){
     this.translateService.use(lang);
     localStorage.setItem('selectedLang', lang);
+  }
+
+  copyLink(input: any){
+    input.select();
+    input.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(input.value);
+  }
+
+  joinVoiceChat(){
+    window.open(this.voiceUrl, '_blank');
   }
 }

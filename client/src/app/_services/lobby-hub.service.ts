@@ -85,7 +85,7 @@ export class LobbyHubService {
 
       this.hubConnection.on("NotInDiscordServer", () => {
         this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
-        this.notificationService.setNewNotification({type: 'info', message: 'You need to join our Discord server in order to join lobbies. You can do so here'});
+        this.notificationService.setNewNotification({type: 'info', message: 'You need to join our Discord server in order to join lobbies. Check your notifications.', inDiscordServer: true});
       });
 
       this.hubConnection.on("CancelQueue", () => {
