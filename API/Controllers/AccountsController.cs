@@ -314,7 +314,7 @@ namespace API.Controllers
             var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
             if (!result.Succeeded) return BadRequest(result.Errors);
 
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
             return NoContent();
         }
 
