@@ -8,6 +8,7 @@ namespace API.Interfaces.IRepositories
     public interface ISteamAppRepository : IBaseRepository<AppInfo>
     {
         Task<AppInfo> GetAppInfoAsync(int id);
+        Task<AppInfo> GetAppInfoBySteamId(int id);
 
         void AddApp(AppInfo appInfo);
 

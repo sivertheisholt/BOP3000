@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs.Lobbies;
 using API.Entities.Lobbies;
 using API.Entities.Lobbies.LobbyTracking;
 using API.Interfaces.IRepositories;

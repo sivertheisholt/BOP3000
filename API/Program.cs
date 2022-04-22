@@ -52,7 +52,7 @@ namespace API
                 await Seed.SeedUsers(userManager, roleManager, meilisearchService, mapper, unitOfWork);
                 await Seed.SeedCustomSteamApps(steamStoreClient, steamAppsClient, unitOfWork);
                 await Seed.SeedLobbies(lobbyHub, unitOfWork);
-                await Seed.SeedLobbyHub(unitOfWork, lobbyHub);
+                await Seed.SeedLobbyHub(mapper, unitOfWork, lobbyHub);
                 await Seed.SeedActivities(unitOfWork);
                 await Seed.SeedMeilisearch(meilisearchService, unitOfWork, mapper);
             }

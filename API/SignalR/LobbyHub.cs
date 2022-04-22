@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs.Lobbies;
 using API.Entities.Activities;
 using API.Entities.Lobbies;
 using API.Extentions;
@@ -34,8 +35,8 @@ namespace API.SignalR
 
         public async Task CreateLobby(Lobby lobby, int uid)
         {
+            Console.WriteLine(lobby.Id);
             await _lobbyTracker.CreateLobby(lobby, uid);
-            await AddToGroup($"lobby_{lobby.Id.ToString()}");
         }
 
         public async Task AcceptMember(int lobbyId, int acceptedUid)

@@ -1,3 +1,4 @@
+using API.DTOs.Lobbies;
 using API.Entities.Activities;
 using API.Entities.Applications;
 using API.Entities.Countries;
@@ -210,7 +211,7 @@ namespace API.Data
             Console.WriteLine($"Finished seeding lobbies data");
         }
 
-        public static async Task SeedLobbyHub(IUnitOfWork unitOfWork, LobbyHub lobbyHub)
+        public static async Task SeedLobbyHub(IMapper mapper, IUnitOfWork unitOfWork, LobbyHub lobbyHub)
         {
             var testLobbies = await unitOfWork.lobbiesRepository.GetActiveLobbies(new UniversalParams { });
             foreach (var lobby in testLobbies)

@@ -52,5 +52,10 @@ namespace API.Data.Repositories
         {
             return await Context.AppInfo.Where(x => x.Data.SteamAppid == gameId).AnyAsync();
         }
+
+        public async Task<AppInfo> GetAppInfoBySteamId(int id)
+        {
+            return await Context.AppInfo.Include(x => x.Data).FirstOrDefaultAsync(x => x.Data.SteamAppid == id);
+        }
     }
 }

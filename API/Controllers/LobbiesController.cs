@@ -4,6 +4,7 @@ using API.Entities.Lobbies;
 using API.Extentions;
 using API.Helpers.PaginationsParams;
 using API.Interfaces;
+using API.Interfaces.IClients;
 using API.SignalR;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -20,8 +21,10 @@ namespace API.Controllers
         private readonly LobbyChatHub _lobbyChatHub;
         private readonly LobbyTracker _lobbyTracker;
         private readonly IUnitOfWork _unitOfWork;
-        public LobbiesController(IMapper mapper, LobbyHub lobbyHub, LobbyTracker lobbyTracker, LobbyChatHub lobbyChatHub, IUnitOfWork unitOfWork) : base(mapper)
+        private readonly ISteamStoreClient _steamStoreClient;
+        public LobbiesController(IMapper mapper, LobbyHub lobbyHub, LobbyTracker lobbyTracker, LobbyChatHub lobbyChatHub, IUnitOfWork unitOfWork, ISteamStoreClient steamStoreClient) : base(mapper)
         {
+            _steamStoreClient = steamStoreClient;
             _unitOfWork = unitOfWork;
             _lobbyTracker = lobbyTracker;
             _lobbyChatHub = lobbyChatHub;
@@ -37,25 +40,29 @@ namespace API.Controllers
         [Authorize(Policy = "RequireMemberRole")]
         public async Task<ActionResult<LobbyDto>> CreateLobby(NewLobbyDto newLobby)
         {
-            // Create a new GameRoom object
+            // Create a new GameRoom objec
+            var game = await _unitOfWork.steamAppRepository.GetAppInfoBySteamId(newLobby.GameId);
+            if (game == null)
+            {
+                game = await _steamStoreClient.GetAppInfo(newLobby.GameId);
+                _unitOfWork.steamAppRepository.AddApp(game);
+                await _unitOfWork.Complete();
+            }
             var lobby = new Lobby
             {
                 AdminUid = GetUserIdFromClaim(),
                 MaxUsers = newLobby.MaxUsers,
                 Title = newLobby.Title,
                 LobbyDescription = newLobby.LobbyDescription,
-                GameId = newLobby.GameId,
-                GameName = (await _unitOfWork.steamAppRepository.GetAppInfoAsync(newLobby.GameId)).Data.Name,
+                GameId = game.Id,
+                GameName = game.Data.Name,
                 GameType = newLobby.GameType,
-                LobbyRequirement = new Requirement
-                {
-                    Gender = newLobby.LobbyRequirement == null ? "Other" : newLobby.LobbyRequirement.Gender
-                },
                 StartDate = DateTime.Now
             };
 
             // Add a new Game Room
             _unitOfWork.lobbiesRepository.AddLobby(lobby);
+            await _unitOfWork.Complete();
 
             // Checks the result from adding the new Game Room
             var createdLobby = Mapper.Map<NewLobbyDto>(lobby);
