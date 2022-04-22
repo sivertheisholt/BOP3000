@@ -51,6 +51,12 @@ namespace API.Controllers
                 {
                     Gender = newLobby.LobbyRequirement.Gender
                 },
+                Log = new Log
+                {
+                    Messages = new List<Message>()
+                },
+                Users = new List<int>(),
+                Votes = new List<LobbyVote>(),
                 StartDate = DateTime.Now
             };
 
