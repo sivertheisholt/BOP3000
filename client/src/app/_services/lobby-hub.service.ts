@@ -155,8 +155,9 @@ export class LobbyHubService {
       });
 
       this.hubConnection.on("EndedLobby", id => {
+        console.log("Ending lobby with id" + id);
+        this.redirectUser(this.router.url, +id);
         this.notificationService.setNewNotification({type: 'error', message: "Lobby was ended by the host."});
-        this.redirectUser(this.router.url, id);
       });
 
       this.hubConnection.on("LobbyStarted", url => {
@@ -266,6 +267,7 @@ export class LobbyHubService {
 
   redirectUserAfterFinished(currentUrl: string, lobbyId: number){
     const lobbyUrl: string = '/lobby/' + lobbyId;
+    console.log(lobbyUrl);
     if(currentUrl == lobbyUrl){
       this.router.navigate(['archived-lobby/' + lobbyId]);
     }
