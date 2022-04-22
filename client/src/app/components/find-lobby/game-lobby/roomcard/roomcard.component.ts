@@ -18,7 +18,7 @@ export class RoomcardComponent implements OnInit {
   dropdownStatus: boolean = false;
   @Input('game') game?: Game;
   pageNumber: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 20;
 
   lobbyId: number = 0;
   inQueue: boolean = false;

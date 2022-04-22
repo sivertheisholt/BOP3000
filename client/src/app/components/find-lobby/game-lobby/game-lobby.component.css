@@ -6,12 +6,12 @@
 }
 
 .game-lobby-container{
-    width: 90%;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 .content{
-    margin-top: 54px;
+    margin-top: 64px;
     width: 100%;
     height: 100%;
 }
@@ -26,7 +26,7 @@
 }
 
 .game-lobby-header-section{
-    margin-top: 54px;
+    margin-top: 64px;
     background-color: rgba(26, 29, 32, 0.65);
     width: 100%;
 }
