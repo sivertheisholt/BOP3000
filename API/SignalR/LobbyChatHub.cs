@@ -24,10 +24,20 @@ namespace API.SignalR
             _lobbyChatTracker = lobbyChatTracker;
         }
 
-        public async Task CreateChat(int lobbyId)
+        public Task CreateChatTest(int lobbyId)
         {
-            await _lobbyChatTracker.CreateChat(lobbyId);
+            _lobbyChatTracker.CreateChat(lobbyId);
+
+            return Task.CompletedTask;
         }
+
+        public Task CreateChat(int lobbyId)
+        {
+            _lobbyChatTracker.CreateChat(lobbyId);
+
+            return Task.CompletedTask;
+        }
+
 
         public override async Task OnConnectedAsync()
         {
@@ -35,31 +45,18 @@ namespace API.SignalR
             var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
             var uid = Context.User.GetUserId();
 
-            if (!await _lobbyChatTracker.CheckIfChatExists(1))
-            {
-                Console.WriteLine("CHAT DOES NOT EXIST");
-                await _lobbyChatTracker.CreateChat(1);
-            }
-
-            await AddToGroup($"user_{uid}");
-            if (!await _lobbyChatTracker.CheckIfUserInChat(uid))
-            {
-                if (await _lobbyChatTracker.MemberJoinedChat(lobbyId, uid))
-                {
-                    await Clients.OthersInGroup($"lobby_{lobbyId}").SendAsync("JoinedChat", uid);
-                }
-            }
+            if (!_lobbyChatTracker.MemberJoinedChat(lobbyId, uid)) await Clients.Group($"lobby_{lobbyId}").SendAsync("JoinedChat", uid);
 
             await AddToGroup($"lobby_{lobbyId}");
+            await AddToGroup($"user_{uid}");
 
-            await Clients.Caller.SendAsync("GetMessages", await _lobbyChatTracker.GetMessages(lobbyId));
+            await Clients.Caller.SendAsync("GetMessages", _lobbyChatTracker.GetMessages(lobbyId));
 
             await base.OnConnectedAsync();
         }
 
         public async Task SendMessage(int lobbyId, string message)
         {
-            var httpContext = Context.GetHttpContext();
             var uid = Context.User.GetUserId();
             var user = await _unitOfWork.userRepository.GetUserByIdAsync(uid);
 
@@ -72,19 +69,16 @@ namespace API.SignalR
                 Username = user.UserName
             };
 
-            if (await _lobbyChatTracker.SendMessage(lobbyId, uid, Chatmessage))
-            {
-                var messageDto = _mapper.Map<MessageDto>(Chatmessage);
-                var messageFakeArray = new List<MessageDto>();
-                messageFakeArray.Add(messageDto);
-                await Clients.Group($"lobby_{lobbyId}").SendAsync("NewMessage", messageFakeArray);
-            }
-        }
+            if (!_lobbyChatTracker.SendMessage(lobbyId, uid, Chatmessage)) return;
 
+            var messageDto = _mapper.Map<MessageDto>(Chatmessage);
+
+            await Clients.Group($"lobby_{lobbyId}").SendAsync("NewMessage", new List<MessageDto>() { messageDto });
+        }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            var lobbyId = await _lobbyChatTracker.GetLobbyIdFromUser(Context.User.GetUserId());
+            var lobbyId = _lobbyChatTracker.GetLobbyIdFromUser(Context.User.GetUserId());
             if (lobbyId == 0) return;
 
             await base.OnDisconnectedAsync(exception);

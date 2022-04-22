@@ -5,6 +5,7 @@ import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { GameSearch } from 'src/app/_models/game-search.model';
 import { GamesService } from 'src/app/_services/games.service';
+import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
 import { LobbyService } from 'src/app/_services/lobby.service';
 import { CustomValidator } from 'src/app/_validators/custom-validator';
 
@@ -24,7 +25,7 @@ export class CreateLobbyComponent implements OnInit {
 
   @ViewChild('gameInput', {static: true}) gameInput? : ElementRef;
 
-  constructor(private lobbyService: LobbyService, private gamesService: GamesService, private router: Router) {
+  constructor(private lobbyService: LobbyService, private gamesService: GamesService, private router: Router, private lobbyHub: LobbyHubService) {
 
   }
 
@@ -74,6 +75,7 @@ export class CreateLobbyComponent implements OnInit {
     if(this.createLobbyForm.valid){
       this.lobbyService.postLobby(this.createLobbyForm.value).subscribe(
         (res) => {
+          this.lobbyHub.createdLobby(res.id);
           this.router.navigate(['lobby', res.id]);
         }, err => {
           this.createLobbyForm.setErrors({'serverError': 'Something went wrong.'});

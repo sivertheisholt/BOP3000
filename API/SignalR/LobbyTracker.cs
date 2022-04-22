@@ -14,7 +14,7 @@ namespace API.SignalR
         private static readonly Dictionary<int, LobbyStatusTracker> Lobby = new Dictionary<int, LobbyStatusTracker>();
         private static readonly Dictionary<int, int> MemberTracker = new Dictionary<int, int>();
 
-        public Task CreateLobby(Lobby lobby, int adminUid)
+        public void CreateLobby(Lobby lobby, int adminUid)
         {
             var lobbyTracker = new LobbyStatusTracker
             {
@@ -35,31 +35,29 @@ namespace API.SignalR
 
             lock (Lobby) Lobby.Add(lobby.Id, lobbyTracker);
             lock (MemberTracker) MemberTracker.Add(adminUid, lobby.Id);
-
-            return Task.CompletedTask;
         }
 
-        public Task<bool> JoinQueue(int lobbyId, int uid)
+        public bool JoinQueue(int lobbyId, int uid)
         {
-            if (MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            if (MemberTracker.ContainsKey(uid)) return false;
 
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
             lock (Lobby) Lobby[lobbyId].UsersQueue.Add(uid);
             lock (MemberTracker) MemberTracker.Add(uid, lobbyId);
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> AcceptMember(int lobbyId, int uid, int adminUid)
+        public bool AcceptMember(int lobbyId, int uid, int adminUid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            if (!MemberTracker.ContainsKey(uid)) return false;
 
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
-            if (!Lobby[lobbyId].UsersQueue.Contains(uid)) return Task.FromResult(false);
+            if (!Lobby[lobbyId].UsersQueue.Contains(uid)) return false;
 
-            if (Lobby[lobbyId].AdminUid != adminUid) return Task.FromResult(false);
+            if (Lobby[lobbyId].AdminUid != adminUid) return false;
 
             var lobbyUser = new LobbyUser
             {
@@ -73,31 +71,31 @@ namespace API.SignalR
                 Lobby[lobbyId].UsersQueue.Remove(uid);
             }
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> DeclineMember(int lobbyId, int uid, int adminUid)
+        public bool DeclineMember(int lobbyId, int uid, int adminUid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            if (!MemberTracker.ContainsKey(uid)) return false;
 
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
-            if (Lobby[lobbyId].AdminUid != adminUid) return Task.FromResult(false);
+            if (Lobby[lobbyId].AdminUid != adminUid) return false;
 
             lock (Lobby) Lobby[lobbyId].UsersQueue.Remove(uid);
 
             lock (MemberTracker) MemberTracker.Remove(uid);
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> KickMember(int lobbyId, int uid, int adminUid)
+        public bool KickMember(int lobbyId, int uid, int adminUid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            if (!MemberTracker.ContainsKey(uid)) return false;
 
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
-            if (Lobby[lobbyId].AdminUid != adminUid) return Task.FromResult(false);
+            if (Lobby[lobbyId].AdminUid != adminUid) return false;
 
             var userLobby = Lobby[lobbyId].UsersLobby.FirstOrDefault(user => user.Uid == uid);
 
@@ -105,64 +103,64 @@ namespace API.SignalR
 
             lock (MemberTracker) MemberTracker.Remove(uid);
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> MemberLeftLobby(int lobbyId, int uid)
+        public bool MemberLeftLobby(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            if (!MemberTracker.ContainsKey(uid)) return false;
 
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
             var userLobby = Lobby[lobbyId].UsersLobby.FirstOrDefault(user => user.Uid == uid);
 
             lock (Lobby) Lobby[lobbyId].UsersLobby.Remove(userLobby);
             lock (MemberTracker) MemberTracker.Remove(uid);
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> MemberLeftQueueLobby(int lobbyId, int uid)
+        public bool MemberLeftQueueLobby(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            if (!MemberTracker.ContainsKey(uid)) return false;
 
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
             lock (Lobby) Lobby[lobbyId].UsersQueue.Remove(uid);
 
             lock (MemberTracker) MemberTracker.Remove(uid);
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> BanMember(int lobbyId, int uid, int adminUid)
+        public bool BanMember(int lobbyId, int uid, int adminUid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            if (!MemberTracker.ContainsKey(uid)) return false;
 
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
-            if (Lobby[lobbyId].AdminUid != adminUid) return Task.FromResult(false);
+            if (Lobby[lobbyId].AdminUid != adminUid) return false;
 
             lock (Lobby) Lobby[lobbyId].BannedUsers.Add(uid);
 
             lock (MemberTracker) MemberTracker.Remove(uid);
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> UnbanMember(int lobbyId, int uid)
+        public bool UnbanMember(int lobbyId, int uid)
         {
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
             lock (Lobby) Lobby[lobbyId].BannedUsers.Remove(uid);
 
-            return Task.FromResult(true);
+            return true;
         }
-        public Task<bool> StartCheck(int lobbyId, int adminUid)
+        public bool StartCheck(int lobbyId, int adminUid)
         {
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
-            if (Lobby[lobbyId].AdminUid != adminUid) return Task.FromResult(false);
+            if (Lobby[lobbyId].AdminUid != adminUid) return false;
 
             lock (Lobby)
             {
@@ -170,12 +168,12 @@ namespace API.SignalR
                 Lobby[lobbyId].UsersLobby.FirstOrDefault(u => u.Uid == adminUid).Ready = true;
             }
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> CancelCheck(int lobbyId)
+        public bool CancelCheck(int lobbyId)
         {
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
             lock (Lobby)
             {
@@ -185,10 +183,10 @@ namespace API.SignalR
                     user.Ready = false;
                 });
             }
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task FinishLobby(int lobbyId)
+        public void FinishLobby(int lobbyId)
         {
             Lobby[lobbyId].UsersLobby.ForEach(user =>
             {
@@ -196,91 +194,90 @@ namespace API.SignalR
             });
 
             lock (Lobby) Lobby.Remove(lobbyId);
-            return Task.CompletedTask;
         }
 
-        public Task<bool> AcceptReady(int lobbyId, int uid)
+        public bool AcceptReady(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            if (!MemberTracker.ContainsKey(uid)) return false;
 
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
             lock (Lobby) Lobby[lobbyId].UsersLobby.FirstOrDefault(u => u.Uid == uid).Ready = true;
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> DeclineReady(int lobbyId, int uid)
+        public bool DeclineReady(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return Task.FromResult(false);
+            if (!MemberTracker.ContainsKey(uid)) return false;
 
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
             lock (Lobby) Lobby[lobbyId].UsersLobby.FirstOrDefault(u => u.Uid == uid).Ready = false;
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<bool> CheckIfAllReady(int lobbyId)
+        public bool CheckIfAllReady(int lobbyId)
         {
-            if (!Lobby.ContainsKey(lobbyId)) return Task.FromResult(false);
+            if (!Lobby.ContainsKey(lobbyId)) return false;
 
             var users = Lobby[lobbyId].UsersLobby.Select(u => u.Ready).ToList();
 
             foreach (var user in users)
             {
-                if (!user) return Task.FromResult(false);
+                if (!user) return false;
             }
 
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<List<int>> GetMembersInLobby(int lobbyId)
+        public List<int> GetMembersInLobby(int lobbyId)
         {
-            return Task.FromResult(Lobby[lobbyId].UsersLobby.Select(user => user.Uid).ToList());
+            return Lobby[lobbyId].UsersLobby.Select(user => user.Uid).ToList();
         }
 
-        public Task<List<int>> GetMembersInQueueLobby(int lobbyId)
+        public List<int> GetMembersInQueueLobby(int lobbyId)
         {
-            return Task.FromResult(Lobby[lobbyId].UsersQueue);
+            return Lobby[lobbyId].UsersQueue;
         }
 
-        public Task<bool> CheckIfMemberInQueue(int lobbyId, int uid)
+        public bool CheckIfMemberInQueue(int lobbyId, int uid)
         {
-            return Task.FromResult(Lobby[lobbyId].UsersQueue.Contains(uid));
+            return Lobby[lobbyId].UsersQueue.Contains(uid);
         }
 
-        public Task<bool> CheckIfMemberIsBanned(int lobbyId, int uid)
+        public bool CheckIfMemberIsBanned(int lobbyId, int uid)
         {
-            return Task.FromResult(Lobby[lobbyId].BannedUsers.Contains(uid));
+            return Lobby[lobbyId].BannedUsers.Contains(uid);
         }
-        public Task<bool> CheckIfMemberInAnyLobby(int uid)
+        public bool CheckIfMemberInAnyLobby(int uid)
         {
-            return Task.FromResult(MemberTracker.ContainsKey(uid));
+            return MemberTracker.ContainsKey(uid);
         }
-        public Task<int> GetLobbyIdFromUser(int uid)
+        public int GetLobbyIdFromUser(int uid)
         {
-            return Task.FromResult(MemberTracker[uid]);
+            return MemberTracker[uid];
         }
-        public Task<int> GetLobbyAdmin(int lobbyId)
+        public int GetLobbyAdmin(int lobbyId)
         {
-            return Task.FromResult(Lobby[lobbyId].AdminUid);
+            return Lobby[lobbyId].AdminUid;
         }
-        public Task<bool> CheckIfMemberInLobby(int lobbyId, int uid)
+        public bool CheckIfMemberInLobby(int lobbyId, int uid)
         {
-            return Task.FromResult(Lobby[lobbyId].UsersLobby.Select(user => user.Uid).Contains(uid));
+            return Lobby[lobbyId].UsersLobby.Select(user => user.Uid).Contains(uid);
         }
-        public Task<bool> CheckIfLobbyExists(int lobbyId)
+        public bool CheckIfLobbyExists(int lobbyId)
         {
-            return Task.FromResult(Lobby.ContainsKey(lobbyId));
+            return Lobby.ContainsKey(lobbyId);
         }
-        public Task<bool> CheckReadyState(int lobbyId)
+        public bool CheckReadyState(int lobbyId)
         {
-            return Task.FromResult(Lobby[lobbyId].LobbyReadyCheck);
+            return Lobby[lobbyId].LobbyReadyCheck;
         }
-        public Task<bool> CheckIfLobbyFull(int lobbyId)
+        public bool CheckIfLobbyFull(int lobbyId)
         {
-            return Task.FromResult(Lobby[lobbyId].MaxUsers == Lobby[lobbyId].UsersLobby.Count);
+            return Lobby[lobbyId].MaxUsers == Lobby[lobbyId].UsersLobby.Count;
         }
     }
 }

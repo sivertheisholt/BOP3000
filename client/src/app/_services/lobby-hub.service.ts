@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
@@ -76,6 +77,7 @@ export class LobbyHubService {
       // Member that is kicked will get this
       this.hubConnection.on('Kicked', id => {
         this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
+        this.kickedResponse(id);
         this.redirectUser(this.router.url, +id);
         this.notificationService.setNewNotification({type: 'error', message: 'You have been kicked from the lobby.'});
       });
@@ -250,9 +252,14 @@ export class LobbyHubService {
     await this.connectionStatus;
     this.hubConnection.invoke("AcceptedResponse", lobbyId);
   }
-
-  
-
+  async kickedResponse(lobbyId: number){
+    await this.connectionStatus;
+    this.hubConnection.invoke("KickedResponse", lobbyId);
+  }
+  async createdLobby(lobbyId: number){
+    await this.connectionStatus;
+    this.hubConnection.invoke("CreatedLobby", lobbyId);
+  }
 
   stopHubConnection() {
     this.hubConnection.stop().catch(error => console.log(error));

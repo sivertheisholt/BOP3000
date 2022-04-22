@@ -28,30 +28,30 @@ namespace API.SignalR
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateLobbyTest(Lobby lobby, int uid)
+        public Task CreateLobbyTest(Lobby lobby, int uid)
         {
-            await _lobbyTracker.CreateLobby(lobby, uid);
+            _lobbyTracker.CreateLobby(lobby, uid);
+            return Task.CompletedTask;
         }
 
-        public async Task CreateLobby(Lobby lobby, int uid)
+        public Task CreateLobby(Lobby lobby, int uid)
         {
-            Console.WriteLine(lobby.Id);
-            await _lobbyTracker.CreateLobby(lobby, uid);
+            _lobbyTracker.CreateLobby(lobby, uid);
+
+            return Task.CompletedTask;
         }
 
         public async Task AcceptMember(int lobbyId, int acceptedUid)
         {
             var uid = Context.User.GetUserId();
 
-            if (await _lobbyTracker.CheckIfLobbyFull(lobbyId))
+            if (_lobbyTracker.CheckIfLobbyFull(lobbyId))
             {
                 await Clients.Caller.SendAsync("FullLobby");
                 return;
             }
 
-            var result = await _lobbyTracker.AcceptMember(lobbyId, acceptedUid, uid);
-
-            if (!result) return;
+            if (!_lobbyTracker.AcceptMember(lobbyId, acceptedUid, uid)) return;
 
             var activityLog = new ActivityLog
             {
@@ -63,16 +63,16 @@ namespace API.SignalR
 
             _unitOfWork.activitiesRepository.AddActivityLog(activityLog);
 
-            await _unitOfWork.Complete();
-
             await Clients.Group($"user_{acceptedUid.ToString()}").SendAsync("Accepted", lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAccepted", new List<int>() { lobbyId, acceptedUid });
+
+            await _unitOfWork.Complete();
         }
         public async Task DeclineMember(int lobbyId, int declinedUid)
         {
             var uid = Context.User.GetUserId();
 
-            var result = await _lobbyTracker.DeclineMember(lobbyId, declinedUid, uid);
+            var result = _lobbyTracker.DeclineMember(lobbyId, declinedUid, uid);
 
             if (!result) return;
 
@@ -84,7 +84,7 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
-            var result = await _lobbyTracker.BanMember(lobbyId, bannedUid, uid);
+            var result = _lobbyTracker.BanMember(lobbyId, bannedUid, uid);
 
             if (!result) return;
 
@@ -96,7 +96,7 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
-            var result = await _lobbyTracker.KickMember(lobbyId, kickedUid, uid);
+            var result = _lobbyTracker.KickMember(lobbyId, kickedUid, uid);
 
             if (!result) return;
 
@@ -108,7 +108,7 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
-            if (await _lobbyTracker.CheckIfMemberIsBanned(lobbyId, uid)) return;
+            if (_lobbyTracker.CheckIfMemberIsBanned(lobbyId, uid)) return;
 
             if (!await _unitOfWork.userRepository.CheckIfDiscordConnected(uid)) return;
 
@@ -120,7 +120,7 @@ namespace API.SignalR
                 return;
             }
 
-            if (!await _lobbyTracker.JoinQueue(lobbyId, uid)) return;
+            if (!_lobbyTracker.JoinQueue(lobbyId, uid)) return;
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("JoinedLobbyQueue", uid);
             await Clients.Caller.SendAsync("InQueue", lobbyId);
@@ -130,9 +130,9 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
-            if (!await _lobbyTracker.CheckIfMemberInQueue(lobbyId, uid)) return;
+            if (!_lobbyTracker.CheckIfMemberInQueue(lobbyId, uid)) return;
 
-            await _lobbyTracker.MemberLeftQueueLobby(lobbyId, uid);
+            _lobbyTracker.MemberLeftQueueLobby(lobbyId, uid);
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftQueue", uid);
             await Clients.Caller.SendAsync("CancelQueue");
@@ -143,10 +143,11 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
-            if (!await _lobbyTracker.CheckIfMemberInLobby(lobbyId, uid)) return;
+            if (!_lobbyTracker.CheckIfMemberInLobby(lobbyId, uid)) return;
 
-            await _lobbyTracker.MemberLeftLobby(lobbyId, uid);
+            _lobbyTracker.MemberLeftLobby(lobbyId, uid);
 
+            await RemoveFromGroup($"lobby_{lobbyId.ToString()}");
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftLobby", uid);
             await Clients.Caller.SendAsync("CancelLobby");
         }
@@ -155,9 +156,7 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
-            var result = await _lobbyTracker.StartCheck(lobbyId, uid);
-
-            if (!result) return;
+            if (!_lobbyTracker.StartCheck(lobbyId, uid)) return;
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("HostStarted", uid);
 
@@ -174,7 +173,7 @@ namespace API.SignalR
                 Console.Write("Lobby started before timer");
             }
 
-            if (await _lobbyTracker.CheckReadyState(lobbyId))
+            if (_lobbyTracker.CheckReadyState(lobbyId))
             {
                 await AllReady(lobbyId);
             }
@@ -188,32 +187,32 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
-            if (!await _lobbyTracker.AcceptReady(lobbyId, uid)) return;
+            if (!_lobbyTracker.AcceptReady(lobbyId, uid)) return;
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberAcceptedReady", uid);
 
-            if (await _lobbyTracker.CheckIfAllReady(lobbyId)) LobbyStartingTask[lobbyId].Cancel();
+            if (_lobbyTracker.CheckIfAllReady(lobbyId)) LobbyStartingTask[lobbyId].Cancel();
         }
 
         public async Task DeclineCheck(int lobbyId)
         {
             var uid = Context.User.GetUserId();
 
-            if (!await _lobbyTracker.DeclineReady(lobbyId, uid)) return;
-            if (!await _lobbyTracker.CancelCheck(lobbyId)) return;
+            if (!_lobbyTracker.DeclineReady(lobbyId, uid)) return;
+            if (!_lobbyTracker.CancelCheck(lobbyId)) return;
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclinedReady", uid);
         }
 
         public async Task GetQueueMembers(int lobbyId)
         {
-            var members = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
+            var members = _lobbyTracker.GetMembersInQueueLobby(lobbyId);
             await Clients.Caller.SendAsync("QueueMembers", members);
         }
 
         public async Task GetLobbyMembers(int lobbyId)
         {
-            var members = await _lobbyTracker.GetMembersInLobby(lobbyId);
+            var members = _lobbyTracker.GetMembersInLobby(lobbyId);
             await Clients.Caller.SendAsync("LobbyMembers", members);
         }
 
@@ -221,10 +220,18 @@ namespace API.SignalR
         {
             await AddToGroup($"lobby_{lobbyId.ToString()}");
         }
+        public async Task KickedResponse(int lobbyId)
+        {
+            await RemoveFromGroup($"lobby_{lobbyId.ToString()}");
+        }
+        public async Task CreatedLobby(int lobbyId)
+        {
+            await AddToGroup($"lobby_{lobbyId.ToString()}");
+        }
         public async Task EndLobby(int lobbyId)
         {
-            var queueUsers = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
-            await _lobbyTracker.FinishLobby(lobbyId);
+            var queueUsers = _lobbyTracker.GetMembersInQueueLobby(lobbyId);
+            _lobbyTracker.FinishLobby(lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("EndedLobby", lobbyId);
             foreach (var user in queueUsers)
             {
@@ -241,10 +248,10 @@ namespace API.SignalR
             if (uid == -1) return;
 
             await AddToGroup($"user_{uid}");
-            if (await _lobbyTracker.CheckIfMemberInAnyLobby(uid))
+            if (_lobbyTracker.CheckIfMemberInAnyLobby(uid))
             {
-                var lobbyId = await _lobbyTracker.GetLobbyIdFromUser(uid);
-                if (await _lobbyTracker.CheckIfMemberInLobby(lobbyId, uid))
+                var lobbyId = _lobbyTracker.GetLobbyIdFromUser(uid);
+                if (_lobbyTracker.CheckIfMemberInLobby(lobbyId, uid))
                 {
                     await AddToGroup($"lobby_{lobbyId}");
                 }
@@ -267,7 +274,6 @@ namespace API.SignalR
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
 
-
         private async Task AllReady(int lobbyId)
         {
             await StartLobby(lobbyId);
@@ -277,16 +283,16 @@ namespace API.SignalR
         private async Task StartLobby(int lobbyId)
         {
             var discordIds = new List<ulong>();
-            foreach (var userId in await _lobbyTracker.GetMembersInLobby(lobbyId))
+            foreach (var userId in _lobbyTracker.GetMembersInLobby(lobbyId))
             {
                 discordIds.Add(await _unitOfWork.userRepository.GetUserDiscordIdFromUid(userId));
             }
 
-            var adminName = await _unitOfWork.userRepository.GetUsernameFromId(await _lobbyTracker.GetLobbyAdmin(lobbyId));
+            var adminName = await _unitOfWork.userRepository.GetUsernameFromId(_lobbyTracker.GetLobbyAdmin(lobbyId));
             var channelName = $"{adminName}'s lobby";
             var invitelink = await _discordBotService.CreateVoiceChannelForLobby(discordIds.ToArray(), channelName);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyStarted", invitelink);
-            var queueUsers = await _lobbyTracker.GetMembersInQueueLobby(lobbyId);
+            var queueUsers = _lobbyTracker.GetMembersInQueueLobby(lobbyId);
             foreach (var user in queueUsers)
             {
                 await Clients.Group($"user_{user}").SendAsync("QueueKicked");
@@ -295,16 +301,16 @@ namespace API.SignalR
         private async Task FinishLobby(int lobbyId)
         {
             var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(lobbyId);
-            var users = await _lobbyTracker.GetMembersInLobby(lobbyId);
+            var users = _lobbyTracker.GetMembersInLobby(lobbyId);
             lobby.Finished = true;
             lobby.Users = users;
             lobby.FinishedDate = DateTime.Now;
             lobby.Log = new Log
             {
-                Messages = await _lobbyChatTracker.GetMessages(lobbyId)
+                Messages = _lobbyChatTracker.GetMessages(lobbyId)
             };
 
-            await _lobbyTracker.FinishLobby(lobbyId);
+            _lobbyTracker.FinishLobby(lobbyId);
 
             var finishTask = Task.Delay(20 * 1000);
             await finishTask;
@@ -312,7 +318,7 @@ namespace API.SignalR
 
             _unitOfWork.lobbiesRepository.Update(lobby);
 
-            await _lobbyChatTracker.LobbyChatDone(lobbyId);
+            _lobbyChatTracker.LobbyChatDone(lobbyId);
 
             foreach (var uid in users)
             {

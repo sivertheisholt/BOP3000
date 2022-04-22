@@ -33,7 +33,7 @@ export class ChatComponent implements OnInit {
 
   onSubmit(){
     if(this.chatMessage.nativeElement.value.length !== 0){
-      this.lobbyChatHubService.sendMessage(1, this.chatMessage.nativeElement.value);
+      this.lobbyChatHubService.sendMessage(this.lobby.id, this.chatMessage.nativeElement.value);
       this.chatMessage.nativeElement.value = '';
       this.chatMessage.nativeElement.focus();
     }

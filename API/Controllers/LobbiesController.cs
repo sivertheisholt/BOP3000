@@ -96,7 +96,7 @@ namespace API.Controllers
 
             if (!lobby.Finished)
             {
-                lobbyDto.Users = await _lobbyTracker.GetMembersInLobby(id);
+                lobbyDto.Users = _lobbyTracker.GetMembersInLobby(id);
             }
 
             var lobbyAdmin = await _unitOfWork.userRepository.GetUserByIdAsync(lobby.AdminUid);
@@ -124,7 +124,7 @@ namespace API.Controllers
 
                 if (lobby.Finished)
                 {
-                    lobby.Users = await _lobbyTracker.GetMembersInLobby(lobby.Id);
+                    lobby.Users = _lobbyTracker.GetMembersInLobby(lobby.Id);
                 }
 
                 lobby.AdminUsername = lobbyAdmin.UserName;

@@ -130,10 +130,10 @@ namespace API.Controllers
                 LobbyId = 0
             };
 
-            if (!await _lobbyTracker.CheckIfMemberInAnyLobby(userId)) return Ok(status);
-            var lobbyId = await _lobbyTracker.GetLobbyIdFromUser(userId);
+            if (!_lobbyTracker.CheckIfMemberInAnyLobby(userId)) return Ok(status);
+            var lobbyId = _lobbyTracker.GetLobbyIdFromUser(userId);
 
-            status.InQueue = await _lobbyTracker.CheckIfMemberInQueue(lobbyId, userId);
+            status.InQueue = _lobbyTracker.CheckIfMemberInQueue(lobbyId, userId);
             status.LobbyId = lobbyId;
 
             return Ok(status);
