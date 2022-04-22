@@ -158,7 +158,7 @@ namespace API.SignalR
 
             if (!_lobbyTracker.StartCheck(lobbyId, uid)) return;
 
-            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("HostStarted", uid);
+            await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("HostStarted", new List<int>() { uid, lobbyId });
 
             CancellationTokenSource source = new CancellationTokenSource();
             var task = Task.Delay(30000, source.Token);
