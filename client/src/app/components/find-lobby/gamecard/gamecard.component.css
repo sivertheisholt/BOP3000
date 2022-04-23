@@ -40,7 +40,6 @@ a:hover{
     .games-container{
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     }
-    
 }
 
 @media only screen and (max-width: 471px) {
