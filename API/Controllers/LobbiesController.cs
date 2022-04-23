@@ -152,6 +152,7 @@ namespace API.Controllers
 
                 lobbyDto.AdminUsername = lobbyAdmin.UserName;
                 lobbyDto.AdminProfilePic = lobbyAdmin.AppUserProfile.AppUserPhoto.Url;
+                lobbyDto.Users = _lobbyTracker.GetMembersInLobby(lobby.Id);
                 lobbiesDto.Add(lobbyDto);
             }
 
