@@ -15,6 +15,7 @@ namespace API.SignalR
 
         public void CreateChat(int lobbyId)
         {
+            Console.WriteLine("CREATING CHAAAAAAAAAAAAAAAAAAT");
             Console.WriteLine(lobbyId);
             var chat = new LobbyChatStatusTracker
             {
@@ -28,8 +29,6 @@ namespace API.SignalR
         public bool MemberJoinedChat(int lobbyId, int uid)
         {
             if (!Chat.ContainsKey(lobbyId)) return false;
-
-            if (MemberTracker.ContainsKey(uid)) return false;
 
             lock (Chat) Chat[lobbyId].Users.Add(uid);
 
