@@ -31,6 +31,11 @@ namespace API.Data.Repositories
             return await PagedList<Lobby>.CreateAsync(query, universalParams.PageNumber, universalParams.PageSize);
         }
 
+        public async Task<List<Lobby>> GetActiveRecommendedLobbies(int amount)
+        {
+            return await Context.Lobby.Where(x => !x.Finished).OrderBy(x => Guid.NewGuid()).Take(amount).ToListAsync();
+        }
+
         public async Task<List<Lobby>> GetAllLobbiesNoPaging()
         {
             return await Context.Lobby.ToListAsync();

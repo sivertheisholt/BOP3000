@@ -21,5 +21,7 @@ namespace API.Interfaces.IRepositories
 
         Task<List<Lobby>> GetAllLobbiesNoPaging();
 
+        Task<List<Lobby>> GetActiveRecommendedLobbies(int amount);
+
     }
 }

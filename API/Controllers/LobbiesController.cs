@@ -133,6 +133,29 @@ namespace API.Controllers
             return lobbiesDto;
         }
 
+        [HttpGet("recommended")]
+        [Authorize(Policy = "RequireMemberRole")]
+        public async Task<ActionResult<IEnumerable<LobbyDto>>> GetRecommendedLobbies()
+        {
+            var uid = GetUserIdFromClaim();
+            var lobbies = await _unitOfWork.lobbiesRepository.GetActiveRecommendedLobbies(3);
+            var lobbiesDto = new List<LobbyDto>();
+            foreach (var lobby in lobbies)
+            {
+                if (lobby.Finished) continue;
+
+                var lobbyDto = Mapper.Map<LobbyDto>(lobby);
+                var lobbyAdmin = await _unitOfWork.userRepository.GetUserByIdAsync(lobby.AdminUid);
+
+                lobbyDto.AdminUsername = lobbyAdmin.UserName;
+                lobbyDto.AdminProfilePic = lobbyAdmin.AppUserProfile.AppUserPhoto.Url;
+                lobbyDto.Users = _lobbyTracker.GetMembersInLobby(lobby.Id);
+                lobbiesDto.Add(lobbyDto);
+            }
+
+            return Ok(lobbiesDto);
+        }
+
         [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("game/{id}")]
         public async Task<ActionResult<IEnumerable<LobbyDto>>> GetActiveLobbiesWithGameId(int id, [FromQuery] UniversalParams universalParams)
