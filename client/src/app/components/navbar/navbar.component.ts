@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isNavVisible = false;
   notifications: NotificationModel[] = [];
   totalNotifications: number = 0;
-  inLobby: boolean = false;
+  inQueue: boolean = false;
   inLobbyId: number = 0;
   inLobbyStatus: string = '';
   voiceUrl: string = 'https://discord.gg/zcFXdYDCWn';
@@ -62,12 +62,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     
 
     this.lobbyService.getQueueStatus().subscribe(
-      (res) => {
-        console.log(res);
-        if(res.lobbyId != 0 && !res.inQueue){
-          this.inLobby = true;
-          this.inLobbyId = res.lobbyId;
-          this.inLobbyStatus = 'accepted';
+      (response) => {
+        if(!response.inQueue && response.lobbyId == 0){
+          this.lobbyHubService.inQueue.next({lobbyId: response.lobbyId, inQueue: response.inQueue, inQueueStatus: 'notInQueue'});
+        }
+        if(response.inQueue && response.lobbyId != 0){
+          this.lobbyHubService.inQueue.next({lobbyId: response.lobbyId, inQueue: response.inQueue, inQueueStatus: 'inQueue'});
+        }
+        if(!response.inQueue && response.lobbyId != 0){
+          this.lobbyHubService.inQueue.next({lobbyId: response.lobbyId, inQueue: response.inQueue, inQueueStatus: 'accepted'});
         }
       }
     )
@@ -76,7 +79,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       (res) => {
         console.log(res);
         this.inLobbyId = res.lobbyId;
-        this.inLobby = res.inQueue;
+        this.inQueue = res.inQueue;
         this.inLobbyStatus = res.inQueueStatus;
       }
     )

@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], resolve: {countries: CountryResolver} },
   { path: 'home', component: HomeComponent, canActivate: [UnAuthGuard] },
   { path: 'forgotten-password', component: ForgottenPasswordComponent, canActivate: [AuthGuard] },
-  { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard, CreateLobbyGuard] },
+  { path: 'create-lobby', component: CreateLobbyComponent, canActivate: [UnAuthGuard, CreateLobbyGuard, DiscordConnectionGuard] },
   { path: 'upgrade', component: UpgradeAccountComponent, canActivate: [UnAuthGuard] },
   { path: 'about', component: AboutComponent, canActivate: [UnAuthGuard] },
   { path: 'contact', component: ContactFormComponent, canActivate: [UnAuthGuard], resolve: {user: UserResolver} },

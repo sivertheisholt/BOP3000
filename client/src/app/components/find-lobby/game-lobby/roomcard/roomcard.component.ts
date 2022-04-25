@@ -28,19 +28,7 @@ export class RoomcardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLobbies();
-    this.lobbyService.getQueueStatus().subscribe(
-      (response) => {
-        if(!response.inQueue && response.lobbyId == 0){
-          this.lobbyHubService.inQueue.next({lobbyId: response.lobbyId, inQueue: response.inQueue, inQueueStatus: 'notInQueue'});
-        }
-        if(response.inQueue && response.lobbyId != 0){
-          this.lobbyHubService.inQueue.next({lobbyId: response.lobbyId, inQueue: response.inQueue, inQueueStatus: 'inQueue'});
-        }
-        if(!response.inQueue && response.lobbyId != 0){
-          this.lobbyHubService.inQueue.next({lobbyId: response.lobbyId, inQueue: response.inQueue, inQueueStatus: 'accepted'});
-        }
-      }
-    );
+
     this.lobbyHubService.inQueue.subscribe(
       (res) => {
         this.lobbyId = res.lobbyId;

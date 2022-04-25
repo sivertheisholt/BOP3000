@@ -43,7 +43,6 @@ export class CreateLobbyComponent implements OnInit {
 
     fromEvent(this.gameInput?.nativeElement, 'keyup').pipe(
       map((event: any) => {
-        console.log(event.target.value.length);
         if(event.target.value.length > 1){
           this.games = [];
           this.gameInput?.nativeElement.classList.add('loading');
