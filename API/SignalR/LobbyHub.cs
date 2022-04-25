@@ -258,13 +258,14 @@ namespace API.SignalR
                 Console.Write("Lobby started before timer");
             }
 
+            lock (LobbyStartingTask) LobbyStartingTask.Remove(lobbyId);
+
             if (_lobbyTracker.CheckReadyState(lobbyId))
             {
                 await AllReady(lobbyId);
             }
             else
             {
-                lock (LobbyStartingTask) LobbyStartingTask.Remove(lobbyId);
                 await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyCancelled");
             }
         }
