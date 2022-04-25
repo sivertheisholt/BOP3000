@@ -128,8 +128,12 @@ namespace API.SignalR
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            var lobbyId = _lobbyChatTracker.GetLobbyIdFromUser(Context.User.GetUserId());
-            if (lobbyId == 0) return;
+            var uid = Context.User.GetUserId();
+            var lobbyId = _lobbyChatTracker.GetLobbyIdFromUser(uid);
+
+            if (!await GlobalChecks(new Checks(), lobbyId, uid, uid)) return;
+
+            _lobbyChatTracker.MemberLeftChat(lobbyId, uid);
 
             await base.OnDisconnectedAsync(exception);
         }
