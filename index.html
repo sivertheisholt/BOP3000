@@ -362,6 +362,9 @@
                     <a href="#get-active-lobbies-with-specific-game-id" class="toc-h2 toc-link" data-title="GET Active lobbies with specific game ID">GET Active lobbies with specific game ID</a>
                   </li>
                   <li>
+                    <a href="#get-recommended-lobbies" class="toc-h2 toc-link" data-title="GET Recommended lobbies">GET Recommended lobbies</a>
+                  </li>
+                  <li>
                     <a href="#get-check-if-lobby-is-finished" class="toc-h2 toc-link" data-title="GET Check if lobby is finished">GET Check if lobby is finished</a>
                   </li>
                   <li>
@@ -1300,13 +1303,7 @@
     </span><span class="nl">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-03-30T04:08:03.088913"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"finishedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"finished"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"votes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"voterUid"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"votedUid"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"upvote"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+    </span><span class="nl">"votes"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
@@ -1439,6 +1436,191 @@
 <th>Type</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>messages</td>
+<td>Message[]</td>
+</tr>
+</tbody></table>
+<h4 id='message-2'>Message</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>messages</td>
+<td>Message[]</td>
+</tr>
+</tbody></table>
+<h2 id='get-recommended-lobbies'>GET Recommended lobbies</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">https://bop3000.azurewebsites.net/api/lobbies/recommended</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">requestOptions</span>
+<span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"maxUsers"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Road to global - DEV LOBBY"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Counter-Strike: Global Offensive"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Competetive"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lobbyDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">" If you are trash don't bother - LEM is required"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"adminUid"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"adminUsername"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Willym"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"adminProfilePic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dzpzecnx5/image/upload/v1650922946/TestImages/pf5_ltqunk.jpg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">5</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"log"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lobbyRequirement"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-04-09T12:00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finishedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finished"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"votes"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves max 3 recommended lobbies for current user</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://bop3000.azurewebsites.net/api/lobbies/recommended</code></p>
+<h3 id='response-class-status-200-4'>Response Class (Status 200)</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+</tr>
+<tr>
+<td>maxUsers</td>
+<td>int</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+</tr>
+<tr>
+<td>gameId</td>
+<td>int</td>
+</tr>
+<tr>
+<td>gameType</td>
+<td>string</td>
+</tr>
+<tr>
+<td>gameName</td>
+<td>string</td>
+</tr>
+<tr>
+<td>lobbyDescription</td>
+<td>string, optional</td>
+</tr>
+<tr>
+<td>adminUid</td>
+<td>string</td>
+</tr>
+<tr>
+<td>adminUsername</td>
+<td>string</td>
+</tr>
+<tr>
+<td>users</td>
+<td>int[]</td>
+</tr>
+<tr>
+<td>log</td>
+<td>Log, optional</td>
+</tr>
+<tr>
+<td>lobbyRequirement</td>
+<td>LobbyRequirement</td>
+</tr>
+<tr>
+<td>startDate</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>finishedDate</td>
+<td>Date, optional</td>
+</tr>
+<tr>
+<td>votes</td>
+<td>Vote[]</td>
+</tr>
+</tbody></table>
+<h4 id='lobbyrequirement-4'>LobbyRequirement</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>gender</td>
+<td>string, optional</td>
+</tr>
+</tbody></table>
+<h4 id='vote-4'>Vote</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>voterUid</td>
+<td>int</td>
+</tr>
+<tr>
+<td>votedUid</td>
+<td>int</td>
+</tr>
+<tr>
+<td>upvote</td>
+<td>int</td>
+</tr>
+</tbody></table>
+<h4 id='log-4'>Log</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>messages</td>
+<td>Message[]</td>
+</tr>
+</tbody></table>
+<h4 id='message-3'>Message</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>messages</td>
+<td>Message[]</td>
+</tr>
 </tbody></table>
 <h2 id='get-check-if-lobby-is-finished'>GET Check if lobby is finished</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
@@ -1462,7 +1644,7 @@
 </blockquote>
 
 <p>This endpoint checks if lobby is finished.</p>
-<h3 id='http-request-4'>HTTP Request</h3>
+<h3 id='http-request-5'>HTTP Request</h3>
 <p><code>GET https://bop3000.azurewebsites.net/api/lobbies/&lt;ID&gt;/finished</code></p>
 
 <!--- POST --->
@@ -1505,7 +1687,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint will create a new lobby.</p>
-<h3 id='http-request-5'>HTTP Request</h3>
+<h3 id='http-request-6'>HTTP Request</h3>
 <p><code>POST https://bop3000.azurewebsites.net/api/lobbies</code></p>
 <h3 id='body-schema'>Body Schema</h3>
 <table><thead>
@@ -1539,7 +1721,7 @@
 <td>LobbyRequirement</td>
 </tr>
 </tbody></table>
-<h4 id='lobbyrequirement-4'>LobbyRequirement</h4>
+<h4 id='lobbyrequirement-5'>LobbyRequirement</h4>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1551,7 +1733,7 @@
 <td>string, optional</td>
 </tr>
 </tbody></table>
-<h3 id='response-class-status-200-4'>Response Class (Status 200)</h3>
+<h3 id='response-class-status-200-5'>Response Class (Status 200)</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1583,7 +1765,7 @@
 <td>LobbyRequirement</td>
 </tr>
 </tbody></table>
-<h4 id='lobbyrequirement-5'>LobbyRequirement</h4>
+<h4 id='lobbyrequirement-6'>LobbyRequirement</h4>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1622,7 +1804,7 @@
 </blockquote>
 
 <p>This endpoint will upvote another member</p>
-<h3 id='http-request-6'>HTTP Request</h3>
+<h3 id='http-request-7'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/lobbies/&lt;ID&gt;/upvote/&lt;UID&gt;</code></p>
 <h2 id='patch-downvote'>PATCH Downvote</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorization</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bearer &lt;Token&gt;</span><span class="dl">"</span><span class="p">);</span>
@@ -1647,7 +1829,7 @@
 </blockquote>
 
 <p>This endpoint will downvote another member</p>
-<h3 id='http-request-7'>HTTP Request</h3>
+<h3 id='http-request-8'>HTTP Request</h3>
 <p><code>PATCH https://bop3000.azurewebsites.net/api/lobbies/&lt;ID&gt;/downvote/&lt;UID&gt;</code></p>
 
 <!--- DELETE --->
@@ -2498,7 +2680,12 @@
     </span><span class="nl">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-03-31T00:00:00"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"membertest"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"appUserId"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lobby-created"</span><span class="w">
+    </span><span class="nl">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lobby-created"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lobbyId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Counter-Strike: Global Offensive"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gameId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"headerImage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg?t=1641233427"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"profilePicture"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dzpzecnx5/image/upload/v1650922825/TestImages/pf2_myeoew.png"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
@@ -2527,6 +2714,26 @@
 <tr>
 <td>identifier</td>
 <td>string</td>
+</tr>
+<tr>
+<td>lobbyId</td>
+<td>int, optional</td>
+</tr>
+<tr>
+<td>gameName</td>
+<td>string, optional</td>
+</tr>
+<tr>
+<td>gameId</td>
+<td>int, optional</td>
+</tr>
+<tr>
+<td>headerImage</td>
+<td>string, optional</td>
+</tr>
+<tr>
+<td>profilePicture</td>
+<td>string, optional</td>
 </tr>
 </tbody></table>
 <h2 id='get-discord-connected-status'>GET Discord connected status</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
