@@ -38,6 +38,50 @@ namespace API.SignalR
             return Task.CompletedTask;
         }
 
+        private class Checks
+        {
+            public Checks(bool checkUid = true, bool checkLobbyExists = true, bool checkIfMemberInLobby = false)
+            {
+                CheckUid = checkUid;
+                CheckLobbyExists = checkLobbyExists;
+                CheckIfMemberInLobby = checkIfMemberInLobby;
+            }
+
+            public bool CheckUid { get; set; } = true;
+            public bool CheckLobbyExists { get; set; } = true;
+            public bool CheckIfMemberInLobby { get; set; } = true;
+        }
+
+        private async Task<bool> GlobalChecks(Checks checks, int lobbyId = -1, int callerUid = -1, int targetUid = -1)
+        {
+            if (checks.CheckUid)
+            {
+                if (callerUid == -1)
+                {
+                    await Clients.Caller.SendAsync("ServerError", "Can't get UID");
+                    return false;
+                }
+            }
+            if (checks.CheckLobbyExists)
+            {
+                if (!_lobbyChatTracker.CheckIfChatExists(lobbyId))
+                {
+                    await Clients.Caller.SendAsync("ServerError", "Lobby doesn't exist");
+                    return false;
+                }
+            }
+            if (checks.CheckIfMemberInLobby)
+            {
+                if (!_lobbyChatTracker.CheckIfMemberInChat(lobbyId, targetUid))
+                {
+                    await Clients.Caller.SendAsync("ServerError", "Member is not in lobby");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
 
         public override async Task OnConnectedAsync()
         {
@@ -45,7 +89,11 @@ namespace API.SignalR
             var lobbyId = Int32.Parse(httpContext.Request.Query["lobbyId"]);
             var uid = Context.User.GetUserId();
 
-            if (!_lobbyChatTracker.MemberJoinedChat(lobbyId, uid)) await Clients.Group($"lobby_{lobbyId}").SendAsync("JoinedChat", uid);
+            if (!await GlobalChecks(new Checks(), lobbyId, uid, uid)) return;
+
+            _lobbyChatTracker.MemberJoinedChat(lobbyId, uid);
+
+            await Clients.Group($"lobby_{lobbyId}").SendAsync("JoinedChat", uid);
 
             await AddToGroup($"lobby_{lobbyId}");
             await AddToGroup($"user_{uid}");
@@ -60,6 +108,8 @@ namespace API.SignalR
             var uid = Context.User.GetUserId();
             var user = await _unitOfWork.userRepository.GetUserByIdAsync(uid);
 
+            if (!await GlobalChecks(new Checks(), lobbyId, uid, uid)) return;
+
             var Chatmessage = new Message
             {
                 LobbyId = lobbyId,
@@ -69,7 +119,7 @@ namespace API.SignalR
                 Username = user.UserName
             };
 
-            if (!_lobbyChatTracker.SendMessage(lobbyId, uid, Chatmessage)) return;
+            _lobbyChatTracker.SendMessage(lobbyId, uid, Chatmessage);
 
             var messageDto = _mapper.Map<MessageDto>(Chatmessage);
 

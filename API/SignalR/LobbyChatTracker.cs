@@ -15,8 +15,6 @@ namespace API.SignalR
 
         public void CreateChat(int lobbyId)
         {
-            Console.WriteLine("CREATING CHAAAAAAAAAAAAAAAAAAT");
-            Console.WriteLine(lobbyId);
             var chat = new LobbyChatStatusTracker
             {
                 LobbyId = lobbyId,
@@ -26,26 +24,17 @@ namespace API.SignalR
             lock (Chat) Chat.Add(lobbyId, chat);
         }
 
-        public bool MemberJoinedChat(int lobbyId, int uid)
+        public void MemberJoinedChat(int lobbyId, int uid)
         {
-            if (!Chat.ContainsKey(lobbyId)) return false;
-
             lock (Chat) Chat[lobbyId].Users.Add(uid);
 
             lock (MemberTracker) MemberTracker.Add(uid, lobbyId);
-
-            return true;
         }
 
-        public bool SendMessage(int lobbyId, int uid, Message message)
+        public void SendMessage(int lobbyId, int uid, Message message)
         {
-            if (!Chat.ContainsKey(lobbyId)) return false;
-
-            if (!Chat[lobbyId].Users.Contains(uid)) return false;
 
             lock (Chat) Chat[lobbyId].Messages.Add(message);
-
-            return true;
         }
 
         public List<Message> GetMessages(int lobbyId)
@@ -70,9 +59,13 @@ namespace API.SignalR
         {
             return Chat.ContainsKey(lobbyId);
         }
-        public bool CheckIfUserInChat(int uid)
+        public bool CheckIfMemberInAnyChat(int uid)
         {
             return MemberTracker.ContainsKey(uid);
+        }
+        public bool CheckIfMemberInChat(int lobbyId, int uid)
+        {
+            return Chat[lobbyId].Users.Contains(uid);
         }
     }
 }
