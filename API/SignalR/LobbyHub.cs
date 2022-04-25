@@ -260,9 +260,17 @@ namespace API.SignalR
 
             lock (LobbyStartingTask) LobbyStartingTask.Remove(lobbyId);
 
-            if (!_lobbyTracker.CheckReadyState(lobbyId)) await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyCancelled");
+            if (!_lobbyTracker.CheckReadyState(lobbyId))
+            {
+                await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyCancelled");
+                return;
+            }
 
-            if (!_lobbyTracker.CheckIfAllReady(lobbyId)) await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyCancelled");
+            if (!_lobbyTracker.CheckIfAllReady(lobbyId))
+            {
+                await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyCancelled");
+                return;
+            }
 
             await AllReady(lobbyId);
         }
