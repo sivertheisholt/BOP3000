@@ -1,3 +1,4 @@
+using System.Reflection;
 using API.DTOs.Activities;
 using API.DTOs.Applications;
 using API.DTOs.Members;
@@ -65,6 +66,13 @@ namespace API.Controllers
             var user = await _unitOfWork.userRepository.GetUserByIdAsync(userId);
 
             if (user == null) return NotFound();
+
+            if (memberUpdateDto.Birthday == null) return BadRequest("Birthday can't be null");
+            if (memberUpdateDto.CountryId == 0) return BadRequest("Country can't be null");
+            if (memberUpdateDto.Description == null) return BadRequest("Description can't be null");
+            if (memberUpdateDto.Email == null) return BadRequest("Email can't be null");
+            if (memberUpdateDto.Gender == null) return BadRequest("Gender can't be null");
+            if (memberUpdateDto.UserName == null) return BadRequest("Username can't be null");
 
             var member = Mapper.Map(memberUpdateDto, user);
             member.AppUserProfile.CountryIso = await _unitOfWork.countryRepository.GetCountryIsoByIdAsync(memberUpdateDto.CountryId);
