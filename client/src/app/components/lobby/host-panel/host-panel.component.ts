@@ -31,7 +31,7 @@ export class HostPanelComponent implements OnInit {
     this.lobbyHubService.lobbyReadyCheck$.subscribe(
       (res) => {
         if(res){
-          this.readyCheckModal = res;
+          this.readyCheckModal = true;
           this.readyCheckTimer();
         }
       }
@@ -60,12 +60,19 @@ export class HostPanelComponent implements OnInit {
 
     this.lobbyHubService.declinedReadyCheckMembers$.subscribe(
       (res) => {
-        this.userDeclined = res;
-        this.subscription?.unsubscribe();
-        this.start = 30;
-        setTimeout(() => {
-          this.readyCheckModal = false;
-        }, 3000)
+        if(res != 0){
+          this.userDeclined = res;
+          this.subscription?.unsubscribe();
+          this.start = 30;
+          setTimeout(() => {
+            this.declined = false;
+            this.accepted = false;
+            this.usersAccepted = 0;
+            this.userDeclined = 0;
+            this.lobbyHubService.declinedReadyCheckMembers.next(0);
+            this.readyCheckModal = false;
+          }, 3000)
+        }
       }
     )
 

@@ -28,7 +28,7 @@
                 <div class="column is-half">
                     <div class="bottom-right-content">
                         <app-host-panel *ngIf="currentUser?.id == lobby.adminUid" [voiceUrl]="voiceUrl" [lobby]="lobby"></app-host-panel>
-                        <app-user-panel [currentUser]="currentUser" [lobby]="lobby" [voiceUrl]="voiceUrl" *ngIf="currentUser?.id != lobby.adminUid"></app-user-panel>
+                        <app-user-panel *ngIf="currentUser?.id != lobby.adminUid" [currentUser]="currentUser" [lobby]="lobby" [voiceUrl]="voiceUrl"></app-user-panel>
                     </div>
                 </div>
             </div>

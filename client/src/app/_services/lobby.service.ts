@@ -37,7 +37,7 @@ export class LobbyService{
         });
     }
 
-    fetchAllLobbiesWithGameIdTest(id: number, pageNumber: number, pageSize: number){
+    fetchAllLobbiesWithGameIdPagination(id: number, pageNumber: number, pageSize: number){
         return this.http.get<Lobby[]>(this.baseUrl + 'lobbies/game/' + id, {
             params: {
                 pageNumber: pageNumber,

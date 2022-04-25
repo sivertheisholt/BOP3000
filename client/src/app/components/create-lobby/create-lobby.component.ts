@@ -75,6 +75,7 @@ export class CreateLobbyComponent implements OnInit {
       this.lobbyService.postLobby(this.createLobbyForm.value).subscribe(
         (res) => {
           this.lobbyHub.createdLobby(res.id);
+          this.lobbyHub.inQueue.next({lobbyId: res.id, inQueue: false, inQueueStatus: 'accepted'});
           this.router.navigate(['lobby', res.id]);
         }, err => {
           this.createLobbyForm.setErrors({'serverError': 'Something went wrong.'});
