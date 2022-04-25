@@ -176,7 +176,7 @@ namespace API.SignalR
         {
             var uid = Context.User.GetUserId();
 
-            if (!await GlobalChecks(new Checks(checkMemberInQueue: true, checkMemberAdmin: true), lobbyId, uid, kickedUid)) return;
+            if (!await GlobalChecks(new Checks(checkMemberInLobby: true, checkMemberAdmin: true), lobbyId, uid, kickedUid)) return;
 
             _lobbyTracker.KickMember(lobbyId, kickedUid);
 

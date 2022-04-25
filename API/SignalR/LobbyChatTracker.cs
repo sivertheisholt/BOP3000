@@ -31,6 +31,13 @@ namespace API.SignalR
             lock (MemberTracker) MemberTracker.Add(uid, lobbyId);
         }
 
+        public void MemberLeftChat(int lobbyId, int uid)
+        {
+            lock (Chat) Chat[lobbyId].Users.Remove(uid);
+
+            lock (MemberTracker) MemberTracker.Remove(uid);
+        }
+
         public void SendMessage(int lobbyId, int uid, Message message)
         {
 
