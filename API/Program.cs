@@ -42,6 +42,7 @@ namespace API
                 var meilisearchService = services.GetRequiredService<IMeilisearchService>();
 
                 var lobbyHub = services.GetRequiredService<LobbyHub>();
+                var lobbyChatHub = services.GetRequiredService<LobbyChatHub>();
 
                 var mapper = services.GetRequiredService<IMapper>();
 
@@ -52,7 +53,7 @@ namespace API
                 await Seed.SeedUsers(userManager, roleManager, meilisearchService, mapper, unitOfWork);
                 await Seed.SeedCustomSteamApps(steamStoreClient, steamAppsClient, unitOfWork);
                 await Seed.SeedLobbies(lobbyHub, unitOfWork);
-                await Seed.SeedLobbyHub(mapper, unitOfWork, lobbyHub);
+                await Seed.SeedLobbyHub(mapper, unitOfWork, lobbyHub, lobbyChatHub);
                 await Seed.SeedActivities(unitOfWork);
                 await Seed.SeedMeilisearch(meilisearchService, unitOfWork, mapper);
             }

@@ -211,12 +211,13 @@ namespace API.Data
             Console.WriteLine($"Finished seeding lobbies data");
         }
 
-        public static async Task SeedLobbyHub(IMapper mapper, IUnitOfWork unitOfWork, LobbyHub lobbyHub)
+        public static async Task SeedLobbyHub(IMapper mapper, IUnitOfWork unitOfWork, LobbyHub lobbyHub, LobbyChatHub lobbyChatHub)
         {
             var testLobbies = await unitOfWork.lobbiesRepository.GetActiveLobbies(new UniversalParams { });
             foreach (var lobby in testLobbies)
             {
                 await lobbyHub.CreateLobbyTest(lobby, lobby.AdminUid);
+                await lobbyChatHub.CreateChatTest(lobby.Id);
             }
             Console.WriteLine($"Finished seeding lobby hub data");
         }
