@@ -246,8 +246,8 @@ namespace API.SignalR
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("HostStarted", new List<int>() { uid, lobbyId });
 
             CancellationTokenSource source = new CancellationTokenSource();
-            var task = Task.Delay(30000, source.Token);
             lock (LobbyStartingTask) LobbyStartingTask.Add(lobbyId, source);
+            var task = Task.Delay(30000, source.Token);
 
             try
             {
@@ -291,6 +291,8 @@ namespace API.SignalR
 
             _lobbyTracker.DeclineReady(lobbyId, uid);
             _lobbyTracker.CancelCheck(lobbyId);
+
+            LobbyStartingTask[lobbyId].Cancel();
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclinedReady", uid);
         }
