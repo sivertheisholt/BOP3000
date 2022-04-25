@@ -8,7 +8,7 @@
             <div class="cell quick-join-players">{{ 'PLAYERS' | translate }}</div>
             <div class="cell quick-join-button"></div>
         </div>
-        <div class="quick-join-list-item p-2" *ngFor="let lobby of gameRooms">
+        <div class="quick-join-list-item p-2" *ngFor="let lobby of recommendedLobbies">
             <div class="quick-join-host is-flex">
                 <div class="image is-32x32 mr-2 is-flex is-align-items-center">
                     <img class="is-rounded" [src]="lobby.adminProfilePic" alt="User Image">
@@ -26,7 +26,11 @@
             <div class="quick-join-players is-flex is-align-items-center">
                 {{ lobby.users.length }} / {{ lobby.maxUsers }}
             </div>
-            <a (click)="requestToJoin(lobby.id)" class="button quick-join-button is-success">{{ 'JOIN' | translate }}</a>
+            <div class="lobby-btn-wrapper">
+                <button (click)="requestToJoin(lobby.id)" *ngIf="queueStatus == 'notInQueue' && lobbyId == 0 && !inQueue" class="button is-info">{{ 'BTN_REQUEST_JOIN' | translate }}</button>
+                <button (click)="cancelJoin(lobby.id)" *ngIf="queueStatus == 'inQueue' && lobbyId == lobby.id && inQueue" class="button is-info">{{ 'BTN_WAITING' | translate }}</button>
+                <button *ngIf="queueStatus == 'accepted' && lobby.id == lobbyId && !inQueue" class="button is-info" [routerLink]="['/lobby', lobby.id]">{{ 'BTN_GO_TO_LOBBY' | translate }}</button>
+            </div>
         </div>
     </div>
 </div>

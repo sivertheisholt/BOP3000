@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
+import { LobbyService } from 'src/app/_services/lobby.service';
 
 @Component({
   selector: 'app-quick-join',
@@ -8,18 +9,35 @@ import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
   styleUrls: ['./quick-join.component.css']
 })
 export class QuickJoinComponent implements OnInit {
-  gameRooms: Lobby[] = [
-    {id: 1, maxUsers: 5, title: 'test', lobbyDescription: '', gameId: 5, steamId: 1, gameType: 'Ranked', users: [1,2], adminUsername: 'Test', gameName: 'Some Game', adminUid: 1, lobbyRequirement: {gender: ''}, adminProfilePic: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png'},
-    {id: 1, maxUsers: 5, title: 'test', lobbyDescription: '', gameId: 3, steamId: 1, gameType: 'Ranked', users: [1,2], adminUsername: 'Test', gameName: 'Some Game', adminUid: 1, lobbyRequirement: {gender: ''}, adminProfilePic: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png'},
-    {id: 1, maxUsers: 5, title: 'test', lobbyDescription: '', gameId: 2, steamId: 1, gameType: 'Ranked', users: [1,2], adminUsername: 'Test', gameName: 'Some Game', adminUid: 1, lobbyRequirement: {gender: ''}, adminProfilePic: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png'},
-  ]
-  constructor(private lobbyHubService: LobbyHubService) { }
+  recommendedLobbies: Lobby[] = [];
+  lobbyId: number = 0;
+  inQueue: boolean = false;
+  queueStatus: string = '';
+
+  constructor(private lobbyHubService: LobbyHubService, private lobbyService: LobbyService) { }
 
   ngOnInit(): void {
+    this.lobbyHubService.inQueue.subscribe(
+      (res) => {
+        this.lobbyId = res.lobbyId;
+        this.inQueue = res.inQueue;
+        this.queueStatus = res.inQueueStatus;
+      }
+    )
+
+    this.lobbyService.fetchRecommendedLobbies().subscribe(
+      (res) => {
+        this.recommendedLobbies = res;
+      }
+    )
     
   }
 
   requestToJoin(id: number){
     this.lobbyHubService.goInQueue(id);
+  }
+
+  cancelJoin(id: number){
+    this.lobbyHubService.leaveQueue(id);
   }
 }

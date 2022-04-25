@@ -50,6 +50,14 @@ export class LobbyService{
         );
     }
 
+    fetchRecommendedLobbies(){
+        return this.http.get<Lobby[]>(this.baseUrl + 'lobbies/recommended').pipe(
+            map((response) => {
+                return response;
+            })
+        )
+    }
+
     getQueueStatus(){
         return this.http.get<QueueStatus>(this.baseUrl + 'members/lobby-status').pipe(
             map((response) => {

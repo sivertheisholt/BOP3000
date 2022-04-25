@@ -148,7 +148,6 @@ export class LobbyHubService {
         if(this.router.url != lobbyUrl){
           this.router.navigate(['lobby/', +id[1]]);
         }
-        console.log(id[0]);
         this.acceptedReadyCheckMembers.next([id[0]]);
         this.lobbyReadyCheck.next(true);
       });
@@ -291,16 +290,6 @@ export class LobbyHubService {
     const lobbyUrl: string = '/lobby/' + lobbyId;
     if(currentUrl == lobbyUrl){
       this.router.navigate(['..']);
-    }
-    return;
-  }
-
-  redirectUserAfterFinished(currentUrl: string, lobbyId: number){
-    const lobbyUrl: string = '/lobby/' + lobbyId;
-    console.log(lobbyUrl);
-    console.log(currentUrl);
-    if(currentUrl == lobbyUrl){
-      this.router.navigate(['archived-lobby/' + lobbyId]);
     }
     return;
   }

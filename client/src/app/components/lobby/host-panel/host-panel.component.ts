@@ -30,8 +30,9 @@ export class HostPanelComponent implements OnInit {
   ngOnInit(): void {
     this.lobbyHubService.lobbyReadyCheck$.subscribe(
       (res) => {
+        console.log(res);
         if(res){
-          this.readyCheckModal = true;
+          this.readyCheckModal = res;
           this.readyCheckTimer();
         }
       }
@@ -101,6 +102,12 @@ export class HostPanelComponent implements OnInit {
         if(this.start === 0){
           this.subscription?.unsubscribe();
           this.start = 30;
+          this.readyCheckModal = false;
+          this.declined = false;
+          this.accepted = false;
+          this.usersAccepted = 0;
+          this.userDeclined = 0;
+          this.lobbyHubService.declinedReadyCheckMembers.next(0);
           this.readyCheckModal = false;
         }
       }
