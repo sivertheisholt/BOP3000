@@ -2,7 +2,7 @@
     {
         "MaxUsers": 2,
         "AdminUid": 1,
-        "Title": "Ayo let's play",
+        "Title": "Ayo let's play - DEV LOBBY",
         "LobbyDescription": "Please only nice people. If you want we can also change game later!",
         "GameId": 1,
         "GameName": "",
@@ -15,7 +15,7 @@
     {
         "MaxUsers": 5,
         "AdminUid": 5,
-        "Title": "Road to global",
+        "Title": "Road to global - DEV LOBBY",
         "LobbyDescription": " If you are trash don't bother - LEM is required",
         "GameId": 1,
         "GameName": "",
@@ -28,7 +28,7 @@
     {
         "MaxUsers": 8,
         "AdminUid": 6,
-        "Title": "The grind is on",
+        "Title": "The grind is on - DEV LOBBY",
         "LobbyDescription": "We need a Gunner, Mage and Assassin. I can be Warrior",
         "GameId": 2,
         "GameName": "",
@@ -39,9 +39,9 @@
         "StartDate": "2022-04-09T12:00:00"
     },
     {
-        "MaxUsers": 5,
+        "MaxUsers": 3,
         "AdminUid": 7,
-        "Title": "Road to pred",
+        "Title": "Road to pred - DEV LOBBY",
         "LobbyDescription": "Only join if you are Master rank - Diamond no good",
         "GameId": 3,
         "GameName": "",
@@ -54,7 +54,7 @@
     {
         "MaxUsers": 4,
         "AdminUid": 8,
-        "Title": "Trolling the killers",
+        "Title": "Trolling the killers - DEV LOBBY",
         "LobbyDescription": "Just having fun with the killer. Please just enjoy the game",
         "GameId": 4,
         "GameName": "",
@@ -67,7 +67,7 @@
     {
         "MaxUsers": 6,
         "AdminUid": 9,
-        "Title": "Automate everything",
+        "Title": "Automate everything - DEV LOBBY",
         "LobbyDescription": "Manual work is eww. Automation is yaaay",
         "GameId": 5,
         "GameName": "",
@@ -80,7 +80,7 @@
     {
         "MaxUsers": 2,
         "AdminUid": 10,
-        "Title": "Speedrun",
+        "Title": "Speedrun - DEV LOBBY",
         "LobbyDescription": "Getting that new record, currently at 5 hours record. Let's beat it!",
         "GameId": 5,
         "GameName": "",

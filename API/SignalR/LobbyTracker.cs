@@ -37,28 +37,14 @@ namespace API.SignalR
             lock (MemberTracker) MemberTracker.Add(adminUid, lobby.Id);
         }
 
-        public bool JoinQueue(int lobbyId, int uid)
+        public void JoinQueue(int lobbyId, int uid)
         {
-            if (MemberTracker.ContainsKey(uid)) return false;
-
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
             lock (Lobby) Lobby[lobbyId].UsersQueue.Add(uid);
             lock (MemberTracker) MemberTracker.Add(uid, lobbyId);
-
-            return true;
         }
 
-        public bool AcceptMember(int lobbyId, int uid, int adminUid)
+        public void AcceptMember(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return false;
-
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
-            if (!Lobby[lobbyId].UsersQueue.Contains(uid)) return false;
-
-            if (Lobby[lobbyId].AdminUid != adminUid) return false;
-
             var lobbyUser = new LobbyUser
             {
                 Ready = false,
@@ -70,111 +56,63 @@ namespace API.SignalR
                 Lobby[lobbyId].UsersLobby.Add(lobbyUser);
                 Lobby[lobbyId].UsersQueue.Remove(uid);
             }
-
-            return true;
         }
 
-        public bool DeclineMember(int lobbyId, int uid, int adminUid)
+        public void DeclineMember(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return false;
-
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
-            if (Lobby[lobbyId].AdminUid != adminUid) return false;
-
             lock (Lobby) Lobby[lobbyId].UsersQueue.Remove(uid);
-
             lock (MemberTracker) MemberTracker.Remove(uid);
-
-            return true;
         }
 
-        public bool KickMember(int lobbyId, int uid, int adminUid)
+        public void KickMember(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return false;
-
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
-            if (Lobby[lobbyId].AdminUid != adminUid) return false;
-
             var userLobby = Lobby[lobbyId].UsersLobby.FirstOrDefault(user => user.Uid == uid);
 
             lock (Lobby) Lobby[lobbyId].UsersLobby.Remove(userLobby);
 
             lock (MemberTracker) MemberTracker.Remove(uid);
-
-            return true;
         }
 
-        public bool MemberLeftLobby(int lobbyId, int uid)
+        public void MemberLeftLobby(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return false;
-
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
             var userLobby = Lobby[lobbyId].UsersLobby.FirstOrDefault(user => user.Uid == uid);
 
             lock (Lobby) Lobby[lobbyId].UsersLobby.Remove(userLobby);
             lock (MemberTracker) MemberTracker.Remove(uid);
-
-            return true;
         }
 
-        public bool MemberLeftQueueLobby(int lobbyId, int uid)
+        public void MemberLeftQueueLobby(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return false;
-
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
             lock (Lobby) Lobby[lobbyId].UsersQueue.Remove(uid);
 
             lock (MemberTracker) MemberTracker.Remove(uid);
-
-            return true;
         }
 
-        public bool BanMember(int lobbyId, int uid, int adminUid)
+        public void BanMember(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return false;
-
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
-            if (Lobby[lobbyId].AdminUid != adminUid) return false;
-
             lock (Lobby) Lobby[lobbyId].BannedUsers.Add(uid);
 
-            lock (MemberTracker) MemberTracker.Remove(uid);
-
-            return true;
+            if (MemberTracker.ContainsKey(uid) && MemberTracker[uid] == lobbyId)
+            {
+                lock (MemberTracker) MemberTracker.Remove(uid);
+            }
         }
 
-        public bool UnbanMember(int lobbyId, int uid)
+        public void UnbanMember(int lobbyId, int uid)
         {
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
             lock (Lobby) Lobby[lobbyId].BannedUsers.Remove(uid);
-
-            return true;
         }
-        public bool StartCheck(int lobbyId, int adminUid)
+        public void StartCheck(int lobbyId, int adminUid)
         {
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
-            if (Lobby[lobbyId].AdminUid != adminUid) return false;
-
             lock (Lobby)
             {
                 Lobby[lobbyId].LobbyReadyCheck = true;
                 Lobby[lobbyId].UsersLobby.FirstOrDefault(u => u.Uid == adminUid).Ready = true;
             }
-
-            return true;
         }
 
-        public bool CancelCheck(int lobbyId)
+        public void CancelCheck(int lobbyId)
         {
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
             lock (Lobby)
             {
                 Lobby[lobbyId].LobbyReadyCheck = false;
@@ -183,7 +121,6 @@ namespace API.SignalR
                     user.Ready = false;
                 });
             }
-            return true;
         }
 
         public void FinishLobby(int lobbyId)
@@ -196,39 +133,24 @@ namespace API.SignalR
             lock (Lobby) Lobby.Remove(lobbyId);
         }
 
-        public bool AcceptReady(int lobbyId, int uid)
+        public void AcceptReady(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return false;
-
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
             lock (Lobby) Lobby[lobbyId].UsersLobby.FirstOrDefault(u => u.Uid == uid).Ready = true;
-
-            return true;
         }
 
-        public bool DeclineReady(int lobbyId, int uid)
+        public void DeclineReady(int lobbyId, int uid)
         {
-            if (!MemberTracker.ContainsKey(uid)) return false;
-
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
             lock (Lobby) Lobby[lobbyId].UsersLobby.FirstOrDefault(u => u.Uid == uid).Ready = false;
-
-            return true;
         }
 
         public bool CheckIfAllReady(int lobbyId)
         {
-            if (!Lobby.ContainsKey(lobbyId)) return false;
-
             var users = Lobby[lobbyId].UsersLobby.Select(u => u.Ready).ToList();
 
             foreach (var user in users)
             {
                 if (!user) return false;
             }
-
             return true;
         }
 
@@ -255,6 +177,10 @@ namespace API.SignalR
         {
             return MemberTracker.ContainsKey(uid);
         }
+        public bool CheckIfLobbyExists(int lobbyId)
+        {
+            return Lobby.ContainsKey(lobbyId);
+        }
         public int GetLobbyIdFromUser(int uid)
         {
             return MemberTracker[uid];
@@ -267,9 +193,9 @@ namespace API.SignalR
         {
             return Lobby[lobbyId].UsersLobby.Select(user => user.Uid).Contains(uid);
         }
-        public bool CheckIfLobbyExists(int lobbyId)
+        public bool CheckIfMemberIsAdmin(int lobbyId, int uid)
         {
-            return Lobby.ContainsKey(lobbyId);
+            return Lobby[lobbyId].AdminUid == uid;
         }
         public bool CheckReadyState(int lobbyId)
         {

@@ -100,6 +100,9 @@ export class LobbyHubService {
         this.inQueue.next({lobbyId: 0, inQueue: false, inQueueStatus: 'notInQueue'});
         this.notificationService.setNewNotification({type: 'info', message: 'You left the lobby.'});
       });
+      this.hubConnection.on("ServerError", message => {
+        console.log(message);
+      });
 
       // Everyone in lobby will get this
       this.hubConnection.on("MemberAccepted", ids => {

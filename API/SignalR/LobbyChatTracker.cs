@@ -40,8 +40,6 @@ namespace API.SignalR
 
         public bool SendMessage(int lobbyId, int uid, Message message)
         {
-            Console.WriteLine(lobbyId);
-
             if (!Chat.ContainsKey(lobbyId)) return false;
 
             if (!Chat[lobbyId].Users.Contains(uid)) return false;
