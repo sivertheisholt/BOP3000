@@ -607,7 +607,12 @@ fetch(
     "date": "2022-03-31T00:00:00",
     "username": "membertest",
     "appUserId": 2,
-    "identifier": "lobby-created"
+    "identifier": "lobby-created",
+    "lobbyId": 1,
+    "gameName": "Counter-Strike: Global Offensive",
+    "gameId": 1,
+    "headerImage": "https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg?t=1641233427",
+    "profilePicture": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1650922825/TestImages/pf2_myeoew.png"
   }
 ]
 ```
@@ -620,12 +625,17 @@ This endpoint gets the current logged in member's activity list
 
 ### Response Class (Status 200)
 
-| Key        | Type   |
-| ---------- | ------ |
-| date       | string |
-| username   | string |
-| appUserId  | int    |
-| identifier | string |
+| Key            | Type             |
+| -------------- | ---------------- |
+| date           | string           |
+| username       | string           |
+| appUserId      | int              |
+| identifier     | string           |
+| lobbyId        | int, optional    |
+| gameName       | string, optional |
+| gameId         | int, optional    |
+| headerImage    | string, optional |
+| profilePicture | string, optional |
 
 ## GET Discord connected status
 

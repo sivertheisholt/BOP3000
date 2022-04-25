@@ -269,13 +269,7 @@ fetch("https://bop3000.azurewebsites.net/api/lobbies/game/51", requestOptions)
     "startDate": "2022-03-30T04:08:03.088913",
     "finishedDate": "0001-01-01T00:00:00",
     "finished": true,
-    "votes": [
-      {
-        "voterUid": 2,
-        "votedUid": 1,
-        "upvote": true
-      }
-    ]
+    "votes": []
   }
 ]
 ```
@@ -329,8 +323,114 @@ This endpoint retrieves all lobbies with a specific game ID.
 
 #### Log
 
-| Key | Type |
-| --- | ---- |
+| Key      | Type      |
+| -------- | --------- |
+| messages | Message[] |
+
+#### Message
+
+| Key      | Type      |
+| -------- | --------- |
+| messages | Message[] |
+
+## GET Recommended lobbies
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer <Token>");
+
+var requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+fetch(
+  "https://bop3000.azurewebsites.net/api/lobbies/recommended",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 2,
+    "maxUsers": 5,
+    "title": "Road to global - DEV LOBBY",
+    "gameId": 1,
+    "gameName": "Counter-Strike: Global Offensive",
+    "gameType": "Competetive",
+    "lobbyDescription": " If you are trash don't bother - LEM is required",
+    "adminUid": 5,
+    "adminUsername": "Willym",
+    "adminProfilePic": "https://res.cloudinary.com/dzpzecnx5/image/upload/v1650922946/TestImages/pf5_ltqunk.jpg",
+    "users": [5],
+    "log": null,
+    "lobbyRequirement": null,
+    "startDate": "2022-04-09T12:00:00",
+    "finishedDate": "0001-01-01T00:00:00",
+    "finished": false,
+    "votes": []
+  }
+]
+```
+
+This endpoint retrieves max 3 recommended lobbies for current user
+
+### HTTP Request
+
+`GET https://bop3000.azurewebsites.net/api/lobbies/recommended`
+
+### Response Class (Status 200)
+
+| Key              | Type             |
+| ---------------- | ---------------- |
+| id               | int              |
+| maxUsers         | int              |
+| title            | string           |
+| gameId           | int              |
+| gameType         | string           |
+| gameName         | string           |
+| lobbyDescription | string, optional |
+| adminUid         | string           |
+| adminUsername    | string           |
+| users            | int[]            |
+| log              | Log, optional    |
+| lobbyRequirement | LobbyRequirement |
+| startDate        | Date             |
+| finishedDate     | Date, optional   |
+| votes            | Vote[]           |
+
+#### LobbyRequirement
+
+| Key    | Type             |
+| ------ | ---------------- |
+| gender | string, optional |
+
+#### Vote
+
+| Key      | Type |
+| -------- | ---- |
+| voterUid | int  |
+| votedUid | int  |
+| upvote   | int  |
+
+#### Log
+
+| Key      | Type      |
+| -------- | --------- |
+| messages | Message[] |
+
+#### Message
+
+| Key      | Type      |
+| -------- | --------- |
+| messages | Message[] |
 
 ## GET Check if lobby is finished
 
