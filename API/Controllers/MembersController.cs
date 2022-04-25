@@ -94,7 +94,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("current/activity")]
-        public async Task<ActionResult<IEnumerable<MemberMeiliDto>>> GetCurrentUserActivityLog(string name, int limit = 10)
+        public async Task<ActionResult<IEnumerable<MemberMeiliDto>>> GetCurrentUserActivityLog(string name)
         {
             var uid = GetUserIdFromClaim();
 
@@ -110,8 +110,16 @@ namespace API.Controllers
 
                 foreach (var activityDto in activitiesDto)
                 {
-                    activityDto.Username = await _unitOfWork.userRepository.GetUsernameFromId(activityDto.AppUserId);
+                    var user = await _unitOfWork.userRepository.GetUserByIdAsync(activityDto.AppUserId);
+                    activityDto.Username = user.UserName;
+                    activityDto.ProfilePicture = user.AppUserProfile.AppUserPhoto.Url;
                     activities.Add(activityDto);
+                    if (activityDto.LobbyId == 0) continue;
+                    var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(activityDto.LobbyId);
+                    var game = await _unitOfWork.steamAppRepository.GetAppInfoAsync(lobby.GameId);
+                    activityDto.GameId = game.Id;
+                    activityDto.GameName = game.Data.Name;
+                    activityDto.HeaderImage = game.Data.HeaderImage;
                 }
             }
 
