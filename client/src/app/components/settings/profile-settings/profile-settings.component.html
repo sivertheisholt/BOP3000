@@ -4,11 +4,33 @@
         <div class="is-flex is-flex-direction-column">
             <div class="control">
                 <label for="newusername">{{ 'CHANGE_USERNAME' | translate }}</label>
-                <input class="input mt-3 mb-3" id="newusername" type="text" formControlName="username" [value]="user?.username">
+                <input class="input mt-3 mb-3" id="newusername" type="text" formControlName="username" [value]="user?.username" #usernameInput>
+                <div class="error danger mt-2" *ngIf="profileSettingsForm.get('username')?.invalid && profileSettingsForm.get('username')?.errors && (profileSettingsForm.get('username')?.dirty || profileSettingsForm.get('username')?.touched)">
+                    <div *ngIf="profileSettingsForm.get('username')?.hasError('required')">
+                      This field is required.
+                    </div>
+                    <div *ngIf="profileSettingsForm.get('username')?.hasError('hasSpecialCharacter')">
+                      No special characters allowed in username.
+                    </div>
+                    <div *ngIf="profileSettingsForm.get('username')?.hasError('usernameTaken')">
+                      Username is taken.
+                    </div>
+                  </div>
             </div>
             <div class="control">
                 <label for="newusername">{{ 'CHANGE_EMAIL' | translate }}</label>
-                <input class="input mt-3 mb-3" id="newemail" type="email" formControlName="email" [value]="user?.email">
+                <input class="input mt-3 mb-3" id="newemail" type="email" formControlName="email" [value]="user?.email" #emailInput>
+                <div class="error danger mt-2" *ngIf="profileSettingsForm.get('email')?.invalid && profileSettingsForm.get('email')?.errors && (profileSettingsForm.get('email')?.dirty || profileSettingsForm.get('email')?.touched)">
+                    <div *ngIf="profileSettingsForm.get('email')?.hasError('required')">
+                      This field is required.
+                    </div>
+                    <div *ngIf="profileSettingsForm.get('email')?.hasError('email')">
+                      This has to be a valid email.
+                    </div>
+                    <div *ngIf="profileSettingsForm.get('email')?.hasError('emailTaken')">
+                      Email is taken.
+                    </div>
+                  </div>
             </div>
             <div class="field">
                 <div class="control">
@@ -28,6 +50,9 @@
                         [closeOnSelect]='true'
                         class="custom">
                     </ng-select>
+                    <div class="error danger mt-2" *ngIf="profileSettingsForm.get('country')?.hasError('required')">
+                        This field is required.
+                    </div>
                 </div>
                 <div class="control dropdown-ng">
                     <label for="gender">{{ 'GENDER' | translate }}</label>
@@ -38,6 +63,9 @@
                         [closeOnSelect]='true'
                         class="custom">
                     </ng-select>
+                    <div class="error danger mt-2" *ngIf="profileSettingsForm.get('gender')?.hasError('required')">
+                        This field is required.
+                    </div>
                 </div>
             </div>
 

@@ -22,6 +22,14 @@
     transform: scale(1.1);
 }
 
+.loading {    
+    background-color: #ffffff;
+    background-image: url(../../../../assets/spinner/Spin-1s-257px.gif);
+    background-size: 25px 25px;
+    background-position:right center;
+    background-repeat: no-repeat;
+}
+
 .custom{
     width: 100%;
 }

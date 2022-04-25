@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { Country } from 'src/app/_models/country.model';
 import { CustomImg } from 'src/app/_models/custom-img.model';
 import { Member } from 'src/app/_models/member.model';
+import { NotificationService } from 'src/app/_services/notification.service';
 import { UserSettingsService } from 'src/app/_services/user-settings.service';
 import { UserService } from 'src/app/_services/user.service';
+import { CustomValidator } from 'src/app/_validators/custom-validator';
 
 @Component({
   selector: 'app-profile-settings',
@@ -22,8 +26,10 @@ export class ProfileSettingsComponent implements OnInit {
   years: number[] = [];
   selectedImgUrl: string = '';
   customizationImages: CustomImg[] = [];
+  @ViewChild('emailInput', {static: true}) emailInput? : ElementRef;
+  @ViewChild('usernameInput', {static: true}) usernameInput? : ElementRef;
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private userSettingsService: UserSettingsService) {
+  constructor(private route: ActivatedRoute, private userService: UserService, private userSettingsService: UserSettingsService, private notificationService: NotificationService) {
     this.countries = this.route.snapshot.data['countries'];
     this.user = this.route.snapshot.data['user'];
     
@@ -42,31 +48,95 @@ export class ProfileSettingsComponent implements OnInit {
     }
     let userBirthday = new Date(this.user.memberProfile?.birthday!);
     this.profileSettingsForm = new FormGroup({
-      username: new FormControl(this.user?.username),
-      email: new FormControl(this.user?.email),
+      username: new FormControl(this.user?.username, [CustomValidator.patternValidator(/^[A-Za-z0-9 ]+$/, { hasSpecialCharacter: true }), Validators.required]),
+      email: new FormControl(this.user?.email, [Validators.email, Validators.required]),
       description: new FormControl(this.user?.memberProfile?.description),
-      gender: new FormControl(this.user?.memberProfile?.gender),
-      country: new FormControl(this.user.memberProfile?.countryIso?.id),
+      gender: new FormControl(this.user?.memberProfile?.gender, Validators.required),
+      country: new FormControl(this.user.memberProfile?.countryIso?.id, Validators.required),
       dateDay: new FormControl(userBirthday.getDate(), [Validators.max(31), Validators.min(1)]),
       dateMonth: new FormControl(this.months[userBirthday.getMonth()], [Validators.max(12), Validators.min(1)]),
       dateYear: new FormControl(userBirthday.getFullYear(), [Validators.max(2009), Validators.min(1900)])
     });
 
+    fromEvent(this.usernameInput?.nativeElement, 'keyup').pipe(
+      map((event: any) => {
+        if(event.target.value.length > 3){
+          this.usernameInput?.nativeElement.classList.add('loading');
+          return event.target.value;
+        } else{
+          this.usernameInput?.nativeElement.classList.remove('loading');
+        }
+      })
+      ,filter(res => res != undefined)
+      ,debounceTime(1000)
+      ,distinctUntilChanged()
+    ).subscribe((input: string) => {
+      this.userService.searchUser(input).subscribe((response) => {
+        if(response.length == 0){
+          this.usernameInput?.nativeElement.classList.remove('loading');
+          return;
+        }
+        if(response[0].userName.toLowerCase() != input.toLowerCase()){
+          this.usernameInput?.nativeElement.classList.remove('loading');
+          return;
+        }
+        this.profileSettingsForm.get('username')?.setErrors({'usernameTaken': 'Username is taken.'});
+        this.usernameInput?.nativeElement.classList.remove('loading');
+        return;
+      }, (err) => {
+        this.usernameInput?.nativeElement.classList.remove('loading');
+      })
+    })
+
+    fromEvent(this.emailInput?.nativeElement, 'keyup').pipe(
+      map((event: any) => {
+        if(event.target.value.length > 3){
+          this.emailInput?.nativeElement.classList.add('loading');
+          return event.target.value;
+        } else{
+          this.emailInput?.nativeElement.classList.remove('loading');
+        }
+      })
+      ,filter(res => res != undefined)
+      ,debounceTime(1000)
+      ,distinctUntilChanged()
+    ).subscribe((input: string) => {
+      this.userService.searchEmailExists(input).subscribe((response) => {
+        if(response){
+          this.emailInput?.nativeElement.classList.remove('loading');
+          this.profileSettingsForm.get('email')?.setErrors({'emailTaken': 'Email is taken.'});
+          return;
+        }
+        this.emailInput?.nativeElement.classList.remove('loading');
+        return;
+      }, (err) => {
+        this.emailInput?.nativeElement.classList.remove('loading');
+      })
+    })
 
 
   }
 
   onSubmit(){
-    let someDate = new Date(this.profileSettingsForm.value.dateYear + '-' + this.profileSettingsForm.value.dateMonth + '-' + this.profileSettingsForm.value.dateDay);
-    const model = {
-      username: this.profileSettingsForm.value.username,
-      email: this.profileSettingsForm.value.email,
-      countryId: this.profileSettingsForm.value.country,
-      gender: this.profileSettingsForm.value.gender,
-      description: this.profileSettingsForm.value.description,
-      birthday: someDate
+    console.log(this.profileSettingsForm);
+    if(this.profileSettingsForm.valid){
+      let someDate = new Date(this.profileSettingsForm.value.dateYear + '-' + this.profileSettingsForm.value.dateMonth + '-' + this.profileSettingsForm.value.dateDay);
+      const model = {
+        username: this.profileSettingsForm.value.username,
+        email: this.profileSettingsForm.value.email,
+        countryId: this.profileSettingsForm.value.country,
+        gender: this.profileSettingsForm.value.gender,
+        description: this.profileSettingsForm.value.description,
+        birthday: someDate
+      }
+      this.userService.updateMember(model).subscribe(
+        (res) => {
+          this.notificationService.setNewNotification({message: 'Successfully updated settings', type: 'success'})
+        }, error => {
+          this.notificationService.setNewNotification({message: 'Something went wrong', type: 'error'})
+        }
+      );
     }
-    this.userService.updateMember(model);
   }
 
   onChangeAccountBg(url: string){

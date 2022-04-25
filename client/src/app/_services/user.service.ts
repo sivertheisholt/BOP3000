@@ -30,11 +30,9 @@ export class UserService{
     updateMember(model: any){
         return this.http.patch(this.baseUrl + 'members', model).pipe(
             map(response => {
-                console.log(response);
+                return response;
             })
-        ).subscribe((response) => {
-            console.log(response);
-        });
+        )
     }
 
     getSpecificUser(id: number){

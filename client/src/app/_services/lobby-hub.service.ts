@@ -101,7 +101,7 @@ export class LobbyHubService {
         this.notificationService.setNewNotification({type: 'info', message: 'You left the lobby.'});
       });
       this.hubConnection.on("ServerError", message => {
-        console.log(message);
+        this.notificationService.setNewNotification({type: 'error', message: message});
       });
 
       // Everyone in lobby will get this

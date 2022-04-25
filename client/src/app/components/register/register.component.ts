@@ -22,8 +22,6 @@ export class RegisterComponent implements OnInit {
   genders = ['Male', 'Female', 'Other', 'Hidden'];
   @ViewChild('usernameInput', {static: true}) usernameInput? : ElementRef;
   @ViewChild('emailInput', {static: true}) emailInput? : ElementRef;
-  usernameTaken: boolean = false;
-  emailTaken: boolean = false;
 
   constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
