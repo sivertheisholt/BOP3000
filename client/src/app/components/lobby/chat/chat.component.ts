@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChatMessage } from 'src/app/_models/chatmessage.model';
 import { Lobby } from 'src/app/_models/lobby.model';
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/_services/user.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   @Input('lobby') lobby! : Lobby;
   @ViewChild('chatMessage') chatMessage!: ElementRef;
   chatMessages : ChatMessage[] = []
@@ -29,6 +29,10 @@ export class ChatComponent implements OnInit {
         });
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    this.lobbyChatHubService.stopHubConnection();
   }
 
   onSubmit(){
