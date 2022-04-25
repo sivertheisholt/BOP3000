@@ -247,7 +247,7 @@ namespace API.SignalR
 
             CancellationTokenSource source = new CancellationTokenSource();
             var task = Task.Delay(30000, source.Token);
-            LobbyStartingTask.Add(lobbyId, source);
+            lock (LobbyStartingTask) LobbyStartingTask.Add(lobbyId, source);
 
             try
             {
@@ -264,6 +264,7 @@ namespace API.SignalR
             }
             else
             {
+                lock (LobbyStartingTask) LobbyStartingTask.Remove(lobbyId);
                 await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LobbyCancelled");
             }
         }
