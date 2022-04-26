@@ -1,15 +1,21 @@
 <aside class="sidebar">
     <div class="ml-3 sidebar-items">
-        <p class="menu-label has-text-centered mt-5">{{ 'NAV_NAVIGATION' | translate }}</p>
+        <div class="menu-label has-text-centered mt-5">{{ 'NAV_NAVIGATION' | translate }}
+            <div class="border"></div>
+        </div>
         <ul class="menu-list">
             <li><a [routerLink]="['home']"><fa-icon class="fa-lg mr-2" [icon]="faHome"></fa-icon>{{ 'NAV_HOME' | translate }}</a></li>
         </ul>
-        <p class="menu-label has-text-centered">{{ 'NAV_MATCHMAKING' | translate }}</p>
+        <div class="menu-label has-text-centered">{{ 'NAV_MATCHMAKING' | translate }}
+            <div class="border"></div>
+        </div>
         <ul class="menu-list">
             <li><a [routerLink]="['create-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faBullseye"></fa-icon>{{ 'NAV_CREATE_LOBBY' | translate }} </a></li>
             <li><a [routerLink]="['find-lobby']"><fa-icon class="fa-lg mr-2" [icon]="faUsers"></fa-icon>{{ 'NAV_FIND_LOBBY' | translate }}</a></li>
         </ul>
-        <p class="menu-label has-text-centered">{{ 'NAV_ACCOUNT' | translate }}</p>
+        <div class="menu-label has-text-centered">{{ 'NAV_ACCOUNT' | translate }}
+            <div class="border"></div>
+        </div>
         <ul class="menu-list">
             <li><a [routerLink]="['account', user?.id]"><fa-icon class="fa-lg mr-2" [icon]="faUser"></fa-icon>{{ 'NAV_ACCOUNT' | translate }}</a></li>
             <li><a [routerLink]="['activity']"><fa-icon class="fa-lg mr-2" [icon]="faGlobe"></fa-icon>{{ 'NAV_ACTIVITY' | translate }}</a></li>

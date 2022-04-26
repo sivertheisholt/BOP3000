@@ -48,6 +48,8 @@
 
 .date-wrapper{
     height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .date-divider{

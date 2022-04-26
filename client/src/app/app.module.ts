@@ -58,6 +58,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { QuickJoinComponent } from './components/home/quick-join/quick-join.component';
 import { TermsAgreementComponent } from './components/terms-agreement/terms-agreement.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 export function httpTranslateLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http);
@@ -111,7 +112,8 @@ export function httpTranslateLoaderFactory(http: HttpClient){
     FaqComponent,
     AboutComponent,
     QuickJoinComponent,
-    TermsAgreementComponent
+    TermsAgreementComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,

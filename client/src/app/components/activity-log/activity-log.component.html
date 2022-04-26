@@ -3,11 +3,41 @@
         <div class="content">
             <div class="activity-container">
                 <div class="activity-card" *ngFor="let activity of activities">
-                    <div class="activity-text">
-                        <a [routerLink]="['../account', activity.appUserId]"> {{ activity.username }} </a> &nbsp; {{ activity.outputText }}
-                    </div>
-                    <div class="activity-date">
-                        {{ fixDate(activity.date) }}
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <div class="image is-64x64">
+                                    <img [src]="activity.profilePicture" alt="Placeholder image">
+                                </div>
+                            </div>
+                            <div class="media-content text-is-light title is-4">
+                                <a [routerLink]="['/account', activity.appUserId]">
+                                    {{ activity.username }}
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="activity-text" *ngIf="activity.gameId != 0"> {{ activity.outputText }}
+                            <div class="tooltip">
+                                <a [routerLink]="['/game-lobby', activity.gameId]">
+                                        &nbsp; {{ activity.gameName }}
+                                </a> 
+                                <div class="bottom">
+                                    <img [src]="activity.headerImage" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="is-flex is-flex-direction-column activity-text" *ngIf="activity.gameId == 0">
+                            {{ activity.outputText }}
+                        </div>
+                        <div class="activity-footer">
+                            <div class="btn-container" *ngIf="activity.lobbyId != 0 && activity.identifier != 'lobby-finished'">
+                                <button class="button is-success">Join</button>
+                            </div>
+                            <div class="activity-date">
+                                {{ fixDate(activity.date) }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

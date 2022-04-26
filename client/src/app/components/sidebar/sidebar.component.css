@@ -18,8 +18,12 @@ aside{
 .menu-label{
     color: white;
     font-size: 16px;
+}
+
+.border{
     border-bottom: 1px solid white;
     padding-bottom: 10px;
+    width: 94%;
 }
 
 .sidebar-items{

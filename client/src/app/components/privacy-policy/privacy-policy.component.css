@@ -1,4 +1,4 @@
-.terms-wrapper{
+.privacy-wrapper{
     color: white;
     margin-top: 64px;
     height: 100%;
@@ -8,16 +8,4 @@
 
 .container{
     height: 100%;
-}
-
-h2{
-    color: white;
-}
-
-strong{
-    color: white;
-}
-
-ul li{
-    list-style: disc;
 }

@@ -21,14 +21,15 @@
 
 .activity-card{
   width: 100%;
-  height: 100px;
+  height: 250px;
   background-color: rgb(43, 43, 43);
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 
 .activity-text{
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
   color: rgb(196, 196, 196);
   height: 70px;
   padding: 8px;
@@ -36,25 +37,76 @@
 
 .activity-date{
   display: flex;
-  height: 30px;
   padding: 5px;
   color: rgb(197, 197, 197);
   justify-content: flex-end;
+  height: 75px;
   align-items: flex-end;
+  flex: 1;
+}
+
+.activity-footer{
+  display: flex;
+  flex-direction: row;
+}
+
+.btn-container{
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  padding: 8px;
+}
+
+.media{
+  align-items: center;
 }
 
 a{
-  color: rgb(44, 112, 175);
+  color: rgb(68, 132, 192);
 }
 
 a:hover{
-  color: rgb(42, 77, 190);
+  color: rgb(182, 189, 212);
 }
 
 .activity-card:nth-child(even){
-  border-left: 7px solid rgb(150, 28, 28);
+  /* border-left: 7px solid rgb(150, 28, 28); */
+  box-shadow: rgba(201, 35, 35, 0.3) 3px 3px 6px 5px;
 }
 
 .activity-card:nth-child(odd){
-  border-left: 7px solid rgb(93, 91, 165);
+  /* border-left: 7px solid rgb(93, 91, 165); */
+  box-shadow: rgba(93, 91, 165, 0.3) 3px 3px 6px 5px;
+}
+
+
+
+.tooltip {
+  display:inline-block;
+  position:relative;
+  text-align:left;
+}
+
+.tooltip .bottom {
+  min-width:200px;
+  height: 100%;
+  top:40px;
+  left:50%;
+  transform:translate(-50%, 0);
+  color:#666666;
+  background-color:#EEEEEE;
+  border-radius:8px;
+  position:absolute;
+  z-index:99999999;
+  box-sizing:border-box;
+  box-shadow:0 1px 8px rgba(0,0,0,0.5);
+  display:none;
+}
+
+.tooltip:hover .bottom {
+  display:block;
+}
+
+.tooltip .bottom img {
+  width:400px;
 }

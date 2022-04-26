@@ -33,6 +33,7 @@ import { DiscordConnectionGuard } from './_guards/discord-connection.guard';
 import { AboutComponent } from './components/about/about.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { TermsAgreementComponent } from './components/terms-agreement/terms-agreement.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent, canActivate: [AuthGuard] },
@@ -43,7 +44,6 @@ const routes: Routes = [
   { path: 'upgrade', component: UpgradeAccountComponent, canActivate: [UnAuthGuard] },
   { path: 'about', component: AboutComponent, canActivate: [UnAuthGuard] },
   { path: 'contact', component: ContactFormComponent, canActivate: [UnAuthGuard], resolve: {user: UserResolver} },
-  { path: 'terms', component: TermsAgreementComponent, canActivate: [UnAuthGuard] },
   { path: 'account/:id', component: AccountComponent, canActivate: [UnAuthGuard, BlockedGuard] },
   { path: 'lobby/:id', component: LobbyComponent, canActivate:[UnAuthGuard, LobbyGuard], resolve: {lobby: LobbyResolver} },
   { path: 'archived-lobby/:id', component: ArchivedLobbyComponent, canActivate:[UnAuthGuard, ArchivedLobbyGuard], resolve: {lobby: LobbyResolver, user: UserResolver} },
@@ -52,6 +52,8 @@ const routes: Routes = [
   { path: 'activity', component: ActivityLogComponent, canActivate: [UnAuthGuard], resolve: {activities: ActivityLogResolver }},
   { path: 'settings', component: SettingsComponent, canActivate: [UnAuthGuard], resolve: {countries: CountryResolver, user: UserResolver} },
   { path: 'help', component: HelpComponent, canActivate: [UnAuthGuard]},
+  { path: 'terms', component: TermsAgreementComponent, canActivate: [UnAuthGuard] },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent, canActivate: [UnAuthGuard] },
   { path: 'errors', component: TestErrorsComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
