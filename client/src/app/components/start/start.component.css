@@ -1,14 +1,131 @@
+.start-bg{
+  width: 100%;
+  height:100%;
+  background:linear-gradient(
+    rgba(49, 49, 49, 0.93),
+    rgba(6, 32, 56, 0.999)
+  ),
+  url(https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/159520989/original/b0ccd1868f52407d823dbd9d42d48a684188e4b7/play-any-game-with-you.jpg);
+  background-size: cover;
+}
+
+.page-wrapper{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-wrapper{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+.left-card{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin-right: 30px;
+}
+
+.image{
+  width: 170px;
+  margin: auto;
+}
+
+.right-card{
+  width: 100%;
+  margin-left: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-card-content{
+  background-color: rgba(49, 49, 49, 0.83);
+  border: 1px solid white;
+  border-radius: 50px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  padding: 25px;
+}
+
+.bottom-cards{
+  display: flex;
+  width: 100%;
+  background-color: rgba(67, 75, 92, 0.25);
+
+}
+
+.front-logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  
+}
+
+.step{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+}
+
+.step-content-wrapper{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.bottom-cards-container{
+  display: flex;
+  padding-top: 60px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.step-text{
+  padding: 10px;
+}
+
+@media only screen and (max-width: 823px) {
+  .card-wrapper{
+    flex-direction: column;
+  }
   
 
+  .left-card{
+    margin-right: 0px;
+    align-items: center;
+  }
+  
+  
+  .right-card{
+    height: 50%;
+    margin-left: 0px;
+    align-items: center;
+  }
 
-.info-section-one{
-  background-color: rgb(19, 33, 61);
-}
+  .bottom-cards-container{
+    flex-direction: column;
+  }
 
-.info-section-two{
-  background-color: rgb(117, 101, 9);
-}
+  .step:nth-child(1){
+    border-bottom: 1px solid white;
+  }
 
-.info-section-three{
-  background-color: rgb(58, 17, 17);
+  .step:nth-child(2){
+    border-bottom: 1px solid white;
+    margin-top: 40px;
+  }
+
+  .step:nth-child(3){
+    margin-top: 40px;
+  }
+  
 }

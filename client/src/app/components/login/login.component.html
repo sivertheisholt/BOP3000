@@ -1,4 +1,4 @@
-<div class="login-bg">
+<!-- <div class="login-bg">
     <div class="container">
         <div class="front-logo">
             <img src="../../../assets/images/playfu.png" alt="Playfu Logo">
@@ -53,4 +53,50 @@
             </div>
         </div>
     </div>
-</div> 
+</div>  -->
+
+        <form [formGroup]="loginUserForm" class="login-form" (ngSubmit)="login()" autocomplete="off">
+            <div class="card-content">
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <input
+                        name="email"
+                        formControlName="email"
+                        class="input"
+                        type="email"
+                        placeholder="Email">
+                        <span class="icon is-small is-left">
+                        <fa-icon [icon]="faEnvelope"></fa-icon>
+                        </span>
+                    </p>
+                </div>
+                <div class="field mt-5">
+                    <p class="control has-icons-left">
+                        <input
+                        name="password"
+                        formControlName="password"
+                        class="input"
+                        type="password"
+                        placeholder="Password">
+                        <span class="icon is-small is-left">
+                        <fa-icon [icon]="faLock"></fa-icon>
+                        </span>
+                    </p>
+                </div>
+                <div class="error danger p-2" *ngIf="invalidInput">
+                    Invalid email/password
+                </div>
+            </div>
+
+            <div class="has-text-centered">
+                <button class="button is-info" type="submit">Login</button>
+            </div>
+            <div class="card-footer mt-5"></div>
+            <div class="has-text-centered mt-5">
+                <p class="is-size-6 has-text-light">New to Playfu?</p>
+                <button type="button" class="button is-success mt-2" routerLink="register">Sign Up</button>
+            </div>
+            <div class="has-text-centered mt-5">
+                <a class="is-size-6 has-text-light is-underlined" routerLink="forgotten-password">Forgotten Password</a>
+            </div>
+        </form>
