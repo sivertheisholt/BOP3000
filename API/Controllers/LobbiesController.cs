@@ -138,7 +138,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<LobbyDto>>> GetRecommendedLobbies()
         {
             var uid = GetUserIdFromClaim();
-            var lobbies = await _unitOfWork.lobbiesRepository.GetActiveRecommendedLobbies(3);
+            var lobbies = await _unitOfWork.lobbiesRepository.GetActiveRecommendedLobbies(5);
             var lobbiesDto = new List<LobbyDto>();
             foreach (var lobby in lobbies)
             {
