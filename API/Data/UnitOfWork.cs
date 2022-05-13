@@ -12,10 +12,8 @@ namespace API.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
-        public UnitOfWork(DataContext context, IMapper mapper)
+        public UnitOfWork(DataContext context)
         {
-            _mapper = mapper;
             _context = context;
         }
 

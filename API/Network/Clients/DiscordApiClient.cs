@@ -15,8 +15,11 @@ namespace API.Network.Clients
         private readonly IConfiguration _configuration;
         public DiscordApiClient(HttpClient client, IConfiguration configuration) : base(client)
         {
+            var uri = "https://discord.com/api";
+
             _configuration = configuration;
-            Client.BaseAddress = new Uri("https://discord.com/api");
+
+            Client.BaseAddress = new Uri(uri);
         }
 
         public async Task<DiscordUserDto> GetUserObjectFromToken(string token)

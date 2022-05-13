@@ -58,32 +58,17 @@ namespace API.SignalR
             }
         }
 
-        public void DeclineMember(int lobbyId, int uid)
+        public void RemoveMemberQueue(int lobbyId, int uid)
         {
             lock (Lobby) Lobby[lobbyId].UsersQueue.Remove(uid);
             lock (MemberTracker) MemberTracker.Remove(uid);
         }
 
-        public void KickMember(int lobbyId, int uid)
+        public void RemoveMember(int lobbyId, int uid)
         {
             var userLobby = Lobby[lobbyId].UsersLobby.FirstOrDefault(user => user.Uid == uid);
 
             lock (Lobby) Lobby[lobbyId].UsersLobby.Remove(userLobby);
-
-            lock (MemberTracker) MemberTracker.Remove(uid);
-        }
-
-        public void MemberLeftLobby(int lobbyId, int uid)
-        {
-            var userLobby = Lobby[lobbyId].UsersLobby.FirstOrDefault(user => user.Uid == uid);
-
-            lock (Lobby) Lobby[lobbyId].UsersLobby.Remove(userLobby);
-            lock (MemberTracker) MemberTracker.Remove(uid);
-        }
-
-        public void MemberLeftQueueLobby(int lobbyId, int uid)
-        {
-            lock (Lobby) Lobby[lobbyId].UsersQueue.Remove(uid);
 
             lock (MemberTracker) MemberTracker.Remove(uid);
         }

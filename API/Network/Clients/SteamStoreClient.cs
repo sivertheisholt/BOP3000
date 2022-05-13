@@ -10,7 +10,9 @@ namespace API.Clients
     {
         public SteamStoreClient(HttpClient client) : base(client)
         {
-            Client.BaseAddress = new Uri("https://store.steampowered.com/api/");
+            var uri = "https://store.steampowered.com/api/";
+
+            Client.BaseAddress = new Uri(uri);
         }
 
         public async Task<AppInfo> GetAppInfo(int appid)
@@ -35,7 +37,7 @@ namespace API.Clients
                         {
                             Success = false
                         };
-                    };
+                    }
 
                     // For some reason, some games treat this as an array?
                     // For example, App ID 380 has an empty array here.

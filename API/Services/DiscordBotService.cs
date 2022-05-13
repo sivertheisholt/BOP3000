@@ -56,9 +56,8 @@ namespace API.Services
             _client = new DiscordSocketClient();
             _client.Log += Logger.Log;
             _client.Ready += ReadyAsync;
-            //_client.ChannelUpdated += OnchannelUpdated;
-            // Login and connect.
 
+            // Login and connect.
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var token = "";
             if (env == "Development")
@@ -92,7 +91,7 @@ namespace API.Services
 
             var users = await guild.GetUsersAsync().FirstAsync();
 
-            if (users.Where(x => x.Id == userId).FirstOrDefault() == null) return false;
+            if (users.FirstOrDefault(x => x.Id == userId) == null) return false;
 
             return true;
         }

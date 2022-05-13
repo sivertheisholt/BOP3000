@@ -52,7 +52,7 @@ namespace API.Controllers
 
             Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
-            if (users == null) return NotFound();
+            if (users.FirstOrDefault() == null) return NotFound();
 
             return Ok(Mapper.Map<IEnumerable<MemberDto>>(users));
         }

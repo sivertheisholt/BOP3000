@@ -11,7 +11,9 @@ namespace API.Clients
     {
         public SteamAppsClient(HttpClient client) : base(client)
         {
-            Client.BaseAddress = new Uri("https://api.steampowered.com/ISteamApps/");
+            var uri = "https://api.steampowered.com/ISteamApps/";
+
+            Client.BaseAddress = new Uri(uri);
         }
 
         public async Task<AppList> GetAppsList()
@@ -46,7 +48,7 @@ namespace API.Clients
                     {
                         Success = false
                     };
-                };
+                }
 
                 var resultString = JsonConvert.SerializeObject(contentObject["applist"]);
 

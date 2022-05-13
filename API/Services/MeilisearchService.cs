@@ -11,11 +11,9 @@ namespace API.Services
     public class MeilisearchService : IMeilisearchService
     {
         private readonly MeilisearchClient _meilisearchClient;
-        private readonly IConfiguration _config;
         private Dictionary<string, Meilisearch.Index> Indexes = new Dictionary<string, Meilisearch.Index>();
         public MeilisearchService(IConfiguration config)
         {
-            _config = config;
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
             string apiToken;

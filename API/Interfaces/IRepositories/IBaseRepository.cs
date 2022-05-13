@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.Interfaces.IRepositories
 {
-    public interface IBaseRepository<T> where T : class
+    public interface IBaseRepository<in T> where T : class
     {
         void Update(T entity);
 

@@ -16,7 +16,7 @@ namespace API.Services
         private readonly Cloudinary _cloudinary;
         public PhotoService(IOptions<CloudinarySettings> config, IConfiguration envConfig)
         {
-            var acc = new Account { };
+            Account acc;
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (env == "Development")
             {

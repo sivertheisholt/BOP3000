@@ -38,7 +38,7 @@ namespace API.SignalR
             return Task.CompletedTask;
         }
 
-        private class Checks
+        private sealed class Checks
         {
             public Checks(bool checkUid = true, bool checkLobbyExists = true, bool checkIfMemberInLobby = false)
             {
@@ -47,36 +47,27 @@ namespace API.SignalR
                 CheckIfMemberInLobby = checkIfMemberInLobby;
             }
 
-            public bool CheckUid { get; set; } = true;
-            public bool CheckLobbyExists { get; set; } = true;
-            public bool CheckIfMemberInLobby { get; set; } = true;
+            public bool CheckUid { get; set; }
+            public bool CheckLobbyExists { get; set; }
+            public bool CheckIfMemberInLobby { get; set; }
         }
 
         private async Task<bool> GlobalChecks(Checks checks, int lobbyId = -1, int callerUid = -1, int targetUid = -1)
         {
-            if (checks.CheckUid)
+            if (checks.CheckUid && callerUid == -1)
             {
-                if (callerUid == -1)
-                {
-                    await Clients.Caller.SendAsync("ServerError", "Can't get UID");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("ServerError", "Can't get UID");
+                return false;
             }
-            if (checks.CheckLobbyExists)
+            if (checks.CheckLobbyExists && !_lobbyChatTracker.CheckIfChatExists(lobbyId))
             {
-                if (!_lobbyChatTracker.CheckIfChatExists(lobbyId))
-                {
-                    await Clients.Caller.SendAsync("ServerError", "Lobby doesn't exist");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("ServerError", "Lobby doesn't exist");
+                return false;
             }
-            if (checks.CheckIfMemberInLobby)
+            if (checks.CheckIfMemberInLobby && !_lobbyChatTracker.CheckIfMemberInChat(lobbyId, targetUid))
             {
-                if (!_lobbyChatTracker.CheckIfMemberInChat(lobbyId, targetUid))
-                {
-                    await Clients.Caller.SendAsync("ServerError", "Member is not in lobby");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("ServerError", "Member is not in lobby");
+                return false;
             }
 
             return true;
@@ -134,6 +125,9 @@ namespace API.SignalR
             if (!await GlobalChecks(new Checks(), lobbyId, uid, uid)) return;
 
             _lobbyChatTracker.MemberLeftChat(lobbyId, uid);
+
+            await RemoveFromGroup($"lobby_{lobbyId}");
+            await RemoveFromGroup($"user_{uid}");
 
             await base.OnDisconnectedAsync(exception);
         }

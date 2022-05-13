@@ -114,7 +114,7 @@ namespace API.Controllers
 
             Response.AddPaginationHeader(lobbies.CurrentPage, lobbies.PageSize, lobbies.TotalCount, lobbies.TotalPages);
 
-            if (lobbies == null) return NotFound();
+            if (lobbies.FirstOrDefault() == null) return NotFound();
 
             var lobbiesDto = Mapper.Map<List<LobbyDto>>(lobbies);
 
@@ -137,7 +137,6 @@ namespace API.Controllers
         [Authorize(Policy = "RequireMemberRole")]
         public async Task<ActionResult<IEnumerable<LobbyDto>>> GetRecommendedLobbies()
         {
-            var uid = GetUserIdFromClaim();
             var lobbies = await _unitOfWork.lobbiesRepository.GetActiveRecommendedLobbies(5);
             var lobbiesDto = new List<LobbyDto>();
             foreach (var lobby in lobbies)

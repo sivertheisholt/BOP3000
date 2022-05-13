@@ -24,7 +24,7 @@ namespace API
             await InitHost(args);
         }
 
-        private async Task InitHost(string[] args)
+        private static async Task InitHost(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 

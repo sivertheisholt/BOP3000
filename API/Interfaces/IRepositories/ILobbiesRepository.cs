@@ -7,7 +7,7 @@ namespace API.Interfaces.IRepositories
 {
     public interface ILobbiesRepository : IBaseRepository<Lobby>
     {
-        void AddLobby(Lobby loby);
+        void AddLobby(Lobby lobby);
 
         Task<Lobby> GetLobbyAsync(int id);
 

@@ -40,7 +40,7 @@ namespace API.SignalR
             return Task.CompletedTask;
         }
 
-        private class Checks
+        private sealed class Checks
         {
             public Checks(bool checkUid = true, bool checkLobbyExists = true, bool checkMemberInLobby = false, bool checkMemberInQueue = false, bool checkMemberAdmin = false, bool checkIfLobbyFull = false, bool checkIfMemberIsBanned = false)
             {
@@ -53,73 +53,52 @@ namespace API.SignalR
                 CheckIfMemberIsBanned = checkIfMemberIsBanned;
             }
 
-            public bool CheckUid { get; set; } = true;
-            public bool CheckLobbyExists { get; set; } = true;
-            public bool CheckMemberInLobby { get; set; } = false;
-            public bool CheckMemberInQueue { get; set; } = false;
-            public bool CheckMemberAdmin { get; set; } = false;
-            public bool CheckIfLobbyFull { get; set; } = false;
-            public bool CheckIfMemberIsBanned { get; set; } = false;
+            public bool CheckUid { get; set; }
+            public bool CheckLobbyExists { get; set; }
+            public bool CheckMemberInLobby { get; set; }
+            public bool CheckMemberInQueue { get; set; }
+            public bool CheckMemberAdmin { get; set; }
+            public bool CheckIfLobbyFull { get; set; }
+            public bool CheckIfMemberIsBanned { get; set; }
 
         }
 
         private async Task<bool> GlobalChecks(Checks checks, int lobbyId = -1, int callerUid = -1, int targetUid = -1)
         {
-            if (checks.CheckUid)
+            if (checks.CheckUid && callerUid == -1)
             {
-                if (callerUid == -1)
-                {
-                    await Clients.Caller.SendAsync("ServerError", "Can't get UID");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("ServerError", "Can't get UID");
+                return false;
             }
-            if (checks.CheckLobbyExists)
+            if (checks.CheckLobbyExists && !_lobbyTracker.CheckIfLobbyExists(lobbyId))
             {
-                if (!_lobbyTracker.CheckIfLobbyExists(lobbyId))
-                {
-                    await Clients.Caller.SendAsync("ServerError", "Lobby doesn't exist");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("ServerError", "Lobby doesn't exist");
+                return false;
             }
-            if (checks.CheckMemberInLobby)
+            if (checks.CheckMemberInLobby && !_lobbyTracker.CheckIfMemberInLobby(lobbyId, targetUid))
             {
-                if (!_lobbyTracker.CheckIfMemberInLobby(lobbyId, targetUid))
-                {
-                    await Clients.Caller.SendAsync("ServerError", "Member is not in lobby");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("ServerError", "Member is not in lobby");
+                return false;
             }
-            if (checks.CheckMemberInQueue)
+            if (checks.CheckMemberInQueue && !_lobbyTracker.CheckIfMemberInQueue(lobbyId, targetUid))
             {
-                if (!_lobbyTracker.CheckIfMemberInQueue(lobbyId, targetUid))
-                {
-                    await Clients.Caller.SendAsync("ServerError", "Member is not in queue");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("ServerError", "Member is not in queue");
+                return false;
             }
-            if (checks.CheckMemberAdmin)
+            if (checks.CheckMemberAdmin && !_lobbyTracker.CheckIfMemberIsAdmin(lobbyId, callerUid))
             {
-                if (!_lobbyTracker.CheckIfMemberIsAdmin(lobbyId, callerUid))
-                {
-                    await Clients.Caller.SendAsync("ServerError", "Member is not admin");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("ServerError", "Member is not admin");
+                return false;
             }
-            if (checks.CheckIfLobbyFull)
+            if (checks.CheckIfLobbyFull && _lobbyTracker.CheckIfLobbyFull(lobbyId))
             {
-                if (_lobbyTracker.CheckIfLobbyFull(lobbyId))
-                {
-                    await Clients.Caller.SendAsync("FullLobby", "Lobby is full");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("FullLobby", "Lobby is full");
+                return false;
             }
-            if (checks.CheckIfMemberIsBanned)
+            if (checks.CheckIfMemberIsBanned && _lobbyTracker.CheckIfMemberIsBanned(lobbyId, targetUid))
             {
-                if (_lobbyTracker.CheckIfMemberIsBanned(lobbyId, targetUid))
-                {
-                    await Clients.Caller.SendAsync("BannedQueue");
-                    return false;
-                }
+                await Clients.Caller.SendAsync("BannedQueue");
+                return false;
             }
 
             return true;
@@ -154,7 +133,7 @@ namespace API.SignalR
 
             if (!await GlobalChecks(new Checks(checkMemberInQueue: true, checkMemberAdmin: true), lobbyId, uid, declinedUid)) return;
 
-            _lobbyTracker.DeclineMember(lobbyId, declinedUid);
+            _lobbyTracker.RemoveMemberQueue(lobbyId, declinedUid);
 
             await Clients.Group($"user_{declinedUid.ToString()}").SendAsync("Declined", lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberDeclined", new List<int>() { lobbyId, declinedUid });
@@ -178,7 +157,7 @@ namespace API.SignalR
 
             if (!await GlobalChecks(new Checks(checkMemberInLobby: true, checkMemberAdmin: true), lobbyId, uid, kickedUid)) return;
 
-            _lobbyTracker.KickMember(lobbyId, kickedUid);
+            _lobbyTracker.RemoveMember(lobbyId, kickedUid);
 
             await Clients.Group($"user_{kickedUid.ToString()}").SendAsync("Kicked", lobbyId);
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("MemberKicked", new List<int>() { lobbyId, kickedUid });
@@ -193,7 +172,7 @@ namespace API.SignalR
             {
                 await Clients.Caller.SendAsync("DiscordNotConnected");
                 return;
-            };
+            }
 
             var discordId = await _unitOfWork.userRepository.GetUserDiscordIdFromUid(uid);
 
@@ -215,7 +194,7 @@ namespace API.SignalR
 
             if (!await GlobalChecks(new Checks(checkMemberInQueue: true), lobbyId, uid, uid)) return;
 
-            _lobbyTracker.MemberLeftQueueLobby(lobbyId, uid);
+            _lobbyTracker.RemoveMemberQueue(lobbyId, uid);
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftQueue", uid);
             await Clients.Caller.SendAsync("CancelQueue");
@@ -228,7 +207,7 @@ namespace API.SignalR
 
             if (!await GlobalChecks(new Checks(checkMemberInLobby: true), lobbyId, uid, uid)) return;
 
-            _lobbyTracker.MemberLeftLobby(lobbyId, uid);
+            _lobbyTracker.RemoveMember(lobbyId, uid);
 
             await RemoveFromGroup($"lobby_{lobbyId.ToString()}");
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("LeftLobby", uid);
@@ -332,8 +311,6 @@ namespace API.SignalR
         }
         public async Task EndLobby(int lobbyId)
         {
-            var uid = Context.User.GetUserId();
-
             if (!await GlobalChecks(new Checks(checkUid: false), lobbyId: lobbyId)) return;
 
             var queueUsers = _lobbyTracker.GetMembersInQueueLobby(lobbyId);
@@ -367,7 +344,17 @@ namespace API.SignalR
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
+            var uid = Context.User.GetUserId();
+            if (_lobbyTracker.CheckIfMemberInAnyLobby(uid))
+            {
+                var lobbyId = _lobbyTracker.GetLobbyIdFromUser(uid);
+                await RemoveFromGroup($"lobby_{lobbyId}");
+            }
+
+            await RemoveFromGroup($"user_{uid}");
+
             await base.OnDisconnectedAsync(exception);
+
         }
 
         private async Task AddToGroup(string groupName)

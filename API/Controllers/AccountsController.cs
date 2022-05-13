@@ -82,7 +82,7 @@ namespace API.Controllers
                     },
                     AccountCustomization = new AppUserCustomization
                     {
-                        BackgroundUrl = "http://res.cloudinary.com/dzpzecnx5/image/upload/v1650544575/AccountBackgrounds/pexels-suzukii-xingfu-698319_brqyfl.jpg"
+                        BackgroundUrl = "https://res.cloudinary.com/dzpzecnx5/image/upload/v1650544575/AccountBackgrounds/pexels-suzukii-xingfu-698319_brqyfl.jpg"
                     },
                     UserConnections = new AppUserConnections
                     {
@@ -123,7 +123,6 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             // Gets the user by email from the database
-            //var user = await _userManager.Users.SingleOrDefaultAsync(x => x.Email == loginDto.Email.ToLower());
             var user = await _unitOfWork.userRepository.GetUserByEmailAsync(loginDto.Email);
 
             // Checks if user exists

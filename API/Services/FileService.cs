@@ -9,10 +9,8 @@ namespace API.Services
 {
     public class FileService : IFileService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public FileService(IUnitOfWork unitOfWork)
+        public FileService()
         {
-            _unitOfWork = unitOfWork;
         }
 
         public async Task CreateUserData()

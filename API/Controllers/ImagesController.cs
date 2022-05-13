@@ -12,12 +12,10 @@ namespace API.Controllers
 {
     public class ImagesController : BaseApiController
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IPhotoService _photoService;
-        public ImagesController(IMapper mapper, IUnitOfWork unitOfWork, IPhotoService photoService) : base(mapper)
+        public ImagesController(IMapper mapper, IPhotoService photoService) : base(mapper)
         {
             _photoService = photoService;
-            _unitOfWork = unitOfWork;
         }
 
         [HttpGet("customizer_images")]

@@ -18,18 +18,16 @@ namespace API.Controllers
     public class SeedController : BaseApiController
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<AppRole> _roleManager;
         private readonly IMeilisearchService _meilisearchService;
         private readonly ISteamStoreClient _steamStoreClient;
         private readonly ISteamAppsClient _steamAppsClient;
         private readonly IUnitOfWork _unitOfWork;
-        public SeedController(IMapper mapper, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMeilisearchService meilisearchService, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, IUnitOfWork unitOfWork) : base(mapper)
+        public SeedController(IMapper mapper, UserManager<AppUser> userManager, IMeilisearchService meilisearchService, ISteamStoreClient steamStoreClient, ISteamAppsClient steamAppsClient, IUnitOfWork unitOfWork) : base(mapper)
         {
             _unitOfWork = unitOfWork;
             _steamAppsClient = steamAppsClient;
             _steamStoreClient = steamStoreClient;
             _meilisearchService = meilisearchService;
-            _roleManager = roleManager;
             _userManager = userManager;
         }
 

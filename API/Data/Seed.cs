@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 
 namespace API.Data
 {
-    public class Seed
+    public static class Seed
     {
         /// <summary>
         /// Will seed a few test users to the database for development
