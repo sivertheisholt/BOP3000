@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
-import { GamesService } from 'src/app/_services/games.service';
 import { NotificationService } from 'src/app/_services/notification.service';
 import { CustomValidator } from 'src/app/_validators/custom-validator';
 import { passwordMatchingValidator } from 'src/app/_validators/password-matching';

@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { faCheckCircle, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, timer } from 'rxjs';
 import { Lobby } from 'src/app/_models/lobby.model';
-import { Member } from 'src/app/_models/member.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';
-import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-host-panel',

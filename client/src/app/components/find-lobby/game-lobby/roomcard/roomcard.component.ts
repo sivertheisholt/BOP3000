@@ -1,7 +1,4 @@
-import { NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Game } from 'src/app/_models/game.model';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { LobbyHubService } from 'src/app/_services/lobby-hub.service';

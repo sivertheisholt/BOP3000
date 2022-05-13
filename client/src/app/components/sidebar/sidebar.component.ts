@@ -4,7 +4,6 @@ import { faUser, faUserCircle, faSignOutAlt, faHome, faCogs, faQuestionCircle, f
 import { TranslateService } from '@ngx-translate/core';
 import { Member } from 'src/app/_models/member.model';
 import { AuthService } from 'src/app/_services/auth.service';
-import { LobbyService } from 'src/app/_services/lobby.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({

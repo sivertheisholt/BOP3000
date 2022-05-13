@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faArrowAltCircleUp, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Member } from 'src/app/_models/member.model';

@@ -1,10 +1,8 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChatMessage } from 'src/app/_models/chatmessage.model';
 import { Lobby } from 'src/app/_models/lobby.model';
 import { AuthService } from 'src/app/_services/auth.service';
 import { LobbyChatHubService } from 'src/app/_services/lobby-chat-hub.service';
-import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-chat',

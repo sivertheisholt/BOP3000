@@ -97,7 +97,7 @@
     <div class="image-template-wrapper is-flex">
         <div class="image placeholder-img p-3" *ngFor="let image of customizationImages;">
             <a (click)="onChangeAccountBg(image.backgroundUrl)">
-                <img [ngClass]="{'selected-img': selectedImgUrl == image.backgroundUrl}" [src]="image.iconUrl">
+                <img [ngClass]="{'selected-img': selectedImgUrl == image.backgroundUrl}" [src]="image.iconUrl" alt="background image">
             </a>
         </div>
     </div>

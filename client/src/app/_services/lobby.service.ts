@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, map, retry } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { Lobby } from "../_models/lobby.model";
 import { QueueStatus } from "../_models/queuestatus.model";
 import { environment } from '../../environments/environment';

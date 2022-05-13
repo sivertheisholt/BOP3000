@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { DiscordConnection } from 'src/app/_models/discord-connection.model';

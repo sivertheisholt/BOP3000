@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DiscordConnection } from 'src/app/_models/discord-connection.model';
 import { Member } from 'src/app/_models/member.model';
