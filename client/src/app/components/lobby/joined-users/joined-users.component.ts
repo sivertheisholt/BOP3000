@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { Lobby } from 'src/app/_models/lobby.model';

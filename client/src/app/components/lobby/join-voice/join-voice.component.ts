@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
 @Component({
   selector: 'app-join-voice',
