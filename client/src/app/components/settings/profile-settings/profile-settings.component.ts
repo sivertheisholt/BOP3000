@@ -118,16 +118,15 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.profileSettingsForm);
     if(this.profileSettingsForm.valid){
-      let someDate = new Date(this.profileSettingsForm.value.dateYear + '-' + this.profileSettingsForm.value.dateMonth + '-' + this.profileSettingsForm.value.dateDay);
+      let newDate = new Date(this.profileSettingsForm.value.dateYear + '-' + this.profileSettingsForm.value.dateMonth + '-' + this.profileSettingsForm.value.dateDay);
       const model = {
         username: this.profileSettingsForm.value.username,
         email: this.profileSettingsForm.value.email,
         countryId: this.profileSettingsForm.value.country,
         gender: this.profileSettingsForm.value.gender,
         description: this.profileSettingsForm.value.description,
-        birthday: someDate
+        birthday: newDate
       }
       if(model.description == null){
         model.description = "";
