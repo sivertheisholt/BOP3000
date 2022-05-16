@@ -43,7 +43,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     let d = new Date();
-    for(let i = 1930; i <= d.getFullYear(); i++){
+    for(let i = d.getFullYear()-13; i >= d.getFullYear()-100; i--){
       this.years.push(i);
     }
     let userBirthday = new Date(this.user.memberProfile?.birthday!);

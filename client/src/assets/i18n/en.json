@@ -38,7 +38,7 @@
     "ACTIVITY_LOBBY_CREATED": "Just created a lobby in",
     "ACTIVITY_LOBBY_FINISHED": "Just finished a lobby in",
     "ACTIVITY_LOBBY_JOINED": "Joined a lobby in",
-    "ACTIVITY_FOLLOWING": "Started following you!",
+    "ACTIVITY_FOLLOWING": "Started following",
     "PARTY": "Party",
     "LOBBYID": "Lobbyid:",
     "REQUIRED_FIELD": "This field is required",
