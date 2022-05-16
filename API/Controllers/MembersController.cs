@@ -132,7 +132,7 @@ namespace API.Controllers
                     }
                     if (activityDto.MemberFollowedId != 0)
                     {
-                        activityDto.MemberFollowedUsername = await _unitOfWork.userRepository.GetUsernameFromId(uid);
+                        activityDto.MemberFollowedUsername = await _unitOfWork.userRepository.GetUsernameFromId(activityDto.MemberFollowedId);
                     }
                     activities.Add(activityDto);
                 }
