@@ -16,5 +16,7 @@ namespace API.Interfaces.IServices
         Task CreateIndexAsync(string indexName);
 
         Task AddDocumentsAsync<T>(T[] entities, Meilisearch.Index index);
+
+        Task DeleteAllDocumentsAsync<T>(Meilisearch.Index index);
     }
 }

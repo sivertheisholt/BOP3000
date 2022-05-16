@@ -72,5 +72,9 @@ namespace API.Services
             return await index.SearchAsync<T>(title, searchAttributes);
         }
 
+        public async Task DeleteAllDocumentsAsync<T>(Meilisearch.Index index)
+        {
+            await index.DeleteAllDocumentsAsync();
+        }
     }
 }

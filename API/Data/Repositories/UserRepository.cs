@@ -149,6 +149,14 @@ namespace API.Data.Repositories
                 .Select(x => x.AppUserProfile.AppUserData.Followers)
                 .FirstOrDefaultAsync();
         }
+        public async Task<ICollection<int>> GetUserFollowing(int id)
+        {
+            return await Context.Users.Where(user => user.Id == id)
+                .Include(user => user.AppUserProfile)
+                .ThenInclude(user => user.AppUserData)
+                .Select(x => x.AppUserProfile.AppUserData.Following)
+                .FirstOrDefaultAsync();
+        }
 
         public async Task<string> GetUsernameFromId(int id)
         {

@@ -14,6 +14,7 @@ namespace API.Interfaces.IRepositories
         Task<AppUser> GetUserByEmailAsync(string email);
 
         Task<ICollection<int>> GetUserFollowers(int id);
+        Task<ICollection<int>> GetUserFollowing(int id);
 
         void UpdateUsername(AppUser user, string username);
 

@@ -16,26 +16,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    /// <summary>
-    /// AccountController is the endpoint for actions related to accounts
-    /// </summary>
     public class AccountsController : BaseApiController
     {
         private readonly ITokenService _tokenService;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IMeilisearchService _meilisearchService;
 
-        /// <summary>
-        /// Constructs a new AccountController
-        /// </summary>
-        /// <param name="userManager"></param>
-        /// <param name="signInManager"></param>
-        /// <param name="tokenService"></param>
         private readonly IDiscordApiClient _discordApiClient;
         private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
-        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IDiscordApiClient discordApiClient, IEmailService emailService, IUnitOfWork unitOfWork) : base(mapper)
+        public AccountsController(IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IDiscordApiClient discordApiClient, IEmailService emailService, IUnitOfWork unitOfWork, IMeilisearchService meilisearchService) : base(mapper)
         {
+            _meilisearchService = meilisearchService;
             _unitOfWork = unitOfWork;
             _emailService = emailService;
             _discordApiClient = discordApiClient;
@@ -45,11 +38,6 @@ namespace API.Controllers
         }
 
 
-        /// <summary>
-        /// Registers a new user with the provided information
-        /// </summary>
-        /// <param name="registerDto"></param>
-        /// <returns>A UserDto of the newly created user</returns>
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
@@ -105,6 +93,9 @@ namespace API.Controllers
             // Check if role was successfully given
             if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
+            var index = _meilisearchService.GetIndex("members");
+            await _meilisearchService.AddDocumentsAsync<AppUserMeili>(new AppUserMeili[] { Mapper.Map<AppUserMeili>(user) }, index);
+
             // Returns a new UserDto
             return new UserDto
             {
@@ -114,11 +105,6 @@ namespace API.Controllers
             };
         }
 
-        /// <summary>
-        /// Log in a user with the provided information
-        /// </summary>
-        /// <param name="loginDto"></param>
-        /// <returns>A UserDto of the newly logged in user</returns>
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -257,11 +243,6 @@ namespace API.Controllers
             return Ok("User deleted successfully!");
         }
 
-        /// <summary>
-        /// Will generate a token for the user to use for resetting password
-        /// </summary>
-        /// <param name="forgottenPasswordDto"></param>
-        /// <returns></returns>
         [HttpPost("forgotten_password")]
         public async Task<ActionResult> ForgottenPassword(ForgottenPasswordDto forgottenPasswordDto)
         {
@@ -276,12 +257,6 @@ namespace API.Controllers
             return Accepted();
         }
 
-        /// <summary>
-        /// Verifies the provided token and changes the users password to the provided password 
-        /// </summary>
-        /// <param name="changeForgottenPasswordDto"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
         [HttpPatch("change_forgotten_password")]
         public async Task<ActionResult> ChangeForgottenPassword(ChangeForgottenPasswordDto changeForgottenPasswordDto, string token)
         {
@@ -298,11 +273,6 @@ namespace API.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Will change the password of the user
-        /// </summary>
-        /// <param name="changePasswordDto"></param>
-        /// <returns></returns>
         [Authorize(Policy = "RequireMemberRole")]
         [HttpPatch("change_password")]
         public async Task<ActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
@@ -317,21 +287,11 @@ namespace API.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Checks if username exists
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns>Task -> True/False if the username exists</returns>
         private async Task<bool> UsernameExists(string username)
         {
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
 
-        /// <summary>
-        /// Checks if email exists
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns>Task -> True/False if the email exists</returns>
         private async Task<bool> EmailExists(string email)
         {
             return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());

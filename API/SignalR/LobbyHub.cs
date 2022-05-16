@@ -315,14 +315,16 @@ namespace API.SignalR
 
             var queueUsers = _lobbyTracker.GetMembersInQueueLobby(lobbyId);
             _lobbyTracker.FinishLobby(lobbyId);
+
+            var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(lobbyId);
+            _unitOfWork.lobbiesRepository.Delete(lobby);
+            await _unitOfWork.Complete();
+
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("EndedLobby", lobbyId);
             foreach (var user in queueUsers)
             {
                 await Clients.Group($"user_{user}").SendAsync("EndedLobby", lobbyId);
             }
-            var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(lobbyId);
-            _unitOfWork.lobbiesRepository.Delete(lobby);
-            await _unitOfWork.Complete();
         }
 
         public override async Task OnConnectedAsync()

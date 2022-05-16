@@ -102,36 +102,40 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireMemberRole")]
         [HttpGet("current/activity")]
-        public async Task<ActionResult<IEnumerable<MemberMeiliDto>>> GetCurrentUserActivityLog(string name)
+        public async Task<ActionResult<IEnumerable<MemberMeiliDto>>> GetCurrentUserActivityLog()
         {
             var uid = GetUserIdFromClaim();
 
-            var followers = await _unitOfWork.userRepository.GetUserFollowers(uid);
+            var followers = await _unitOfWork.userRepository.GetUserFollowing(uid);
 
             var activities = new List<ActivityLogDto>();
 
             foreach (var follower in followers)
             {
 
-                var activites = await _unitOfWork.activitiesRepository.GetActivitiesForUser(follower);
-                var activitiesDto = Mapper.Map<List<ActivityLogDto>>(activites);
+                var activitesFollower = await _unitOfWork.activitiesRepository.GetActivitiesForUser(follower);
+                var activitiesDto = Mapper.Map<List<ActivityLogDto>>(activitesFollower);
 
                 foreach (var activityDto in activitiesDto)
                 {
                     var user = await _unitOfWork.userRepository.GetUserByIdAsync(activityDto.AppUserId);
                     activityDto.Username = user.UserName;
                     activityDto.ProfilePicture = user.AppUserProfile.AppUserPhoto.Url;
+
+                    if (activityDto.LobbyId != 0)
+                    {
+                        var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(activityDto.LobbyId);
+                        var game = await _unitOfWork.steamAppRepository.GetAppInfoAsync(lobby.GameId);
+                        activityDto.GameId = game.Id;
+                        activityDto.GameName = game.Data.Name;
+                        activityDto.HeaderImage = game.Data.HeaderImage;
+                    }
                     activities.Add(activityDto);
-                    if (activityDto.LobbyId == 0) continue;
-                    var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(activityDto.LobbyId);
-                    var game = await _unitOfWork.steamAppRepository.GetAppInfoAsync(lobby.GameId);
-                    activityDto.GameId = game.Id;
-                    activityDto.GameName = game.Data.Name;
-                    activityDto.HeaderImage = game.Data.HeaderImage;
                 }
             }
 
             activities.Sort((y, x) => x.Date.CompareTo(y.Date));
+
             return Ok(activities);
         }
 
