@@ -52,8 +52,8 @@ const routes: Routes = [
   { path: 'activity', component: ActivityLogComponent, canActivate: [UnAuthGuard], resolve: {activities: ActivityLogResolver }},
   { path: 'settings', component: SettingsComponent, canActivate: [UnAuthGuard], resolve: {countries: CountryResolver, user: UserResolver} },
   { path: 'help', component: HelpComponent, canActivate: [UnAuthGuard]},
-  { path: 'terms', component: TermsAgreementComponent, canActivate: [UnAuthGuard] },
-  { path: 'privacy-policy', component: PrivacyPolicyComponent, canActivate: [UnAuthGuard] },
+  { path: 'terms', component: TermsAgreementComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'errors', component: TestErrorsComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
@@ -61,7 +61,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

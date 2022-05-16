@@ -9,3 +9,19 @@
 .container{
     height: 100%;
 }
+
+ul{
+    list-style-type: disc;
+}
+
+h1{
+    font-size: 28px;
+}
+
+h2{
+    font-size: 22px;
+    margin-top: 40px;
+}
+
+ul {margin-left: 0; padding-left: 60px;}
+
