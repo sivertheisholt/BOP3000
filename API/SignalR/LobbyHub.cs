@@ -317,7 +317,15 @@ namespace API.SignalR
             _lobbyTracker.FinishLobby(lobbyId);
 
             var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(lobbyId);
-            _unitOfWork.lobbiesRepository.Delete(lobby);
+            lobby.Finished = true;
+            lobby.Users = _lobbyTracker.GetMembersInLobby(lobbyId);
+            lobby.FinishedDate = DateTime.Now;
+            lobby.Log = new Log
+            {
+                Messages = _lobbyChatTracker.GetMessages(lobbyId)
+            };
+
+            _unitOfWork.lobbiesRepository.Update(lobby);
             await _unitOfWork.Complete();
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("EndedLobby", lobbyId);

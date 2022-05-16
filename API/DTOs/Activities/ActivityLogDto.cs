@@ -16,5 +16,7 @@ namespace API.DTOs.Activities
         public int GameId { get; set; }
         public string HeaderImage { get; set; }
         public string ProfilePicture { get; set; }
+        public int MemberFollowedId { get; set; }
+        public string MemberFollowedUsername { get; set; }
     }
 }

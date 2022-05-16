@@ -130,6 +130,10 @@ namespace API.Controllers
                         activityDto.GameName = game.Data.Name;
                         activityDto.HeaderImage = game.Data.HeaderImage;
                     }
+                    if (activityDto.MemberFollowedId != 0)
+                    {
+                        activityDto.MemberFollowedUsername = await _unitOfWork.userRepository.GetUsernameFromId(uid);
+                    }
                     activities.Add(activityDto);
                 }
             }

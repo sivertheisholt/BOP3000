@@ -53,7 +53,7 @@ namespace API.Controllers
                 {
                     user.AppUserProfile.CountryIso = await _unitOfWork.countryRepository.GetCountryIsoByIdAsync(rnd.Next(1, 50));
 
-                    if (user.UserName == "Playfu1")
+                    if (user.UserName == "Arabin")
                     {
                         await _userManager.CreateAsync(user, "Pa$$w0rd");
                         await _userManager.AddToRolesAsync(user, new[] { Role.Member.MakeString(), Role.Admin.MakeString(), Role.Premium.MakeString() });

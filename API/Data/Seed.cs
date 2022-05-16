@@ -54,7 +54,7 @@ namespace API.Data
                 {
                     user.AppUserProfile.CountryIso = await unitOfWork.countryRepository.GetCountryIsoByIdAsync(rnd.Next(1, 50));
 
-                    if (user.UserName == "Playfu1")
+                    if (user.UserName == "Arabin")
                     {
                         await userManager.CreateAsync(user, "Pa$$w0rd");
                         await userManager.AddToRolesAsync(user, new[] { Role.Member.MakeString(), Role.Admin.MakeString(), Role.Premium.MakeString() });
