@@ -44,7 +44,15 @@ export class ConnectionsComponent implements OnInit {
   onSteamUnlink(){
     this.connectionService.disconnectFromSteam().subscribe(
       (res) => {
-        
+        this.userService.getUserData().subscribe(
+          (user) => {
+            this.userService.getSteamConnectionStatus(user.id!).subscribe(
+              (steamResponse) => {
+                this.steamData = steamResponse;
+              }
+            )
+          }
+        )
       }
     )
   }
@@ -52,7 +60,15 @@ export class ConnectionsComponent implements OnInit {
   onDiscordUnlink(){
     this.connectionService.disconnectFromDiscord().subscribe(
       (res) => {
-
+        this.userService.getUserData().subscribe(
+          (user) => {
+            this.userService.getDiscordConnectionStatus(user.id!).subscribe(
+              (discordResponse) => {
+                this.discordData = discordResponse;
+              }
+            )
+          }
+        )
       }
     )
   }
