@@ -28,7 +28,6 @@ export class HostPanelComponent implements OnInit {
   ngOnInit(): void {
     this.lobbyHubService.lobbyReadyCheck$.subscribe(
       (res) => {
-        console.log(res);
         if(res){
           this.readyCheckModal = res;
           this.readyCheckTimer();

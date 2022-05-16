@@ -45,18 +45,14 @@ export class LobbyChatHubService {
       // Everyone will get this except the caller
       this.hubConnection.on('JoinedChat', id => {
         this.chatMembersSource$.next(id);
-        console.log("User with id: " + id + " has connected to chat");
       })
 
       this.hubConnection.on('GetMessages', messages => {
         this.chatAllMessagesSource$.next(messages);
-        console.log("Getting messages");
-        
       })
 
       this.hubConnection.on('NewMessage', message => {
         this.chatAllMessagesSource$.next(message);
-        console.log("New message");
       })
   }
 

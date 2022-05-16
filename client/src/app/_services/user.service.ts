@@ -20,11 +20,7 @@ export class UserService{
     }
 
     deleteAccount(){
-        return this.http.delete(this.baseUrl + 'accounts/delete').pipe(
-            map(response =>{
-                console.log(response);
-            })
-        );
+        return this.http.delete(this.baseUrl + 'accounts/delete');
     }
 
     updateMember(model: any){

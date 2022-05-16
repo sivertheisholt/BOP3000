@@ -108,15 +108,10 @@ export class RegisterComponent implements OnInit {
       this.authService.register(this.regUserForm.value).subscribe(res => {
         this.router.navigate(['/home']);
     }, err => {
-        console.log('error');
         console.log(err);
       });
     } else {
       this.regUserForm.setErrors({'missingFields': 'Have you filled every field?'});
     }
-  }
-
-  cancel() {
-    console.log('cancelled');
   }
 }

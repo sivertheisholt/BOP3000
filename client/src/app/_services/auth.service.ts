@@ -55,7 +55,7 @@ export class AuthService {
   updateUserPasswordFromEmail(body: any){
     return this.http.patch(this.baseUrl + 'accounts/change_forgotten_password?token=' + this.getUserId(), body).pipe(
       map(response => {
-        console.log(response);
+        return response;
       })
     );
   }

@@ -29,7 +29,6 @@ export class ConnectionsComponent implements OnInit {
         this.userService.getDiscordConnectionStatus(user.id!).subscribe(
           (discordResponse) => {
             this.discordData = discordResponse;
-            console.log(discordResponse);
             this.discordHidden = discordResponse.hidden;
           }
         )

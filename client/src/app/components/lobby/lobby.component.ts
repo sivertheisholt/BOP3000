@@ -29,8 +29,6 @@ export class LobbyComponent implements OnInit {
     this.userService.getUserData().subscribe(
       (response) => {
         this.currentUser = response;
-        console.log(response.id);
-        console.log(this.lobby.adminUid);
       }
     );
 

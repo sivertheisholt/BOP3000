@@ -110,12 +110,10 @@ export class LobbyHubService {
       this.hubConnection.on("MemberAccepted", ids => {
         this.lobbyPartyMembers.next(ids[1]);
         this.acceptedMembers.next(ids[1]);
-        console.log("User with id: " + ids[1] + " was accepted!");
       });
 
       this.hubConnection.on("MemberDeclined", ids => {
         this.kickedQueueMembers.next(ids[1]);
-        console.log("User with id: " + ids[1] + " was declined!");
       });
 
       this.hubConnection.on("MemberBanned", id => {
@@ -124,26 +122,21 @@ export class LobbyHubService {
 
       this.hubConnection.on("MemberKicked", ids => {
         this.kickedPartyMembers.next(ids[1])
-        console.log("User with id: " + ids[1] + " was kicked!");
       });
 
       this.hubConnection.on("JoinedLobbyQueue", id => {
         this.lobbyQueueMembers.next(id);
-        console.log("User with id: " + id + " joined lobby queue!");
       });
 
       this.hubConnection.on("LeftLobby", id => {
         this.kickedPartyMembers.next(id);
-        console.log("User with id: " + id + " left lobby party!");
       });
 
       this.hubConnection.on("LeftQueue", id => {
         this.kickedQueueMembers.next(id);
-        console.log("User with id: " + id + " left lobby queue!");
       });
 
       this.hubConnection.on("HostStarted", id => {
-        console.log("User with id: " + id[0] + " started ready check in lobby with id: " + id[1]);
         const lobbyUrl: string = '/lobby/' + +id[1];
         if(this.router.url != lobbyUrl){
           this.router.navigate(['lobby/', +id[1]]);
@@ -156,12 +149,10 @@ export class LobbyHubService {
         this.lobbyReadyCheck.next(false);
         this.acceptedReadyCheckMembers.next([]);
         this.declinedReadyCheckMembers.next(id);
-        console.log("User with id: " + id + " declined ready check!");
       });
 
       this.hubConnection.on("MemberAcceptedReady", id => {
         this.acceptedReadyCheckMembers.next(id);
-        console.log("User with id: " + id + " accepted ready check!");
       });
       
       this.hubConnection.on("FullLobby", () => {
@@ -197,7 +188,6 @@ export class LobbyHubService {
 
       // Only caller will get this
       this.hubConnection.on("QueueMembers", ids => {
-        console.log("Getting users in queue");
         ids.forEach((id: number[]) => {
           this.lobbyQueueMembers.next(id);
         });
@@ -205,7 +195,6 @@ export class LobbyHubService {
 
       // Only caller will get this
       this.hubConnection.on("LobbyMembers", ids => {
-        console.log("Getting users in lobby");
         ids.forEach((id: number[]) => {
           this.lobbyPartyMembers.next(id);
         });
@@ -250,7 +239,6 @@ export class LobbyHubService {
   }
   async startReadyCheck(lobbyId: number){
     await this.connectionStatus;
-    console.log("Ready check");
     this.hubConnection.invoke("StartCheck", lobbyId);
   }
   async acceptReadyCheck(lobbyId: number){

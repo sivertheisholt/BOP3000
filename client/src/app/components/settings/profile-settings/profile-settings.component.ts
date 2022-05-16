@@ -146,7 +146,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.selectedImgUrl = url;
     this.userSettingsService.postChangeAccountBackground(url).subscribe(
       (res) => {
-        console.log(res);
+        this.notificationService.setNewNotification({message: 'Successfully changed account background', type: 'success'})
       }
     )
     

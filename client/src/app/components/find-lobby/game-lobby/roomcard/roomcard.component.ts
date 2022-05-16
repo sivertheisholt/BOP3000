@@ -104,7 +104,6 @@ export class RoomcardComponent implements OnInit {
   getLobbies(){
     this.lobbyService.fetchAllLobbiesWithGameId(this.game?.id!, this.pageNumber, this.pageSize).subscribe(
       (res) => {
-        console.log(res);
         this.lobbies = res;
         this.loadedLobbies = res;
       }

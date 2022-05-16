@@ -34,7 +34,6 @@ export class UserSettingsService{
     }
 
     postChangeAccountBackground(url: string){
-        console.log(url);
         return this.http.post<string>(this.baseUrl + 'members/set-background', {url: url});
     }
 }

@@ -77,7 +77,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.lobbyHubService.inQueue$.subscribe(
       (res) => {
-        console.log(res);
         this.inLobbyId = res.lobbyId;
         this.inQueue = res.inQueue;
         this.inLobbyStatus = res.inQueueStatus;

@@ -75,12 +75,10 @@ export class AccountCardComponent implements OnInit {
   onUploadProfilePicture(event: any){
     const formData: FormData = new FormData();
     if(event.target.files[0].size > 500 * 500){
-      console.log('Image height/weight');
       this.imageHeightWidth = true;
       return;
     }
     if(event.target.files[0].size > 3000000){
-      console.log('Size bigger than 3mb');
       this.imageSize = true;
       return;
     }

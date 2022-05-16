@@ -83,7 +83,6 @@ export class CreateLobbyComponent implements OnInit {
       )
     } else {
       this.createLobbyForm.setErrors({'missingFields': 'Have you filled every field thats required?'});
-      console.log(this.createLobbyForm);
     }
 
   }

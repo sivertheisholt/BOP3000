@@ -35,14 +35,10 @@ export class ArchivedLobbyPartyComponent implements OnInit {
         }
       )
     });
-    this.lobby?.votes!.forEach((vote) => {
-      console.log(vote);
-    })
 
   }
 
   upvoteUser(id: number){
-    console.log("User with id " + this.lobby?.id + " upvoted user with id " + id);
     this.lobbyService.upvoteUser(this.lobby?.id!, id).subscribe(
       (res) => {
         this.notificationService.setNewNotification({type: 'success', message: 'Upvoted'});
@@ -53,7 +49,6 @@ export class ArchivedLobbyPartyComponent implements OnInit {
   }
 
   downvoteUser(id: number){
-    console.log("User with id " + this.lobby?.id + " downvoted user with id " + id);
     this.lobbyService.downvoteUser(this.lobby?.id!, id).subscribe(
       (res) => {
         this.notificationService.setNewNotification({type: 'success', message: 'Downvoted'});

@@ -20,7 +20,7 @@ export class ManageAccountComponent implements OnInit {
   onDeleteAccount(){
     this.userService.deleteAccount().subscribe(
       (response) => {
-        console.log(response);
+        
       }
     )
   }
