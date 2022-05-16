@@ -27,8 +27,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="is-flex is-flex-direction-column activity-text" *ngIf="activity.gameId == 0">
+                        <div class="is-flex is-flex-direction-column activity-text" *ngIf="activity.gameId == 0 && activity.memberFollowedId == 0">
                             {{ activity.outputText }}
+                        </div>
+                        <div class="is-flex activity-text" *ngIf="activity.memberFollowedId != 0">
+                            {{ activity.outputText }} &nbsp; <a [routerLink]="['../account/', activity.memberFollowedId]"> {{ activity.memberFollowedUsername }}</a>
                         </div>
                         <div class="activity-footer">
                             <div class="activity-date">

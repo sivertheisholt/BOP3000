@@ -9,4 +9,6 @@ export interface ActivityLog{
     gameId?: number;
     headerImage?: string;
     profilePicture?: string;
+    memberFollowedId?: number;
+    memberFollowedUsername? : string;
 }
