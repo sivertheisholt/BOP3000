@@ -314,9 +314,8 @@ namespace API.SignalR
             if (!await GlobalChecks(new Checks(checkUid: false), lobbyId: lobbyId)) return;
 
             var queueUsers = _lobbyTracker.GetMembersInQueueLobby(lobbyId);
-            _lobbyTracker.FinishLobby(lobbyId);
-
             var lobby = await _unitOfWork.lobbiesRepository.GetLobbyAsync(lobbyId);
+
             lobby.Finished = true;
             lobby.Users = _lobbyTracker.GetMembersInLobby(lobbyId);
             lobby.FinishedDate = DateTime.Now;
@@ -327,6 +326,8 @@ namespace API.SignalR
 
             _unitOfWork.lobbiesRepository.Update(lobby);
             await _unitOfWork.Complete();
+
+            _lobbyTracker.FinishLobby(lobbyId);
 
             await Clients.Group($"lobby_{lobbyId.ToString()}").SendAsync("EndedLobby", lobbyId);
             foreach (var user in queueUsers)
