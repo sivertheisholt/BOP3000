@@ -250,5 +250,62 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+        [HttpPatch("seed_meili_apps")]
+        public async Task<ActionResult> SeedMeiliApps()
+        {
+            //Delete apps
+            var index = _meilisearchService.GetIndex("apps");
+
+            await _meilisearchService.DeleteAllDocumentsAsync<AppListInfo>(index);
+
+            var apps = await _unitOfWork.steamAppsRepository.GetAppsList(1);
+
+            //Seed apps to search
+            var createTask = _meilisearchService.CreateIndexAsync("apps");
+
+            var cont = createTask.ContinueWith(task =>
+            {
+                var index = _meilisearchService.GetIndex("apps");
+
+                var docsTask = _meilisearchService.AddDocumentsAsync(apps.Apps.ToArray(), index);
+
+                var docs = docsTask.ContinueWith(docsTask =>
+                {
+                    Console.WriteLine("Meilisearch docs successfully uploaded");
+                });
+                docs.Wait();
+            });
+            return NoContent();
+        }
+        [HttpPatch("seed_meili_users")]
+        public async Task<ActionResult> SeedMeiliMembers()
+        {
+            //Delete apps
+            var index = _meilisearchService.GetIndex("members");
+
+            await _meilisearchService.DeleteAllDocumentsAsync<AppUserMeili>(index);
+
+            var users = await _unitOfWork.userRepository.GetAllUsersNoPaging();
+
+            var usersMeili = Mapper.Map<List<AppUserMeili>>(users);
+
+            //Seed apps to search
+            var createTask = _meilisearchService.CreateIndexAsync("members");
+
+            var cont = createTask.ContinueWith(task =>
+            {
+                var index = _meilisearchService.GetIndex("members");
+
+                var docsTask = _meilisearchService.AddDocumentsAsync(usersMeili.ToArray(), index);
+
+                var docs = docsTask.ContinueWith(docsTask =>
+                {
+                    Console.WriteLine("Meilisearch docs successfully uploaded");
+                });
+                docs.Wait();
+            });
+            return NoContent();
+        }
     }
 }
