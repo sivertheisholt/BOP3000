@@ -29,7 +29,7 @@
 .activity-text{
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   color: rgb(196, 196, 196);
   height: 70px;
   padding: 8px;
@@ -48,13 +48,6 @@
 .activity-footer{
   display: flex;
   flex-direction: row;
-}
-
-.btn-container{
-  display: flex;
-  flex: 1;
-  align-items: flex-end;
-  padding: 8px;
 }
 
 .media{

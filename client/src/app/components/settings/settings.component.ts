@@ -28,6 +28,10 @@ export class SettingsComponent implements OnInit {
     this.connectionService.onSteamSuccess().subscribe(
       (res) => {
         this.viewMode = 'tab3';
+        this.notificationService.setNewNotification({type: 'success', message: 'You have successfully connected Steam with Playfu!.'});
+      }, error => {
+        this.viewMode = 'tab3';
+        this.notificationService.setNewNotification({type: 'error', message: error.error});
       }
     )
   }
@@ -37,6 +41,9 @@ export class SettingsComponent implements OnInit {
       (res) => {
         this.viewMode = 'tab3';
         this.notificationService.setNewNotification({type: 'success', message: 'You have successfully connected Discord with Playfu!. In order to start joining lobbies, you need to join our Playfu Discord. Check your notifications.', inDiscordServer: true});
+      }, error => {
+        this.viewMode = 'tab3';
+        this.notificationService.setNewNotification({type: 'error', message: error.error});
       }
     )
   }

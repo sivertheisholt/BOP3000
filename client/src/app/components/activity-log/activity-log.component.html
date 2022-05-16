@@ -31,9 +31,6 @@
                             {{ activity.outputText }}
                         </div>
                         <div class="activity-footer">
-                            <div class="btn-container" *ngIf="activity.lobbyId != 0 && activity.identifier != 'lobby-finished'">
-                                <button class="button is-success">Join</button>
-                            </div>
                             <div class="activity-date">
                                 {{ fixDate(activity.date) }}
                             </div>

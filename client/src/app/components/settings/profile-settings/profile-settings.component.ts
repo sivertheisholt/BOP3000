@@ -53,9 +53,9 @@ export class ProfileSettingsComponent implements OnInit {
       description: new FormControl(this.user?.memberProfile?.description),
       gender: new FormControl(this.user?.memberProfile?.gender, Validators.required),
       country: new FormControl(this.user.memberProfile?.countryIso?.id, Validators.required),
-      dateDay: new FormControl(userBirthday.getDate(), [Validators.max(31), Validators.min(1)]),
-      dateMonth: new FormControl(this.months[userBirthday.getMonth()], [Validators.max(12), Validators.min(1)]),
-      dateYear: new FormControl(userBirthday.getFullYear(), [Validators.max(2009), Validators.min(1900)])
+      dateDay: new FormControl(userBirthday.getDate()),
+      dateMonth: new FormControl(this.months[userBirthday.getMonth()]),
+      dateYear: new FormControl(userBirthday.getFullYear())
     });
 
     fromEvent(this.usernameInput?.nativeElement, 'keyup').pipe(
@@ -128,6 +128,9 @@ export class ProfileSettingsComponent implements OnInit {
         gender: this.profileSettingsForm.value.gender,
         description: this.profileSettingsForm.value.description,
         birthday: someDate
+      }
+      if(model.description == null){
+        model.description = "";
       }
       this.userService.updateMember(model).subscribe(
         (res) => {
