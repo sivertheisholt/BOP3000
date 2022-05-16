@@ -625,17 +625,19 @@ This endpoint gets the current logged in member's activity list
 
 ### Response Class (Status 200)
 
-| Key            | Type             |
-| -------------- | ---------------- |
-| date           | string           |
-| username       | string           |
-| appUserId      | int              |
-| identifier     | string           |
-| lobbyId        | int, optional    |
-| gameName       | string, optional |
-| gameId         | int, optional    |
-| headerImage    | string, optional |
-| profilePicture | string, optional |
+| Key                    | Type             |
+| ---------------------- | ---------------- |
+| date                   | string           |
+| username               | string           |
+| appUserId              | int              |
+| identifier             | string           |
+| lobbyId                | int, optional    |
+| gameName               | string, optional |
+| gameId                 | int, optional    |
+| headerImage            | string, optional |
+| profilePicture         | string, optional |
+| memberFollowedId       | int, optional    |
+| memberFollowedUsername | string, optional |
 
 ## GET Discord connected status
 
