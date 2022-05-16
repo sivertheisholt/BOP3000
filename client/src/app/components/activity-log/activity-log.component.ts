@@ -13,6 +13,7 @@ export class ActivityLogComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private userService: UserService) {
     this.activities = this.route.snapshot.data['activities'];
+    console.log(this.activities);
   }
 
   ngOnInit(): void {
@@ -20,8 +21,10 @@ export class ActivityLogComponent implements OnInit {
 
   fixDate(date: Date){
     let d = new Date(date);
-    let fixedDate = ('0' + d.getDate()).slice(-2) + '.' + ('0' + d.getMonth()).slice(-2) + '.' + ('0' + d.getFullYear()).slice(-2) + ' @ ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
-    return fixedDate;
+    let fixedDate = d.toLocaleDateString('en-GB');
+    let timeStamp = d.toTimeString().slice(0, 8);
+    let output = fixedDate + ' @ ' + timeStamp
+    return output;
   }
   
 }
