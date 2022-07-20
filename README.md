@@ -30,4 +30,5 @@ If you wanna take a look at the delivered docs (Norwegian only) check out the De
 Other websites related to the project (Can't promise these will be up forever):
 
 Status website: https://happy-river-0edb05f03.1.azurestaticapps.net/
+
 API Docs: https://sivertheisholt.github.io/BOP3000/#introduction
